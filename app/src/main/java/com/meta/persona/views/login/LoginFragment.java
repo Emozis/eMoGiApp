@@ -41,7 +41,6 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;
 
-
     public static LoginFragment newInstance() {
         return new LoginFragment();
     }
@@ -69,7 +68,11 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         // Set the sign-in button click listener
-        view.findViewById(R.id.button).setOnClickListener(v -> signIn());
+        view.findViewById(R.id.login_button).setOnClickListener(v -> signIn());
+
+        view.findViewById(R.id.network1).setOnClickListener(v -> network_fun1());
+
+        view.findViewById(R.id.network2).setOnClickListener(v -> network_fun2());
 
         return view;
     }
@@ -84,7 +87,6 @@ public class LoginFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
         // TODO: Use the ViewModel
     }
-
 
     // ActivityResultLauncher for sign-in result handling
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -132,4 +134,22 @@ public class LoginFragment extends Fragment {
             }
         });
     }
+
+    private void network_fun1() {
+
+        @Override public void onResponse (Call < Void > call, Response < Void > response){
+            if (!response.isSuccessful()) {
+                Log.e("Error", "Code: " + response.code());
+                return;
+            }
+            Log.d(TAG, "Token sent successfully.");
+        }
+
+        @Override public void onFailure (Call < Void > call, Throwable t){
+            Log.e("Error", t.getMessage());
+        }
+
+    }
+
+    private void network_fun2() {}
 }
