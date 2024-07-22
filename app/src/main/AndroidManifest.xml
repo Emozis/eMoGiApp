@@ -28,7 +28,12 @@
             android:exported="false" />
         <activity
             android:name=".views.chatroom.ChatRoomActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".views.chatlist.ChatListActivity"
             android:exported="false" />
@@ -37,11 +42,7 @@
             android:exported="false">
         </activity>
         <activity android:name=".views.login.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
