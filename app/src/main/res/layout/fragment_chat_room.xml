@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.meta.persona.views.chatroom.ChatRoomViewModel" />
+            type="com.meta.emogi.views.chatroom.ChatRoomViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,12 +20,10 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/input_field"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_weight="9"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="7" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/input_field"
@@ -33,38 +31,39 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_weight="1"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chat_field">
+            app:layout_constraintTop_toBottomOf="@+id/chat_field"
+            app:layout_constraintVertical_weight="1">
 
             <EditText
                 android:id="@+id/send_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="@{viewModel.inputText()}"
+                android:text="@={viewModel.inputText}"
                 android:textColor="@color/black"
-                android:textSize="50dp"
+                android:textSize="28dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/transmit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintHorizontal_bias="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
                 tools:text="text" />
+
 
             <Button
                 android:id="@+id/transmit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:layout_constraintHorizontal_weight="1"
-                android:onClick="@{()->viewModel.init()}"
-                app:layout_constraintHorizontal_bias="2"
+                android:onClick="@{() -> viewModel.chatMessage()}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="2"
+                app:layout_constraintHorizontal_weight="1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

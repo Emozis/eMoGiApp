@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.meta.persona'
+    namespace 'com.meta.emogi'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.meta.persona"
+        applicationId "com.meta.emogi"
         minSdk 24
         targetSdk 34
         versionCode 1
