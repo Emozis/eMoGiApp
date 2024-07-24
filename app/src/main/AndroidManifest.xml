@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.meta.persona">
+    package="com.meta.emogi">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,35 +18,29 @@
         android:theme="@style/Theme.Persona"
         tools:targetApi="31">
         <activity
-            android:name=".views.splash.SplashActivity"
+            android:name="com.meta.emogi.views.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".views.profile.ProfileActivity"
+            android:name="com.meta.emogi.views.menu.MenuActivity"
             android:exported="false" />
         <activity
-            android:name=".views.menu.MenuActivity"
+            android:name="com.meta.emogi.views.makecharacter.MakeCharacterActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.makecharacter.MakeCharacterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.chatroom.ChatRoomActivity"
-            android:exported="true">
+            android:name="com.meta.emogi.views.chatroom.ChatRoomActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.chatlist.ChatListActivity"
+            android:name="com.meta.emogi.views.chatlist.ChatListActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
+            android:name="com.meta.emogi.views.MainActivity"
             android:exported="false">
         </activity>
-        <activity
-            android:name=".views.login.LoginActivity"
+        <activity android:name="com.meta.emogi.views.login.LoginActivity"
             android:exported="false">
         </activity>
         <meta-data

@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "500056101367",
-    "project_id": "persona19981214",
-    "storage_bucket": "persona19981214.appspot.com"
+    "project_number": "301284266297",
+    "project_id": "emoziss",
+    "storage_bucket": "emoziss.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:500056101367:android:99ba4f4fc10ca8441cdef2",
+        "mobilesdk_app_id": "1:301284266297:android:45833cde17518f684858e8",
         "android_client_info": {
-          "package_name": "com.meta.persona"
+          "package_name": "com.meta.emogi"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "500056101367-mg6nr68ngorst0f495jagvcge0es9qfe.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.meta.persona",
-            "certificate_hash": "d22e3c4178e46a7e9e168157f19670fe668da192"
-          }
-        },
-        {
-          "client_id": "500056101367-ilq2eq063e5ggg1hqvvek5kr743sukm9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDxiQMrA-LQEFukYB_-_gsIdRSKO-BQoUo"
+          "current_key": "AIzaSyBlKQg16t-AvGLqEaR-TdZtKErAXZYbe50"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "500056101367-ilq2eq063e5ggg1hqvvek5kr743sukm9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

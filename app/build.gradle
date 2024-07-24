@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.meta.persona'
+    namespace 'com.meta.emogi'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.meta.persona"
+        applicationId "com.meta.emogi"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -73,6 +73,9 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'androidx.core:core-ktx:1.6.0'
+
+    // 소켓통신 라이브러리
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
