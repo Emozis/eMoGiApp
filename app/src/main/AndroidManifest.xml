@@ -18,6 +18,14 @@
         android:theme="@style/Theme.Persona"
         tools:targetApi="31">
         <activity
+            android:name="com.meta.emogi.views.splash.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.meta.emogi.views.profile.ProfileActivity"
             android:exported="false" />
         <activity
@@ -26,13 +34,6 @@
         <activity
             android:name="com.meta.emogi.views.makecharacter.MakeCharacterActivity"
             android:exported="false" />
-            android:name="com.meta.emogi.views.chatroom.ChatRoomActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name="com.meta.emogi.views.chatlist.ChatListActivity"
             android:exported="false" />
@@ -40,9 +41,11 @@
             android:name="com.meta.emogi.views.MainActivity"
             android:exported="false">
         </activity>
-        <activity android:name="com.meta.emogi.views.login.LoginActivity"
+        <activity
+            android:name="com.meta.emogi.views.login.LoginActivity"
             android:exported="false">
         </activity>
+
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />

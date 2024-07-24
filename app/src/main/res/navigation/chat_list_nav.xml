@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chat_list_nav"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/chatListFragment">
+
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="com.meta.emogi.views.chatlist.ChatListFragment"
+        tools:layout="@layout/fragment_chat_list"
+        android:label="ChatListFragment" />
+</navigation>

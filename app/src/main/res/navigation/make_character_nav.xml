@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/make_character_nav"
+    app:startDestination="@id/makeCharacterFragment">
+
+    <fragment
+        android:id="@+id/makeCharacterFragment"
+        android:name="com.meta.emogi.views.makecharacter.MakeCharacterFragment"
+        android:label="MakeCharacterFragment"
+        tools:layout="@layout/fragment_make_character" />
+
+</navigation>

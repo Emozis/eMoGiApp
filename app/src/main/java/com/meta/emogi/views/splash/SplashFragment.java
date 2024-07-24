@@ -1,5 +1,6 @@
 package com.meta.emogi.views.splash;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -13,24 +14,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.meta.emogi.R;
+import com.meta.emogi.databinding.FragmentChatRoomBinding;
+import com.meta.emogi.databinding.FragmentSplashBinding;
+import com.meta.emogi.views.chatroom.ChatRoomViewModel;
 
 public class SplashFragment extends Fragment {
 
-    private SplashViewModel mViewModel;
+    private SplashViewModel viewModel;
+    private FragmentSplashBinding binding;
     public static SplashFragment newInstance() {
         return new SplashFragment();
     }
     @Override
     public View onCreateView(
-            @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_splash, container, false);
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(this);
     }
 
 }
