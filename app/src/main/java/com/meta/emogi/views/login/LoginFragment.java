@@ -80,17 +80,6 @@ public class LoginFragment extends Fragment {
     private void network_fun2() {}
     private void network_fun1() {}
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated: ");
-
-        // ViewModelFactory 사용
-        ViewModelFactory factory = new ViewModelFactory();
-        mViewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 
     // ActivityResultLauncher for sign-in result handling
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

@@ -1,7 +1,14 @@
 package com.meta.emogi.views.login;
 
+import android.app.Application;
+
 import androidx.lifecycle.ViewModel;
 
-public class LoginViewModel extends ViewModel {
+import com.meta.emogi.base.BaseViewModel;
+
+public class LoginViewModel extends BaseViewModel {
+    public LoginViewModel(Application application) {
+        super(application);
+    }
     // TODO: Implement the ViewModel
 }

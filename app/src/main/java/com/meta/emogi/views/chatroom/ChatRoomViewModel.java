@@ -1,19 +1,23 @@
 package com.meta.emogi.views.chatroom;
 
+import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.network.ChatWebSocket;
 
-public class ChatRoomViewModel extends ViewModel {
+public class ChatRoomViewModel extends BaseViewModel {
     private ChatWebSocket chatWebSocket;
     private static final String TAG = "ChatRoomViewModel";
+
 
     public MutableLiveData<String> inputText = new MutableLiveData<>("");
     private MutableLiveData<String> _sendText = new MutableLiveData<>();
     private MutableLiveData<String> _receivedText = new MutableLiveData<>();
+    public ChatRoomViewModel(Application application) {super(application);}
 
     public LiveData<String> sendText() {
         return _sendText;

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.meta.emogi.base.BaseViewModel"/>
         <variable
             name="viewModel"
             type="com.meta.emogi.views.splash.SplashViewModel" />

@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.meta.emogi.R;
+import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.data.ChatMessage;
 import com.meta.emogi.databinding.FragmentChatRoomBinding;
 import com.meta.emogi.di.ViewModelFactory;
@@ -27,10 +29,8 @@ import com.meta.emogi.di.ViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatRoomFragment extends Fragment {
+public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel> {
 
-    private ChatRoomViewModel viewModel;
-    private FragmentChatRoomBinding binding;
     private ChatListAdapter adapter;
     private List<ChatMessage> data;
     private RecyclerView recyclerView;
@@ -40,64 +40,17 @@ public class ChatRoomFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentChatRoomBinding.inflate(inflater, container, false);
-        setKeyboard(binding);
-        return binding.getRoot();
-    }
-    private void setKeyboard(FragmentChatRoomBinding binding) {
-        binding.sendText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_SEND ||
-                        (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
-                    // 소프트 키보드를 숨깁니다.
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(binding.sendText.getWindowToken(), 0);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
+    protected int layoutId() {
+        return R.layout.fragment_chat_room;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ViewModelFactory factory = new ViewModelFactory();
-        viewModel = new ViewModelProvider(this, factory).get(ChatRoomViewModel.class);
-        binding.setViewModel(viewModel);
-        binding.setLifecycleOwner(getViewLifecycleOwner());
-
-        // RecyclerView 설정
-        recyclerView = binding.chatField;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // 예제 데이터
-        data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add(new ChatMessage("User message " + i, ChatMessage.TYPE_USER));
-            data.add(new ChatMessage("Other message " + i, ChatMessage.TYPE_OTHER));
-        }
-
-        recyclerView.scrollToPosition(data.size() - 1);
-        adapter = new ChatListAdapter(data);
-        recyclerView.setAdapter(adapter);
-
-        setObserve();
+    protected Class<ChatRoomViewModel> viewModelClass() {
+        return ChatRoomViewModel.class;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        viewModel.init();
-    }
-
-    private void setObserve() {
+    protected void registerObservers() {
         viewModel.sendText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String sendText) {
@@ -114,5 +67,52 @@ public class ChatRoomFragment extends Fragment {
                 recyclerView.scrollToPosition(data.size() - 1);
             }
         });
+    }
+
+    private void setKeyboard() {
+        binding.sendText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                    // 소프트 키보드를 숨깁니다.
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(binding.sendText.getWindowToken(), 0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setKeyboard();
+
+        // RecyclerView 설정
+        recyclerView = binding.chatField;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // 예제 데이터
+        data = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            data.add(new ChatMessage("User message " + i, ChatMessage.TYPE_USER));
+            data.add(new ChatMessage("Other message " + i, ChatMessage.TYPE_OTHER));
+        }
+
+        recyclerView.scrollToPosition(data.size() - 1);
+        adapter = new ChatListAdapter(data);
+        recyclerView.setAdapter(adapter);
+
+        registerObservers();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.init();
     }
 }

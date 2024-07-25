@@ -1,13 +1,21 @@
 package com.meta.emogi;
 
-import android.content.Context;
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
+import android.app.Application;
 
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends Application {
+
+    private static MyApplication instance;
+
     @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+    }
+
+    public static synchronized MyApplication getInstance(){
+        if (instance == null) {
+            instance = new MyApplication();
+        }
+        return instance;
     }
 }

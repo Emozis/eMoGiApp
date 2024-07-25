@@ -13,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.meta.emogi.R;
+import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentChatListBinding;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.menu.MenuViewModel;
 
-public class ChatListFragment extends Fragment {
+public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatListViewModel> {
 
     private ChatListViewModel viewModel;
     private FragmentChatListBinding binding;
@@ -26,19 +27,16 @@ public class ChatListFragment extends Fragment {
         return new ChatListFragment();
     }
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_list, container, false);
-        return binding.getRoot();
+    protected int layoutId() {
+        return R.layout.fragment_chat_list;
     }
-
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(ChatListViewModel.class);
-        binding.setViewModel(viewModel);
-        binding.setLifecycleOwner(this);
+    protected Class<ChatListViewModel> viewModelClass() {
+        return ChatListViewModel.class;
+    }
+    @Override
+    protected void registerObservers() {
+
     }
 
 }

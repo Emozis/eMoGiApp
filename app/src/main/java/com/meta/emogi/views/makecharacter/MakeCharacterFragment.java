@@ -13,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.meta.emogi.R;
+import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMakeCharacterBinding;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.menu.MenuViewModel;
 
-public class MakeCharacterFragment extends Fragment {
+public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBinding,MakeCharacterViewModel> {
 
     private MakeCharacterViewModel viewModel;
     private FragmentMakeCharacterBinding binding;
@@ -25,18 +26,16 @@ public class MakeCharacterFragment extends Fragment {
         return new MakeCharacterFragment();
     }
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_make_character, container, false);
-        return binding.getRoot();
+    protected int layoutId() {
+        return R.layout.fragment_make_character;
     }
-
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MakeCharacterViewModel.class);
-        binding.setViewModel(viewModel);
-        binding.setLifecycleOwner(this);
+    protected Class<MakeCharacterViewModel> viewModelClass() {
+        return MakeCharacterViewModel.class;
+    }
+    @Override
+    protected void registerObservers() {
+
     }
 
 }

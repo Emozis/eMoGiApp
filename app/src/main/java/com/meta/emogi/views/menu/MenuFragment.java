@@ -1,6 +1,7 @@
 package com.meta.emogi.views.menu;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -13,32 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.meta.emogi.R;
+import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMenuBinding;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.splash.SplashViewModel;
 
-public class MenuFragment extends Fragment {
-
-    private MenuViewModel viewModel;
-    private FragmentMenuBinding binding;
-
-    public static MenuFragment newInstance() {
-        return new MenuFragment();
-    }
+public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewModel> {
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu, container, false);
-        return binding.getRoot();
+    protected int layoutId() {
+        return R.layout.fragment_menu;
     }
-
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MenuViewModel.class);
-        binding.setViewModel(viewModel);
-        binding.setLifecycleOwner(this);
+    protected Class<MenuViewModel> viewModelClass() {
+        return MenuViewModel.class;
+    }
+    @Override
+    protected void registerObservers() {
+
     }
 }
