@@ -11,8 +11,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -21,23 +19,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.meta.emogi.R;
-import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.base.BaseFragment;
+import com.meta.emogi.databinding.FragmentLoginBinding;
 import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.IdTokenRequest;
+import com.meta.emogi.network.RetrofitClient;
+import com.meta.emogi.network.datamodels.TokenModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment<FragmentLoginBinding,LoginViewModel> {
 
     private static final String TAG = "LoginFragment";
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
     private static final String SERVER_URL = "http://122.128.54.136:7070/";
     private ApiService apiService;
+    private LoginActivity activity;
 
     private LoginViewModel mViewModel;
 
@@ -47,6 +47,18 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
+    protected int layoutId() {
+        return R.layout.fragment_login;
+    }
+    @Override
+    protected Class<LoginViewModel> viewModelClass() {
+        return LoginViewModel.class;
+    }
+    @Override
+    protected void registerObservers() {
+
+    }
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -55,9 +67,12 @@ public class LoginFragment extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
 
-        // Retrofit setup
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(SERVER_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl(SERVER_URL).addConverterFactory(GsonConverterFactory.create()).build();
+
+
+        // Retrofit setup
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
     }
 
@@ -67,19 +82,16 @@ public class LoginFragment extends Fragment {
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-        // Set the sign-in button click listener
         view.findViewById(R.id.login_button).setOnClickListener(v -> signIn());
-
-        view.findViewById(R.id.network1).setOnClickListener(v -> network_fun1());
-
-        view.findViewById(R.id.network2).setOnClickListener(v -> network_fun2());
-
         return view;
     }
-    private void network_fun2() {}
-    private void network_fun1() {}
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        activity = (LoginActivity) getActivity();
+    }
 
     // ActivityResultLauncher for sign-in result handling
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -106,23 +118,29 @@ public class LoginFragment extends Fragment {
     }
 
     public void sendIdTokenToServer(String idToken) {
-        IdTokenRequest request = new IdTokenRequest(idToken);
+        TokenModel request = new TokenModel(idToken);
 
-        Call<Void> call = apiService.sendIdToken(request);
+        Call<TokenModel> call = apiService.sendIdToken(request);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<TokenModel>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
                 if (!response.isSuccessful()) {
                     Log.e("Error", "Code: " + response.code());
                     return;
                 }
 
-                Log.d(TAG, "Token sent successfully.");
+                TokenModel tokenModel = response.body();
+                if (tokenModel != null) {
+                    String jwtToken = tokenModel.getJwtToken();
+                    Log.d(TAG, "JWT Token received: " + jwtToken);
+                    activity.moveActivity();
+
+                }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<TokenModel> call, Throwable t) {
                 Log.e("Error", t.getMessage());
             }
         });

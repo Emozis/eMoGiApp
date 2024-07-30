@@ -10,5 +10,5 @@ public class LoginViewModel extends BaseViewModel {
     public LoginViewModel(Application application) {
         super(application);
     }
-    // TODO: Implement the ViewModel
+
 }
