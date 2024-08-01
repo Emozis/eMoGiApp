@@ -7,10 +7,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+
+import com.meta.emogi.views.toolbar.ToolbarView;
 public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
     protected V binding;
 
     protected abstract @LayoutRes int layoutId();
+
+    protected abstract void setToolbar(ToolbarView.ToolbarRequest toolbarRequest);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -18,9 +18,14 @@ import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentChatRoomBinding;
 import com.meta.emogi.databinding.FragmentSplashBinding;
 import com.meta.emogi.views.chatroom.ChatRoomViewModel;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class SplashFragment extends BaseFragment<FragmentSplashBinding,SplashViewModel> {
 
+    @Override
+    protected ToolbarView.ToolbarRequest toolbarCallback() {
+        return null;
+    }
     @Override
     protected int layoutId() {
         return R.layout.fragment_splash;

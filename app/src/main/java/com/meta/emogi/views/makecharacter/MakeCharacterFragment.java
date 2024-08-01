@@ -17,8 +17,14 @@ import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMakeCharacterBinding;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBinding,MakeCharacterViewModel> {
+
+    @Override
+    protected ToolbarView.ToolbarRequest toolbarCallback() {
+        return new ToolbarView.ToolbarRequest("투툴바");
+    }
 
     private MakeCharacterViewModel viewModel;
     private FragmentMakeCharacterBinding binding;

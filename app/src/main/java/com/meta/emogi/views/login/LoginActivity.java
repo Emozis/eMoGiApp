@@ -14,23 +14,30 @@ import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityLoginBinding;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.splash.SplashActivity;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     private static final String TAG = "LoginActivity";
-    private String jwtToken="";
+    private String accessToken="";
+
+
     @Override
     protected int layoutId() {
         return R.layout.activity_login;
     }
+    @Override
+    protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
 
-    public void setJwtToken(String jwtToken){
-        this.jwtToken=jwtToken;
+    }
+
+    public void setAccessToken(String jwtToken){
+        this.accessToken=jwtToken;
     }
 
     public void moveActivity(){
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-        intent.putExtra("ACCESS_TOKEN", jwtToken);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
         startActivity(intent);
     }
 

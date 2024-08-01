@@ -24,13 +24,14 @@ import com.meta.emogi.databinding.FragmentLoginBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.TokenModel;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class LoginFragment extends BaseFragment<FragmentLoginBinding,LoginViewModel> {
+public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> {
 
     private static final String TAG = "LoginFragment";
     private static final int RC_SIGN_IN = 9001;
@@ -41,11 +42,14 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding,LoginViewMo
 
     private LoginViewModel mViewModel;
 
-
     public static LoginFragment newInstance() {
         return new LoginFragment();
     }
 
+    @Override
+    protected ToolbarView.ToolbarRequest toolbarCallback() {
+        return null;
+    }
     @Override
     protected int layoutId() {
         return R.layout.fragment_login;
@@ -56,36 +60,21 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding,LoginViewMo
     }
     @Override
     protected void registerObservers() {
-
+        viewModel.isClicked().observe(this, unUsed -> {
+                signIn();
+        });
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Google Sign-In options
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
-
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
-
-
-//        Retrofit retrofit = new Retrofit.Builder().baseUrl(SERVER_URL).addConverterFactory(GsonConverterFactory.create()).build();
-
 
         // Retrofit setup
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
     }
-
-    @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        view.findViewById(R.id.login_button).setOnClickListener(v -> signIn());
-        return view;
-    }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -132,8 +121,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding,LoginViewMo
 
                 TokenModel tokenModel = response.body();
                 if (tokenModel != null) {
-                    String jwtToken = tokenModel.getJwtToken();
-                    Log.d(TAG, "JWT Token received: " + jwtToken);
+                    String acccessToken = tokenModel.getAccessToken();
+                    Log.d(TAG, "JWT Token received: " + acccessToken);
+                    activity.setAccessToken(acccessToken);
                     activity.moveActivity();
 
                 }

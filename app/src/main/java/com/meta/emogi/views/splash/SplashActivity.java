@@ -15,12 +15,16 @@ import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivitySplashBinding;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
     @Override
     protected int layoutId() {
         return R.layout.activity_splash;
+    }
+    @Override
+    protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
     }
 
     @Override

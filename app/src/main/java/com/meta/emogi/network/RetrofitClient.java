@@ -9,7 +9,8 @@ public class RetrofitClient {
 
     public static Retrofit getRetrofitInstance() {
         Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
+//                .excludeFieldsWithoutExposeAnnotation()
+                .setLenient()
                 .create();
 
         return new Retrofit.Builder()

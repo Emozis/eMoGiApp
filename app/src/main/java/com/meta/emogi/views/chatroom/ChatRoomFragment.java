@@ -25,6 +25,7 @@ import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.data.ChatMessage;
 import com.meta.emogi.databinding.FragmentChatRoomBinding;
 import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,11 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     private ChatListAdapter adapter;
     private List<ChatMessage> data;
     private RecyclerView recyclerView;
+
+    @Override
+    protected ToolbarView.ToolbarRequest toolbarCallback() {
+        return new ToolbarView.ToolbarRequest("투툴바");
+    }
 
     public static ChatRoomFragment newInstance() {
         return new ChatRoomFragment();

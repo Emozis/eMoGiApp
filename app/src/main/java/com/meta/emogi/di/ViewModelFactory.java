@@ -12,6 +12,7 @@ import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
 import com.meta.emogi.views.profile.ProfileViewModel;
 import com.meta.emogi.views.splash.SplashViewModel;
+import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -38,6 +39,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new ProfileViewModel(application);
         } else if (modelClass.isAssignableFrom(ChatListViewModel.class)) {
             return (T) new ChatListViewModel(application);
+        }else if (modelClass.isAssignableFrom(ToolbarViewModel.class)) {
+            return (T) new ToolbarViewModel(application);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class");

@@ -17,9 +17,14 @@ import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentProfileBinding;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.splash.SplashViewModel;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding,ProfileViewModel> {
 
+    @Override
+    protected ToolbarView.ToolbarRequest toolbarCallback() {
+        return new ToolbarView.ToolbarRequest("투툴바");
+    }
     @Override
     protected int layoutId() {
         return R.layout.fragment_profile;

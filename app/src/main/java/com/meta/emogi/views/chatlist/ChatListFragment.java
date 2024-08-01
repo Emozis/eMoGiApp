@@ -17,11 +17,17 @@ import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentChatListBinding;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatListViewModel> {
 
     private ChatListViewModel viewModel;
     private FragmentChatListBinding binding;
+
+    @Override
+    protected ToolbarView.ToolbarRequest toolbarCallback() {
+        return new ToolbarView.ToolbarRequest("채팅리스트");
+    }
 
     public static ChatListFragment newInstance() {
         return new ChatListFragment();

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.views.toolbar.ToolbarView;
 
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends Fragment {
 
@@ -22,11 +23,13 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     protected V binding;
     protected VM viewModel;
 
+    protected abstract ToolbarView.ToolbarRequest toolbarCallback();
     protected abstract @LayoutRes int layoutId();
 
     protected abstract Class<VM> viewModelClass();
 
     protected abstract void registerObservers();
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +46,12 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         binding = DataBindingUtil.inflate(inflater, layoutId(), container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setVariable(BR.viewModel, viewModel);
-        registerObservers(); // Move this line here
+        registerObservers();
+
+        ToolbarView.ToolbarRequest request = toolbarCallback();
+        if (request != null)
+            ((BaseActivity<?>) requireActivity()).setToolbar(toolbarCallback());
+
         return binding.getRoot();
     }
 }
