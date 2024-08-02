@@ -35,7 +35,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("투툴바");
+        return new ToolbarView.ToolbarRequest("EmoGi");
     }
 
     @Override
@@ -50,10 +50,10 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
     @Override
     protected void registerObservers() {
-        viewModel.type().observe(this,type->{
-            if(type== MenuViewModel.MoveType.CHAT_LIST){
+        viewModel.type().observe(this, type -> {
+            if (type == MenuViewModel.MoveType.CHAT_LIST) {
                 activity.moveToChatList();
-            }else{
+            } else {
                 activity.moveToMakeCharacter();
             }
         });
@@ -71,7 +71,6 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
 
-
     }
 
     @Override
@@ -80,8 +79,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
         String key = activity.getAccessToken();
         setupRecyclerView();
-//        getCharactersMe("Bearer " + key);
-//        getCharactersRank();
+        getCharactersMe("Bearer " + key);
+        getCharactersRank();
 
     }
 
@@ -97,9 +96,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         call.enqueue(new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
-                Log.d(TAG, "getCharacters:2 ");
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "getCharacters:3 ");
                     List<CharacterModel> characterList = response.body();
                     if (characterList != null) {
                         menuListAdapter = new MenuListAdapter(characterList);
@@ -119,7 +116,6 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
-                Log.d(TAG, "getCharacters:4");
                 Log.e(TAG, "Request Failed: " + t.getMessage());
             }
         });
@@ -131,18 +127,10 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         call.enqueue(new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
-                Log.d(TAG, "getCharacters:2 ");
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "getCharacters:3 ");
                     List<CharacterModel> characterList = response.body();
 
                     if (characterList != null) {
-                        for(CharacterModel check : characterList){
-                            Log.d(TAG, String.valueOf(check));
-//                            Log.d(TAG, check.getCharacterName());
-                            Log.d(TAG, String.valueOf(check.getCharacterId()));
-                        }
-
                         menuListAdapter = new MenuListAdapter(characterList);
                         binding.listMyCharacter.setAdapter(menuListAdapter);
                     }
@@ -160,7 +148,6 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
-                Log.d(TAG, "getCharacters:4");
                 Log.e(TAG, "Request Failed: " + t.getMessage());
             }
         });

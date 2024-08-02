@@ -1,6 +1,9 @@
 package com.meta.emogi.network;
 import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.network.datamodels.ChatListModel;
+import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.TokenModel;
+import com.meta.emogi.network.datamodels.UserData;
 
 import java.util.List;
 
@@ -14,10 +17,22 @@ public interface ApiService {
     Call<TokenModel> sendIdToken(@Body TokenModel request);
 
     @GET("api/v1/characters/me/")
-    Call<List<CharacterModel>> getCharactersMe(@Header("Authorization") String authToken);
+    Call<List<CharacterModel>> getCharactersMe(@Header("Authorization") String accessToken);
 
     @GET("api/v1/characters/rank/")
     Call<List<CharacterModel>> getCharactersRank();
 
+    @GET("api/v1/chat/me/")
+    Call<List<ChatListModel>> getChatList(@Header("Authorization") String accessToken);
+
+    @POST("api/v1/characters/")
+    Call<MakeCharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body
+    MakeCharacterModel characterRequest);
+
+    @POST("api/v1/user/me")
+    Call<UserData> getUserData(@Header("Authorization") String accessToken);
 }
+
+
+
 

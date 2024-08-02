@@ -4,25 +4,47 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityMenuBinding;
+import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.chatlist.ChatListActivity;
 import com.meta.emogi.views.chatroom.ChatRoomActivity;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.makecharacter.MakeCharacterActivity;
+import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
+import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
 
     private String accessToken;
     private static final String TAG = "MenuActivity";
-    
+    private ToolbarViewModel toolbarViewModel;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // ViewModel 초기화
+        ViewModelFactory factory = new ViewModelFactory(getApplication());
+        toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
+
+        // goToProfile 이벤트 관찰
+        toolbarViewModel.goToProfile().observe(this, unused -> {
+            // ProfileActivity로 이동
+            Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
+            intent.putExtra("ACCESS_TOKEN", accessToken);
+            startActivity(intent);
+        });
+    }
+
     @Override
     protected int layoutId() {
         return R.layout.activity_menu;
@@ -38,7 +60,6 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         Intent intent = getIntent();
         String data = intent.getStringExtra("ACCESS_TOKEN");
         setAccessToken(data);
-//        Log.d(TAG, data);
     }
 
     public String getAccessToken() {

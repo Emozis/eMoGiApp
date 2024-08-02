@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,10 +17,23 @@
         >
 
 
-        <Button
+<!--        <Button-->
+<!--            android:id="@+id/back"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/drawable_background_toolbar_profile"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--        -->
+
+        <ImageView
             android:id="@+id/back"
-            android:layout_width="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
+            android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+            android:src="@drawable/drawable_background_toolbar_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,14 +45,14 @@
             android:layout_marginTop="2dp"
             android:textColor="@color/black"
             android:layout_marginBottom="2dp"
-            android:text="tiLE"
+            android:text="@{viewModel.title()}"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="title"
             />
 
 

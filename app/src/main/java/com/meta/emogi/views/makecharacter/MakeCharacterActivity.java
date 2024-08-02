@@ -1,5 +1,6 @@
 package com.meta.emogi.views.makecharacter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBinding> {
 
+    private String accessToken;
     @Override
     protected int layoutId() {
         return R.layout.activity_make_character;
@@ -22,5 +24,20 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("ACCESS_TOKEN");
+        setAccessToken(data);
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

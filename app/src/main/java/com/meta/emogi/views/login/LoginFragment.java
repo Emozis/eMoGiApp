@@ -61,7 +61,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     @Override
     protected void registerObservers() {
         viewModel.isClicked().observe(this, unUsed -> {
-                signIn();
+            signIn();
         });
     }
     @Override

@@ -3,11 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile_nav"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/myPageFragment">
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.meta.emogi.views.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/>
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.meta.emogi.views.profile.myPage.MyPageFragment"
+        android:label="MyPageFragment" >
+        <action
+            android:id="@+id/action_myPageFragment_to_characterManageFragment"
+            app:destination="@id/characterManageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterManageFragment"
+        android:name="com.meta.emogi.views.profile.characterMangage.CharacterManageFragment"
+        android:label="CharacterManageFragment" >
+        <action
+            android:id="@+id/action_characterManageFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
 </navigation>
