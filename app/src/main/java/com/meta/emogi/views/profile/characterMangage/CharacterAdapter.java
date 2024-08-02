@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
+import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.recyclerview.CategoryItem;
 import com.meta.emogi.network.recyclerview.CharacterItem;
 import com.meta.emogi.views.makecharacter.CategoryAdapter;
@@ -17,28 +18,28 @@ import com.meta.emogi.views.makecharacter.CategoryAdapter;
 import java.util.List;
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
 
-    private List<CharacterItem> characterItemList;
+    private List<CharacterModel> characterList;
 
-    public CharacterAdapter(List<CharacterItem> characterItemList) {
-        this.characterItemList = characterItemList;
+    public CharacterAdapter(List<CharacterModel> characterList) {
+        this.characterList = characterList;
     }
 
     // 새로운 데이터를 추가하는 메서드
-    public void addCharacterItem(CharacterItem newItem) {
-        characterItemList.add(newItem);
-        notifyItemInserted(characterItemList.size() - 1); // 새 아이템이 추가된 위치를 알려줍니다.
+    public void addCharacterItem(CharacterModel newItem) {
+        characterList.add(newItem);
+        notifyItemInserted(characterList.size() - 1); // 새 아이템이 추가된 위치를 알려줍니다.
     }
 
     // 특정 위치에 데이터를 추가하는 메서드
-    public void addCharacterItem(int position, CharacterItem newItem) {
-        characterItemList.add(position, newItem);
+    public void addCharacterItem(int position, CharacterModel newItem) {
+        characterList.add(position, newItem);
         notifyItemInserted(position); // 새 아이템이 추가된 위치를 알려줍니다.
     }
 
     // 특정 아이템을 제거하는 메서드
     public void removeCharacterItem(int position) {
-        if (position < characterItemList.size() && position >= 0) {
-            characterItemList.remove(position);
+        if (position < characterList.size() && position >= 0) {
+            characterList.remove(position);
             notifyItemRemoved(position); // 아이템이 제거된 위치를 알려줍니다.
         }
     }
@@ -55,20 +56,20 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     public void onBindViewHolder(
             @NonNull CharacterViewHolder holder, int position) {
 
-        CharacterItem characterItem = characterItemList.get(position);
+        CharacterModel characterItem = characterList.get(position);
 
-        Glide.with(holder.characterImageView.getContext())
-                .load(characterItem.getImageResId())  // 리소스 ID를 사용
-                .into(holder.characterImageView);
-
-        holder.characterDescriptionView.setText(characterItem.getCharacterDescription());
+//        Glide.with(holder.characterImageView.getContext())
+//                .load(characterItem.getImageResId())  // 리소스 ID를 사용
+//                .into(holder.characterImageView);
+        
+        holder.characterDescriptionView.setText(characterItem.getCharacterDetails());
         holder.characterNameView.setText(characterItem.getCharacterName());
 
     }
 
     @Override
     public int getItemCount() {
-        return characterItemList.size();
+        return characterList.size();
     }
 
     public class CharacterViewHolder extends RecyclerView.ViewHolder {

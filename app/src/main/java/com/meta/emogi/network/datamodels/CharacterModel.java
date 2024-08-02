@@ -26,6 +26,11 @@ public class CharacterModel {
 
     // Getters and Setters
 
+    public CharacterModel(String characterName, String characterDetails) {
+        this.characterName = characterName;
+        this.characterDetails = characterDetails;
+    }
+
     public static class CharacterRelationship {
         public Relationship getRelationship() {
             return relationship;
