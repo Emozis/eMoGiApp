@@ -4,29 +4,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMakeCharacterBinding;
-import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
-import com.meta.emogi.network.datamodels.CategoryItem;
+import com.meta.emogi.network.recyclerview.CategoryItem;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
-import com.meta.emogi.network.datamodels.ImageItem;
-import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.network.recyclerview.ImageItem;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;

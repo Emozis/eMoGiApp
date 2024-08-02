@@ -1,4 +1,4 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.network.recyclerview;
 public class ImageItem {
     private int imageResId;  // 리소스 ID를 사용하거나 URL을 사용할 수 있음
 

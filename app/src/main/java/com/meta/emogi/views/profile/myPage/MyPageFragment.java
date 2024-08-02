@@ -63,9 +63,9 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
-        
-        activity=(ProfileActivity) requireActivity();
-        
+
+        activity = (ProfileActivity) requireActivity();
+
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
     }
@@ -82,31 +82,30 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onResume() {
         super.onResume();
-        
-//        getUserData();
+
+        getUserData();
         Log.d(TAG, "onResume: ");
     }
-    
-    private void getUserData(){
-        String accessToken = "Bearer "+activity.getAccessToken();
+
+    private void getUserData() {
+        String accessToken = "Bearer " + activity.getAccessToken();
         Call<UserData> call = apiService.getUserData(accessToken);
 
         call.enqueue(new Callback<UserData>() {
             @Override
-            public void onResponse(@NonNull Call<UserData> call, @NonNull
-            Response<UserData> response) {
+            public void onResponse(
+                    @NonNull Call<UserData> call, @NonNull Response<UserData> response) {
                 if (response.isSuccessful()) {
                     UserData createdCharacter = response.body();
                     if (createdCharacter != null) {
                         // 성공적으로 생성된 캐릭터 처리
 
-                        Log.d(TAG, createdCharacter.getUserEmail());
-                        Log.d(TAG, createdCharacter.getUserName());
+                        viewModel.setUserData(createdCharacter.getUserEmail(), createdCharacter.getUserName());
 
                     }
                 } else {
                     // 요청 실패 처리
-                    Log.e("Character", "캐릭터 생성 실패: " + response.message());
+                    Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
                 }
             }
 
@@ -116,7 +115,6 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
                 Log.e("Character", "API 호출 실패: " + t.getMessage());
             }
         });
-        
-        
+
     }
 }

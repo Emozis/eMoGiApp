@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.CategoryItem;
+import com.meta.emogi.network.recyclerview.CategoryItem;
 
 import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {

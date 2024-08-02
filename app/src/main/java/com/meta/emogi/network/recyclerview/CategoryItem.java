@@ -1,4 +1,4 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.network.recyclerview;
 
 public class CategoryItem {
     private String categoryName;

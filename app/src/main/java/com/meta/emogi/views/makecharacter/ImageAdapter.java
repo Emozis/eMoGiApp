@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.ImageItem;
+import com.meta.emogi.network.recyclerview.ImageItem;
 
 import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {

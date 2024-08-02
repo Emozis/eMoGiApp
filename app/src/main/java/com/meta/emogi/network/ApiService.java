@@ -29,7 +29,7 @@ public interface ApiService {
     Call<MakeCharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body
     MakeCharacterModel characterRequest);
 
-    @POST("api/v1/user/me")
+    @GET("api/v1/user/me")
     Call<UserData> getUserData(@Header("Authorization") String accessToken);
 }
 
