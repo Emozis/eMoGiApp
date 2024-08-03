@@ -33,7 +33,7 @@ public class MakeCharacterModel {
 
     @SerializedName("relationships")
     @Expose
-    private List<String> relationships;
+    private List<Integer> relationships;
 
     // 응답에서 받는 필드
     @SerializedName("characterId")
@@ -51,7 +51,7 @@ public class MakeCharacterModel {
     // 요청에 사용하는 생성자
     public MakeCharacterModel(String characterName, String characterProfile, String characterGender,
                           String characterPersonality, String characterDetails,
-                          boolean characterIsPublic, List<String> relationships) {
+                          boolean characterIsPublic, List<Integer> relationships) {
         this.characterName = characterName;
         this.characterProfile = characterProfile;
         this.characterGender = characterGender;
@@ -110,11 +110,11 @@ public class MakeCharacterModel {
         this.characterIsPublic = characterIsPublic;
     }
 
-    public List<String> getRelationships() {
+    public List<Integer> getRelationships() {
         return relationships;
     }
 
-    public void setRelationships(List<String> relationships) {
+    public void setRelationships(List<Integer> relationships) {
         this.relationships = relationships;
     }
 

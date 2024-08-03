@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.CharacterModel;
 
@@ -33,6 +34,12 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         holder.characterName.setText(character.getCharacterName());
         holder.characterDescription.setText(character.getCharacterDetails());
         // ImageView에 이미지를 로드하는 코드를 추가
+
+        Glide.with(holder.itemView.getContext())
+                .load(character.getCharacterProfile()) // characterProfile은 이미지 URL
+                .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
+                .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
+                .into(holder.characterImage); // ImageView에 로드
     }
 
     @Override

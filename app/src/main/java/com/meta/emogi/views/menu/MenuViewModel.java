@@ -13,9 +13,13 @@ import com.meta.emogi.base.BaseViewModel;
 public class MenuViewModel extends BaseViewModel {
     public MenuViewModel(Application application) {super(application);}
     private final MutableLiveData<MoveType> _type = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
 
     LiveData<MoveType> type(){
         return _type;
+    }
+    LiveData<Boolean> isLoading(){
+        return _isLoading;
     }
 
     @Override
@@ -32,5 +36,7 @@ public class MenuViewModel extends BaseViewModel {
         CHAT_LIST,
         MAKE_CHARACTER
     }
+
+
 
 }

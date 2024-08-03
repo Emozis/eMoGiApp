@@ -11,10 +11,12 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:background="@drawable/drawable_background_character_iamge"
             android:layout_margin="4dp"
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:padding="8dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"

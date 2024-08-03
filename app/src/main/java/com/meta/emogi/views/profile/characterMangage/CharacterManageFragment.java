@@ -1,20 +1,14 @@
 package com.meta.emogi.views.profile.characterMangage;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
@@ -22,14 +16,9 @@ import com.meta.emogi.databinding.FragmentCharacterManageBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.recyclerview.CharacterItem;
-import com.meta.emogi.network.recyclerview.ImageItem;
-import com.meta.emogi.views.menu.MenuActivity;
-import com.meta.emogi.views.menu.MenuListAdapter;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

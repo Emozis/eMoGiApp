@@ -14,9 +14,10 @@ import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMakeCharacterBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
+import com.meta.emogi.network.datamodels.ImageModel;
 import com.meta.emogi.network.recyclerview.CategoryItem;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
-import com.meta.emogi.network.recyclerview.ImageItem;
+import com.meta.emogi.network.datamodels.ImageModel;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;
@@ -71,14 +72,14 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     public void onResume() {
         super.onResume();
 
-        List<ImageItem> imageItems = new ArrayList<>();
-        imageItems.add(new ImageItem(R.drawable.ic_launcher_background));
-        imageItems.add(new ImageItem(R.drawable.ic_launcher_background));
-        imageItems.add(new ImageItem(R.drawable.ic_launcher_background));
+//        List<ImageModel> imageModels = new ArrayList<>();
+//        imageModels.add(new ImageModel(R.drawable.ic_launcher_background));
+//        imageModels.add(new ImageModel(R.drawable.ic_launcher_background));
+//        imageModels.add(new ImageModel(R.drawable.ic_launcher_background));
 
-        imageAdapter= new ImageAdapter(imageItems);
-        binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.characterImage.setAdapter(imageAdapter);
+//        imageAdapter= new ImageAdapter(imageModels);
+//        binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        binding.characterImage.setAdapter(imageAdapter);
 
 
         List<CategoryItem> categoryItemList = new ArrayList<>();
@@ -97,14 +98,46 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
 
         String selectedCategory = categoryAdapter.getSelectedCategoryText();
 
-
+        getDefaultImages();
     }
+
+
+    private void getDefaultImages(){
+        Call<List<ImageModel>> call = apiService.getDefaultImage();
+
+        call.enqueue(new Callback<List<ImageModel>>() {
+            @Override
+            public void onResponse(
+                    @NonNull Call<List<ImageModel>> call, @NonNull Response<List<ImageModel>> response) {
+                if (response.isSuccessful()) {
+                    List<ImageModel> createdCharacter = response.body();
+                    if (createdCharacter != null) {
+                        // 성공적으로 생성된 캐릭터 처리
+                        imageAdapter= new ImageAdapter(createdCharacter);
+                        binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                        binding.characterImage.setAdapter(imageAdapter);
+
+                    }
+                } else {
+                    // 요청 실패 처리
+                    Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ImageModel>> call, @NonNull Throwable t) {
+                // 네트워크 오류 처리
+                Log.e("Character", "API 호출 실패: " + t.getMessage());
+            }
+        });
+    }
+
 
     private void createCharacter(String selectedCategory) {
         // 예제 데이터 생성 (실제 데이터로 대체 필요)
-        List<String> relationships = new ArrayList<>();
+        List<Integer> relationships = new ArrayList<>();
 //        relationships.add(selectedCategory); // 선택된 카테고리를 관계로 추가
-        relationships.add("ㅇㅈ"); // 선택된 카테고리를 관계로 추가
+        relationships.add(1); // 선택된 카테고리를 관계로 추가
 
         MakeCharacterModel makeCharacterModel = new MakeCharacterModel(
                 "name",

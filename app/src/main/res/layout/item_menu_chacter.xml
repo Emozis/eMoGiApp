@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="character"
             type="com.meta.emogi.network.datamodels.CharacterModel" />
@@ -19,6 +20,7 @@
             android:id="@+id/character_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:background="@drawable/drawable_background_character_iamge"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,26 +29,22 @@
             android:id="@+id/character_name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@color/black"
             android:gravity="left"
-            android:textSize="12sp"
             android:text="hihi"
             android:textColor="@color/white"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/character_image" />
 
         <TextView
             android:id="@+id/character_description"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:background="@color/gray"
-            android:gravity="center"
             android:text="설명설명"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/character_name" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

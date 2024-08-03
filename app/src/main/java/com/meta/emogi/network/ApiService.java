@@ -4,6 +4,7 @@ import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
+import com.meta.emogi.network.datamodels.ImageModel;
 
 import java.util.List;
 
@@ -31,6 +32,9 @@ public interface ApiService {
 
     @GET("api/v1/user/me")
     Call<UserData> getUserData(@Header("Authorization") String accessToken);
+
+    @GET("api/v1/default-images/")
+    Call<List<ImageModel>> getDefaultImage();
 }
 
 
