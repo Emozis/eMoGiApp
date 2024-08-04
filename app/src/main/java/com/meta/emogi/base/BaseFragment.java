@@ -1,4 +1,5 @@
 package com.meta.emogi.base;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.meta.emogi.BR;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends Fragment {
@@ -51,6 +54,16 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         ToolbarView.ToolbarRequest request = toolbarCallback();
         if (request != null)
             ((BaseActivity<?>) requireActivity()).setToolbar(toolbarCallback());
+//
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+//            public void handleOnBackPressed() {
+//                // 홈 액티비티로 이동
+//                Intent intent = new Intent(getActivity(), MenuActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//                requireActivity().finish(); // 현재 Activity 종료
+//            }
+//        });
 
         return binding.getRoot();
     }

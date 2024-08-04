@@ -6,9 +6,12 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
@@ -59,16 +62,18 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                requireActivity().finish();  // 현재 액티비티 종료
-            }
-        });
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                requireActivity().finish();  // 현재 액티비티 종료
+//            }
+//        });
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
     }
+
+
 
     @Override
     public void onResume() {
@@ -85,8 +90,13 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
                 if (response.isSuccessful()) {
                     List<CharacterModel> characterList = response.body();
+                    for(CharacterModel c :characterList){
+                        Log.d(TAG, c.getCharacterName());
+                    }
+
                     if (characterList != null) {
                         characterAdapter = new CharacterAdapter(characterList);
+                        binding.rvCharacterList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                         binding.rvCharacterList.setAdapter(characterAdapter);
                     }
                 } else {

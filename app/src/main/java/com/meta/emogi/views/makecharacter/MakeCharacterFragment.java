@@ -54,8 +54,17 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     }
     @Override
     protected void registerObservers() {
-        viewModel.generate().observe(this,unused -> {
-            createCharacter("친구");
+        viewModel.generate().observe(this, unused -> {
+//            String selectedImageUrl = imageAdapter.getSelectedImageUrl();
+//            if (selectedImageUrl != null) {
+//                Log.d("MakeCharacterFragment", "Selected Image URL: " + selectedImageUrl);
+//                createCharacter(selectedImageUrl, "친구");
+//            } else {
+//                Log.d("MakeCharacterFragment", "No Image Selected");
+//            }
+            activity.moveToMyProfile();
+
+
         });
     }
 
@@ -71,16 +80,6 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     @Override
     public void onResume() {
         super.onResume();
-
-//        List<ImageModel> imageModels = new ArrayList<>();
-//        imageModels.add(new ImageModel(R.drawable.ic_launcher_background));
-//        imageModels.add(new ImageModel(R.drawable.ic_launcher_background));
-//        imageModels.add(new ImageModel(R.drawable.ic_launcher_background));
-
-//        imageAdapter= new ImageAdapter(imageModels);
-//        binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        binding.characterImage.setAdapter(imageAdapter);
-
 
         List<CategoryItem> categoryItemList = new ArrayList<>();
         categoryItemList.add(new CategoryItem("친구"));
@@ -112,11 +111,9 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                 if (response.isSuccessful()) {
                     List<ImageModel> createdCharacter = response.body();
                     if (createdCharacter != null) {
-                        // 성공적으로 생성된 캐릭터 처리
                         imageAdapter= new ImageAdapter(createdCharacter);
                         binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                         binding.characterImage.setAdapter(imageAdapter);
-
                     }
                 } else {
                     // 요청 실패 처리
@@ -133,21 +130,21 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     }
 
 
-    private void createCharacter(String selectedCategory) {
+    private void createCharacter(String selectedImgUrl, String selectedCategory) {
         // 예제 데이터 생성 (실제 데이터로 대체 필요)
         List<Integer> relationships = new ArrayList<>();
-//        relationships.add(selectedCategory); // 선택된 카테고리를 관계로 추가
         relationships.add(1); // 선택된 카테고리를 관계로 추가
 
         MakeCharacterModel makeCharacterModel = new MakeCharacterModel(
-                "name",
-                "profile",
+                viewModel.name.getValue(),
+                selectedImgUrl,
                 "male",
-                "Personality",
-                "detailZ",
+                viewModel.personality.getValue(),
+                viewModel.detail.getValue(),
                 true,
                 relationships
         );
+        Log.d(TAG, selectedImgUrl);
 
         // 예시용 JWT 토큰 (실제 앱에서는 사용자 인증 후 받은 토큰 사용)
         String accessToken = "Bearer "+activity.getAccessToken();

@@ -11,6 +11,10 @@ import androidx.core.view.WindowInsetsCompat;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityMakeCharacterBinding;
+import com.meta.emogi.views.chatlist.ChatListActivity;
+import com.meta.emogi.views.chatroom.ChatRoomActivity;
+import com.meta.emogi.views.menu.MenuActivity;
+import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBinding> {
@@ -39,5 +43,18 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     }
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+
+    public void moveToMyProfile(){
+//        Intent intent = new Intent(MakeCharacterActivity.this, ProfileActivity.class);
+//        intent.putExtra("ACCESS_TOKEN", accessToken);
+//        intent.putExtra("INIT_FRAGMENT", "Character");
+//        startActivity(intent);
+
+        Intent intent = new Intent(MakeCharacterActivity.this, ChatRoomActivity.class);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("INIT_FRAGMENT", "Character");
+        startActivity(intent);
     }
 }

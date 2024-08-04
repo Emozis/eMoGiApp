@@ -27,13 +27,16 @@ public class ChatRoomViewModel extends BaseViewModel {
         return _receivedText;
     }
 
-    public void init() {
-        connectNetwork();
+    public void init(String key) {
+        connectNetwork(key);
     }
 
-    private void connectNetwork() {
+    private void connectNetwork(String key) {
         chatWebSocket = new ChatWebSocket(_receivedText);
         chatWebSocket.start();
+
+        Log.d(TAG, "a "+key);
+        chatWebSocket.sendMessage("a " +key);
     }
 
     public void chatMessage(){

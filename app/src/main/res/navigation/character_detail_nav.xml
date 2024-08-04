@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/character_detail_nav.xml"
+    app:startDestination="@id/characterDetailFragment">
+
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.meta.emogi.views.characterdetail.CharacterDetailFragment"
+        android:label="CharacterDetailFragment" />
+</navigation>

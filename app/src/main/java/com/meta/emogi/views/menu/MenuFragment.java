@@ -130,11 +130,6 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                 if (response.isSuccessful()) {
                     List<CharacterModel> characterList = response.body();
 
-                    for(CharacterModel c : characterList){
-                        Log.d(TAG, c.getCharacterProfile());
-                    }
-
-
                     if (characterList != null) {
                         menuListAdapter = new MenuListAdapter(characterList);
                         binding.listMyCharacter.setAdapter(menuListAdapter);

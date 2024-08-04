@@ -13,7 +13,7 @@ public class ChatWebSocket extends WebSocketListener {
     private WebSocket webSocket;
     private OkHttpClient client;
     private MutableLiveData<String> liveData;
-    private static final String serverUrl ="ws://122.128.54.136:7070/api/chatting/ws";
+    private static final String serverUrl ="ws://122.128.54.136:7070/api/chatting/ws/1";
 
     public ChatWebSocket(MutableLiveData<String> liveData) {
         this.liveData = liveData;

@@ -23,6 +23,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         this.imageModelList = imageModelList;
     }
 
+    public String getSelectedImageUrl() {
+        if (selectedPosition != RecyclerView.NO_POSITION) {
+            return imageModelList.get(selectedPosition).getImageUrl();
+        }
+        return null;
+    }
 
     @NonNull
     @Override
@@ -35,11 +41,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         ImageModel imageModel = imageModelList.get(position);
         holder.imageView.setSelected(position == selectedPosition);
-
-//        // Glide를 사용하여 이미지를 로드합니다.
-//        Glide.with(holder.imageView.getContext())
-//                .load(imageModel.getImageResId())  // 리소스 ID를 사용
-//                .into(holder.imageView);
 
         RequestOptions requestOptions = new RequestOptions()
                 .transform(new RoundedCorners(20)); // 반지름 설정

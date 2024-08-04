@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import com.meta.emogi.MyApplication;
+import com.meta.emogi.views.characterdetail.CharacterDetailViewModel;
 import com.meta.emogi.views.chatlist.ChatListViewModel;
 import com.meta.emogi.views.chatroom.ChatRoomViewModel;
 import com.meta.emogi.views.login.LoginViewModel;
@@ -47,6 +48,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new CharacterManageViewModel(application);
         }else if (modelClass.isAssignableFrom(MyPageViewModel.class)) {
             return (T) new MyPageViewModel(application);
+        }else if (modelClass.isAssignableFrom(CharacterDetailViewModel.class)) {
+            return (T) new CharacterDetailViewModel(application);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class");

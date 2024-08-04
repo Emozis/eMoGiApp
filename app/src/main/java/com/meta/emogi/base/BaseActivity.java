@@ -10,8 +10,15 @@ import androidx.databinding.ViewDataBinding;
 
 import com.meta.emogi.views.toolbar.ToolbarView;
 public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
-    protected V binding;
 
+    protected V binding;
+    private String accessToken;
+    public String getAccessToken() {
+        return accessToken;
+    }
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
     protected abstract @LayoutRes int layoutId();
 
     protected abstract void setToolbar(ToolbarView.ToolbarRequest toolbarRequest);
@@ -19,6 +26,8 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         binding = DataBindingUtil.setContentView(this, layoutId());
         binding.setLifecycleOwner(this);
     }

@@ -35,6 +35,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     private ChatListAdapter adapter;
     private List<ChatMessage> data;
     private RecyclerView recyclerView;
+    private ChatRoomActivity activity;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -96,6 +97,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        activity=(ChatRoomActivity) requireActivity();
+
         setKeyboard();
 
         // RecyclerView 설정
@@ -119,6 +122,9 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.init();
+
+        String key = activity.getAccessToken();
+
+        viewModel.init(key);
     }
 }

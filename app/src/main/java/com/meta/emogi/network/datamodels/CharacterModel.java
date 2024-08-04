@@ -23,12 +23,14 @@ public class CharacterModel {
     private String characterCreatedAt;
     @SerializedName("user")
     private User user;
+    private boolean isSelected; // 선택 상태를 저장하는 필드 추가
 
     // Getters and Setters
 
     public CharacterModel(String characterName, String characterDetails) {
         this.characterName = characterName;
         this.characterDetails = characterDetails;
+        this.isSelected = false;
     }
 
     public static class CharacterRelationship {
@@ -138,5 +140,10 @@ public class CharacterModel {
     public void setUser(User user) {
         this.user = user;
     }
-
+    public boolean isSelected() {
+        return isSelected;
+    }
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }

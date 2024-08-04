@@ -58,12 +58,15 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
         CharacterModel characterItem = characterList.get(position);
 
-//        Glide.with(holder.characterImageView.getContext())
-//                .load(characterItem.getImageResId())  // 리소스 ID를 사용
-//                .into(holder.characterImageView);
-        
         holder.characterDescriptionView.setText(characterItem.getCharacterDetails());
         holder.characterNameView.setText(characterItem.getCharacterName());
+
+
+        Glide.with(holder.itemView.getContext())
+                .load(characterItem.getCharacterProfile()) // characterProfile은 이미지 URL
+                .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
+                .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
+                .into(holder.characterImageView); // ImageView에 로드
 
     }
 
