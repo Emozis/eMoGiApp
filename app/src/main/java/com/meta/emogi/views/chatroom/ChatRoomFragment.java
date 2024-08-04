@@ -1,30 +1,25 @@
 package com.meta.emogi.views.chatroom;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
-import com.meta.emogi.data.ChatMessage;
+import com.meta.emogi.data.ChatContent;
 import com.meta.emogi.databinding.FragmentChatRoomBinding;
-import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;
@@ -33,7 +28,7 @@ import java.util.List;
 public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel> {
 
     private ChatListAdapter adapter;
-    private List<ChatMessage> data;
+    private List<ChatContent> data;
     private RecyclerView recyclerView;
     private ChatRoomActivity activity;
 
@@ -61,7 +56,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         viewModel.sendText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String sendText) {
-                data.add(new ChatMessage(sendText, ChatMessage.TYPE_USER));
+                data.add(new ChatContent(ChatContent.TYPE_USER,sendText));
                 adapter.notifyItemInserted(data.size() - 1);
                 recyclerView.scrollToPosition(data.size() - 1);
             }
@@ -69,7 +64,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         viewModel.receivedText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String receivedText) {
-                data.add(new ChatMessage(receivedText, ChatMessage.TYPE_OTHER));
+                data.add(new ChatContent(ChatContent.TYPE_CHARACTER,receivedText));
                 adapter.notifyItemInserted(data.size() - 1);
                 recyclerView.scrollToPosition(data.size() - 1);
             }
@@ -108,8 +103,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         // 예제 데이터
         data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            data.add(new ChatMessage("User message " + i, ChatMessage.TYPE_USER));
-            data.add(new ChatMessage("Other message " + i, ChatMessage.TYPE_OTHER));
+            data.add(new ChatContent("User message " + i, ChatContent.TYPE_USER));
+            data.add(new ChatContent("Other message " + i, ChatContent.TYPE_CHARACTER));
         }
 
         recyclerView.scrollToPosition(data.size() - 1);
@@ -124,7 +119,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         super.onResume();
 
         String key = activity.getAccessToken();
-
-        viewModel.init(key);
+        int chatId = activity.getChatId();
+        viewModel.init(key,chatId);
     }
 }

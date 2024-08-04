@@ -2,6 +2,7 @@ package com.meta.emogi.views.chatroom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -16,10 +17,12 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
 
     private String accessToken;
+    private int chatId;
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
     }
+
     @Override
     protected int layoutId() {
         return R.layout.activity_chat_room;
@@ -31,13 +34,20 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
-
+    public int getChatId() {
+        return chatId;
+    }
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
+    }
     @Override
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        String data = intent.getStringExtra("ACCESS_TOKEN");
-        setAccessToken(data);
+        accessToken = intent.getStringExtra("ACCESS_TOKEN");
+        chatId = intent.getIntExtra("CHAT_ID",0);
+        setAccessToken(accessToken);
+        setChatId(chatId);
     }
 
 }

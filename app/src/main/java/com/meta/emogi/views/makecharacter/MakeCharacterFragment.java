@@ -55,13 +55,13 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     @Override
     protected void registerObservers() {
         viewModel.generate().observe(this, unused -> {
-//            String selectedImageUrl = imageAdapter.getSelectedImageUrl();
-//            if (selectedImageUrl != null) {
-//                Log.d("MakeCharacterFragment", "Selected Image URL: " + selectedImageUrl);
-//                createCharacter(selectedImageUrl, "친구");
-//            } else {
-//                Log.d("MakeCharacterFragment", "No Image Selected");
-//            }
+            String selectedImageUrl = imageAdapter.getSelectedImageUrl();
+            if (selectedImageUrl != null) {
+                Log.d("MakeCharacterFragment", "Selected Image URL: " + selectedImageUrl);
+                createCharacter(selectedImageUrl, "친구");
+            } else {
+                Log.d("MakeCharacterFragment", "No Image Selected");
+            }
             activity.moveToMyProfile();
 
 

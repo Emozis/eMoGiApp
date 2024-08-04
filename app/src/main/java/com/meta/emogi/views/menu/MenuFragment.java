@@ -70,24 +70,38 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         super.onViewCreated(view, savedInstanceState);
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         String key = activity.getAccessToken();
-        setupRecyclerView();
         getCharactersMe("Bearer " + key);
         getCharactersRank();
 
     }
 
-    private void setupRecyclerView() {
-        menuListAdapter = new MenuListAdapter(new ArrayList<>());
-        binding.listRankCharacter.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.listRankCharacter.setAdapter(menuListAdapter);
+//    private void setupRecyclerView() {
+//        menuListAdapter = new MenuListAdapter(new ArrayList<>());
+////        binding.listRankCharacter.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        binding.listRankCharacter.setAdapter(menuListAdapter);
+//
+//        menuListAdapter.setOnItemClickListener(characterId -> {
+//            // 클릭된 아이템의 CharacterId를 가져와서 처리
+//            if (characterId != -1) {
+//                Log.d(TAG, "Selected CharacterId: " + characterId);
+//            }
+//        });
+//    }
+
+    private void setClickListenerRecyclerView(MenuListAdapter menuListAdapter) {
+        menuListAdapter.setOnItemClickListener(characterId -> {
+            // 클릭된 아이템의 CharacterId를 가져와서 처리
+            if (characterId != -1) {
+                Log.d(TAG, "Selected CharacterId: " + characterId);
+                activity.moveToCharacterDetail(characterId);
+            }
+        });
     }
 
     public void getCharactersMe(String authToken) {
@@ -101,6 +115,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                     if (characterList != null) {
                         menuListAdapter = new MenuListAdapter(characterList);
                         binding.listRankCharacter.setAdapter(menuListAdapter);
+                        setClickListenerRecyclerView(menuListAdapter);
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());

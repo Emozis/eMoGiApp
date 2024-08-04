@@ -15,6 +15,8 @@ import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityMenuBinding;
 import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
+import com.meta.emogi.views.characterdetail.CharacterDetailViewModel;
 import com.meta.emogi.views.chatlist.ChatListActivity;
 import com.meta.emogi.views.chatroom.ChatRoomActivity;
 import com.meta.emogi.views.login.LoginActivity;
@@ -80,6 +82,15 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         intent.putExtra("ACCESS_TOKEN", accessToken);
         startActivity(intent);
     }
+
+    public void moveToCharacterDetail(int characterId){
+        Intent intent = new Intent(MenuActivity.this, CharacterDetailActivity.class);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("CHARACTER_ID", characterId);
+        startActivity(intent);
+    }
+
+
 
 
 

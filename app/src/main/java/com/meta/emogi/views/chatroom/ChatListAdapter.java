@@ -9,12 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.R;
-import com.meta.emogi.data.ChatMessage;
+import com.meta.emogi.data.ChatContent;
 
 import java.util.List;
+import java.util.Objects;
 public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ChatMessage> mData;
+    private List<ChatContent> mData;
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView chatText;
@@ -38,40 +39,45 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public ChatListAdapter(List<ChatMessage> data) {
+    public ChatListAdapter(List<ChatContent> data) {
         mData = data;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mData.get(position).getType();
+        String type = mData.get(position).getType();
+        if (Objects.equals(type, ChatContent.TYPE_USER)) {
+            return 0; // Return a unique integer for user type
+        } else {
+            return 1; // Return a different integer for other type
+        }
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == ChatMessage.TYPE_USER) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_user_chat, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == 0) { // User message type
+            View view = inflater.inflate(R.layout.item_user_chat, parent, false);
             return new UserViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_ai_chat, parent, false);
+        } else { // Other message type
+            View view = inflater.inflate(R.layout.item_ai_chat, parent, false);
             return new OtherViewHolder(view);
         }
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ChatMessage message = mData.get(position);
-        if (holder.getItemViewType() == ChatMessage.TYPE_USER) {
+        ChatContent message = mData.get(position);
+        if (holder.getItemViewType() == 0) {
             UserViewHolder userHolder = (UserViewHolder) holder;
-            userHolder.chatText.setText(message.getMessage());
-            // 이미지 설정이 필요하면 여기에 추가
+            userHolder.chatText.setText(message.getContent());
+            // Set image if necessary
         } else {
             OtherViewHolder otherHolder = (OtherViewHolder) holder;
-            otherHolder.chatText.setText(message.getMessage());
-            // 이미지 설정이 필요하면 여기에 추가
+            otherHolder.chatText.setText(message.getContent());
+            // Set image if necessary
         }
     }
 

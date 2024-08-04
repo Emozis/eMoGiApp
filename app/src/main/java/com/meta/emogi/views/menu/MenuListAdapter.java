@@ -1,7 +1,9 @@
 package com.meta.emogi.views.menu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,9 +19,27 @@ import java.util.List;
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.CharacterViewHolder> {
     private List<CharacterModel> characterList;
     private int selectedPosition = RecyclerView.NO_POSITION;
+    private OnItemClickListener onItemClickListener;
+
+    private static final String TAG = "MenuListAdapter";
 
     public MenuListAdapter(List<CharacterModel> characterList) {
         this.characterList = characterList;
+    }
+
+    // 데이터 설정 메서드 추가
+    public void setCharacterList(List<CharacterModel> newCharacterList) {
+        this.characterList = newCharacterList;
+        selectedPosition = RecyclerView.NO_POSITION; // 선택 초기화
+        notifyDataSetChanged();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int characterId);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @NonNull
@@ -39,13 +59,10 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         holder.characterDescription.setText(character.getCharacterDetails());
         // ImageView에 이미지를 로드하는 코드를 추가
 
-        Glide.with(holder.itemView.getContext())
-                .load(character.getCharacterProfile()) // characterProfile은 이미지 URL
+        Glide.with(holder.itemView.getContext()).load(character.getCharacterProfile()) // characterProfile은 이미지 URL
                 .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
                 .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
                 .into(holder.characterImage); // ImageView에 로드
-
-
 
         holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +75,15 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
                 // 새로운 아이템을 선택하고 상태 업데이트
                 selectedPosition = holder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
+
+                if (onItemClickListener != null) {
+                    int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();
+                    onItemClickListener.onItemClick(clickedCharacterId);
+                }
             }
         });
-
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -77,7 +98,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
 
         CharacterViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemMenuCharacter=itemView.findViewById(R.id.item_menu_character);
+            itemMenuCharacter = itemView.findViewById(R.id.item_menu_character);
             characterImage = itemView.findViewById(R.id.character_image);
             characterName = itemView.findViewById(R.id.character_name);
             characterDescription = itemView.findViewById(R.id.character_description);

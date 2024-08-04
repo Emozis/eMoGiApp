@@ -52,7 +52,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
 //        intent.putExtra("INIT_FRAGMENT", "Character");
 //        startActivity(intent);
 
-        Intent intent = new Intent(MakeCharacterActivity.this, ChatRoomActivity.class);
+        Intent intent = new Intent(MakeCharacterActivity.this, ProfileActivity.class);
         intent.putExtra("ACCESS_TOKEN", accessToken);
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
