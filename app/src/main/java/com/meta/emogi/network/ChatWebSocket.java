@@ -53,7 +53,6 @@ public class ChatWebSocket extends WebSocketListener {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        Log.d(TAG, "Received message: " + text);
 
         try {
             // JSON 파싱
@@ -62,7 +61,9 @@ public class ChatWebSocket extends WebSocketListener {
             // "character" 타입의 메시지 처리
             if ("character".equals(chatResponse.getType())) {  // 상수를 왼쪽에 두어 null 체크
                 int responseId = chatResponse.getResponseId();
-                String characterFragment = chatResponse.getCharacter();
+                String characterFragment = chatResponse.getContent();
+
+                Log.d("소켓에서 받는데이터", "onMessage: "+characterFragment);
 
                 // 기존에 수집 중인 메시지가 있는지 확인
                 messageBufferMap.computeIfAbsent(responseId, k -> new StringBuilder());
@@ -70,18 +71,8 @@ public class ChatWebSocket extends WebSocketListener {
                 // 메시지 추가
                 messageBufferMap.get(responseId).append(characterFragment);
 
-                // 완전한 메시지인지 확인
-                if (".".equals(characterFragment)) { // 종료 조건이 "."인 경우
-                    // 메시지 완성
-                    String completeMessage = messageBufferMap.get(responseId).toString();
 
-                    // 데이터 업데이트
-                    _liveData.postValue("Character: " + chatResponse.getCharacterName() +
-                            ", ID: " + responseId + ", Message: " + completeMessage);
-
-                    // 메시지 버퍼 초기화
-                    messageBufferMap.remove(responseId);
-                }
+                _liveData.postValue(characterFragment);
             } else {
                 Log.e(TAG, "Unexpected message type or null chatResponse");
             }

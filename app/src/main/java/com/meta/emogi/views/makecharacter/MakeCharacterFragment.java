@@ -92,7 +92,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         categoryItemList.add(new CategoryItem("가족"));
 
         categoryAdapter= new CategoryAdapter(categoryItemList);
-        binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.HORIZONTAL, false));
+        binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
         binding.characterCategory.setAdapter(categoryAdapter);
 
         String selectedCategory = categoryAdapter.getSelectedCategoryText();

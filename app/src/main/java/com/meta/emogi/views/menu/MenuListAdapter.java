@@ -27,13 +27,6 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         this.characterList = characterList;
     }
 
-    // 데이터 설정 메서드 추가
-    public void setCharacterList(List<CharacterModel> newCharacterList) {
-        this.characterList = newCharacterList;
-        selectedPosition = RecyclerView.NO_POSITION; // 선택 초기화
-        notifyDataSetChanged();
-    }
-
     public interface OnItemClickListener {
         void onItemClick(int characterId);
     }

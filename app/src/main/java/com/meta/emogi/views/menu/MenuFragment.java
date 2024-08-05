@@ -114,7 +114,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                     List<CharacterModel> characterList = response.body();
                     if (characterList != null) {
                         menuListAdapter = new MenuListAdapter(characterList);
-                        binding.listRankCharacter.setAdapter(menuListAdapter);
+                        binding.listMyCharacter.setAdapter(menuListAdapter);
                         setClickListenerRecyclerView(menuListAdapter);
                     }
                 } else {
@@ -147,7 +147,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
                     if (characterList != null) {
                         menuListAdapter = new MenuListAdapter(characterList);
-                        binding.listMyCharacter.setAdapter(menuListAdapter);
+                        binding.listRankCharacter.setAdapter(menuListAdapter);
+                        setClickListenerRecyclerView(menuListAdapter);
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());

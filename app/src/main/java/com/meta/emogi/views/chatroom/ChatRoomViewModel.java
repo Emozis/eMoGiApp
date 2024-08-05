@@ -5,11 +5,13 @@ import static com.meta.emogi.data.ChatContent.TYPE_USER;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
+import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.data.ChatContent;
 import com.meta.emogi.network.ChatWebSocket;
@@ -25,6 +27,7 @@ public class ChatRoomViewModel extends BaseViewModel {
     private MutableLiveData<String> _sendText = new MutableLiveData<>();
     private MutableLiveData<String> _receivedText = new MutableLiveData<>();
     private Map<Integer, ChatContent> messageMap = new HashMap<>();
+    private MutableLiveData<String> _characterContent = new MutableLiveData<>();
 
     public ChatRoomViewModel(Application application) {super(application);}
 
@@ -34,6 +37,13 @@ public class ChatRoomViewModel extends BaseViewModel {
 
     public LiveData<String> receivedText() {
         return _receivedText;
+    }
+    public LiveData<String> characterContent() {
+        return _characterContent;
+    }
+
+    public void setCharacterContent(String s){
+        _characterContent.setValue(s);
     }
 
     public void init(String key,int chatId) {
@@ -54,9 +64,16 @@ public class ChatRoomViewModel extends BaseViewModel {
         chatWebSocket.sendMessage(jsonMessage);
     }
 
-    public void chatMessage() {
-        _sendText.setValue(inputText.getValue());
-        sendMessageToServer();
+    @Override
+    public void onButtonClicked(View v) {
+        Log.d(TAG, "onButtonClicked: ");
+        int btnResId = v.getId();
+        if (btnResId == R.id.transmit) {
+            Log.d(TAG, "몇번되는지 테스트");
+            _sendText.setValue(inputText.getValue());
+            sendMessageToServer();
+        }
+
     }
 
     public void sendMessageToServer() {

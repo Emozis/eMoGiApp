@@ -3,7 +3,7 @@ public class ChatResponse {
     private String type;
     private String character_name;
     private int response_id;
-    private String character; // 'character' 필드를 문자열로 가정
+    private String content; // 'character' 필드를 문자열로 가정
 
     // Getters and Setters
     public String getType() {
@@ -30,11 +30,11 @@ public class ChatResponse {
         this.response_id = response_id;
     }
 
-    public String getCharacter() {
-        return character;
+    public String getContent() {
+        return content;
     }
 
-    public void setCharacter(String character) {
-        this.character = character;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -40,14 +41,16 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
     public void setChatId(int chatId) {
         this.chatId = chatId;
     }
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         accessToken = intent.getStringExtra("ACCESS_TOKEN");
         chatId = intent.getIntExtra("CHAT_ID",0);
         setAccessToken(accessToken);
         setChatId(chatId);
     }
+
 
 }

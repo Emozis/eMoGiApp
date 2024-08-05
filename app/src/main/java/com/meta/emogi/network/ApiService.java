@@ -1,6 +1,7 @@
 package com.meta.emogi.network;
 import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.datamodels.ChatListModel;
+import com.meta.emogi.network.datamodels.ChatLogModel;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
 import com.meta.emogi.network.datamodels.TokenModel;
@@ -47,6 +48,10 @@ public interface ApiService {
             @Header("Authorization") String accessToken,
             @Query("character_id") int characterId
     );
+
+    @GET("api/v1/chat-log/me/{chat_id}")
+    Call<List<ChatLogModel>> getChatLog(@Header("Authorization") String accessToken, @Path("chat_id") int chatId);
+
 
 }
 

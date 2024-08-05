@@ -19,6 +19,7 @@ import com.meta.emogi.databinding.FragmentCharacterManageBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.views.chatlist.ChatListAdapter;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
@@ -82,6 +83,16 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
         getCharactersMe("Bearer " + key);
     }
 
+
+    private void setClickListenerRecyclerView(CharacterAdapter chatListAdapter) {
+        chatListAdapter.setOnItemClickListener(characterId -> {
+            // 클릭된 아이템의 CharacterId를 가져와서 처리
+            if (characterId != -1) {
+                activity.moveToDetail(characterId);
+            }
+        });
+    }
+
     public void getCharactersMe(String authToken) {
         Call<List<CharacterModel>> call = apiService.getCharactersMe(authToken);
 
@@ -98,6 +109,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
                         characterAdapter = new CharacterAdapter(characterList);
                         binding.rvCharacterList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                         binding.rvCharacterList.setAdapter(characterAdapter);
+                        setClickListenerRecyclerView(characterAdapter);
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());

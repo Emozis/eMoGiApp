@@ -81,8 +81,18 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
 
     private void setupRecyclerView() {
         adapter = new ChatListAdapter(new ArrayList<>());
-        binding.listChat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.listChat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         binding.listChat.setAdapter(adapter);
+    }
+
+    private void setClickListenerRecyclerView(ChatListAdapter chatListAdapter) {
+        chatListAdapter.setOnItemClickListener(characterId -> {
+            // 클릭된 아이템의 CharacterId를 가져와서 처리
+            if (characterId != -1) {
+                Log.d(TAG, "Selected CharacterId: " + characterId);
+                activity.moveToChatRoom(characterId);
+            }
+        });
     }
 
     public void getChatList(String authToken) {
@@ -96,10 +106,11 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
             public void onResponse(Call<List<ChatListModel>> call, Response<List<ChatListModel>> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "getCharacters:3 ");
-                    List<ChatListModel> characterList = response.body();
-                    if (characterList != null) {
-                        adapter = new ChatListAdapter(characterList);
+                    List<ChatListModel> chatList = response.body();
+                    if (chatList != null) {
+                        adapter = new ChatListAdapter(chatList);
                         binding.listChat.setAdapter(adapter);
+                        setClickListenerRecyclerView(adapter);
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());

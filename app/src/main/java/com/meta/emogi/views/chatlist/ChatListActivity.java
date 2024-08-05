@@ -11,6 +11,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityChatListBinding;
+import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
+import com.meta.emogi.views.chatroom.ChatRoomActivity;
+import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
@@ -40,6 +43,14 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+
+    public void moveToChatRoom(int chatId){
+        Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("CHAT_ID", chatId);
+        startActivity(intent);
     }
 
 }

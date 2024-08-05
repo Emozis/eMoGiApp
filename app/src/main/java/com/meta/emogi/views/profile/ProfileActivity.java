@@ -2,6 +2,7 @@ package com.meta.emogi.views.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityProfileBinding;
+import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
+import com.meta.emogi.views.chatroom.ChatRoomActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageFragment;
 import com.meta.emogi.views.toolbar.ToolbarView;
@@ -52,6 +55,14 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             transaction.replace(R.id.fragmentContainerView4, new CharacterManageFragment());
             transaction.commit();
         }
+    }
+
+    public void moveToDetail(int characterId){
+        Intent intent = new Intent(ProfileActivity.this, CharacterDetailActivity.class);
+        Log.d("토큰확인", accessToken);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("CHARACTER_ID", characterId);
+        startActivity(intent);
     }
 
 

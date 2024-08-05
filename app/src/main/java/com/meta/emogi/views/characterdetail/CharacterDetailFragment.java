@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentCharacterDetailBinding;
@@ -69,15 +70,15 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     @Override
     public void onResume() {
         super.onResume();
-        accessKey = "Bearer "+activity.getAccessToken();
+        accessKey = "Bearer " + activity.getAccessToken();
         characterId = activity.getCharacterId();
         setCharacterDetail();
     }
     @Override
     protected void registerObservers() {
-        viewModel.isChatStart().observe(this,unused -> {
+        viewModel.isChatStart().observe(this, unused -> {
             makeChatRoom();
-//            activity.moveToChatRoom();
+            //            activity.moveToChatRoom();
         });
     }
 
@@ -93,9 +94,21 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                 if (response.isSuccessful()) {
                     CharacterModel createdCharacter = response.body();
                     if (createdCharacter != null) {
+
+                        String imageUrl = createdCharacter.getCharacterProfile();
+
+                        // 이미지 URL을 ImageView에 로드
+                        Glide.with(requireContext())
+                                .load(imageUrl)
+                                .placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
+                                .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
+                                .into(binding.characterProfileImage);
+
                         Log.d(TAG, createdCharacter.getCharacterName());
+                        createdCharacter.getCharacterProfile();
                         viewModel.getCharacterDetailData(createdCharacter.getCharacterName(), createdCharacter.getCharacterPersonality(), "test", createdCharacter.getCharacterDetails());
                         //                               createdCharacter.getCharacterRelationships(),
+
                     }
                 } else {
                     // 요청 실패 처리
@@ -111,14 +124,13 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
         });
     }
 
-    public void makeChatRoom(){
-        Call<MakeChatRoom> call = apiService.createChatRoom(accessKey,characterId);
+    public void makeChatRoom() {
+        Call<MakeChatRoom> call = apiService.createChatRoom(accessKey, characterId);
 
         call.enqueue(new Callback<MakeChatRoom>() {
             @Override
             public void onResponse(
-                    @NonNull Call<MakeChatRoom> call,
-                    @NonNull Response<MakeChatRoom> response) {
+                    @NonNull Call<MakeChatRoom> call, @NonNull Response<MakeChatRoom> response) {
                 if (response.isSuccessful()) {
                     MakeChatRoom createdCharacter = response.body();
                     if (createdCharacter != null) {
@@ -139,7 +151,5 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
         });
 
     }
-
-
 
 }
