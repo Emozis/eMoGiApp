@@ -3,6 +3,7 @@ package com.meta.emogi.network.datamodels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MakeCharacterModel {
@@ -51,7 +52,7 @@ public class MakeCharacterModel {
     // 요청에 사용하는 생성자
     public MakeCharacterModel(String characterName, String characterProfile, String characterGender,
                           String characterPersonality, String characterDetails,
-                          boolean characterIsPublic, List<Integer> relationships) {
+                          boolean characterIsPublic, ArrayList<Integer> relationships) {
         this.characterName = characterName;
         this.characterProfile = characterProfile;
         this.characterGender = characterGender;

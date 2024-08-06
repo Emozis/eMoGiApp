@@ -63,8 +63,6 @@ public class ChatWebSocket extends WebSocketListener {
                 int responseId = chatResponse.getResponseId();
                 String characterFragment = chatResponse.getContent();
 
-                Log.d("소켓에서 받는데이터", "onMessage: "+characterFragment);
-
                 // 기존에 수집 중인 메시지가 있는지 확인
                 messageBufferMap.computeIfAbsent(responseId, k -> new StringBuilder());
 

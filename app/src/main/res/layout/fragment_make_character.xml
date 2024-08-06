@@ -18,24 +18,13 @@
         android:layout_height="match_parent"
         tools:context=".views.makecharacter.MakeCharacterFragment">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="캐릭터 생성"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="1">
 
             <TextView
@@ -95,7 +84,9 @@
                 android:id="@+id/gender_man"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/drawable_background_character_iamge"
                 android:text="남"
+                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/gender_woman"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -109,7 +100,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="여"
+                android:background="@drawable/drawable_background_character_iamge"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_weight="1"

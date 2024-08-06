@@ -27,6 +27,7 @@ import com.meta.emogi.views.makecharacter.ImageAdapter;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -104,9 +105,17 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                                 .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
                                 .into(binding.characterProfileImage);
 
+                        List<CharacterModel.CharacterRelationship> relationshipList = createdCharacter.getCharacterRelationships();
+
+
+                        StringBuilder sendRelationship= new StringBuilder();
+                        for(CharacterModel.CharacterRelationship relationship : relationshipList){
+                            sendRelationship.append("#").append(relationship.getRelationship().getRelationshipName()).append(" ");
+                        }
+
                         Log.d(TAG, createdCharacter.getCharacterName());
                         createdCharacter.getCharacterProfile();
-                        viewModel.getCharacterDetailData(createdCharacter.getCharacterName(), createdCharacter.getCharacterPersonality(), "test", createdCharacter.getCharacterDetails());
+                        viewModel.getCharacterDetailData(createdCharacter.getCharacterName(), createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
                         //                               createdCharacter.getCharacterRelationships(),
 
                     }
@@ -126,7 +135,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
 
     public void makeChatRoom() {
         Call<MakeChatRoom> call = apiService.createChatRoom(accessKey, characterId);
-
+        Log.i("www", characterId+"  :  "+accessKey);
         call.enqueue(new Callback<MakeChatRoom>() {
             @Override
             public void onResponse(

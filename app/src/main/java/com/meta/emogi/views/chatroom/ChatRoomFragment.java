@@ -64,6 +64,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     @Override
     protected void registerObservers() {
         viewModel.sendText().observe(getViewLifecycleOwner(), sendText -> {
+            binding.transmit.setEnabled(false);
+
             data.add(new ChatContent(ChatContent.TYPE_USER, sendText));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
@@ -74,10 +76,10 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
-//            Log.d(TAG, recevied);
             if (recevied.equals("[EOS]"))
             {
                 viewModel.setCharacterContent("");
+                binding.transmit.setEnabled(true);
             }else{
                 if (viewModel.characterContent().getValue()==null){
                     viewModel.setCharacterContent(recevied);
@@ -90,7 +92,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.characterContent().observe(getViewLifecycleOwner(), characterContent -> {
-            Log.d(TAG, characterContent);
             // RecyclerView의 마지막 항목 업데이트
             if (!characterContent.equals("")&&!data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
                 data.get(data.size() - 1).setContent(characterContent);
@@ -131,18 +132,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         recyclerView = binding.chatField;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // 예제 데이터
-        data = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            data.add(new ChatContent("User message " + i, ChatContent.TYPE_USER));
-//            data.add(new ChatContent("Other message " + i, ChatContent.TYPE_CHARACTER));
-//        }
-
         getChatLog();
 
-        recyclerView.scrollToPosition(data.size() - 1);
-        adapter = new ChatListAdapter(data);
-        recyclerView.setAdapter(adapter);
     }
 
     public void getChatLog(){
@@ -155,16 +146,15 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                     @NonNull Response<List<ChatLogModel>> response) {
                 if (response.isSuccessful()) {
                     List<ChatLogModel> chatLogs = response.body();
-                    Log.d(TAG, "onResponse: ");
+                    data = new ArrayList<>();
                     for (ChatLogModel log : chatLogs) {
-                        Log.d("테테스트", log.getRole());
                         data.add(new ChatContent(log.getRole(),log.getContents()));
                     }
 
-                    adapter.notifyItemChanged(data.size() - 1);
-                    recyclerView.scrollToPosition(data.size() - 1);
-                    recyclerView.scrollToPosition(data.size() - 1);
                     adapter = new ChatListAdapter(data);
+                    adapter.notifyItemChanged(data.size() - 1);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.scrollToPosition(data.size() - 1);
                 } else {
                     Log.e("API Error", "Failed to fetch chat logs: " + response.message());
                 }

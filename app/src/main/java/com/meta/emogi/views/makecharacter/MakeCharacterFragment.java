@@ -15,9 +15,8 @@ import com.meta.emogi.databinding.FragmentMakeCharacterBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.ImageModel;
-import com.meta.emogi.network.recyclerview.CategoryItem;
+import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
-import com.meta.emogi.network.datamodels.ImageModel;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;
@@ -28,11 +27,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBinding,MakeCharacterViewModel> {
-
+public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBinding, MakeCharacterViewModel> {
 
     private ImageAdapter imageAdapter;
-    private CategoryAdapter categoryAdapter;
+    private RelationshipAdapter relationshipAdapter;
     private ApiService apiService;
     private MakeCharacterActivity activity;
 
@@ -56,15 +54,17 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     protected void registerObservers() {
         viewModel.generate().observe(this, unused -> {
             String selectedImageUrl = imageAdapter.getSelectedImageUrl();
-            if (selectedImageUrl != null) {
-                Log.d("MakeCharacterFragment", "Selected Image URL: " + selectedImageUrl);
-                createCharacter(selectedImageUrl, "친구");
-            } else {
-                Log.d("MakeCharacterFragment", "No Image Selected");
-            }
-            activity.moveToMyProfile();
 
+            String gender = viewModel.isMan().getValue() ? "male" : "female";
 
+            ArrayList<Integer> relationshipList = new ArrayList<>();
+            relationshipList.add(relationshipAdapter.getSelectedRelationId());
+
+            createCharacter(selectedImageUrl, gender, relationshipList);
+        });
+        viewModel.isMan().observe(getViewLifecycleOwner(), isMan -> {
+            binding.genderMan.setSelected(isMan);
+            binding.genderWoman.setSelected(!isMan);
         });
     }
 
@@ -72,7 +72,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity=(MakeCharacterActivity)requireActivity();
+        activity = (MakeCharacterActivity) requireActivity();
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
@@ -81,37 +81,52 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     public void onResume() {
         super.onResume();
 
-        List<CategoryItem> categoryItemList = new ArrayList<>();
-        categoryItemList.add(new CategoryItem("친구"));
-        categoryItemList.add(new CategoryItem("직장동료"));
-        categoryItemList.add(new CategoryItem("연인"));
-        categoryItemList.add(new CategoryItem("비밀친구"));
-        categoryItemList.add(new CategoryItem("고용주"));
-        categoryItemList.add(new CategoryItem("인터넷친구"));
-        categoryItemList.add(new CategoryItem("운동메이트"));
-        categoryItemList.add(new CategoryItem("가족"));
-
-        categoryAdapter= new CategoryAdapter(categoryItemList);
-        binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
-        binding.characterCategory.setAdapter(categoryAdapter);
-
-        String selectedCategory = categoryAdapter.getSelectedCategoryText();
-
         getDefaultImages();
+        getDefaultRelationship();
     }
 
+    private void getDefaultRelationship() {
+        Call<List<RelationshipModel>> call = apiService.getDefaultRelationship();
 
-    private void getDefaultImages(){
+        call.enqueue(new Callback<List<RelationshipModel>>() {
+            @Override
+            public void onResponse(
+                    @NonNull Call<List<RelationshipModel>> call,
+                    @NonNull Response<List<RelationshipModel>> response) {
+                if (response.isSuccessful()) {
+                    List<RelationshipModel> createdRelationsip = response.body();
+                    if (createdRelationsip != null) {
+                        relationshipAdapter = new RelationshipAdapter(createdRelationsip);
+                        binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
+                        binding.characterCategory.setAdapter(relationshipAdapter);
+                    }
+                } else {
+                    // 요청 실패 처리
+                    Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(
+                    @NonNull Call<List<RelationshipModel>> call, @NonNull Throwable t) {
+                // 네트워크 오류 처리
+                Log.e("Character", "API 호출 실패: " + t.getMessage());
+            }
+        });
+    }
+
+    private void getDefaultImages() {
         Call<List<ImageModel>> call = apiService.getDefaultImage();
 
         call.enqueue(new Callback<List<ImageModel>>() {
             @Override
             public void onResponse(
-                    @NonNull Call<List<ImageModel>> call, @NonNull Response<List<ImageModel>> response) {
+                    @NonNull Call<List<ImageModel>> call,
+                    @NonNull Response<List<ImageModel>> response) {
                 if (response.isSuccessful()) {
                     List<ImageModel> createdCharacter = response.body();
                     if (createdCharacter != null) {
-                        imageAdapter= new ImageAdapter(createdCharacter);
+                        imageAdapter = new ImageAdapter(createdCharacter);
                         binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                         binding.characterImage.setAdapter(imageAdapter);
                     }
@@ -129,38 +144,35 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         });
     }
 
-
-    private void createCharacter(String selectedImgUrl, String selectedCategory) {
+    private void createCharacter(String selectedImgUrl, String gender, ArrayList<Integer> relationships) {
         // 예제 데이터 생성 (실제 데이터로 대체 필요)
-        List<Integer> relationships = new ArrayList<>();
-        relationships.add(1); // 선택된 카테고리를 관계로 추가
 
         MakeCharacterModel makeCharacterModel = new MakeCharacterModel(
                 viewModel.name.getValue(),
                 selectedImgUrl,
-                "male",
+                gender,
                 viewModel.personality.getValue(),
                 viewModel.detail.getValue(),
                 true,
-                relationships
-        );
-        Log.d(TAG, selectedImgUrl);
+                relationships);
 
         // 예시용 JWT 토큰 (실제 앱에서는 사용자 인증 후 받은 토큰 사용)
-        String accessToken = "Bearer "+activity.getAccessToken();
+        String accessToken = "Bearer " + activity.getAccessToken();
 
-        Call<MakeCharacterModel> call = apiService.createCharacter(accessToken,makeCharacterModel);
+        Call<MakeCharacterModel> call = apiService.createCharacter(accessToken, makeCharacterModel);
 
         call.enqueue(new Callback<MakeCharacterModel>() {
             @Override
-            public void onResponse(@NonNull Call<MakeCharacterModel> call, @NonNull
-            Response<MakeCharacterModel> response) {
+            public void onResponse(
+                    @NonNull Call<MakeCharacterModel> call,
+                    @NonNull Response<MakeCharacterModel> response) {
                 if (response.isSuccessful()) {
                     MakeCharacterModel createdCharacter = response.body();
                     if (createdCharacter != null) {
                         // 성공적으로 생성된 캐릭터 처리
                         Log.d("Character", "캐릭터 생성 성공: ID=" + createdCharacter.getCharacterId());
-
+                        viewModel.dataReset();
+                        activity.moveToMyProfile();
                     }
                 } else {
                     // 요청 실패 처리
@@ -175,6 +187,5 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
             }
         });
     }
-
 
 }

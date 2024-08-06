@@ -34,12 +34,7 @@ public class CharacterModel {
     }
 
     public static class CharacterRelationship {
-        public Relationship getRelationship() {
-            return relationship;
-        }
-        public void setRelationship(Relationship relationship) {
-            this.relationship = relationship;
-        }
+
         @SerializedName("relationship")
         private Relationship relationship;
 
@@ -48,6 +43,26 @@ public class CharacterModel {
             private int relationshipId;
             @SerializedName("relationshipName")
             private String relationshipName;
+
+            public int getRelationshipId() {
+                return relationshipId;
+            }
+            public void setRelationshipId(int relationshipId) {
+                this.relationshipId = relationshipId;
+            }
+            public String getRelationshipName() {
+                return relationshipName;
+            }
+            public void setRelationshipName(String relationshipName) {
+                this.relationshipName = relationshipName;
+            }
+        }
+
+        public Relationship getRelationship() {
+            return relationship;
+        }
+        public void setRelationship(Relationship relationship) {
+            this.relationship = relationship;
         }
     }
 

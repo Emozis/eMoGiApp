@@ -70,6 +70,7 @@
                 android:id="@+id/transmit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/drawable_background_arrow_selector"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

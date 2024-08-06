@@ -8,16 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.R;
-import com.meta.emogi.network.recyclerview.CategoryItem;
+import com.meta.emogi.network.datamodels.RelationshipModel;
 
 import java.util.List;
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
+public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapter.CategoryViewHolder> {
 
-    private List<CategoryItem> categoryItemList;
+    private List<RelationshipModel> relationshipModelList;
     private int selectedPosition = RecyclerView.NO_POSITION;
 
-    public CategoryAdapter(List<CategoryItem> categoryItemList) {
-        this.categoryItemList = categoryItemList;
+    public RelationshipAdapter(List<RelationshipModel> relationshipModelList) {
+        this.relationshipModelList = relationshipModelList;
     }
     @NonNull
     @Override
@@ -25,10 +25,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_make_character, parent, false);
         return new CategoryViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        CategoryItem categoryItem = categoryItemList.get(position);
-        holder.textView.setText(categoryItem.getCategoryName());
+        RelationshipModel relationshipModel = relationshipModelList.get(position);
+        holder.textView.setText(relationshipModel.getRelationshipName());
         holder.itemView.setSelected(position == selectedPosition);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,16 +47,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     }
 
-    public String getSelectedCategoryText() {
+    public int getSelectedRelationId() {
         if (selectedPosition != RecyclerView.NO_POSITION) {
-            return categoryItemList.get(selectedPosition).getCategoryName();
+            return relationshipModelList.get(selectedPosition).getRelationshipId();
         }
-        return null; // 선택된 아이템이 없는 경우 null 반환
+        return -1; // 선택된 아이템이 없는 경우 null 반환
     }
 
     @Override
     public int getItemCount() {
-        return categoryItemList.size();
+        return relationshipModelList.size();
     }
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView textView;

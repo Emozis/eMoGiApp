@@ -4,6 +4,7 @@ import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.ChatLogModel;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
+import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
 import com.meta.emogi.network.datamodels.ImageModel;
@@ -39,6 +40,9 @@ public interface ApiService {
 
     @GET("api/v1/default-images/")
     Call<List<ImageModel>> getDefaultImage();
+
+    @GET("api/v1/relationship/")
+    Call<List<RelationshipModel>> getDefaultRelationship();
 
     @GET("api/v1/characters/{character_id}")
     Call<CharacterModel> getCharacterDetails(@Header("Authorization") String accessToken, @Path("character_id") int characterId);

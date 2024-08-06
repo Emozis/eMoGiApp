@@ -12,10 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.recyclerview.CategoryItem;
-import com.meta.emogi.network.recyclerview.CharacterItem;
-import com.meta.emogi.views.makecharacter.CategoryAdapter;
-import com.meta.emogi.views.menu.MenuListAdapter;
 
 import java.util.List;
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
