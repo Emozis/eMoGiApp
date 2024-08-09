@@ -60,7 +60,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
             result += hour / 12 > 0 ? "오후\n" : "오전\n";
             result += hour % 12 ==0 ? "12" : String.valueOf(hour % 12) +":"+timeArr[4];
         }else{
-            result += nowMonth+"월"+" "+nowDay+"일";
+            result += timeArr[1]+"월"+" "+timeArr[2]+"일";
         }
 
         return result;
