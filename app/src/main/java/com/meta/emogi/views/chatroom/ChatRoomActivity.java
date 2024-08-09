@@ -53,12 +53,16 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         accessToken = intent.getStringExtra("ACCESS_TOKEN");
-        chatId = intent.getIntExtra("CHAT_ID",0);
+        chatId = intent.getIntExtra("CHAT_ID", 0);
         chatUrl = intent.getStringExtra("CHAT_URL");
         setAccessToken(accessToken);
         setChatId(chatId);
         setChatUrl(chatUrl);
     }
 
+    @Override
+    protected void onBackPressedAction() {
+        finish();
+    }
 
 }

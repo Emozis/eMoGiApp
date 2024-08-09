@@ -77,4 +77,9 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
         intent.putExtra("CHAT_URL", chatUrl);
         startActivity(intent);
     }
+
+    @Override
+    protected void onBackPressedAction() {
+        finish();
+    }
 }
