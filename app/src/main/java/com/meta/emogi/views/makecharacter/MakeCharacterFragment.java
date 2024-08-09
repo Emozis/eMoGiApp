@@ -59,6 +59,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
 
             ArrayList<Integer> relationshipList = new ArrayList<>();
             relationshipList.add(relationshipAdapter.getSelectedRelationId());
+            Log.i("www2", String.valueOf(relationshipAdapter.getSelectedRelationId()));
 
             createCharacter(selectedImageUrl, gender, relationshipList);
         });

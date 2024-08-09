@@ -41,6 +41,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     private CharacterDetailActivity activity;
     private int characterId;
     private String accessKey;
+    private String chatUrl;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -96,11 +97,11 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                     CharacterModel createdCharacter = response.body();
                     if (createdCharacter != null) {
 
-                        String imageUrl = createdCharacter.getCharacterProfile();
+                        chatUrl = createdCharacter.getCharacterProfile();
 
                         // 이미지 URL을 ImageView에 로드
                         Glide.with(requireContext())
-                                .load(imageUrl)
+                                .load(chatUrl)
                                 .placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
                                 .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
                                 .into(binding.characterProfileImage);
@@ -143,7 +144,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                 if (response.isSuccessful()) {
                     MakeChatRoom createdCharacter = response.body();
                     if (createdCharacter != null) {
-                        activity.moveToChatRoom(createdCharacter.getChatId());
+                        activity.moveToChatRoom(createdCharacter.getChatId(),chatUrl);
                         Log.d("방만들기 성공", String.valueOf(createdCharacter.getChatId()));
                     }
                 } else {

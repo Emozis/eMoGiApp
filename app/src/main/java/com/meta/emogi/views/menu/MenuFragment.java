@@ -57,6 +57,10 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                 activity.moveToMakeCharacter();
             }
         });
+
+        viewModel.goToProfile().observe(this, unused->{
+            activity.moveToMyProfile();
+        });
     }
 
     @Override

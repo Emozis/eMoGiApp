@@ -70,7 +70,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
 
-            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, ""));
+            Log.d("www", activity.getChatUrl());
+            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, "",activity.getChatUrl()));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
         });
@@ -87,8 +88,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                     viewModel.setCharacterContent(viewModel.characterContent().getValue() + recevied);
                 }
             }
-
-
         });
 
         viewModel.characterContent().observe(getViewLifecycleOwner(), characterContent -> {
@@ -96,7 +95,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
             if (!characterContent.equals("")&&!data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
                 data.get(data.size() - 1).setContent(characterContent);
                 adapter.notifyItemChanged(data.size() - 1);
-                recyclerView.scrollToPosition(data.size() - 1);
+//                recyclerView.scrollToPosition(data.size() - 1);
             }
         });
     }

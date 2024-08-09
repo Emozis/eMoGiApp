@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.CharacterModel;
 
@@ -52,8 +54,12 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         holder.characterDescription.setText(character.getCharacterDetails());
         // ImageView에 이미지를 로드하는 코드를 추가
 
+        RequestOptions requestOptions = new RequestOptions()
+                .transform(new RoundedCorners(20)); // 반지름 설정
+
         Glide.with(holder.itemView.getContext()).load(character.getCharacterProfile()) // characterProfile은 이미지 URL
                 .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
+                .apply(requestOptions) // 둥근 모서리 적용
                 .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
                 .into(holder.characterImage); // ImageView에 로드
 

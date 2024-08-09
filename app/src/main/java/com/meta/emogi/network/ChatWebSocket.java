@@ -24,6 +24,7 @@ public class ChatWebSocket extends WebSocketListener {
     private MutableLiveData<String> _liveData;
     private static String serverDefaultUrl="ws://122.128.54.136:7070/api/v1/chatting/ws/";
     private static String serverUrl;
+    private String get;
 
     private final Gson gson = new Gson();
     private Map<Integer, StringBuilder> messageBufferMap = new HashMap<>();
@@ -69,6 +70,8 @@ public class ChatWebSocket extends WebSocketListener {
                 // 메시지 추가
                 messageBufferMap.get(responseId).append(characterFragment);
 
+                get+=characterFragment;
+                Log.i(TAG, get);
 
                 _liveData.postValue(characterFragment);
             } else {

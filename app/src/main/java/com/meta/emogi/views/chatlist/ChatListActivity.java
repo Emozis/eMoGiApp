@@ -14,6 +14,7 @@ import com.meta.emogi.databinding.ActivityChatListBinding;
 import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
 import com.meta.emogi.views.chatroom.ChatRoomActivity;
 import com.meta.emogi.views.menu.MenuActivity;
+import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
@@ -25,7 +26,7 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     }
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
-
+        binding.toolbar.settingView(toolbarRequest);
     }
 
     @Override
@@ -46,10 +47,18 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     }
 
 
-    public void moveToChatRoom(int chatId){
+    public void moveToChatRoom(int chatId,String chatUrl){
         Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
         intent.putExtra("ACCESS_TOKEN", accessToken);
         intent.putExtra("CHAT_ID", chatId);
+        intent.putExtra("CHAT_URL", chatUrl);
+        startActivity(intent);
+    }
+
+    public void moveToMyProfile(){
+        Intent intent = new Intent(ChatListActivity.this, ProfileActivity.class);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
     }
 

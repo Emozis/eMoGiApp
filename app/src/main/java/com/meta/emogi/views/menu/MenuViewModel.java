@@ -9,17 +9,22 @@ import androidx.lifecycle.ViewModel;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
+import com.meta.emogi.base.SingleLiveEvent;
 
 public class MenuViewModel extends BaseViewModel {
     public MenuViewModel(Application application) {super(application);}
     private final MutableLiveData<MoveType> _type = new MutableLiveData<>();
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
+    private final SingleLiveEvent<Void> _goToProfile = new SingleLiveEvent<>();
 
     LiveData<MoveType> type(){
         return _type;
     }
     LiveData<Boolean> isLoading(){
         return _isLoading;
+    }
+    LiveData<Void> goToProfile(){
+        return _goToProfile;
     }
 
     @Override
@@ -29,6 +34,8 @@ public class MenuViewModel extends BaseViewModel {
             _type.setValue(MoveType.CHAT_LIST);
         } else if (btnResId == R.id.move_to_make_character) {
             _type.setValue(MoveType.MAKE_CHARACTER);
+        } else if (btnResId == R.id.button_go_profile) {
+            _goToProfile.call();
         }
     }
 

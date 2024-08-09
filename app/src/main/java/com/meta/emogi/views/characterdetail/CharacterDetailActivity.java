@@ -69,11 +69,12 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
     }
 
 
-    public void moveToChatRoom(int Roomid){
+    public void moveToChatRoom(int chatId,String chatUrl){
         Intent intent = new Intent(CharacterDetailActivity.this, ChatRoomActivity.class);
         Log.d("토큰확인", accessToken);
         intent.putExtra("ACCESS_TOKEN", accessToken);
-        intent.putExtra("CHAT_ID", Roomid);
+        intent.putExtra("CHAT_ID", chatId);
+        intent.putExtra("CHAT_URL", chatUrl);
         startActivity(intent);
     }
 }

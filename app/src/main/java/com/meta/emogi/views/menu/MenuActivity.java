@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -45,6 +46,7 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
             intent.putExtra("ACCESS_TOKEN", accessToken);
             startActivity(intent);
         });
+
     }
 
     @Override
@@ -90,6 +92,12 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         startActivity(intent);
     }
 
+    public void moveToMyProfile(){
+        Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
+        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("INIT_FRAGMENT", "Character");
+        startActivity(intent);
+    }
 
 
 

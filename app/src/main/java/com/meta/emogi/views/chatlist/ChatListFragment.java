@@ -59,7 +59,9 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
     }
     @Override
     protected void registerObservers() {
-
+        viewModel.goToProfile().observe(getViewLifecycleOwner(),unused -> {
+            activity.moveToMyProfile();
+        });
     }
 
     @Override
@@ -86,11 +88,12 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
     }
 
     private void setClickListenerRecyclerView(ChatListAdapter chatListAdapter) {
-        chatListAdapter.setOnItemClickListener(characterId -> {
-            // 클릭된 아이템의 CharacterId를 가져와서 처리
+        chatListAdapter.setOnItemClickListener((characterId, clickedChatUrl) -> {
+            // 클릭된 아이템의 CharacterId와 clickedChatUrl을 가져와서 처리
             if (characterId != -1) {
                 Log.d(TAG, "Selected CharacterId: " + characterId);
-                activity.moveToChatRoom(characterId);
+                Log.d(TAG, "Clicked Chat URL: " + clickedChatUrl);
+                activity.moveToChatRoom(characterId,clickedChatUrl);
             }
         });
     }

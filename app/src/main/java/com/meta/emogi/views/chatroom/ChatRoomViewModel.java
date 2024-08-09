@@ -73,7 +73,6 @@ public class ChatRoomViewModel extends BaseViewModel {
             _sendText.setValue(inputText.getValue());
             sendMessageToServer();
         }
-
     }
 
     public void sendMessageToServer() {

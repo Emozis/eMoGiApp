@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    text-->
+    <dimen name="common_text_size_time_small">12sp</dimen>
+    <dimen name="common_text_size_small">16sp</dimen>
+    <dimen name="common_text_size_medium">20sp</dimen>
+    <dimen name="common_text_size_large">24sp</dimen>
+
+
+    <dimen name="menu_list_width">115dp</dimen>
+    <dimen name="chat_icon_size">30dp</dimen>
+
+
+</resources>

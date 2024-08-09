@@ -41,7 +41,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/input_field"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -52,10 +52,12 @@
             <EditText
                 android:id="@+id/send_text"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@={viewModel.inputText}"
+                android:layout_margin="8dp"
+                android:background="@drawable/drawable_background_my_chat"
                 android:textColor="@color/black"
-                android:textSize="28dp"
+                android:textSize="@dimen/common_text_size_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/transmit"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,17 +67,16 @@
                 android:imeOptions="actionDone"
                 tools:text="text" />
 
-
             <Button
                 android:id="@+id/transmit"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/drawable_background_arrow_selector"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="2"
-                app:layout_constraintHorizontal_weight="1" />
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

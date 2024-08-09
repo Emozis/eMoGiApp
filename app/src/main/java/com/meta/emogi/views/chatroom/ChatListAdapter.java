@@ -1,4 +1,5 @@
 package com.meta.emogi.views.chatroom;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.R;
 import com.meta.emogi.data.ChatContent;
 
@@ -78,6 +82,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             OtherViewHolder otherHolder = (OtherViewHolder) holder;
             otherHolder.chatText.setText(message.getContent());
             // Set image if necessary
+            RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 반지름 설정
+
+            Glide.with(otherHolder.itemView.getContext()).load(message.getAiUrl()) // characterProfile은 이미지 URL
+                    .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
+                    .apply(requestOptions) // 둥근 모서리 적용
+                    .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
+                    .into(otherHolder.profile); // ImageView에 로드
         }
     }
 
