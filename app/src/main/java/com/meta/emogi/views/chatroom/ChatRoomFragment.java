@@ -91,11 +91,13 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.characterContent().observe(getViewLifecycleOwner(), characterContent -> {
+
+            Log.d("www", characterContent);
+
             // RecyclerView의 마지막 항목 업데이트
             if (!characterContent.equals("")&&!data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
                 data.get(data.size() - 1).setContent(characterContent);
                 adapter.notifyItemChanged(data.size() - 1);
-//                recyclerView.scrollToPosition(data.size() - 1);
             }
         });
     }
@@ -147,7 +149,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                     List<ChatLogModel> chatLogs = response.body();
                     data = new ArrayList<>();
                     for (ChatLogModel log : chatLogs) {
-                        data.add(new ChatContent(log.getRole(),log.getContents()));
+                        data.add(new ChatContent(log.getRole(),log.getContents(),activity.getChatUrl()));
                     }
 
                     adapter = new ChatListAdapter(data);
