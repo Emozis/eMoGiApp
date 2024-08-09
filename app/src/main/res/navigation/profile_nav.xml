@@ -6,11 +6,6 @@
     app:startDestination="@id/myPageFragment">
 
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.meta.emogi.views.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
-    <fragment
         android:id="@+id/myPageFragment"
         android:name="com.meta.emogi.views.profile.myPage.MyPageFragment"
         android:label="MyPageFragment" >

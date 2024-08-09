@@ -4,14 +4,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import com.meta.emogi.MyApplication;
+
 import com.meta.emogi.views.characterdetail.CharacterDetailViewModel;
 import com.meta.emogi.views.chatlist.ChatListViewModel;
 import com.meta.emogi.views.chatroom.ChatRoomViewModel;
 import com.meta.emogi.views.login.LoginViewModel;
 import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
-import com.meta.emogi.views.profile.ProfileViewModel;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageViewModel;
 import com.meta.emogi.views.profile.myPage.MyPageViewModel;
 import com.meta.emogi.views.splash.SplashViewModel;
@@ -38,8 +37,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new MakeCharacterViewModel(application);
         } else if (modelClass.isAssignableFrom(MenuViewModel.class)) {
             return (T) new MenuViewModel(application);
-        } else if (modelClass.isAssignableFrom(ProfileViewModel.class)) {
-            return (T) new ProfileViewModel(application);
         } else if (modelClass.isAssignableFrom(ChatListViewModel.class)) {
             return (T) new ChatListViewModel(application);
         }else if (modelClass.isAssignableFrom(ToolbarViewModel.class)) {

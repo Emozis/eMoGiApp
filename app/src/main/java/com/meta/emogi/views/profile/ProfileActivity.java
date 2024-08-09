@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 
 import com.meta.emogi.R;
@@ -52,11 +53,16 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         String initFragment = intent.getStringExtra("INIT_FRAGMENT");
 
         setAccessToken(data);
-        if(Objects.equals(initFragment, "Character")){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainerView4, new CharacterManageFragment());
-            transaction.commit();
+
+        NavController navController = Navigation.findNavController(this, R.id.profileChildFrag);
+        NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.profile_nav);
+
+        if (Objects.equals(initFragment, "Character")) {
+            navGraph.setStartDestination(R.id.characterManageFragment);
+        } else {
+            navGraph.setStartDestination(R.id.myPageFragment);
         }
+        navController.setGraph(navGraph);
     }
 
     public void moveToDetail(int characterId){
