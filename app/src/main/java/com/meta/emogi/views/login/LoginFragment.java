@@ -125,6 +125,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
                     Log.d(TAG, "JWT Token received: " + acccessToken);
                     activity.setAccessToken(acccessToken);
                     activity.moveActivity();
+                    Log.d("www", activity.getAccessToken());
 
                 }
             }

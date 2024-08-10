@@ -29,8 +29,6 @@ import java.util.Objects;
 
 public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
-    private String accessToken;
-
     @Override
     protected int layoutId() {
         return R.layout.activity_profile;
@@ -67,18 +65,14 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     public void moveToDetail(int characterId){
         Intent intent = new Intent(ProfileActivity.this, CharacterDetailActivity.class);
-        Log.d("토큰확인", accessToken);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
 
+    @Override
+    public void toolbar2Profile(String accessToken){
+    }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
 }

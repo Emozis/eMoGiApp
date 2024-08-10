@@ -19,7 +19,6 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
 
-    private String accessToken;
     @Override
     protected int layoutId() {
         return R.layout.activity_chat_list;
@@ -38,18 +37,10 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
         //        Log.d(TAG, data);
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
 
     public void moveToChatRoom(int chatId,String chatUrl){
         Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHAT_ID", chatId);
         intent.putExtra("CHAT_URL", chatUrl);
         startActivity(intent);
@@ -57,7 +48,7 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
 
     public void moveToMyProfile(){
         Intent intent = new Intent(ChatListActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
     }

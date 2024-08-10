@@ -24,7 +24,6 @@ import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetailBinding> {
 
-    private String accessToken;
     private ToolbarViewModel toolbarViewModel;
     private int characterId;
 
@@ -60,19 +59,10 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
         this.characterId = characterId;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
 
     public void moveToChatRoom(int chatId,String chatUrl){
         Intent intent = new Intent(CharacterDetailActivity.this, ChatRoomActivity.class);
-        Log.d("토큰확인", accessToken);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHAT_ID", chatId);
         intent.putExtra("CHAT_URL", chatUrl);
         startActivity(intent);

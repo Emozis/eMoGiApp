@@ -16,27 +16,25 @@ public class ToolbarViewModel extends BaseViewModel {
     }
 
     private final MutableLiveData<String> _title = new MutableLiveData<>();
-    private final SingleLiveEvent<Void> _goToProfile = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> _toolbar2Profile = new SingleLiveEvent<>();
 
     public LiveData<String> title() {
         return _title;
-    }
-    public LiveData<Void> goToProfile() {
-        return _goToProfile;
     }
 
     public void setTitle(String title) {
         _title.setValue(title);
     }
-
-    @Override
-    public void onButtonClicked(View v) {
-        int btnResId = v.getId();
-        if (btnResId == R.id.back) {
-            _goToProfile.call();
-        }
+    public LiveData<Void> toolbar2Profile() {
+        return _toolbar2Profile;
     }
 
+    public void onButtonClicked(View v) {
+        int btnResId = v.getId();
+        if (btnResId == R.id.toolbar_profile) {
+            _toolbar2Profile.call();
+        }
+    }
 
 
 }

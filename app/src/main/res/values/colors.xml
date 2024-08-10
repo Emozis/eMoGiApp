@@ -8,4 +8,16 @@
     <color name="dark_blu">#282A37</color>
     <color name="ai_chat">#242633</color>
 
+
+
+    <!--    background-->
+    <color name="bg_toolbar">#1C1D23</color>
+
+    <!--    text-->
+    <color name="text_color_common">@color/white</color>
+
+    <!--    icon-->
+    <color name="icon_color_white">@color/white</color>
+
+
 </resources>
