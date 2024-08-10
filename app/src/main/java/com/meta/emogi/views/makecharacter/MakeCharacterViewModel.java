@@ -24,6 +24,8 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public final MutableLiveData<Boolean> _isMan = new MutableLiveData<>(true);
     public final MutableLiveData<String> _category = new MutableLiveData<>("");
     public final SingleLiveEvent<Void> _generate = new SingleLiveEvent<>();
+    public final MutableLiveData<Boolean> _isOpen = new MutableLiveData<>(false);
+
 
     public LiveData<Boolean> isMan() {
         return _isMan;
@@ -31,9 +33,11 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public LiveData<String> category() {
         return _category;
     }
-
     public LiveData<Void> generate() {
         return _generate;
+    }
+    public LiveData<Boolean> isOpen() {
+        return _isOpen;
     }
 
     @Override
@@ -46,6 +50,8 @@ public class MakeCharacterViewModel extends BaseViewModel {
             _isMan.setValue(true);
         } else if (btnResId == R.id.gender_woman) {
             _isMan.setValue(false);
+        }else if (btnResId == R.id.iv_is_open) {
+            _isOpen.setValue(!_isOpen.getValue());
         }
     }
 

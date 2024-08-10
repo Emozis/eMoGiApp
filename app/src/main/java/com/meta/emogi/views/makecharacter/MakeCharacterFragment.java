@@ -67,6 +67,14 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
             binding.genderMan.setSelected(isMan);
             binding.genderWoman.setSelected(!isMan);
         });
+
+        viewModel.isOpen().observe(getViewLifecycleOwner(),isOpen->{
+            if(isOpen){
+                binding.ivIsOpen.setSelected(true);
+            }else{
+                binding.ivIsOpen.setSelected(false);
+            }
+        });
     }
 
     @Override
@@ -154,7 +162,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                 gender,
                 viewModel.personality.getValue(),
                 viewModel.detail.getValue(),
-                true,
+                viewModel.isOpen().getValue(),
                 relationships);
 
         // 예시용 JWT 토큰 (실제 앱에서는 사용자 인증 후 받은 토큰 사용)
