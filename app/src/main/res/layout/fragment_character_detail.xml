@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.meta.emogi.views.characterdetail.CharacterDetailViewModel" />
@@ -18,16 +19,18 @@
             android:id="@+id/image_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="3"
             app:layout_constraintBottom_toTopOf="@+id/name_gender_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="3">
 
             <ImageView
                 android:id="@+id/character_profile_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -39,31 +42,44 @@
             android:id="@+id/name_gender_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/personality_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/personality_layout"
-            app:layout_constraintTop_toBottomOf="@+id/image_layout">
+            app:layout_constraintTop_toBottomOf="@+id/image_layout"
+            app:layout_constraintVertical_weight="1">
 
             <TextView
                 android:id="@+id/title_name_gender"
                 android:layout_width="match_parent"
-                android:text="이름/성별"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
+                android:text="이름/성별"
+                android:textSize="@dimen/common_text_size_large"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="이름"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="이름" />
 
             <TextView
                 android:id="@+id/content_name_gender"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textSize="30sp"
-                android:text="@{viewModel.name()}"
+                android:layout_marginTop="4dp"
+                android:padding="8dp"
+                android:paddingStart="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/drawable_underline_character_detail"
+                android:textColor="@color/yellow"
+                android:text="@{viewModel.nameAndGender()}"
+                android:textSize="@dimen/common_text_size_small"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_name_gender"
-                tools:text="#머머머머"/>
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="#머머머머" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,30 +87,42 @@
             android:id="@+id/personality_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/category_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/category_layout"
-            app:layout_constraintTop_toBottomOf="@+id/name_gender_layout">
+            app:layout_constraintTop_toBottomOf="@+id/name_gender_layout"
+            app:layout_constraintVertical_weight="1">
 
             <TextView
                 android:id="@+id/title_personality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
                 android:text="성격"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="@dimen/common_text_size_large"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="성격"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="성격" />
 
             <TextView
                 android:id="@+id/content_personality"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="8dp"
+                android:paddingStart="16dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/drawable_underline_character_detail"
+                android:textColor="@color/yellow"
                 android:text="@{viewModel.personality()}"
+                android:textSize="@dimen/common_text_size_small"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_personality"
-                tools:text="#카카칠"/>
+                tools:text="#카카칠" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,76 +130,113 @@
             android:id="@+id/category_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/detail_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/detail_layout"
-            app:layout_constraintTop_toBottomOf="@+id/personality_layout">
+            app:layout_constraintTop_toBottomOf="@+id/personality_layout"
+            app:layout_constraintVertical_weight="1">
 
             <TextView
                 android:id="@+id/title_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
                 android:text="카테고리(관계)"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="@dimen/common_text_size_large"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="카테고리"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="카테고리" />
 
             <TextView
                 android:id="@+id/content_category"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/drawable_underline_character_detail"
+                android:padding="8dp"
+                android:paddingStart="16dp"
                 android:text="@{viewModel.category()}"
+                android:textColor="@color/yellow"
+                android:textSize="@dimen/common_text_size_small"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_category"
-                tools:text="#친구"/>
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="#친구" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/detail_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_chat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_start_chat"
-            app:layout_constraintTop_toBottomOf="@+id/category_layout">
+            app:layout_constraintTop_toBottomOf="@+id/category_layout"
+            app:layout_constraintVertical_weight="3">
 
             <TextView
                 android:id="@+id/title_detail"
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="세부사항"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
+                android:text="세부사항"
+                android:textSize="@dimen/common_text_size_large"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="세부사항"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="세부사항" />
 
-            <TextView
+            <ScrollView
                 android:id="@+id/contnet_detail"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="@{viewModel.detail()}"
+                android:layout_margin="10dp"
+                android:background="@drawable/drawable_underline_character_detail"
+                android:textColor="@color/yellow"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_detail"
-                tools:text="세부세부"/>
+                app:layout_constraintTop_toBottomOf="@+id/title_detail">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="8dp"
+                    android:scrollbars="vertical"
+                    android:scrollHorizontally="false"
+                    android:text="@{viewModel.detail()}"
+                    android:textColor="@color/yellow"
+                    android:textSize="@dimen/common_text_size_small"
+                    tools:text="세부세부" />
+            </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btn_start_chat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:background="@color/yellow"
-            android:textColor="@color/black"
+            style="@style/ButtonCharacterDetail"
             android:onClick="@{() -> viewModel.chatStart()}"
             android:text="채팅시작"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_layout"
+            app:layout_constraintVertical_weight="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -113,11 +113,11 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                         for(CharacterModel.CharacterRelationship relationship : relationshipList){
                             sendRelationship.append("#").append(relationship.getRelationship().getRelationshipName()).append(" ");
                         }
-
-                        Log.d(TAG, createdCharacter.getCharacterName());
                         createdCharacter.getCharacterProfile();
-                        viewModel.getCharacterDetailData(createdCharacter.getCharacterName(), createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
-                        //                               createdCharacter.getCharacterRelationships(),
+
+                        String nameAndGender = "#" + createdCharacter.getCharacterName() + " #" +
+                                (createdCharacter.getCharacterGender().equals("male") ? "남자" : "여자");
+                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
 
                     }
                 } else {
