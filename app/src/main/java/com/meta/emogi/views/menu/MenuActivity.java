@@ -28,26 +28,7 @@ import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
 
-    private String accessToken;
     private static final String TAG = "MenuActivity";
-    private ToolbarViewModel toolbarViewModel;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // ViewModel 초기화
-        ViewModelFactory factory = new ViewModelFactory(getApplication());
-        toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
-
-        // goToProfile 이벤트 관찰
-        toolbarViewModel.goToProfile().observe(this, unused -> {
-            // ProfileActivity로 이동
-            Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
-            intent.putExtra("ACCESS_TOKEN", accessToken);
-            startActivity(intent);
-        });
-
-    }
 
     @Override
     protected int layoutId() {
@@ -66,40 +47,31 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         setAccessToken(data);
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public void moveToChatList(){
         Intent intent = new Intent(MenuActivity.this, ChatListActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 
     public void moveToMakeCharacter(){
         Intent intent = new Intent(MenuActivity.this, MakeCharacterActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 
     public void moveToCharacterDetail(int characterId){
         Intent intent = new Intent(MenuActivity.this, CharacterDetailActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
 
-    public void moveToMyProfile(){
+    public void moveToManageProfile(){
         Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
     }
-
-
-
 
 }

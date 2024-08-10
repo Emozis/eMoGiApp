@@ -11,5 +11,7 @@
     <dimen name="menu_list_width">115dp</dimen>
     <dimen name="chat_icon_size">30dp</dimen>
 
+    <dimen name="height_tool_bar">60dp</dimen>
+    <dimen name="size_tool_bar_icon">35dp</dimen>
 
 </resources>

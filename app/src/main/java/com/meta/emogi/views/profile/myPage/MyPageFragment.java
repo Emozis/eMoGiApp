@@ -42,7 +42,7 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("마이페이지");
+        return new ToolbarView.ToolbarRequest("프로필");
     }
     @Override
     protected int layoutId() {

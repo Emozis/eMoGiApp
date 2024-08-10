@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.meta.emogi.views.toolbar.ToolbarViewModel;
+
 public class BaseViewModel extends AndroidViewModel {
 
     private long buttonLastClickTime;

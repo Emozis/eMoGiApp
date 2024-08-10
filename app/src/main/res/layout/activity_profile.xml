@@ -16,7 +16,7 @@
         <com.meta.emogi.views.toolbar.ToolbarView
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_tool_bar"
             app:layout_constraintTop_toTopOf="parent"
             />
         <androidx.fragment.app.FragmentContainerView

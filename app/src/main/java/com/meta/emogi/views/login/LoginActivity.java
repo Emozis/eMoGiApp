@@ -20,7 +20,6 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     private static final String TAG = "LoginActivity";
-    private String accessToken="";
 
 
     @Override
@@ -32,18 +31,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     }
 
-    public void setAccessToken(String jwtToken){
-        this.accessToken=jwtToken;
-    }
-
-    @Override
-    protected void onBackPressedAction() {
-        finish();
-    }
-
     public void moveActivity(){
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 
