@@ -1,5 +1,7 @@
 package com.meta.emogi.views.makecharacter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
@@ -59,17 +62,22 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
 
             ArrayList<Integer> relationshipList = (ArrayList<Integer>) relationshipAdapter.getSelectedRelationIds();
 
-            createCharacter(selectedImageUrl, gender, relationshipList);
+            if (selectedImageUrl == null || viewModel.personality.getValue() == null || viewModel.detail.getValue() == null || viewModel.isOpen().getValue() == null || relationshipList.size() == 0) {
+
+                Toast.makeText(requireContext(), "설정하지 않은 값이 있습니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                createCharacter(selectedImageUrl, gender, relationshipList);
+            }
         });
         viewModel.isMan().observe(getViewLifecycleOwner(), isMan -> {
             binding.genderMan.setSelected(isMan);
             binding.genderWoman.setSelected(!isMan);
         });
 
-        viewModel.isOpen().observe(getViewLifecycleOwner(),isOpen->{
-            if(isOpen){
+        viewModel.isOpen().observe(getViewLifecycleOwner(), isOpen -> {
+            if (isOpen) {
                 binding.ivIsOpen.setSelected(true);
-            }else{
+            } else {
                 binding.ivIsOpen.setSelected(false);
             }
         });
@@ -154,14 +162,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     private void createCharacter(String selectedImgUrl, String gender, ArrayList<Integer> relationships) {
         // 예제 데이터 생성 (실제 데이터로 대체 필요)
 
-        MakeCharacterModel makeCharacterModel = new MakeCharacterModel(
-                viewModel.name.getValue(),
-                selectedImgUrl,
-                gender,
-                viewModel.personality.getValue(),
-                viewModel.detail.getValue(),
-                viewModel.isOpen().getValue(),
-                relationships);
+        MakeCharacterModel makeCharacterModel = new MakeCharacterModel(viewModel.name.getValue(), selectedImgUrl, gender, viewModel.personality.getValue(), viewModel.detail.getValue(), viewModel.isOpen().getValue(), relationships);
 
         // 예시용 JWT 토큰 (실제 앱에서는 사용자 인증 후 받은 토큰 사용)
         String accessToken = "Bearer " + activity.getAccessToken();

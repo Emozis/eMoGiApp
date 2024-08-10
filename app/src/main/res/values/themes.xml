@@ -1,9 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Persona"  parent="Theme.AppCompat.NoActionBar">
+    <style name="Base.Theme.Persona" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/color_default_background</item>
         <item name="android:textColor">@color/color_default_text</item>
         <item name="android:buttonStyle">@style/MyButtonStyle</item>
+        <item name="colorAccent">@color/white</item> <!-- Accent 색상을 하얀색으로 설정 -->
+        <item name="colorPrimary">@color/white</item> <!-- Primary 색상을 하얀색으로 설정 -->
+        <item name="colorPrimaryDark">@color/white</item> <!-- Primary Dark 색상을 하얀색으로 설정 -->
+        <item name="colorOnPrimary">@color/black</item> <!-- Primary 텍스트 색상 설정 (검은색) -->
+        <item name="colorOnSecondary">@color/black</item> <!-- Secondary 텍스트 색상 설정 (검은색) -->
+        <item name="colorSecondary">@color/white</item> <!-- Secondary 색상 설정 -->
+        <item name="colorOnBackground">@color/color_default_text</item> <!-- 배경 위 텍스트 색상 설정 -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
     <style name="Theme.Persona" parent="Base.Theme.Persona" />

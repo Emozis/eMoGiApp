@@ -11,14 +11,16 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:background="@drawable/drawable_background_character_iamge"
-            android:layout_margin="4dp"
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="8dp"
+            android:layout_width="@dimen/size_character_create_profile"
+            android:layout_height="@dimen/size_character_create_profile"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/drawable_background_character_iamge"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

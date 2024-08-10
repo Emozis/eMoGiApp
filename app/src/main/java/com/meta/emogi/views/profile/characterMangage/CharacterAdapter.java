@@ -47,8 +47,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
 
         String description="";
-        description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자"+" / ";
-        description += characterItem.getCharacterPersonality()+" / ";
+        description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자";
+        description += " / "+characterItem.getCharacterPersonality()+" / ";
         List<CharacterModel.CharacterRelationship> realationships = characterItem.getCharacterRelationships();
         for(CharacterModel.CharacterRelationship realationship :realationships){
             description+=realationship.getRelationship().getRelationshipName()+" / ";
