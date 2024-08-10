@@ -37,7 +37,7 @@
             android:paddingTop="4dp"
             android:gravity="top|right"
             android:text="09:30"
-            android:textSize="@dimen/common_text_size_time_small"
+            android:textSize="@dimen/common_text_size_very_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"

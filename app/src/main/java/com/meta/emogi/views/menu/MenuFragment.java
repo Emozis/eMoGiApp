@@ -1,25 +1,27 @@
 package com.meta.emogi.views.menu;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.request.transition.Transition;
 import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMenuBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,7 +60,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
             }
         });
 
-        viewModel.menu2ManageProfile().observe(this, unused->{
+        viewModel.menu2ManageProfile().observe(this, unused -> {
             activity.moveToManageProfile();
         });
 
@@ -83,21 +85,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         String key = activity.getAccessToken();
         getCharactersMe("Bearer " + key);
         getCharactersRank();
-
     }
 
-//    private void setupRecyclerView() {
-//        menuListAdapter = new MenuListAdapter(new ArrayList<>());
-////        binding.listRankCharacter.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        binding.listRankCharacter.setAdapter(menuListAdapter);
-//
-//        menuListAdapter.setOnItemClickListener(characterId -> {
-//            // 클릭된 아이템의 CharacterId를 가져와서 처리
-//            if (characterId != -1) {
-//                Log.d(TAG, "Selected CharacterId: " + characterId);
-//            }
-//        });
-//    }
 
     private void setClickListenerRecyclerView(MenuListAdapter menuListAdapter) {
         menuListAdapter.setOnItemClickListener(characterId -> {

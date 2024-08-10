@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:background="@drawable/drawable_background_character_iamge"
-        android:padding="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         >
 
         <ImageView
@@ -35,22 +36,24 @@
             android:layout_marginTop="4dp"
             android:gravity="left"
             android:text="hihi"
-            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="@dimen/common_text_size_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/character_description"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/character_image" />
 
         <TextView
             android:id="@+id/character_description"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:text="설명설명"
             android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_small"
+            android:textSize="@dimen/common_text_size_very_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
