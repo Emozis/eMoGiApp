@@ -45,7 +45,22 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         CharacterModel characterItem = characterList.get(position);
         holder.myPageCharacterListLayout.setSelected(position == selectedPosition);
 
-        holder.characterDescriptionView.setText(characterItem.getCharacterDetails());
+
+        String description="";
+        description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자"+" / ";
+        description += characterItem.getCharacterPersonality()+" / ";
+        List<CharacterModel.CharacterRelationship> realationships = characterItem.getCharacterRelationships();
+        for(CharacterModel.CharacterRelationship realationship :realationships){
+            description+=realationship.getRelationship().getRelationshipName()+" / ";
+        }
+        description+=characterItem.getCharacterDetails();
+
+        if (description.endsWith("/")) {
+            description = description.substring(0, description.length() - 1);
+        }
+
+        holder.characterDescriptionView.setText(description);
+
         holder.characterNameView.setText(characterItem.getCharacterName());
 
         RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 반지름 설정

@@ -9,7 +9,7 @@ public class UserData {
     @SerializedName("userName")
     private String userName;
     @SerializedName("userProfile")
-    private String userEuserProfilemail;
+    private String userProfile;
     @SerializedName("userGender")
     private String userGender;
     @SerializedName("userBirthdate")
@@ -33,11 +33,11 @@ public class UserData {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    public String getUserEuserProfilemail() {
-        return userEuserProfilemail;
+    public String getUserProfile() {
+        return userProfile;
     }
-    public void setUserEuserProfilemail(String userEuserProfilemail) {
-        this.userEuserProfilemail = userEuserProfilemail;
+    public void setUserProfile(String userProfile) {
+        this.userProfile = userProfile;
     }
     public String getUserGender() {
         return userGender;

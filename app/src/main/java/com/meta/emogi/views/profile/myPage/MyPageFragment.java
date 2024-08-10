@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMenuBinding;
@@ -99,8 +100,13 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
                     UserData createdCharacter = response.body();
                     if (createdCharacter != null) {
                         // 성공적으로 생성된 캐릭터 처리
-
                         viewModel.setUserData(createdCharacter.getUserEmail(), createdCharacter.getUserName());
+
+                        Glide.with(requireContext())
+                                .load( createdCharacter.getUserProfile())
+                                .placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
+                                .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
+                                .into(binding.imageProfile);
 
                     }
                 } else {

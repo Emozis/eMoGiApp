@@ -6,14 +6,21 @@
     <dimen name="common_text_size_small">16sp</dimen>
     <dimen name="common_text_size_medium">20sp</dimen>
     <dimen name="common_text_size_large">24sp</dimen>
+    <dimen name="common_text_size_very_large">30sp</dimen>
 
 
+    <!--    menu-->
     <dimen name="menu_list_width">115dp</dimen>
     <dimen name="menu_button_size">120dp</dimen>
 
+    <!--    chat-->
     <dimen name="chat_icon_size">30dp</dimen>
 
+    <!--    toolbar-->
     <dimen name="height_tool_bar">60dp</dimen>
     <dimen name="size_tool_bar_icon">35dp</dimen>
+
+    <!--    profile-->
+    <dimen name="size_profile">170dp</dimen>
 
 </resources>
