@@ -12,20 +12,9 @@ import com.meta.emogi.base.SingleLiveEvent;
 
 public class LoginViewModel extends BaseViewModel {
 
-    private final SingleLiveEvent<Void> _isClicked = new SingleLiveEvent<>();
-
-    public LiveData<Void> isClicked() { return _isClicked;}
-
     public LoginViewModel(Application application) {
         super(application);
     }
 
-    @Override
-    public void onButtonClicked(View v) {
-        int btnResId = v.getId();
-        if(btnResId == R.id.login_button){
-            _isClicked.call();
-        }
-    }
 
 }

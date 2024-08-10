@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.meta.emogi.R;
@@ -60,9 +61,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     }
     @Override
     protected void registerObservers() {
-        viewModel.isClicked().observe(this, unUsed -> {
-            signIn();
-        });
+
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,12 +73,21 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         // Retrofit setup
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         activity = (LoginActivity) getActivity();
+
+        SignInButton signInButton = view.findViewById(R.id.login_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn(); // Google 로그인을 시작하는 메서드 호출
+            }
+        });
     }
 
     // ActivityResultLauncher for sign-in result handling
