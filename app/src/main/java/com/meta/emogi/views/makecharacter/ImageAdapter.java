@@ -1,4 +1,5 @@
 package com.meta.emogi.views.makecharacter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,23 +41,25 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         ImageModel imageModel = imageModelList.get(position);
-        holder.imageView.setSelected(position == selectedPosition);
+
+        // 선택 상태 반영
+//        holder.imageView.setSelected(position == selectedPosition);
+        holder.imageView.setActivated(position == selectedPosition);
 
         RequestOptions requestOptions = new RequestOptions()
-                .transform(new RoundedCorners(20)); // 반지름 설정
+                .transform(new RoundedCorners(20)); // 둥근 모서리 설정
 
         Glide.with(holder.itemView.getContext())
-                .load(imageModel.getImageUrl()) // characterProfile은 이미지 URL
+                .load(imageModel.getImageUrl()) // 이미지 URL 로드
                 .apply(requestOptions) // 둥근 모서리 적용
-                .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
-                .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
+                .placeholder(R.drawable.drawable_background_toolbar_profile) // 플레이스홀더 이미지
+                .error(R.drawable.drawable_background_toolbar_profile) // 오류 발생 시 대체 이미지
                 .into(holder.imageView); // ImageView에 로드
-
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 이전에 선택된 아이템의 선택 상태를 해제
+                // 이전에 선택된 아이템의 선택 상태 해제
                 if (selectedPosition != RecyclerView.NO_POSITION) {
                     notifyItemChanged(selectedPosition);
                 }

@@ -15,7 +15,6 @@
         android:layout_width="@dimen/menu_list_width"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:background="@drawable/drawable_background_character_iamge"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         >
@@ -24,7 +23,6 @@
             android:id="@+id/character_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/menu_list_width"
-            android:background="@drawable/drawable_background_character_iamge"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -1,4 +1,5 @@
 package com.meta.emogi.views.chatlist;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -77,11 +79,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         List<ChatListModel.ChatLogs> chatLogs = chat.getChatLogs();
         if (chatLogs != null && !chatLogs.isEmpty()) {
             // Here we assume you want the content of the last chat log entry
+            holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
             String lastLogContent = chatLogs.get(chatLogs.size() - 1).getContents();
             holder.lastTalk.setText(lastLogContent);
         } else {
             // If no chat logs are available, set a default or empty message
             holder.lastTalk.setText("최근에 대화한 채팅이 없습니다.\n어서 이야기해보세요");
+            holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow));
         }
 
 

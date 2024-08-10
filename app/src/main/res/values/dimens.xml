@@ -26,5 +26,8 @@
     <!--    character create-->
     <dimen name="size_character_create_profile">90dp</dimen>
 
+    <!--    character detail-->
+    <dimen name="size_character_detail">150dp</dimen>
+
 
 </resources>
