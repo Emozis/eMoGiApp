@@ -63,8 +63,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="1"
-                android:inputType="text"
-                android:imeOptions="actionDone"
+                android:gravity="top|start"
+                android:scrollHorizontally="false"
+                android:overScrollMode="always"
+                android:scrollbars="vertical"
+                android:maxLines="5"
+                android:imeOptions="actionNone|flagNoExtractUi"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:singleLine="false"
                 tools:text="text" />
 
             <Button

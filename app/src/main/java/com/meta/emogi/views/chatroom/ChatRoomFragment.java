@@ -106,18 +106,27 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         binding.sendText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
-                    // 소프트 키보드를 숨깁니다.
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND) {
+                    // 완료 또는 전송 액션일 때만 키보드를 숨깁니다.
                     InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
                         imm.hideSoftInputFromWindow(binding.sendText.getWindowToken(), 0);
                     }
+                    return true;
+                } else if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    // 엔터 키를 눌렀을 때 줄바꿈을 추가합니다.
+                    int start = binding.sendText.getSelectionStart();
+                    int end = binding.sendText.getSelectionEnd();
+                    binding.sendText.getText().replace(Math.min(start, end), Math.max(start, end), "\n", 0, 1);
+                    binding.sendText.setSelection(start + 1);
                     return true;
                 }
                 return false;
             }
         });
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

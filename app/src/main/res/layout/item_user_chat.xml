@@ -13,10 +13,9 @@
         <TextView
             android:id="@+id/chat_text"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/drawable_background_my_chat"
             android:gravity="center_vertical"
-            android:paddingEnd="60dp"
             android:text="hihi"
             android:textColor="@color/black"
             android:textSize="@dimen/common_text_size_medium"
