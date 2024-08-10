@@ -57,9 +57,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
 
             String gender = viewModel.isMan().getValue() ? "male" : "female";
 
-            ArrayList<Integer> relationshipList = new ArrayList<>();
-            relationshipList.add(relationshipAdapter.getSelectedRelationId());
-            Log.i("www2", String.valueOf(relationshipAdapter.getSelectedRelationId()));
+            ArrayList<Integer> relationshipList = (ArrayList<Integer>) relationshipAdapter.getSelectedRelationIds();
 
             createCharacter(selectedImageUrl, gender, relationshipList);
         });

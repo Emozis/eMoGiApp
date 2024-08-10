@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.RelationshipModel;
 
+import java.util.ArrayList;
 import java.util.List;
 public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapter.CategoryViewHolder> {
 
     private List<RelationshipModel> relationshipModelList;
-    private int selectedPosition = RecyclerView.NO_POSITION;
+    private final List<RelationshipModel> selectedItems = new ArrayList<>();
 
     public RelationshipAdapter(List<RelationshipModel> relationshipModelList) {
         this.relationshipModelList = relationshipModelList;
@@ -30,28 +31,31 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         RelationshipModel relationshipModel = relationshipModelList.get(position);
         holder.textView.setText(relationshipModel.getRelationshipName());
-        holder.itemView.setSelected(position == selectedPosition);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 이전에 선택된 아이템의 선택 상태를 해제
-                if (selectedPosition != RecyclerView.NO_POSITION) {
-                    notifyItemChanged(selectedPosition);
+        holder.itemView.setSelected(selectedItems.contains(relationshipModel));
+        holder.itemView.setOnClickListener(v -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition == RecyclerView.NO_POSITION)
+                return;
+
+            // 선택된 상태라면 선택 해제
+            if (selectedItems.contains(relationshipModel)) {
+                selectedItems.remove(relationshipModel);
+            } else {
+                // 선택된 항목이 3개 미만일 때만 추가
+                if (selectedItems.size() < 3) {
+                    selectedItems.add(relationshipModel);
                 }
-
-                // 새로운 아이템을 선택하고 상태 업데이트
-                selectedPosition = holder.getAdapterPosition();
-                notifyItemChanged(selectedPosition);
             }
+            notifyDataSetChanged();
         });
-
     }
 
-    public int getSelectedRelationId() {
-        if (selectedPosition != RecyclerView.NO_POSITION) {
-            return relationshipModelList.get(selectedPosition).getRelationshipId();
+    public List<Integer> getSelectedRelationIds() {
+        List<Integer> selectedIds = new ArrayList<>();
+        for (RelationshipModel model : selectedItems) {
+            selectedIds.add(model.getRelationshipId());
         }
-        return -1; // 선택된 아이템이 없는 경우 null 반환
+        return selectedIds;
     }
 
     @Override
