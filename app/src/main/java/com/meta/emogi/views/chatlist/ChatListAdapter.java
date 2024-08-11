@@ -54,9 +54,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         Calendar calendar = Calendar.getInstance();
         String nowYear = String.valueOf(calendar.get(Calendar.YEAR));
         String nowMonth = "0"+String.valueOf(calendar.get(Calendar.MONTH) + 1); // 0 부터시작
-        String nowDay = "0"+String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String nowDay = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+
+        nowDay = nowDay.length()==1?"0"+nowDay:nowDay;
 
         String result = "";
+        
         if (timeArr[0].equals(nowYear) && timeArr[1].equals(nowMonth) && timeArr[2].equals(nowDay)) {
             int hour = Integer.valueOf(timeArr[3]);
             result += hour / 12 > 0 ? "오후\n" : "오전\n";

@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.noties.markwon.Markwon;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,7 +78,12 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
             if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
-                data.get(data.size() - 1).setContent(recevied);
+
+                Markwon markwon = Markwon.create(requireContext());
+                Spanned markdownContent = markwon.toMarkdown(recevied);
+
+//                data.get(data.size() - 1).setContent(markdownContent);
+                data.get(data.size() - 1).setSpannedContent(markdownContent);
                 adapter.notifyItemChanged(data.size() - 1);
             }
         });

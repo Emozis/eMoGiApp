@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.noties.markwon.Markwon;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -117,7 +119,14 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
 
                         String nameAndGender = "#" + createdCharacter.getCharacterName() + " #" +
                                 (createdCharacter.getCharacterGender().equals("male") ? "남자" : "여자");
-                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
+
+                        Markwon markwon = Markwon.create(requireContext());
+                        Spanned markdownDetail = markwon.toMarkdown(createdCharacter.getCharacterDetails());
+
+                        //마크다운으로 변환
+                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), markdownDetail);
+
+//                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
 
                     }
                 } else {

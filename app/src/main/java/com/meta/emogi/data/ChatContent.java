@@ -1,4 +1,5 @@
 package com.meta.emogi.data;
+import android.text.Spanned;
 public class ChatContent {
     public static final String TYPE_AUTH = "auth";
     public static final String TYPE_USER = "user";
@@ -8,6 +9,7 @@ public class ChatContent {
     private String content;
     private String token; // 인증 토큰을 위한 필드 추가
     private String aiUrl;
+    private Spanned spannedContent;
 
     // 인증 메시지 생성자를 추가합니다.
     public ChatContent(String type, String token, boolean notUse) {
@@ -61,5 +63,12 @@ public class ChatContent {
     }
     public void setAiUrl(String aiUrl) {
         this.aiUrl = aiUrl;
+    }
+
+    public Spanned getSpannedContent() {
+        return spannedContent;
+    }
+    public void setSpannedContent(Spanned spannedContent) {
+        this.spannedContent = spannedContent;
     }
 }

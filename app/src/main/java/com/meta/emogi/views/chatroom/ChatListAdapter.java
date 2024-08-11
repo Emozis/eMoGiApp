@@ -80,8 +80,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // Set image if necessary
         } else {
             OtherViewHolder otherHolder = (OtherViewHolder) holder;
-            otherHolder.chatText.setText(message.getContent());
-            // Set image if necessary
+            if (message.getSpannedContent() != null) {
+                otherHolder.chatText.setText(message.getSpannedContent()); // Spanned 설정
+            } else {
+                otherHolder.chatText.setText(message.getContent()); // 일반 텍스트 설정
+            }
+//            otherHolder.chatText.setText(message.getContent());
             RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 반지름 설정
 
             Glide.with(otherHolder.itemView.getContext()).load(message.getAiUrl()) // characterProfile은 이미지 URL

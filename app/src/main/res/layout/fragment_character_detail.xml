@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="3">
+            app:layout_constraintVertical_weight="2">
 
             <ImageView
                 android:id="@+id/character_profile_image"
@@ -177,7 +177,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_layout"
-            app:layout_constraintVertical_weight="2">
+            app:layout_constraintVertical_weight="3">
 
             <TextView
                 android:id="@+id/title_detail"
