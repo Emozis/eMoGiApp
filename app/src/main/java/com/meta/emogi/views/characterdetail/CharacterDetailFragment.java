@@ -128,10 +128,13 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
 
 //                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
 
+                        viewModel.offLoading();
+
                     }
                 } else {
                     // 요청 실패 처리
                     Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
+                    viewModel.failLoading();
                 }
             }
 
@@ -139,6 +142,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
             public void onFailure(@NonNull Call<CharacterModel> call, @NonNull Throwable t) {
                 // 네트워크 오류 처리
                 Log.e("Character", "API 호출 실패: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }
