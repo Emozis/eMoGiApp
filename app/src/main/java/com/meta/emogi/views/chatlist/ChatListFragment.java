@@ -115,6 +115,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
                         binding.listChat.setAdapter(adapter);
                         setClickListenerRecyclerView(adapter);
                     }
+                    viewModel.offLoading();
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());
                     try {
@@ -124,14 +125,16 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    viewModel.failLoading();
                 }
-                viewModel.offLoading();
+
             }
 
             @Override
             public void onFailure(Call<List<ChatListModel>> call, Throwable t) {
                 Log.d(TAG, "getCharacters:4");
                 Log.e(TAG, "Request Failed: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }

@@ -118,6 +118,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                 } else {
                     // 요청 실패 처리
                     Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
+                    viewModel.failLoading();
                 }
             }
 
@@ -126,6 +127,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                     @NonNull Call<List<RelationshipModel>> call, @NonNull Throwable t) {
                 // 네트워크 오류 처리
                 Log.e("Character", "API 호출 실패: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }
@@ -148,13 +150,16 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                 } else {
                     // 요청 실패 처리
                     Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
+                    viewModel.failLoading();
                 }
+                viewModel.offLoading();
             }
 
             @Override
             public void onFailure(@NonNull Call<List<ImageModel>> call, @NonNull Throwable t) {
                 // 네트워크 오류 처리
                 Log.e("Character", "API 호출 실패: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }

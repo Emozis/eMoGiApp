@@ -133,13 +133,15 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    viewModel.failLoading();
                 }
-                viewModel.loadDoneMy();
+
             }
 
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
                 Log.e(TAG, "Request Failed: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }
@@ -168,12 +170,14 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    viewModel.failLoading();
                 }
             }
 
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
                 Log.e(TAG, "Request Failed: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }

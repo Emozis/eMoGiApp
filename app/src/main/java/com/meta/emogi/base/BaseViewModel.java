@@ -16,12 +16,21 @@ public class BaseViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<Integer> _buttonClicked = new SingleLiveEvent<>();
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> _isShowProgress = new MutableLiveData<>(true);
+    private final MutableLiveData<String> _loadingText = new MutableLiveData<>("데이터 로딩중입니다.");
 
     public LiveData<Integer> buttonClicked() {
         return _buttonClicked;
     }
     public LiveData<Boolean> isLoading() {
         return _isLoading;
+    }
+    public LiveData<String> loadingText() {
+        return _loadingText;
+    }
+
+    public LiveData<Boolean> isShowProgress() {
+        return _isShowProgress;
     }
 
     public BaseViewModel(@NonNull Application application) {
@@ -34,6 +43,11 @@ public class BaseViewModel extends AndroidViewModel {
 
     public void offLoading(){
         _isLoading.setValue(false);
+    }
+
+    public void failLoading(){
+        _isShowProgress.setValue(false);
+        _loadingText.setValue("데이터 로딩에 실패하였습니다.\n네트워크를 확인해주세요");
     }
 
     public void onButtonClicked(View v) {
