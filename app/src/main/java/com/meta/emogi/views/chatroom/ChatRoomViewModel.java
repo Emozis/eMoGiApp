@@ -18,9 +18,11 @@ import com.meta.emogi.network.ChatWebSocket;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PropertyResourceBundle;
 
 public class ChatRoomViewModel extends BaseViewModel {
     private ChatWebSocket chatWebSocket;
+    private StringBuilder messageBuilder = new StringBuilder();
     private static final String TAG = "ChatRoomViewModel";
 
     public MutableLiveData<String> inputText = new MutableLiveData<>("");
@@ -28,35 +30,42 @@ public class ChatRoomViewModel extends BaseViewModel {
     private MutableLiveData<String> _receivedText = new MutableLiveData<>();
     private Map<Integer, ChatContent> messageMap = new HashMap<>();
     private MutableLiveData<String> _characterContent = new MutableLiveData<>();
+    private MutableLiveData<Boolean> _isCanChat = new MutableLiveData<>(true);
 
     public ChatRoomViewModel(Application application) {super(application);}
 
     public LiveData<String> sendText() {
         return _sendText;
     }
-
     public LiveData<String> receivedText() {
         return _receivedText;
     }
-    public LiveData<String> characterContent() {
-        return _characterContent;
+    public LiveData<Boolean> isCanChat() {
+        return _isCanChat;
     }
 
-    public void setCharacterContent(String s){
-        _characterContent.setValue(s);
+    public void init(String key, int chatId) {
+        connectNetwork(key, chatId);
     }
 
-    public void init(String key,int chatId) {
-        connectNetwork(key,chatId);
-    }
+    private void connectNetwork(String key, int chatId) {
 
-    private void connectNetwork(String key,int chatId) {
-        //test용
-        chatWebSocket = new ChatWebSocket(_receivedText,chatId);
+        chatWebSocket = new ChatWebSocket(chatId, new ChatWebSocket.MessageCallback() {
+            @Override
+            public void onMessageReceived(String message) {
+                if (message.equals("[EOS]")) {
+                    _isCanChat.postValue(true);
+                    messageBuilder = new StringBuilder();
+                } else {
+                    messageBuilder.append(message);
+                    _receivedText.postValue(messageBuilder.toString());
+                }
+            }
+        });
+
         chatWebSocket.start();
 
         ChatContent chatContent = new ChatContent(TYPE_AUTH, "Bearer " + key, true);
-
         Gson gson = new Gson();
         String jsonMessage = gson.toJson(chatContent);
 
@@ -70,6 +79,7 @@ public class ChatRoomViewModel extends BaseViewModel {
         int btnResId = v.getId();
         if (btnResId == R.id.transmit) {
             Log.d(TAG, "몇번되는지 테스트");
+            _isCanChat.setValue(false);
             _sendText.setValue(inputText.getValue());
             sendMessageToServer();
         }

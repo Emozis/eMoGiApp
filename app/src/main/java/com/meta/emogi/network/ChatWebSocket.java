@@ -22,14 +22,19 @@ public class ChatWebSocket extends WebSocketListener {
     private static final String TAG = "ChatWebSocket";
     private WebSocket webSocket;
     private OkHttpClient client;
+    private MessageCallback callback;
     private MutableLiveData<String> _liveData;
     private static String serverDefaultUrl = "ws://122.128.54.136:7070/api/v1/chatting/ws/";
     private static String serverUrl;
     private String get;
     private final Gson gson = new Gson();
 
-    public ChatWebSocket(MutableLiveData<String> liveData, int chatId) {
-        this._liveData = liveData;
+    public interface MessageCallback {
+        void onMessageReceived(String message);
+    }
+
+    public ChatWebSocket(int chatId, MessageCallback callback) {
+        this.callback = callback;
         client = new OkHttpClient();
         serverUrl = String.format(serverDefaultUrl + "%d", chatId);
     }
@@ -54,8 +59,11 @@ public class ChatWebSocket extends WebSocketListener {
 
             if ("character".equals(chatResponse.getType())) {
                 String characterFragment = chatResponse.getContent();
+                callback.onMessageReceived(characterFragment);
 
-                _liveData.postValue(characterFragment);
+//                _liveData.postValue(characterFragment);
+
+
             } else {
                 Log.e(TAG, "Unexpected message type or null chatResponse");
             }

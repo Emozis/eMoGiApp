@@ -64,40 +64,28 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     @Override
     protected void registerObservers() {
         viewModel.sendText().observe(getViewLifecycleOwner(), sendText -> {
-            binding.transmit.setEnabled(false);
-
             data.add(new ChatContent(ChatContent.TYPE_USER, sendText));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
 
             Log.d("www", activity.getChatUrl());
-            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, "",activity.getChatUrl()));
+            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, "", activity.getChatUrl()));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
         });
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
-            if (recevied.equals("[EOS]"))
-            {
-                viewModel.setCharacterContent("");
-                binding.transmit.setEnabled(true);
-            }else{
-                if (viewModel.characterContent().getValue()==null){
-                    viewModel.setCharacterContent(recevied);
-                }else{
-                    viewModel.setCharacterContent(viewModel.characterContent().getValue() + recevied);
-                }
+            if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
+                data.get(data.size() - 1).setContent(recevied);
+                adapter.notifyItemChanged(data.size() - 1);
             }
         });
 
-        viewModel.characterContent().observe(getViewLifecycleOwner(), characterContent -> {
-
-            Log.d("www", characterContent);
-
-            // RecyclerView의 마지막 항목 업데이트
-            if (!characterContent.equals("")&&!data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
-                data.get(data.size() - 1).setContent(characterContent);
-                adapter.notifyItemChanged(data.size() - 1);
+        viewModel.isCanChat().observe(getViewLifecycleOwner(), isCanChat -> {
+            if (isCanChat) {
+                binding.transmit.setEnabled(true);
+            } else {
+                binding.transmit.setEnabled(false);
             }
         });
     }
@@ -126,8 +114,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -146,8 +132,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
 
     }
 
-    public void getChatLog(){
-        Call<List<ChatLogModel>> call = apiService.getChatLog("Bearer "+activity.getAccessToken(),activity.getChatId());
+    public void getChatLog() {
+        Call<List<ChatLogModel>> call = apiService.getChatLog("Bearer " + activity.getAccessToken(), activity.getChatId());
 
         call.enqueue(new Callback<List<ChatLogModel>>() {
             @Override
@@ -158,7 +144,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                     List<ChatLogModel> chatLogs = response.body();
                     data = new ArrayList<>();
                     for (ChatLogModel log : chatLogs) {
-                        data.add(new ChatContent(log.getRole(),log.getContents(),activity.getChatUrl()));
+                        data.add(new ChatContent(log.getRole(), log.getContents(), activity.getChatUrl()));
                     }
 
                     adapter = new ChatListAdapter(data);
