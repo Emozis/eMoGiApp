@@ -6,7 +6,7 @@
             <solid android:color="@android:color/transparent" />
             <stroke
                 android:width="4dp"
-                android:color="@android:color/holo_orange_light" /> <!-- 노란색 테두리 -->
+                android:color="@color/white" /> <!-- 노란색 테두리 -->
             <corners android:radius="16dp" /> <!-- 둥근 모서리 -->
         </shape>
     </item>
@@ -17,7 +17,7 @@
             <solid android:color="@android:color/transparent" />
             <stroke
                 android:width="4dp"
-                android:color="@android:color/transparent" /> <!-- 기본 테두리 없음 -->
+                android:color="@android:color/holo_orange_light" /> <!-- 노란색 테두리 -->
             <corners android:radius="16dp" /> <!-- 둥근 모서리 -->
         </shape>
     </item>

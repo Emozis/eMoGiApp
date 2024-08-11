@@ -42,9 +42,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         ImageModel imageModel = imageModelList.get(position);
 
-        // 선택 상태 반영
-//        holder.imageView.setSelected(position == selectedPosition);
-        holder.imageView.setActivated(position == selectedPosition);
+
+        holder.imageView.setSelected(position == selectedPosition);
 
         RequestOptions requestOptions = new RequestOptions()
                 .transform(new RoundedCorners(20)); // 둥근 모서리 설정
@@ -59,7 +58,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("www", "onClick: ");
                 // 이전에 선택된 아이템의 선택 상태 해제
                 if (selectedPosition != RecyclerView.NO_POSITION) {
                     notifyItemChanged(selectedPosition);
