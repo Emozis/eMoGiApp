@@ -68,7 +68,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="이름/성별"
                 android:textSize="@dimen/common_text_size_medium"
@@ -98,7 +97,7 @@
                 android:id="@+id/gender_man"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/drawable_background_character_iamge"
+                style="@style/ButtonCharacterDetailGender"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:text="남"
                 android:textSize="@dimen/common_text_size_small"
@@ -112,7 +111,7 @@
                 android:id="@+id/gender_woman"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/drawable_background_character_iamge"
+                style="@style/ButtonCharacterDetailGender"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:text="여"
                 android:textSize="@dimen/common_text_size_small"
@@ -180,7 +179,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:text="카테고리(관계)"
                 android:textSize="@dimen/common_text_size_medium"
                 app:layout_constraintStart_toStartOf="parent"
@@ -252,38 +250,40 @@
 
             <ImageView
                 android:id="@+id/iv_is_open"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginEnd="4dp"
                 android:onClick="@{v->viewModel.onButtonClicked(v)}"
                 android:src="@drawable/drawable_background_is_open"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_is_open"
-                app:layout_constraintEnd_toStartOf="@+id/tv_is_open"
-                app:layout_constraintTop_toTopOf="@+id/tv_is_open" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_is_open_text"
+                app:layout_constraintEnd_toStartOf="@+id/tv_is_open_text"
+                app:layout_constraintTop_toTopOf="@+id/tv_is_open_text" />
 
             <TextView
-                android:id="@+id/tv_is_open"
+                android:id="@+id/tv_is_open_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="캐릭터 공개"
-                android:layout_margin="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/generate"
-                app:layout_constraintTop_toBottomOf="parent"
                 android:textSize="@dimen/common_text_size_small"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintBottom_toTopOf="@+id/generate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
             <Button
                 android:id="@+id/generate"
+                style="@style/ButtonCharacterDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_margin="10dp"
+                android:background="@color/yellow"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:text="캐릭터 생성하기"
-                app:layout_constraintTop_toBottomOf="@+id/tv_is_open"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_is_open_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
