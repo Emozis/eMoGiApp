@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    테마-->
+    <color name="color_default_background">#1C1D23</color>
+    <color name="color_default_text">@color/white</color>
+    <color name="color_default_accent">@color/white</color>
+    <color name="colorPrimary">@color/white</color> <!-- 툴바 및 상태바 색상 -->
+    <color name="colorPrimaryDark">@color/black</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#A7A7A7</color>
+    <color name="red">#B34848</color>
+    <color name="yellow">#FFD400</color>
+    <color name="dark_blu">#282A37</color>
+    <color name="ai_chat">#242633</color>
+
+
+    <color name="text_view_character_create">#1C1D23</color>
+
+    <!--    background-->
+    <color name="bg_toolbar">#1C1D23</color>
+
+    <!--    text-->
+    <color name="text_color_common">@color/white</color>
+
+    <!--    icon-->
+    <color name="icon_color_white">@color/white</color>
+
+
 </resources>
