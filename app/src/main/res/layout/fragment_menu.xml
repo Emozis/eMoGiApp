@@ -18,170 +18,209 @@
         tools:context=".views.menu.MenuFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_top"
+            android:id="@+id/loading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_middle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            android:layout_height="match_parent"
+            app:isVisible="@{viewModel.isLoading()}">
 
-            <ImageView
-                android:id="@+id/move_to_chat_list"
-                android:layout_width="@dimen/menu_button_size"
-                android:layout_height="@dimen/menu_button_size"
-                android:alpha="0.6"
-                android:background="@drawable/background_menu_button"
-                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/move_to_make_character"
+            <ProgressBar
+                android:id="@+id/loading_pb"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/move_to_chat_list_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginTop="16dp"
-                android:text="내 채팅방"
-                android:textSize="@dimen/common_text_size_small"
-                app:layout_constraintEnd_toEndOf="@+id/move_to_chat_list"
-                app:layout_constraintStart_toStartOf="@+id/move_to_chat_list"
-                app:layout_constraintTop_toTopOf="@+id/move_to_chat_list" />
-
-            <ImageView
-                android:id="@+id/move_to_make_character"
-                android:layout_width="@dimen/menu_button_size"
-                android:layout_height="@dimen/menu_button_size"
-                android:alpha="0.6"
-                android:background="@drawable/background_menu_button"
-                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/move_to_chat_list"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/move_to_make_character_text"
+                android:id="@+id/loading_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="데이터 로딩중입니다."
+                android:textSize="@dimen/common_text_size_very_large"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="캐릭터 만들기"
-                android:textSize="@dimen/common_text_size_small"
-                app:layout_constraintEnd_toEndOf="@+id/move_to_make_character"
-                app:layout_constraintStart_toStartOf="@+id/move_to_make_character"
-                app:layout_constraintTop_toTopOf="@+id/move_to_make_character" />
+                android:layout_height="wrap_content"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_middle"
+            android:id="@+id/done"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_top"
-            >
-
+            android:layout_height="match_parent"
+            app:isVisible="@{!viewModel.isLoading()}">
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_middle_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="인기 있는 캐릭터"
-                    android:textSize="@dimen/common_text_size_large"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_rank_character"
+                android:id="@+id/layout_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_middle_button" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_middle"
-            >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_bottom_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/list_my_character"
+                android:paddingTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/layout_middle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 >
 
+                <ImageView
+                    android:id="@+id/move_to_chat_list"
+                    android:layout_width="@dimen/menu_button_size"
+                    android:layout_height="@dimen/menu_button_size"
+                    android:alpha="0.6"
+                    android:background="@drawable/background_menu_button"
+                    android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/move_to_make_character"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
+                    android:id="@+id/move_to_chat_list_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="내 캐릭터"
-                    android:textSize="@dimen/common_text_size_large"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
 
-                <Button
-                    android:id="@+id/button_go_manage_profile"
-                    style="@style/MyButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="16dp"
+                    android:text="내 채팅방"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintEnd_toEndOf="@+id/move_to_chat_list"
+                    app:layout_constraintStart_toStartOf="@+id/move_to_chat_list"
+                    app:layout_constraintTop_toTopOf="@+id/move_to_chat_list" />
+
+                <ImageView
+                    android:id="@+id/move_to_make_character"
+                    android:layout_width="@dimen/menu_button_size"
+                    android:layout_height="@dimen/menu_button_size"
+                    android:alpha="0.6"
+                    android:background="@drawable/background_menu_button"
                     android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                    android:text="더보기"
-                    android:textSize="@dimen/common_text_size_very_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/move_to_chat_list"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/move_to_make_character_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="캐릭터 만들기"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintEnd_toEndOf="@+id/move_to_make_character"
+                    app:layout_constraintStart_toStartOf="@+id/move_to_make_character"
+                    app:layout_constraintTop_toTopOf="@+id/move_to_make_character" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_my_character"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_middle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_top"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_middle_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="인기 있는 캐릭터"
+                        android:textSize="@dimen/common_text_size_large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_rank_character"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_middle_button"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_bottom_toolbar" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_middle"
+                >
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_bottom_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/list_my_character"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="내 캐릭터"
+                        android:textSize="@dimen/common_text_size_large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+
+                    <Button
+                        android:id="@+id/button_go_manage_profile"
+                        style="@style/MyButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="12dp"
+                        android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+                        android:text="더보기"
+                        android:textSize="@dimen/common_text_size_very_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_my_character"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_bottom_toolbar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

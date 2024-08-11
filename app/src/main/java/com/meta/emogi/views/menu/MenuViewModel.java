@@ -15,16 +15,20 @@ import com.meta.emogi.base.SingleLiveEvent;
 public class MenuViewModel extends BaseViewModel {
     public MenuViewModel(Application application) {super(application);}
     private final MutableLiveData<MoveType> _type = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> _isMyLoading = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> _isRankLoading = new MutableLiveData<>(true);
     private final SingleLiveEvent<Void> _menu2ManageProfile = new SingleLiveEvent<>();
 
-    LiveData<MoveType> type(){
+    public  LiveData<MoveType> type(){
         return _type;
     }
-    LiveData<Boolean> isLoading(){
-        return _isLoading;
+    public LiveData<Boolean> isMyLoading(){
+        return _isMyLoading;
     }
-    LiveData<Void> menu2ManageProfile(){
+    public  LiveData<Boolean> isRankLoading(){
+        return _isRankLoading;
+    }
+    public  LiveData<Void> menu2ManageProfile(){
         return _menu2ManageProfile;
     }
 
@@ -38,6 +42,14 @@ public class MenuViewModel extends BaseViewModel {
         } else if (btnResId == R.id.button_go_manage_profile) {
             _menu2ManageProfile.call();
         }
+    }
+
+    public void loadDoneMy(){
+        _isMyLoading.setValue(false);
+    }
+
+    public void loadDoneRank(){
+        _isRankLoading.setValue(false);
     }
 
     public enum MoveType{

@@ -64,6 +64,18 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
             activity.moveToManageProfile();
         });
 
+        viewModel.isMyLoading().observe(this,isMyLoading->{
+            if(!isMyLoading&&!viewModel.isRankLoading().getValue()){
+                viewModel.offLoading();
+            }
+        });
+
+        viewModel.isRankLoading().observe(this,isRankLoading->{
+            if(!isRankLoading&&!viewModel.isMyLoading().getValue()){
+                viewModel.offLoading();
+            }
+        });
+
     }
 
     @Override
@@ -110,6 +122,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                         menuListAdapter = new MenuListAdapter(characterList);
                         binding.listMyCharacter.setAdapter(menuListAdapter);
                         setClickListenerRecyclerView(menuListAdapter);
+                        viewModel.loadDoneMy();
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());
@@ -121,6 +134,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                         e.printStackTrace();
                     }
                 }
+                viewModel.loadDoneMy();
             }
 
             @Override
@@ -143,6 +157,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                         menuListAdapter = new MenuListAdapter(characterList);
                         binding.listRankCharacter.setAdapter(menuListAdapter);
                         setClickListenerRecyclerView(menuListAdapter);
+                        viewModel.loadDoneRank();
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());
