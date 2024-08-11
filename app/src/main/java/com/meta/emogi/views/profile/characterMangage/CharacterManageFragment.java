@@ -63,13 +63,6 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                requireActivity().finish();  // 현재 액티비티 종료
-//            }
-//        });
-
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
     }
@@ -110,6 +103,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
                         binding.rvCharacterList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                         binding.rvCharacterList.setAdapter(characterAdapter);
                         setClickListenerRecyclerView(characterAdapter);
+                        viewModel.offLoading();
                     }
                 } else {
                     Log.e(TAG, "Request Failed. Error Code: " + response.code());
@@ -120,12 +114,14 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    viewModel.failLoading();
                 }
             }
 
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
                 Log.e(TAG, "Request Failed: " + t.getMessage());
+                viewModel.failLoading();
             }
         });
     }

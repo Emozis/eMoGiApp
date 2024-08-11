@@ -146,13 +146,13 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                         imageAdapter = new ImageAdapter(createdCharacter);
                         binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                         binding.characterImage.setAdapter(imageAdapter);
+                        viewModel.offLoading();
                     }
                 } else {
                     // 요청 실패 처리
                     Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
                     viewModel.failLoading();
                 }
-                viewModel.offLoading();
             }
 
             @Override

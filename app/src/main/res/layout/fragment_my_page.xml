@@ -20,12 +20,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/profile_top_nav_height"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/layout_profile"
             app:layout_constraintVertical_weight="1">
 
             <TextView
@@ -33,8 +32,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/yellow"
                 android:text="마이페이지"
+                android:textColor="@color/yellow"
                 android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/manage_character"
@@ -46,8 +45,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="캐릭터 관리"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+                android:text="캐릭터 관리"
                 android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,24 +56,47 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isVisible="@{viewModel.isLoading()}"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
+
+            <ProgressBar
+                android:id="@+id/loading_pb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:isVisible="@{viewModel.isShowProgress()}"
+                app:layout_constraintBottom_toTopOf="@+id/loading_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.loadingText()}"
+                android:textSize="@dimen/error_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_profile"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:isVisible="@{!viewModel.isLoading()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
             app:layout_constraintVertical_weight="8">
-
-<!--            <TextView-->
-<!--                android:id="@+id/edit_profile"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="정보수정"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <ImageView
                 android:id="@+id/image_profile"
@@ -89,9 +111,9 @@
 
             <TextView
                 android:id="@+id/profile_email"
-                android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="@{viewModel.email()}"
                 android:textSize="@dimen/common_text_size_very_large"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,9 +122,9 @@
 
             <TextView
                 android:id="@+id/profile_name"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@{viewModel.nickName()}"
                 android:textSize="@dimen/common_text_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
