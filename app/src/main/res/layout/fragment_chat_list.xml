@@ -18,6 +18,35 @@
         tools:context=".views.chatlist.ChatListFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isVisible="@{viewModel.isLoading()}">
+
+            <ProgressBar
+                android:id="@+id/loading_pb"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/loading_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="데이터 로딩중입니다."
+                android:textSize="@dimen/common_text_size_very_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_chat_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -26,7 +55,9 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="8">
+            app:layout_constraintVertical_weight="8"
+            app:isVisible="@{!viewModel.isLoading()}"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chat_tab"

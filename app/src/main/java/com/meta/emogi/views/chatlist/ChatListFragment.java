@@ -125,6 +125,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
                         e.printStackTrace();
                     }
                 }
+                viewModel.offLoading();
             }
 
             @Override
