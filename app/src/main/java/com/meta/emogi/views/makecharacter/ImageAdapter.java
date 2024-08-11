@@ -59,6 +59,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("www", "onClick: ");
                 // 이전에 선택된 아이템의 선택 상태 해제
                 if (selectedPosition != RecyclerView.NO_POSITION) {
                     notifyItemChanged(selectedPosition);
