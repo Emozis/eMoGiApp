@@ -33,7 +33,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
+        setAccessToken(this,intent.getStringExtra("ACCESS_TOKEN"));
     }
 
     public void moveToMyProfile(){

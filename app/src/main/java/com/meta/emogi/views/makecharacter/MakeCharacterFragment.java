@@ -170,7 +170,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         MakeCharacterModel makeCharacterModel = new MakeCharacterModel(viewModel.name.getValue(), selectedImgUrl, gender, viewModel.personality.getValue(), viewModel.detail.getValue(), viewModel.isOpen().getValue(), relationships);
 
         // 예시용 JWT 토큰 (실제 앱에서는 사용자 인증 후 받은 토큰 사용)
-        String accessToken = "Bearer " + activity.getAccessToken();
+        String accessToken = activity.getAccessToken();
 
         Call<MakeCharacterModel> call = apiService.createCharacter(accessToken, makeCharacterModel);
 

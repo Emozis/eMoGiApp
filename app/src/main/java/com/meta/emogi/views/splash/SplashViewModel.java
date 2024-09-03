@@ -10,6 +10,4 @@ public class SplashViewModel extends BaseViewModel {
     public SplashViewModel(Application application) {
         super(application);
     }
-
-    // TODO: Implement the ViewModel
 }

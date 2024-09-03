@@ -1,6 +1,8 @@
 package com.meta.emogi.base;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.activity.OnBackPressedCallback;
@@ -10,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.meta.emogi.util.ConfigUtil;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.di.ViewModelFactory;
@@ -22,12 +26,18 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     protected V binding;
     private String accessToken;
     private ToolbarViewModel toolbarViewModel;
+
     public String getAccessToken() {
         return accessToken;
     }
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+
+    public void setAccessToken(Context context, String accessToken) {
+        ConfigUtil configUtil = new ConfigUtil(context);
+        String prefix = configUtil.getProperty("KEY_PREFIX");
+        Log.d("www", prefix+" "+accessToken);
+        this.accessToken = prefix+" "+accessToken;
     }
+
     protected abstract @LayoutRes int layoutId();
 
     protected abstract void setToolbar(ToolbarView.ToolbarRequest toolbarRequest);

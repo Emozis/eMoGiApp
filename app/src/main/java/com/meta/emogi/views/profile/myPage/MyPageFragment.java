@@ -89,7 +89,7 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     }
 
     private void getUserData() {
-        String accessToken = "Bearer " + activity.getAccessToken();
+        String accessToken =activity.getAccessToken();
         Call<UserData> call = apiService.getUserData(accessToken);
 
         call.enqueue(new Callback<UserData>() {

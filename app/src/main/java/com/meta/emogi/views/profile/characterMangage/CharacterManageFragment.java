@@ -73,7 +73,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
     public void onResume() {
         super.onResume();
         String key = activity.getAccessToken();
-        getCharactersMe("Bearer " + key);
+        getCharactersMe(key);
     }
 
 

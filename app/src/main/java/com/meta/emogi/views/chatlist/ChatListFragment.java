@@ -77,8 +77,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
         super.onResume();
         setupRecyclerView();
         String key = activity.getAccessToken();
-        Log.d(TAG, "chatList key: "+key);
-        getChatList("Bearer " + key);
+        getChatList(key);
     }
 
     private void setupRecyclerView() {
@@ -91,8 +90,6 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
         chatListAdapter.setOnItemClickListener((characterId, clickedChatUrl) -> {
             // 클릭된 아이템의 CharacterId와 clickedChatUrl을 가져와서 처리
             if (characterId != -1) {
-                Log.d(TAG, "Selected CharacterId: " + characterId);
-                Log.d(TAG, "Clicked Chat URL: " + clickedChatUrl);
                 activity.moveToChatRoom(characterId,clickedChatUrl);
             }
         });
@@ -101,14 +98,10 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
     public void getChatList(String authToken) {
         Call<List<ChatListModel>> call = apiService.getChatList(authToken);
 
-        Log.d("API Request", "Request URL: " + call.request().url());
-        Log.d("API Request", "Authorization Header: " + authToken);
-
         call.enqueue(new Callback<List<ChatListModel>>() {
             @Override
             public void onResponse(Call<List<ChatListModel>> call, Response<List<ChatListModel>> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "getCharacters:3 ");
                     List<ChatListModel> chatList = response.body();
                     if (chatList != null) {
                         adapter = new ChatListAdapter(chatList);

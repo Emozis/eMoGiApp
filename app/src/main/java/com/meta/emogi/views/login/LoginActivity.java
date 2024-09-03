@@ -21,14 +21,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     private static final String TAG = "LoginActivity";
 
-
     @Override
     protected int layoutId() {
         return R.layout.activity_login;
     }
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
-
     }
 
     public void moveActivity(){

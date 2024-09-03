@@ -70,7 +70,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
 
-            Log.d("www", activity.getChatUrl());
             data.add(new ChatContent(ChatContent.TYPE_CHARACTER, "", activity.getChatUrl()));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
@@ -82,7 +81,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                 Markwon markwon = Markwon.create(requireContext());
                 Spanned markdownContent = markwon.toMarkdown(recevied);
 
-//                data.get(data.size() - 1).setContent(markdownContent);
                 data.get(data.size() - 1).setSpannedContent(markdownContent);
                 adapter.notifyItemChanged(data.size() - 1);
             }
@@ -140,7 +138,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     }
 
     public void getChatLog() {
-        Call<List<ChatLogModel>> call = apiService.getChatLog("Bearer " + activity.getAccessToken(), activity.getChatId());
+        Call<List<ChatLogModel>> call = apiService.getChatLog(activity.getAccessToken(), activity.getChatId());
 
         call.enqueue(new Callback<List<ChatLogModel>>() {
             @Override

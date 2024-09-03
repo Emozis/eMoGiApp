@@ -33,7 +33,7 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
         super.onResume();
         Intent intent = getIntent();
         String data = intent.getStringExtra("ACCESS_TOKEN");
-        setAccessToken(data);
+        setAccessToken(this,data);
         //        Log.d(TAG, data);
     }
 

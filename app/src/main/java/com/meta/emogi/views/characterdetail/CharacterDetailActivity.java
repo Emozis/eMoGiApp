@@ -49,7 +49,7 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
         Intent intent = getIntent();
         String data = intent.getStringExtra("ACCESS_TOKEN");
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
-        setAccessToken(data);
+        setAccessToken(this,data);
     }
 
     public int getCharacterId() {

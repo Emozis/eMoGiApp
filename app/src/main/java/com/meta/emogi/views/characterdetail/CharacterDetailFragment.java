@@ -74,7 +74,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     @Override
     public void onResume() {
         super.onResume();
-        accessKey = "Bearer " + activity.getAccessToken();
+        accessKey = activity.getAccessToken();
         characterId = activity.getCharacterId();
         setCharacterDetail();
     }

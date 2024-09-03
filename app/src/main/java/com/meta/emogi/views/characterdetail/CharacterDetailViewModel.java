@@ -61,4 +61,6 @@ public class CharacterDetailViewModel extends BaseViewModel {
     public void chatStart() {
         _isChatStart.call();
     }
+
+
 }

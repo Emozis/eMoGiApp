@@ -95,7 +95,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
     public void onResume() {
         super.onResume();
         String key = activity.getAccessToken();
-        getCharactersMe("Bearer " + key);
+        getCharactersMe(key);
         getCharactersRank();
     }
 
