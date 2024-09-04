@@ -82,7 +82,6 @@ public class ToolbarView extends ConstraintLayout {
         }
     }
 
-
     private ToolbarButtonClickListener clickListener;
 
     public interface ToolbarButtonClickListener {

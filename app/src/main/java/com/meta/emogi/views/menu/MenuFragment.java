@@ -76,6 +76,31 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
             }
         });
 
+        viewModel.myCharacters().observe(getViewLifecycleOwner(), characterList -> {
+            if (characterList != null) {
+                menuListAdapter = new MenuListAdapter(characterList);
+                binding.listMyCharacter.setAdapter(menuListAdapter);
+                setClickListenerRecyclerView(menuListAdapter);
+                viewModel.loadDoneMy();
+            } else {
+                viewModel.failLoading();
+                Log.e("www", "Menu myCharacter 통신 오류");
+            }
+        });
+
+        viewModel.rankCharacters().observe(getViewLifecycleOwner(), characterList -> {
+            if (characterList != null) {
+                menuListAdapter = new MenuListAdapter(characterList);
+                binding.listRankCharacter.setAdapter(menuListAdapter);
+                setClickListenerRecyclerView(menuListAdapter);
+                viewModel.loadDoneRank();
+            } else {
+                viewModel.failLoading();
+                Log.e("www", "Menu myCharacter 통신 오류");
+            }
+        });
+
+
     }
 
     @Override
@@ -95,8 +120,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
     public void onResume() {
         super.onResume();
         String key = activity.getAccessToken();
-        getCharactersMe(key);
-        getCharactersRank();
+        viewModel.getMyCharacters(key);
+        viewModel.getRankCharacters();
     }
 
 
@@ -110,76 +135,76 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         });
     }
 
-    public void getCharactersMe(String authToken) {
-        Call<List<CharacterModel>> call = apiService.getCharactersMe(authToken);
-
-        call.enqueue(new Callback<List<CharacterModel>>() {
-            @Override
-            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
-                if (response.isSuccessful()) {
-                    List<CharacterModel> characterList = response.body();
-                    if (characterList != null) {
-                        menuListAdapter = new MenuListAdapter(characterList);
-                        binding.listMyCharacter.setAdapter(menuListAdapter);
-                        setClickListenerRecyclerView(menuListAdapter);
-                        viewModel.loadDoneMy();
-                    }
-                } else {
-                    Log.e(TAG, "Request Failed. Error Code: " + response.code());
-                    try {
-                        if (response.errorBody() != null) {
-                            Log.e(TAG, "Error Body: " + response.errorBody().string());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    viewModel.failLoading();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
-                Log.e(TAG, "Request Failed: " + t.getMessage());
-                viewModel.failLoading();
-            }
-        });
-    }
-
-    public void getCharactersRank() {
-        Call<List<CharacterModel>> call = apiService.getCharactersRank();
-
-        call.enqueue(new Callback<List<CharacterModel>>() {
-            @Override
-            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
-                if (response.isSuccessful()) {
-                    List<CharacterModel> characterList = response.body();
-
-                    if (characterList != null) {
-                        menuListAdapter = new MenuListAdapter(characterList);
-                        binding.listRankCharacter.setAdapter(menuListAdapter);
-                        setClickListenerRecyclerView(menuListAdapter);
-                        viewModel.loadDoneRank();
-                    }
-                } else {
-                    Log.e(TAG, "Request Failed. Error Code: " + response.code());
-                    try {
-                        if (response.errorBody() != null) {
-                            Log.e(TAG, "Error Body: " + response.errorBody().string());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    viewModel.failLoading();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
-                Log.e(TAG, "Request Failed: " + t.getMessage());
-                viewModel.failLoading();
-            }
-        });
-    }
+//    public void getCharactersMe(String authToken) {
+//        Call<List<CharacterModel>> call = apiService.getCharactersMe(authToken);
+//
+//        call.enqueue(new Callback<List<CharacterModel>>() {
+//            @Override
+//            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
+//                if (response.isSuccessful()) {
+//                    List<CharacterModel> characterList = response.body();
+//                    if (characterList != null) {
+//                        menuListAdapter = new MenuListAdapter(characterList);
+//                        binding.listMyCharacter.setAdapter(menuListAdapter);
+//                        setClickListenerRecyclerView(menuListAdapter);
+//                        viewModel.loadDoneMy();
+//                    }
+//                } else {
+//                    Log.e(TAG, "Request Failed. Error Code: " + response.code());
+//                    try {
+//                        if (response.errorBody() != null) {
+//                            Log.e(TAG, "Error Body: " + response.errorBody().string());
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    viewModel.failLoading();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+//                Log.e(TAG, "Request Failed: " + t.getMessage());
+//                viewModel.failLoading();
+//            }
+//        });
+//    }
+//
+//    public void getCharactersRank() {
+//        Call<List<CharacterModel>> call = apiService.getRankCharacters();
+//
+//        call.enqueue(new Callback<List<CharacterModel>>() {
+//            @Override
+//            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
+//                if (response.isSuccessful()) {
+//                    List<CharacterModel> characterList = response.body();
+//
+//                    if (characterList != null) {
+//                        menuListAdapter = new MenuListAdapter(characterList);
+//                        binding.listRankCharacter.setAdapter(menuListAdapter);
+//                        setClickListenerRecyclerView(menuListAdapter);
+//                        viewModel.loadDoneRank();
+//                    }
+//                } else {
+//                    Log.e(TAG, "Request Failed. Error Code: " + response.code());
+//                    try {
+//                        if (response.errorBody() != null) {
+//                            Log.e(TAG, "Error Body: " + response.errorBody().string());
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    viewModel.failLoading();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+//                Log.e(TAG, "Request Failed: " + t.getMessage());
+//                viewModel.failLoading();
+//            }
+//        });
+//    }
 
 }

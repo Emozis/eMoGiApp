@@ -1,35 +1,89 @@
 package com.meta.emogi.views.menu;
 
 import android.app.Application;
-import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.util.ApiRepository;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MenuViewModel extends BaseViewModel {
-    public MenuViewModel(Application application) {super(application);}
     private final MutableLiveData<MoveType> _type = new MutableLiveData<>();
     private final MutableLiveData<Boolean> _isMyLoading = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> _isRankLoading = new MutableLiveData<>(true);
     private final SingleLiveEvent<Void> _menu2ManageProfile = new SingleLiveEvent<>();
 
-    public  LiveData<MoveType> type(){
+    private ApiRepository repository;
+    private final MutableLiveData<List<CharacterModel>> _myCharacters = new MutableLiveData<>();
+    private final MutableLiveData<List<CharacterModel>> _rankCharacters = new MutableLiveData<>();
+
+    public LiveData<MoveType> type() {
         return _type;
     }
-    public LiveData<Boolean> isMyLoading(){
+    public LiveData<Boolean> isMyLoading() {
         return _isMyLoading;
     }
-    public  LiveData<Boolean> isRankLoading(){
+    public LiveData<Boolean> isRankLoading() {
         return _isRankLoading;
     }
-    public  LiveData<Void> menu2ManageProfile(){
+    public LiveData<Void> menu2ManageProfile() {
         return _menu2ManageProfile;
+    }
+    public LiveData<List<CharacterModel>> myCharacters(){
+        return _myCharacters;
+    }
+    public LiveData<List<CharacterModel>> rankCharacters(){
+        return _rankCharacters;
+    }
+
+    public MenuViewModel(Application application) {
+        super(application);
+        repository = new ApiRepository();
+    }
+
+    public void getMyCharacters(String authToken) {
+        repository.getMyCharacters(authToken, new Callback<List<CharacterModel>>() {
+            @Override
+            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
+                if(response.isSuccessful()){
+                    _myCharacters.setValue(response.body());
+                }else{
+                    _myCharacters.setValue(null);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+                _myCharacters.setValue(null);
+            }
+        });
+    }
+
+    public void getRankCharacters(){
+        repository.getRankCharacters(new Callback<List<CharacterModel>>() {
+            @Override
+            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
+                if(response.isSuccessful()){
+                    _rankCharacters.setValue(response.body());
+                }else{
+                    _rankCharacters.setValue(null);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+                _rankCharacters.setValue(null);
+            }
+        });
     }
 
     @Override
@@ -44,19 +98,16 @@ public class MenuViewModel extends BaseViewModel {
         }
     }
 
-    public void loadDoneMy(){
+    public void loadDoneMy() {
         _isMyLoading.setValue(false);
     }
 
-    public void loadDoneRank(){
+    public void loadDoneRank() {
         _isRankLoading.setValue(false);
     }
 
-    public enum MoveType{
-        CHAT_LIST,
-        MAKE_CHARACTER
+    public enum MoveType {
+        CHAT_LIST, MAKE_CHARACTER
     }
-
-
 
 }

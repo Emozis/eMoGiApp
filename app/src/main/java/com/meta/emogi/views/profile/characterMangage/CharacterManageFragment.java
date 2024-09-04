@@ -87,7 +87,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
     }
 
     public void getCharactersMe(String authToken) {
-        Call<List<CharacterModel>> call = apiService.getCharactersMe(authToken);
+        Call<List<CharacterModel>> call = apiService.getMyCharacters(authToken);
 
         call.enqueue(new Callback<List<CharacterModel>>() {
             @Override

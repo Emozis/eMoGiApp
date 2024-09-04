@@ -23,10 +23,10 @@ public interface ApiService {
     Call<TokenModel> sendIdToken(@Body TokenModel request);
 
     @GET("api/v1/characters/me/")
-    Call<List<CharacterModel>> getCharactersMe(@Header("Authorization") String accessToken);
+    Call<List<CharacterModel>> getMyCharacters(@Header("Authorization") String accessToken);
 
     @GET("api/v1/characters/rank/")
-    Call<List<CharacterModel>> getCharactersRank();
+    Call<List<CharacterModel>> getRankCharacters();
 
     @GET("api/v1/chat/me/")
     Call<List<ChatListModel>> getChatList(@Header("Authorization") String accessToken);
