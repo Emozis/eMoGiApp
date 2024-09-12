@@ -15,10 +15,18 @@ import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.data.ChatContent;
 import com.meta.emogi.network.ChatWebSocket;
+import com.meta.emogi.network.datamodels.ChatLogModel;
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.PropertyResourceBundle;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatRoomViewModel extends BaseViewModel {
     private ChatWebSocket chatWebSocket;
@@ -28,9 +36,8 @@ public class ChatRoomViewModel extends BaseViewModel {
     public MutableLiveData<String> inputText = new MutableLiveData<>("");
     private MutableLiveData<String> _sendText = new MutableLiveData<>();
     private MutableLiveData<String> _receivedText = new MutableLiveData<>();
-    private Map<Integer, ChatContent> messageMap = new HashMap<>();
-    private MutableLiveData<String> _characterContent = new MutableLiveData<>();
     private MutableLiveData<Boolean> _isCanChat = new MutableLiveData<>(true);
+    private MutableLiveData<List<ChatLogModel>> _chatLogList = new MutableLiveData<>();
 
     public ChatRoomViewModel(Application application) {super(application);}
 
@@ -43,13 +50,15 @@ public class ChatRoomViewModel extends BaseViewModel {
     public LiveData<Boolean> isCanChat() {
         return _isCanChat;
     }
+    public LiveData<List<ChatLogModel>> chatLogList() {
+        return _chatLogList;
+    }
 
     public void init(String key, int chatId) {
         connectNetwork(key, chatId);
     }
 
     private void connectNetwork(String key, int chatId) {
-
         chatWebSocket = new ChatWebSocket(chatId, new ChatWebSocket.MessageCallback() {
             @Override
             public void onMessageReceived(String message) {
@@ -99,16 +108,22 @@ public class ChatRoomViewModel extends BaseViewModel {
         }
     }
 
-    public void updateChatContent(int responseId, String newContent) {
-        if (messageMap.containsKey(responseId)) {
-            ChatContent existingContent = messageMap.get(responseId);
-            existingContent.appendContent(newContent); // Append new message part
-        } else {
-            ChatContent newContentItem = new ChatContent(ChatContent.TYPE_CHARACTER, newContent);
-            messageMap.put(responseId, newContentItem);
-            // Notify that a new item should be added
-            _receivedText.postValue(newContent);
-        }
+    public void getChatLogList(String accessToken,int chatId){
+        repository.getChatLogList(accessToken, chatId, new Callback<List<ChatLogModel>>() {
+            @Override
+            public void onResponse(Call<List<ChatLogModel>> call, Response<List<ChatLogModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    _chatLogList.setValue(response.body());
+                } else {
+                    failLoading();
+                    Log.e("www", "getChatLogList 응답이 정상적이지 않음");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<ChatLogModel>> call, Throwable t) {
+                Log.e("www", "getChatLogList API 호출 실패: " + t.getMessage());
+            }
+        });
     }
 
     @Override

@@ -35,10 +35,7 @@ import retrofit2.Retrofit;
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> {
 
     private static final String TAG = "LoginFragment";
-    private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    private static final String SERVER_URL = "http://122.128.54.136:7070/";
-    private ApiService apiService;
     private LoginActivity activity;
 
     private LoginViewModel mViewModel;
@@ -61,19 +58,18 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     }
     @Override
     protected void registerObservers() {
-
+        viewModel.accessToken().observe(this,accessToken->{
+            String accessedToken = accessToken.getAccessToken();
+            activity.setAccessToken(requireContext(),accessedToken);
+            activity.moveActivity();
+            Log.d("www", activity.getAccessToken());
+        });
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
-
-        // Retrofit setup
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
-        apiService = retrofit.create(ApiService.class);
-
     }
 
     @Override
@@ -108,40 +104,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Log.d(TAG, "login success :" + account.getIdToken());
-            sendIdTokenToServer(account.getIdToken());
+            TokenModel requestToken = new TokenModel(account.getIdToken());
+            viewModel.createAccessToken(requestToken);
         } catch (ApiException e) {
             Log.w(TAG, "signInResult: failed code=" + e.getStatusCode(), e);
         }
-    }
-
-    public void sendIdTokenToServer(String idToken) {
-        TokenModel request = new TokenModel(idToken);
-
-        Call<TokenModel> call = apiService.sendIdToken(request);
-
-        call.enqueue(new Callback<TokenModel>() {
-            @Override
-            public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("Error", "Code: " + response.code());
-                    return;
-                }
-
-                TokenModel tokenModel = response.body();
-                if (tokenModel != null) {
-                    String acccessToken = tokenModel.getAccessToken();
-                    Log.d(TAG, "JWT Token received: " + acccessToken);
-                    activity.setAccessToken(requireContext(),acccessToken);
-                    activity.moveActivity();
-                    Log.d("www", activity.getAccessToken());
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TokenModel> call, Throwable t) {
-                Log.e("Error", t.getMessage());
-            }
-        });
     }
 }

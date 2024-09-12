@@ -39,7 +39,6 @@ import retrofit2.Retrofit;
 
 public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetailBinding, CharacterDetailViewModel> {
 
-    private ApiService apiService;
     private CharacterDetailActivity activity;
     private int characterId;
     private String accessKey;
@@ -67,8 +66,6 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
-        apiService = retrofit.create(ApiService.class);
     }
 
     @Override
@@ -76,103 +73,45 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
         super.onResume();
         accessKey = activity.getAccessToken();
         characterId = activity.getCharacterId();
-        setCharacterDetail();
+        viewModel.getCharacterDetails(accessKey, characterId);
     }
     @Override
     protected void registerObservers() {
         viewModel.isChatStart().observe(this, unused -> {
-            makeChatRoom();
-            //            activity.moveToChatRoom();
+            viewModel.createChatRoom(accessKey, characterId);
         });
-    }
+        viewModel.characterDetail().observe(this, characterDetail -> {
+            chatUrl = characterDetail.getCharacterProfile();
 
-    public void setCharacterDetail() {
-        Log.d("키값확인", accessKey);
-        Call<CharacterModel> call = apiService.getCharacterDetails(accessKey, characterId);
+            // 이미지 URL을 ImageView에 로드
+            Glide.with(requireContext()).load(chatUrl).placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
+                    .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
+                    .into(binding.characterProfileImage);
 
-        call.enqueue(new Callback<CharacterModel>() {
-            @Override
-            public void onResponse(
-                    @NonNull Call<CharacterModel> call,
-                    @NonNull Response<CharacterModel> response) {
-                if (response.isSuccessful()) {
-                    CharacterModel createdCharacter = response.body();
-                    if (createdCharacter != null) {
+            List<CharacterModel.CharacterRelationship> relationshipList = characterDetail.getCharacterRelationships();
 
-                        chatUrl = createdCharacter.getCharacterProfile();
-
-                        // 이미지 URL을 ImageView에 로드
-                        Glide.with(requireContext())
-                                .load(chatUrl)
-                                .placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
-                                .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
-                                .into(binding.characterProfileImage);
-
-                        List<CharacterModel.CharacterRelationship> relationshipList = createdCharacter.getCharacterRelationships();
-
-
-                        StringBuilder sendRelationship= new StringBuilder();
-                        for(CharacterModel.CharacterRelationship relationship : relationshipList){
-                            sendRelationship.append("#").append(relationship.getRelationship().getRelationshipName()).append(" ");
-                        }
-                        createdCharacter.getCharacterProfile();
-
-                        String nameAndGender = "#" + createdCharacter.getCharacterName() + " #" +
-                                (createdCharacter.getCharacterGender().equals("male") ? "남자" : "여자");
-
-                        Markwon markwon = Markwon.create(requireContext());
-                        Spanned markdownDetail = markwon.toMarkdown(createdCharacter.getCharacterDetails());
-
-                        //마크다운으로 변환
-                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), markdownDetail);
-
-//                        viewModel.getCharacterDetailData(nameAndGender, createdCharacter.getCharacterPersonality(), String.valueOf(sendRelationship), createdCharacter.getCharacterDetails());
-
-                        viewModel.offLoading();
-
-                    }
-                } else {
-                    // 요청 실패 처리
-                    Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
-                    viewModel.failLoading();
-                }
+            StringBuilder sendRelationship = new StringBuilder();
+            for (CharacterModel.CharacterRelationship relationship : relationshipList) {
+                sendRelationship.append("#").append(relationship.getRelationship().getRelationshipName()).append(" ");
             }
+            characterDetail.getCharacterProfile();
 
-            @Override
-            public void onFailure(@NonNull Call<CharacterModel> call, @NonNull Throwable t) {
-                // 네트워크 오류 처리
-                Log.e("Character", "API 호출 실패: " + t.getMessage());
-                viewModel.failLoading();
-            }
-        });
-    }
+            String nameAndGender = "#" + characterDetail.getCharacterName() + " #" + (characterDetail.getCharacterGender().equals("male") ? "남자" : "여자");
 
-    public void makeChatRoom() {
-        Call<MakeChatRoom> call = apiService.createChatRoom(accessKey, characterId);
-        Log.i("www", characterId+"  :  "+accessKey);
-        call.enqueue(new Callback<MakeChatRoom>() {
-            @Override
-            public void onResponse(
-                    @NonNull Call<MakeChatRoom> call, @NonNull Response<MakeChatRoom> response) {
-                if (response.isSuccessful()) {
-                    MakeChatRoom createdCharacter = response.body();
-                    if (createdCharacter != null) {
-                        activity.moveToChatRoom(createdCharacter.getChatId(),chatUrl);
-                        Log.d("방만들기 성공", String.valueOf(createdCharacter.getChatId()));
-                    }
-                } else {
-                    // 요청 실패 처리
-                    Log.e("방만들기 요청 실패", "방만들기 실패 :" + response.message());
-                }
-            }
+            Markwon markwon = Markwon.create(requireContext());
+            Spanned markdownDetail = markwon.toMarkdown(characterDetail.getCharacterDetails());
 
-            @Override
-            public void onFailure(@NonNull Call<MakeChatRoom> call, @NonNull Throwable t) {
-                // 네트워크 오류 처리
-                Log.e("Character", "API 호출 실패: " + t.getMessage());
-            }
+            //마크다운으로 변환
+            viewModel.getCharacterDetailData(nameAndGender, characterDetail.getCharacterPersonality(), String.valueOf(sendRelationship), markdownDetail);
+
+            //                        viewModel.getCharacterDetailData(nameAndGender, characterDetail.getCharacterPersonality(), String.valueOf(sendRelationship), characterDetail.getCharacterDetails());
+
+            viewModel.offLoading();
         });
 
+        viewModel.chatRoom().observe(this, chatRoom -> {
+            activity.moveToChatRoom(chatRoom.getChatId(), chatUrl);
+        });
     }
 
 }

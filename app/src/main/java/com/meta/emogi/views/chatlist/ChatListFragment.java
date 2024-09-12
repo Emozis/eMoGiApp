@@ -34,12 +34,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatListViewModel> {
+public class ChatListFragment extends BaseFragment<FragmentChatListBinding, ChatListViewModel> {
 
-    private ApiService apiService;
     private ChatListActivity activity;
     private ChatListAdapter adapter;
-
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -59,25 +57,27 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
     }
     @Override
     protected void registerObservers() {
-        viewModel.goToProfile().observe(getViewLifecycleOwner(),unused -> {
+        viewModel.goToProfile().observe(getViewLifecycleOwner(), unused -> {
             activity.moveToMyProfile();
+        });
+        viewModel.chatList().observe(this, chatList -> {
+            adapter = new ChatListAdapter(chatList);
+            binding.listChat.setAdapter(adapter);
+            setClickListenerRecyclerView(adapter);
         });
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity=(ChatListActivity) requireActivity();
-
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
-        apiService = retrofit.create(ApiService.class);
+        activity = (ChatListActivity) requireActivity();
     }
     @Override
     public void onResume() {
         super.onResume();
         setupRecyclerView();
         String key = activity.getAccessToken();
-        getChatList(key);
+        viewModel.getChatList(key);
     }
 
     private void setupRecyclerView() {
@@ -90,44 +90,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding,ChatL
         chatListAdapter.setOnItemClickListener((characterId, clickedChatUrl) -> {
             // 클릭된 아이템의 CharacterId와 clickedChatUrl을 가져와서 처리
             if (characterId != -1) {
-                activity.moveToChatRoom(characterId,clickedChatUrl);
-            }
-        });
-    }
-
-    public void getChatList(String authToken) {
-        Call<List<ChatListModel>> call = apiService.getChatList(authToken);
-
-        call.enqueue(new Callback<List<ChatListModel>>() {
-            @Override
-            public void onResponse(Call<List<ChatListModel>> call, Response<List<ChatListModel>> response) {
-                if (response.isSuccessful()) {
-                    List<ChatListModel> chatList = response.body();
-                    if (chatList != null) {
-                        adapter = new ChatListAdapter(chatList);
-                        binding.listChat.setAdapter(adapter);
-                        setClickListenerRecyclerView(adapter);
-                    }
-                    viewModel.offLoading();
-                } else {
-                    Log.e(TAG, "Request Failed. Error Code: " + response.code());
-                    try {
-                        if (response.errorBody() != null) {
-                            Log.e(TAG, "Error Body: " + response.errorBody().string());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    viewModel.failLoading();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ChatListModel>> call, Throwable t) {
-                Log.d(TAG, "getCharacters:4");
-                Log.e(TAG, "Request Failed: " + t.getMessage());
-                viewModel.failLoading();
+                activity.moveToChatRoom(characterId, clickedChatUrl);
             }
         });
     }

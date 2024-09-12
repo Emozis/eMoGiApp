@@ -1,6 +1,7 @@
 package com.meta.emogi.views.menu;
 
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
@@ -24,9 +25,8 @@ public class MenuViewModel extends BaseViewModel {
     private final MutableLiveData<Boolean> _isRankLoading = new MutableLiveData<>(true);
     private final SingleLiveEvent<Void> _menu2ManageProfile = new SingleLiveEvent<>();
 
-    private ApiRepository repository;
-    private final MutableLiveData<List<CharacterModel>> _myCharacters = new MutableLiveData<>();
-    private final MutableLiveData<List<CharacterModel>> _rankCharacters = new MutableLiveData<>();
+    private final MutableLiveData<List<CharacterModel>> _myCharacterList = new MutableLiveData<>();
+    private final MutableLiveData<List<CharacterModel>> _rankCharacterList = new MutableLiveData<>();
 
     public LiveData<MoveType> type() {
         return _type;
@@ -40,48 +40,47 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<Void> menu2ManageProfile() {
         return _menu2ManageProfile;
     }
-    public LiveData<List<CharacterModel>> myCharacters(){
-        return _myCharacters;
+    public LiveData<List<CharacterModel>> myCharacterList(){
+        return _myCharacterList;
     }
-    public LiveData<List<CharacterModel>> rankCharacters(){
-        return _rankCharacters;
+    public LiveData<List<CharacterModel>> rankCharacterList(){
+        return _rankCharacterList;
     }
 
     public MenuViewModel(Application application) {
         super(application);
-        repository = new ApiRepository();
     }
 
-    public void getMyCharacters(String authToken) {
-        repository.getMyCharacters(authToken, new Callback<List<CharacterModel>>() {
+    public void getMyCharacters(String accessToken) {
+        repository.getMyCharacterList(accessToken, new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
                 if(response.isSuccessful()){
-                    _myCharacters.setValue(response.body());
+                    _myCharacterList.setValue(response.body());
                 }else{
-                    _myCharacters.setValue(null);
+                    Log.e("www", "getMyCharacters 응답이 정상적이지 않음");
                 }
             }
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
-                _myCharacters.setValue(null);
+                Log.e("www", "getMyCharacters API 호출 실패: " + t.getMessage());
             }
         });
     }
 
-    public void getRankCharacters(){
-        repository.getRankCharacters(new Callback<List<CharacterModel>>() {
+    public void getRankCharacterList(){
+        repository.getRankCharacterList(new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
                 if(response.isSuccessful()){
-                    _rankCharacters.setValue(response.body());
+                    _rankCharacterList.setValue(response.body());
                 }else{
-                    _rankCharacters.setValue(null);
+                    Log.e("www", "getRankCharacters 응답이 정상적이지 않음");
                 }
             }
             @Override
             public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
-                _rankCharacters.setValue(null);
+                Log.e("www", "getRankCharacters API 호출 실패: " + t.getMessage());
             }
         });
     }

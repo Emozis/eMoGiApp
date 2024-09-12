@@ -38,7 +38,6 @@ import retrofit2.Retrofit;
 
 public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageViewModel> {
 
-    private ApiService apiService;
     private ProfileActivity activity;
 
     @Override
@@ -58,18 +57,25 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
         viewModel.goToMyPage().observe(this, unused -> {
             Navigation.findNavController(requireView()).navigate(R.id.action_myPageFragment_to_characterManageFragment);
         });
+
+        viewModel.userData().observe(this, userData -> {
+            viewModel.setUserData(userData.getUserEmail(), userData.getUserName());
+
+            Glide.with(requireContext()).load(userData.getUserProfile()).placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
+                    .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
+                    .into(binding.imageProfile);
+
+            viewModel.offLoading();
+        });
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
-
         activity = (ProfileActivity) requireActivity();
-
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
-        apiService = retrofit.create(ApiService.class);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -83,47 +89,7 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onResume() {
         super.onResume();
-
-        getUserData();
-        Log.d(TAG, "onResume: ");
-    }
-
-    private void getUserData() {
-        String accessToken =activity.getAccessToken();
-        Call<UserData> call = apiService.getUserData(accessToken);
-
-        call.enqueue(new Callback<UserData>() {
-            @Override
-            public void onResponse(
-                    @NonNull Call<UserData> call, @NonNull Response<UserData> response) {
-                if (response.isSuccessful()) {
-                    UserData createdCharacter = response.body();
-                    if (createdCharacter != null) {
-                        // 성공적으로 생성된 캐릭터 처리
-                        viewModel.setUserData(createdCharacter.getUserEmail(), createdCharacter.getUserName());
-
-                        Glide.with(requireContext())
-                                .load( createdCharacter.getUserProfile())
-                                .placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
-                                .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
-                                .into(binding.imageProfile);
-
-                        viewModel.offLoading();
-                    }
-                } else {
-                    // 요청 실패 처리
-                    Log.e("data요청 실패", "유저 데이터 가져오기 실패 :" + response.message());
-                    viewModel.failLoading();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserData> call, @NonNull Throwable t) {
-                // 네트워크 오류 처리
-                Log.e("Character", "API 호출 실패: " + t.getMessage());
-                viewModel.failLoading();
-            }
-        });
-
+        String key = activity.getAccessToken();
+        viewModel.getUserData(key);
     }
 }

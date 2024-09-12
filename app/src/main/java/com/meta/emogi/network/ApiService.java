@@ -20,29 +20,29 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 public interface ApiService {
     @POST("api/v1/auth/login/google/id-token")
-    Call<TokenModel> sendIdToken(@Body TokenModel request);
+    Call<TokenModel> createAccessToken(@Body TokenModel request);
 
     @GET("api/v1/characters/me/")
-    Call<List<CharacterModel>> getMyCharacters(@Header("Authorization") String accessToken);
+    Call<List<CharacterModel>> getMyCharacterList(@Header("Authorization") String accessToken);
 
     @GET("api/v1/characters/rank/")
-    Call<List<CharacterModel>> getRankCharacters();
+    Call<List<CharacterModel>> getRankCharacterList();
 
     @GET("api/v1/chat/me/")
     Call<List<ChatListModel>> getChatList(@Header("Authorization") String accessToken);
 
     @POST("api/v1/characters/")
     Call<MakeCharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body
-    MakeCharacterModel characterRequest);
+    MakeCharacterModel characterModel);
 
     @GET("api/v1/user/me")
     Call<UserData> getUserData(@Header("Authorization") String accessToken);
 
     @GET("api/v1/default-images/")
-    Call<List<ImageModel>> getDefaultImage();
+    Call<List<ImageModel>> getDefaultImageList();
 
     @GET("api/v1/relationship/")
-    Call<List<RelationshipModel>> getDefaultRelationship();
+    Call<List<RelationshipModel>> getDefaultRelationshipList();
 
     @GET("api/v1/characters/{character_id}")
     Call<CharacterModel> getCharacterDetails(@Header("Authorization") String accessToken, @Path("character_id") int characterId);

@@ -42,7 +42,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     private List<ChatContent> data;
     private RecyclerView recyclerView;
     private ChatRoomActivity activity;
-    private ApiService apiService;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -93,6 +92,18 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                 binding.transmit.setEnabled(false);
             }
         });
+
+        viewModel.chatLogList().observe(this, chatLogList -> {
+            data = new ArrayList<>();
+            for (ChatLogModel log : chatLogList) {
+                data.add(new ChatContent(log.getRole(), log.getContents(), activity.getChatUrl()));
+            }
+
+            adapter = new ChatListAdapter(data);
+            adapter.notifyItemChanged(data.size() - 1);
+            recyclerView.setAdapter(adapter);
+            recyclerView.scrollToPosition(data.size() - 1);
+        });
     }
 
     private void setKeyboard() {
@@ -126,54 +137,17 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         activity = (ChatRoomActivity) requireActivity();
 
         setKeyboard();
-        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
-        apiService = retrofit.create(ApiService.class);
 
-        // RecyclerView 설정
         recyclerView = binding.chatField;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        getChatLog();
-
-    }
-
-    public void getChatLog() {
-        Call<List<ChatLogModel>> call = apiService.getChatLog(activity.getAccessToken(), activity.getChatId());
-
-        call.enqueue(new Callback<List<ChatLogModel>>() {
-            @Override
-            public void onResponse(
-                    @NonNull Call<List<ChatLogModel>> call,
-                    @NonNull Response<List<ChatLogModel>> response) {
-                if (response.isSuccessful()) {
-                    List<ChatLogModel> chatLogs = response.body();
-                    data = new ArrayList<>();
-                    for (ChatLogModel log : chatLogs) {
-                        data.add(new ChatContent(log.getRole(), log.getContents(), activity.getChatUrl()));
-                    }
-
-                    adapter = new ChatListAdapter(data);
-                    adapter.notifyItemChanged(data.size() - 1);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.scrollToPosition(data.size() - 1);
-                } else {
-                    Log.e("API Error", "Failed to fetch chat logs: " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<ChatLogModel>> call, @NonNull Throwable t) {
-                Log.e("Network Error", "API call failed: " + t.getMessage());
-            }
-        });
+        viewModel.getChatLogList(activity.getAccessToken(), activity.getChatId());
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        String key = activity.getAccessToken();
-        int chatId = activity.getChatId();
-        viewModel.init(key, chatId);
+        viewModel.init(activity.getAccessToken(), activity.getChatId());
     }
 }
