@@ -1,10 +1,9 @@
-package com.meta.emogi.views.chatlist;
-import android.annotation.SuppressLint;
-import android.util.Log;
+package com.meta.emogi.views.chatlist.removeChatList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,28 +16,26 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.ChatListModel;
-import com.meta.emogi.views.menu.MenuListAdapter;
+import com.meta.emogi.views.chatlist.chatList.ChatListAdapter;
 
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
+public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAdapter.RemoveChatListViewHolder> {
 
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder> {
+    private OnItemClickListener onItemClickListener;
     private List<ChatListModel> chatList;
     private int selectedPosition = RecyclerView.NO_POSITION;
-    private static final String TAG = "ChatListAdapter";
-    private OnItemClickListener onItemClickListener;
 
-    public ChatListAdapter(List<ChatListModel> chatList) {
+    // 생성자 추가
+    public RemoveChatListAdapter(List<ChatListModel> chatList) {
         this.chatList = chatList;
     }
 
     @NonNull
     @Override
-    public ChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RemoveChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_chat_list, parent, false);
-        return new ChatListViewHolder(view);
+        View view = layoutInflater.inflate(R.layout.item_rm_chat_list, parent, false);
+        return new RemoveChatListViewHolder(view);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -49,54 +46,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         void onItemClick(int characterId, String clickedChatUrl);
     }
 
-    private String parseLastTime(String[] timeArr) {
-
-        Calendar calendar = Calendar.getInstance();
-        String nowYear = String.valueOf(calendar.get(Calendar.YEAR));
-        String nowMonth = "0"+String.valueOf(calendar.get(Calendar.MONTH) + 1); // 0 부터시작
-        String nowDay = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-
-        nowDay = nowDay.length()==1?"0"+nowDay:nowDay;
-
-        String result = "";
-        
-        if (timeArr[0].equals(nowYear) && timeArr[1].equals(nowMonth) && timeArr[2].equals(nowDay)) {
-            int hour = Integer.valueOf(timeArr[3]);
-            result += hour / 12 > 0 ? "오후\n" : "오전\n";
-            result += hour % 12 ==0 ? "12" : String.valueOf(hour % 12) +":"+timeArr[4];
-        }else{
-            result += timeArr[1]+"월"+" "+timeArr[2]+"일";
-        }
-
-        return result;
-
-    }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RemoveChatListViewHolder holder, int position) {
         ChatListModel chat = chatList.get(position);
         holder.characterName.setText(chat.getCharacter().getCharacterName());
-
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
+        holder.lastTalk.setText(chat.getLastMessage());
+        holder.lastTalkTime.setText(chat.getLastMessageAt());
 
-        List<ChatListModel.ChatLogs> chatLogs = chat.getChatLogs();
-        if (chatLogs != null && !chatLogs.isEmpty()) {
-            // Here we assume you want the content of the last chat log entry
+        if (chat.getEmptyChat()) {
             holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
-            String lastLogContent = chatLogs.get(chatLogs.size() - 1).getContents();
-            holder.lastTalk.setText(lastLogContent);
         } else {
-            // If no chat logs are available, set a default or empty message
-            holder.lastTalk.setText("최근에 대화한 채팅이 없습니다.\n어서 이야기해보세요");
             holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow));
         }
-
-
-        String lastTalkTime = chat.getLastMessageAt();
-        String[] timeArr = lastTalkTime.split("[-T:.]");
-        lastTalkTime = parseLastTime(timeArr);
-
-        holder.lastTalkTime.setText(lastTalkTime);
 
         holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +73,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
 
                     int clickedChatId = chatList.get(selectedPosition).getChatId();
                     String clickedChatUrl = chatList.get(selectedPosition).getCharacter().getCharacterProfile();
-                    onItemClickListener.onItemClick(clickedChatId,clickedChatUrl);
+                    onItemClickListener.onItemClick(clickedChatId, clickedChatUrl);
+
+                    if(holder.radioButton.isSelected()){
+                        holder.radioButton.setSelected(false);
+                    }else{
+                        holder.radioButton.setSelected(true);
+                    }
 
                     // 변경된 선택 사항을 RecyclerView에 반영
                     notifyDataSetChanged();
@@ -125,31 +94,30 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
                 .apply(requestOptions) // 둥근 모서리 적용
                 .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
                 .into(holder.characterImage); // ImageView에 로드
-
-        // ImageView에 이미지를 로드하는 코드를 추가
     }
+
 
     @Override
     public int getItemCount() {
-        return chatList.size();
+        return chatList != null ? chatList.size() : 0;
     }
 
-    class ChatListViewHolder extends RecyclerView.ViewHolder {
+    public class RemoveChatListViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout itemMenuCharacter;
+        RadioButton radioButton;
         ImageView characterImage;
         TextView characterName;
         TextView lastTalk;
         TextView lastTalkTime;
 
-        ChatListViewHolder(@NonNull View itemView) {
+        public RemoveChatListViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemMenuCharacter = itemView.findViewById(R.id.my_chat_list_layout);
-            characterImage = itemView.findViewById(R.id.character_image);
-            characterName = itemView.findViewById(R.id.character_name);
-            lastTalk = itemView.findViewById(R.id.last_talk);
-            lastTalkTime = itemView.findViewById(R.id.last_talk_time);
-
+            itemMenuCharacter = itemView.findViewById(R.id.rm_my_chat_list_layout);
+            radioButton = itemView.findViewById(R.id.rm_select_Button);
+            characterImage = itemView.findViewById(R.id.rm_character_image);
+            characterName = itemView.findViewById(R.id.rm_character_name);
+            lastTalk = itemView.findViewById(R.id.rm_last_talk);
+            lastTalkTime = itemView.findViewById(R.id.rm_last_talk_time);
         }
-
     }
 }

@@ -50,7 +50,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         String data = intent.getStringExtra("ACCESS_TOKEN");
         String initFragment = intent.getStringExtra("INIT_FRAGMENT");
 
-        setAccessToken(this,data);
+        setAccessToken(data);
 
         NavController navController = Navigation.findNavController(this, R.id.profileChildFrag);
         NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.profile_nav);

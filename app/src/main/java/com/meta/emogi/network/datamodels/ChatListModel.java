@@ -18,8 +18,14 @@ public class ChatListModel {
     @SerializedName("chatCreateAt")
     private String chatCreateAt;
 
+    @SerializedName("lastMessage")
+    private String lastMessage;
+
     @SerializedName("lastMessageAt")
     private String lastMessageAt;
+
+    @SerializedName("isEmptyChat")
+    private Boolean isEmptyChat;
 
     @SerializedName("chatLogs")
     private List<ChatLogs> chatLogs;
@@ -156,6 +162,18 @@ public class ChatListModel {
         this.chatCreateAt = chatCreateAt;
     }
 
+    public String getLastMessage() {
+        return lastMessage;
+    }
+    public Boolean getEmptyChat() {
+        return isEmptyChat;
+    }
+    public void setEmptyChat(Boolean emptyChat) {
+        isEmptyChat = emptyChat;
+    }
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
     public String getLastMessageAt() {
         return lastMessageAt;
     }

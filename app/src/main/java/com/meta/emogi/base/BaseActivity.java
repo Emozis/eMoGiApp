@@ -31,11 +31,8 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         return accessToken;
     }
 
-    public void setAccessToken(Context context, String accessToken) {
-        ConfigUtil configUtil = new ConfigUtil(context);
-        String prefix = configUtil.getProperty("KEY_PREFIX");
-        Log.d("www", prefix+" "+accessToken);
-        this.accessToken = prefix+" "+accessToken;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     protected abstract @LayoutRes int layoutId();

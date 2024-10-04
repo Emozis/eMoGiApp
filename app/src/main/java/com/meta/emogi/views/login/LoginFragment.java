@@ -25,6 +25,7 @@ import com.meta.emogi.databinding.FragmentLoginBinding;
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.TokenModel;
+import com.meta.emogi.util.ConfigUtil;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import retrofit2.Call;
@@ -58,11 +59,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     }
     @Override
     protected void registerObservers() {
-        viewModel.accessToken().observe(this,accessToken->{
+        viewModel.accessToken().observe(this, accessToken -> {
             String accessedToken = accessToken.getAccessToken();
-            activity.setAccessToken(requireContext(),accessedToken);
+            ConfigUtil configUtil = new ConfigUtil(activity);
+            String prefix = configUtil.getProperty("KEY_PREFIX");
+            activity.setAccessToken(prefix + " " + accessedToken);
             activity.moveActivity();
-            Log.d("www", activity.getAccessToken());
+            Log.d("www", "Login 성공 토큰 :" + activity.getAccessToken());
         });
     }
     @Override

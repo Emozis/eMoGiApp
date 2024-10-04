@@ -7,7 +7,19 @@
 
     <fragment
         android:id="@+id/chatListFragment"
-        android:name="com.meta.emogi.views.chatlist.ChatListFragment"
+        android:name="com.meta.emogi.views.chatlist.chatList.ChatListFragment"
         tools:layout="@layout/fragment_chat_list"
-        android:label="ChatListFragment" />
+        android:label="ChatListFragment" >
+        <action
+            android:id="@+id/action_chatListFragment_to_removeChatListFragment"
+            app:destination="@id/removeChatListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/removeChatListFragment"
+        android:name="com.meta.emogi.views.chatlist.removeChatList.RemoveChatListFragment"
+        android:label="RemoveChatListFragment" >
+        <action
+            android:id="@+id/action_removeChatListFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
+    </fragment>
 </navigation>

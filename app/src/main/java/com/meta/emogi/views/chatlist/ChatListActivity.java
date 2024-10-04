@@ -7,17 +7,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.MutableLiveData;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityChatListBinding;
+import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
 import com.meta.emogi.views.chatroom.ChatRoomActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
+import java.util.List;
+
 public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
+
+    public List<ChatListModel> chatList;
 
     @Override
     protected int layoutId() {
@@ -33,7 +39,7 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
         super.onResume();
         Intent intent = getIntent();
         String data = intent.getStringExtra("ACCESS_TOKEN");
-        setAccessToken(this,data);
+        setAccessToken(data);
         //        Log.d(TAG, data);
     }
 
@@ -53,4 +59,10 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
         startActivity(intent);
     }
 
+    public List<ChatListModel> getChatList() {
+        return chatList;
+    }
+    public void setChatList(List<ChatListModel> chatList) {
+        this.chatList = chatList;
+    }
 }

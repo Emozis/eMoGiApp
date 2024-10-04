@@ -45,7 +45,7 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        setAccessToken(this,intent.getStringExtra("ACCESS_TOKEN"));
+        setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
         chatId = intent.getIntExtra("CHAT_ID",0);
         chatUrl = intent.getStringExtra("CHAT_URL");
         setChatId(chatId);

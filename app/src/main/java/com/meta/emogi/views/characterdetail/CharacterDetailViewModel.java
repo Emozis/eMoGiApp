@@ -66,14 +66,15 @@ public class CharacterDetailViewModel extends BaseViewModel {
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _characterDetail.setValue(response.body());
-                } else {
                     offLoading();
+                } else {
+                    failLoading();
                     Log.e("www", "getCharacterDetails 응답이 정상적이지 않음");
                 }
             }
             @Override
             public void onFailure(Call<CharacterModel> call, Throwable t) {
-                offLoading();
+                failLoading();
                 Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
             }
         });
@@ -85,8 +86,9 @@ public class CharacterDetailViewModel extends BaseViewModel {
             public void onResponse(Call<MakeChatRoom> call, Response<MakeChatRoom> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _chatRoom.setValue(response.body());
-                } else {
                     offLoading();
+                } else {
+                    failLoading();
                     Log.e("www", "getCharacterDetails 응답이 정상적이지 않음");
                 }
             }

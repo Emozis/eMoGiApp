@@ -1,38 +1,20 @@
-package com.meta.emogi.views.chatlist;
+package com.meta.emogi.views.chatlist.chatList;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentChatListBinding;
-import com.meta.emogi.di.ViewModelFactory;
-import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.RetrofitClient;
-import com.meta.emogi.network.datamodels.ChatListModel;
-import com.meta.emogi.views.menu.MenuActivity;
-import com.meta.emogi.views.menu.MenuListAdapter;
-import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.views.chatlist.ChatListActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ChatListFragment extends BaseFragment<FragmentChatListBinding, ChatListViewModel> {
 
@@ -65,6 +47,10 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
             binding.listChat.setAdapter(adapter);
             setClickListenerRecyclerView(adapter);
         });
+        viewModel.goToEditChatList().observe(this,unused -> {
+            activity.setChatList(viewModel.chatList().getValue());
+            Navigation.findNavController(requireView()).navigate(R.id.action_chatListFragment_to_removeChatListFragment);
+        });
     }
 
     @Override
@@ -75,6 +61,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("WWW", "onResume: ");
         setupRecyclerView();
         String key = activity.getAccessToken();
         viewModel.getChatList(key);

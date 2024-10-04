@@ -44,7 +44,7 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         super.onResume();
         Intent intent = getIntent();
         String data = intent.getStringExtra("ACCESS_TOKEN");
-        setAccessToken(this,data);
+        setAccessToken(data);
     }
 
 

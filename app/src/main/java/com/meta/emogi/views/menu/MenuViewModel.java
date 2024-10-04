@@ -13,6 +13,7 @@ import com.meta.emogi.base.SingleLiveEvent;
 import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.util.ApiRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,13 +53,26 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void getMyCharacters(String accessToken) {
+        Log.d("www", accessToken);
         repository.getMyCharacterList(accessToken, new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
                 if(response.isSuccessful()){
                     _myCharacterList.setValue(response.body());
-                }else{
-                    Log.e("www", "getMyCharacters 응답이 정상적이지 않음");
+                }else {
+                    // HTTP 상태 코드와 에러 메시지 로그 추가
+                    int statusCode = response.code();
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 로그에 상태 코드와 에러 메시지 출력
+                    Log.e("www", "getMyCharacters 응답이 정상적이지 않음. 상태 코드: " + statusCode + ", 에러 본문: " + errorBody);
                 }
             }
             @Override
