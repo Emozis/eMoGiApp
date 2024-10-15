@@ -62,12 +62,12 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
     public void onResume() {
         super.onResume();
         Log.d("WWW", "onResume: ");
-        setupRecyclerView();
+        setAdapter();
         String key = activity.getAccessToken();
         viewModel.getChatList(key);
     }
 
-    private void setupRecyclerView() {
+    private void setAdapter() {
         adapter = new ChatListAdapter(new ArrayList<>());
         binding.listChat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         binding.listChat.setAdapter(adapter);

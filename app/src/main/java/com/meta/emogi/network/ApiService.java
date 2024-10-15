@@ -4,6 +4,7 @@ import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.ChatLogModel;
 import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
+import com.meta.emogi.network.datamodels.MessageResponse;
 import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -30,6 +32,9 @@ public interface ApiService {
 
     @GET("api/v1/chat/me/")
     Call<List<ChatListModel>> getChatList(@Header("Authorization") String accessToken);
+
+    @DELETE("api/v1/chat/{chat_id}")
+    Call<MessageResponse> deleteChat(@Header("Authorization") String accessToken, @Path("chat_id") int chat_id);
 
     @POST("api/v1/characters/")
     Call<MakeCharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body

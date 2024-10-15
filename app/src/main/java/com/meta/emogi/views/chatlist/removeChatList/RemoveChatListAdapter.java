@@ -1,4 +1,5 @@
 package com.meta.emogi.views.chatlist.removeChatList;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int characterId, String clickedChatUrl);
+        void onItemClick(int characterId);
     }
 
 
@@ -72,13 +73,12 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
                     selectedPosition = position;
 
                     int clickedChatId = chatList.get(selectedPosition).getChatId();
-                    String clickedChatUrl = chatList.get(selectedPosition).getCharacter().getCharacterProfile();
-                    onItemClickListener.onItemClick(clickedChatId, clickedChatUrl);
+                    onItemClickListener.onItemClick(clickedChatId);
 
-                    if(holder.radioButton.isSelected()){
-                        holder.radioButton.setSelected(false);
+                    if(holder.radioButton.isChecked()){
+                        holder.radioButton.setChecked(false);
                     }else{
-                        holder.radioButton.setSelected(true);
+                        holder.radioButton.setChecked(true);
                     }
 
                     // 변경된 선택 사항을 RecyclerView에 반영

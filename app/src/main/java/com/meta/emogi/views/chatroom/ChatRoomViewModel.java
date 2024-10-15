@@ -78,7 +78,7 @@ public class ChatRoomViewModel extends BaseViewModel {
         Gson gson = new Gson();
         String jsonMessage = gson.toJson(chatContent);
 
-        Log.d(TAG, "보낸 메시지: " + jsonMessage);
+        Log.d("www", "보낸 메시지: " + jsonMessage);
         chatWebSocket.sendMessage(jsonMessage);
     }
 

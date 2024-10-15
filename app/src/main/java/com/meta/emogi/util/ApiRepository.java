@@ -10,6 +10,7 @@ import com.meta.emogi.network.datamodels.MakeChatRoom;
 import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
+import com.meta.emogi.network.datamodels.MessageResponse;
 
 import java.util.List;
 
@@ -59,6 +60,11 @@ public class ApiRepository {
     //chatList
     public void getChatList(String accessToken,Callback<List<ChatListModel>> callback){
         apiService.getChatList(accessToken).enqueue(callback);
+    }
+
+    //deletechat
+    public void deleteChat(String accessToken,int chatId,Callback<MessageResponse> callback){
+        apiService.deleteChat(accessToken,chatId).enqueue(callback);
     }
 
     //characterDetail

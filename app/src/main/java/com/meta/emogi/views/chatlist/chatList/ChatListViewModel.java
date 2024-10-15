@@ -126,7 +126,6 @@ public class ChatListViewModel extends BaseViewModel {
         }
 
         return result;
-
     }
 
 }

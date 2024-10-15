@@ -31,6 +31,7 @@ public class LoginViewModel extends BaseViewModel {
     public MutableLiveData<TokenModel> accessToken() {
         return _accessToken;
     }
+
     public void createAccessToken(TokenModel requestToken) {
         repository.createAccessToken(requestToken, new Callback<TokenModel>() {
             @Override

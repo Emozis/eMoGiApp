@@ -20,7 +20,6 @@
             android:id="@+id/layout_chat_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:isVisible="@{!viewModel.isLoading()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -55,10 +54,27 @@
                 android:id="@+id/rm_list_chat"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/remove_chat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/chat_tab" />
+
+
+            <Button
+                android:id="@+id/remove_chat"
+                style="@style/ButtonCharacterDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/yellow"
+                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+                android:text="채팅방 삭제하기"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

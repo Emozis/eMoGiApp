@@ -12,12 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.meta.emogi.util.ConfigUtil;
-import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.di.ViewModelFactory;
-import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 import com.meta.emogi.views.toolbar.ToolbarViewModel;
