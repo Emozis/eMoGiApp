@@ -33,7 +33,7 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("채팅 삭제");
+        return new ToolbarView.ToolbarRequest("내 채팅방");
     }
 
     @Override
@@ -58,6 +58,9 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
         });
         viewModel.goToChatList().observe(this,unused -> {
             Navigation.findNavController(requireView()).navigate(R.id.action_removeChatListFragment_to_chatListFragment);
+        });
+        viewModel.selectAll().observe(this,unused -> {
+            adapter.selectAll(true);
         });
     }
     @Override

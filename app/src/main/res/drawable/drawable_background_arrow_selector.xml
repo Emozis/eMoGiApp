@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 비활성화 상태 -->
-    <item android:drawable="@drawable/drawable_background_arrow_disable" android:state_enabled="false" />
+    <item android:drawable="@drawable/ic_send_msg_disable" android:state_enabled="false" />
 
     <!-- 활성화 상태 -->
-    <item android:drawable="@drawable/drawable_background_arrow_enable" android:state_enabled="true" />
+    <item android:drawable="@drawable/ic_send_msg_able" android:state_enabled="true" />
 
 </selector>

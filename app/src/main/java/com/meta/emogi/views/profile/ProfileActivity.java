@@ -74,5 +74,10 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     public void toolbar2Profile(String accessToken){
     }
 
+    @Override
+    public void onBackPressed() {
+        onBackPressedAction();
+        super.onBackPressed();
+    }
 
 }

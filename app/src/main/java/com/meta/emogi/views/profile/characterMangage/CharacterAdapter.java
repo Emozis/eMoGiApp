@@ -63,7 +63,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
         holder.characterNameView.setText(characterItem.getCharacterName());
 
-        RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 반지름 설정
+        RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(12)); // 반지름 설정
         
         Glide.with(holder.itemView.getContext()).load(characterItem.getCharacterProfile()) // characterProfile은 이미지 URL
                 .apply(requestOptions) // 둥근 모서리 적용

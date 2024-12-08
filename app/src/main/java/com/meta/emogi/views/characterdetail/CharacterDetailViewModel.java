@@ -27,7 +27,7 @@ public class CharacterDetailViewModel extends BaseViewModel {
     private final MutableLiveData<String> _nameAndGender = new MutableLiveData<>("이름");
     private final MutableLiveData<String> _personality = new MutableLiveData<>("성격");
     private final MutableLiveData<String> _category = new MutableLiveData<>("카테고리");
-    private final MutableLiveData<Spanned> _detail = new MutableLiveData<>();
+    private final MutableLiveData<String> _detail = new MutableLiveData<>();
     private final SingleLiveEvent<Void> _isChatStart = new SingleLiveEvent<>();
     private final MutableLiveData<CharacterModel> _characterDetail = new MutableLiveData<>();
     private final MutableLiveData<MakeChatRoom> _chatRoom = new MutableLiveData<>();
@@ -41,7 +41,7 @@ public class CharacterDetailViewModel extends BaseViewModel {
     public LiveData<String> category() {
         return _category;
     }
-    public LiveData<Spanned> detail() {
+    public LiveData<String> detail() {
         return _detail;
     }
     public LiveData<Void> isChatStart() {return _isChatStart;}
@@ -49,7 +49,7 @@ public class CharacterDetailViewModel extends BaseViewModel {
     public LiveData<MakeChatRoom> chatRoom() {return _chatRoom;}
 
 
-    public void getCharacterDetailData(String nameAndGender, String personality, String category, Spanned detail) {
+    public void getCharacterDetailData(String nameAndGender, String personality, String category, String detail) {
         _nameAndGender.setValue(nameAndGender);
         _personality.setValue(personality);
         _category.setValue(category);

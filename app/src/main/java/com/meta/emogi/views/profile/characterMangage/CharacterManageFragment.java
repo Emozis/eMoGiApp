@@ -19,7 +19,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("프로필");
+        return new ToolbarView.ToolbarRequest("마이페이지");
     }
     @Override
     protected int layoutId() {

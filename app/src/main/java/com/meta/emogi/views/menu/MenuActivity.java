@@ -34,9 +34,13 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
     protected int layoutId() {
         return R.layout.activity_menu;
     }
+//    @Override
+//    protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
+//        binding.toolbar.settingView(toolbarRequest);
+//    }
+
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
-        binding.toolbar.settingView(toolbarRequest);
     }
 
     @Override
@@ -71,6 +75,12 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
         intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
+        startActivity(intent);
+    }
+
+    public void moveToMyPageProfile(){
+        Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 

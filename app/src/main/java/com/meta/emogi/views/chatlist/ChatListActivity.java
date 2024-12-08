@@ -44,11 +44,13 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     }
 
 
-    public void moveToChatRoom(int chatId,String chatUrl){
+    public void moveToChatRoom(int chatId,String chatUrl,String characterName){
         Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
         intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHAT_ID", chatId);
         intent.putExtra("CHAT_URL", chatUrl);
+        intent.putExtra("CHARACTER_NAME", characterName);
+
         startActivity(intent);
     }
 

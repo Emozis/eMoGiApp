@@ -14,7 +14,8 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorControlActivated">@color/yellow</item>
+        <item name="android:statusBarColor">@color/main_black</item>
         <item name="android:windowAnimationStyle">@null</item>
 
     </style>
@@ -36,11 +37,15 @@
     </style>
 
     <style name="ButtonCharacterDetailGender" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/drawable_background_character_iamge</item>
+        <item name="android:background">@drawable/drawable_background_gender</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:backgroundTint">@null</item>
         <item name="backgroundTint">@null</item>
     </style>
-
+    <!-- res/values/themes.xml 또는 styles.xml -->
+    <style name="checkBox" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- 기존 테마 속성들 -->
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
 
 </resources>

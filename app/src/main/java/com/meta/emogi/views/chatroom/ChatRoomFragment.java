@@ -4,7 +4,9 @@ import androidx.lifecycle.Observer;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,7 +47,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("채팅");
+        return new ToolbarView.ToolbarRequest("채팅방테스트");
     }
 
     public static ChatRoomFragment newInstance() {
@@ -76,7 +78,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
             if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
-                Log.d("www", "메세지 받음"+recevied);
+                Log.d("www", "메세지 받음 :"+recevied);
 
                 Markwon markwon = Markwon.create(requireContext());
                 Spanned markdownContent = markwon.toMarkdown(recevied);
@@ -129,6 +131,24 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                 return false;
             }
         });
+
+        binding.sendText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().isEmpty()){
+                    binding.transmit.setEnabled(false);
+                }else{
+                    binding.transmit.setEnabled(true);
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     @Override
@@ -150,7 +170,9 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     public void onResume() {
         super.onResume();
         Log.d("www34", activity.getAccessToken());
-
+        binding.transmit.setEnabled(false);
         viewModel.init(activity.getAccessToken(), activity.getChatId());
+        ToolbarView.ToolbarRequest newToolbarRequest = new ToolbarView.ToolbarRequest(activity.getCharacterName());
+        updateToolbar(newToolbarRequest);
     }
 }

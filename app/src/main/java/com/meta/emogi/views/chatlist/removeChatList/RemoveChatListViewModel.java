@@ -29,10 +29,15 @@ public class RemoveChatListViewModel extends BaseViewModel {
     private final MutableLiveData<List<ChatListModel>> _chatList = new MutableLiveData<>();
     private final MutableLiveData<List<Integer>> _isPressDelete = new MutableLiveData<>();
     private final SingleLiveEvent<Void> _goToChatList = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> _selectAll = new SingleLiveEvent<>();
+
+
+
 
     public LiveData<List<ChatListModel>> chatList() {return _chatList;}
     public LiveData<List<Integer>> isPressDelete() {return _isPressDelete;}
     public LiveData<Void> goToChatList() {return _goToChatList;}
+    public LiveData<Void> selectAll() {return _selectAll;}
 
     private ArrayList<Integer> DeleteChatIdList;
 
@@ -47,7 +52,12 @@ public class RemoveChatListViewModel extends BaseViewModel {
         int btnResId = v.getId();
         if (btnResId == R.id.remove_chat) {
             _isPressDelete.setValue(DeleteChatIdList);
+        }else if(btnResId == R.id.cancel){
+            _goToChatList.call();
+        }else if(btnResId == R.id.select_all){
+            _selectAll.call();
         }
+
     }
 
     public void selectedChatIdDeleteList(int intChatId) {

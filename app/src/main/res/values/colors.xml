@@ -12,20 +12,26 @@
     <color name="gray">#A7A7A7</color>
     <color name="red">#B34848</color>
     <color name="yellow">#FFD400</color>
-    <color name="dark_blu">#282A37</color>
+    <color name="dark_blu">#242633</color>
     <color name="ai_chat">#242633</color>
-
-
+    <color name="ai_chat_border">#8C8C8C</color>
+    <color name="main_black">#1C1D23</color>
     <color name="text_view_character_create">#1C1D23</color>
+
+    <!--    menu-->
+    <color name="menu_my_chat_room">#321E58</color>
+    <color name="menu_make_character">#1F5A7D</color>
+    <color name="menu_2_profile_btn">#9B9B9B</color>
 
     <!--    background-->
     <color name="bg_toolbar">#1C1D23</color>
 
     <!--    text-->
     <color name="text_color_common">@color/white</color>
-
     <!--    icon-->
     <color name="icon_color_white">@color/white</color>
+
+
 
 
 </resources>

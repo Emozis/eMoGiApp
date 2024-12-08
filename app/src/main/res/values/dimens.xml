@@ -2,13 +2,15 @@
 <resources>
 
     <!--    text-->
-    <dimen name="common_text_size_very_small">12sp</dimen>
+    <dimen name="common_text_size_very_small">10sp</dimen>
     <dimen name="common_text_size_small">16sp</dimen>
     <dimen name="common_text_size_medium">20sp</dimen>
     <dimen name="common_text_size_large">24sp</dimen>
     <dimen name="common_text_size_very_large">30sp</dimen>
     <dimen name="error_text_size">26sp</dimen>
 
+    <!--    chat list img-->
+    <dimen name="chat_list_img">65dp</dimen>
 
     <!--    menu-->
     <dimen name="menu_list_width">115dp</dimen>
@@ -17,20 +19,22 @@
 
     <!--    chat-->
     <dimen name="chat_icon_size">30dp</dimen>
+    <dimen name="chat_character_img_size">42dp</dimen>
 
     <!--    toolbar-->
     <dimen name="height_tool_bar">60dp</dimen>
-    <dimen name="size_tool_bar_icon">35dp</dimen>
+    <dimen name="size_tool_bar_icon">36dp</dimen>
 
     <!--    profile-->
-    <dimen name="size_profile">170dp</dimen>
+    <dimen name="size_profile">135dp</dimen>
     <dimen name="profile_top_nav_height">80dp</dimen>
+    <dimen name="profile_character_img">70dp</dimen>
 
     <!--    character create-->
-    <dimen name="size_character_create_profile">100dp</dimen>
+    <dimen name="size_character_create_profile">80dp</dimen>
 
     <!--    character detail-->
-    <dimen name="size_character_detail">130dp</dimen>
+    <dimen name="size_character_detail">100dp</dimen>
 
 
 </resources>

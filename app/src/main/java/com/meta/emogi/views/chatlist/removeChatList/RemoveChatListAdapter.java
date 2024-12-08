@@ -3,6 +3,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -24,12 +25,19 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
 
     private OnItemClickListener onItemClickListener;
     private List<ChatListModel> chatList;
+    private boolean isAllSelected = false;
     private int selectedPosition = RecyclerView.NO_POSITION;
 
     // 생성자 추가
     public RemoveChatListAdapter(List<ChatListModel> chatList) {
         this.chatList = chatList;
     }
+
+    public void selectAll(boolean select) {
+        isAllSelected = select;
+        notifyDataSetChanged(); // 데이터 변경 알림
+    }
+
 
     @NonNull
     @Override
@@ -51,6 +59,9 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
     @Override
     public void onBindViewHolder(@NonNull RemoveChatListViewHolder holder, int position) {
         ChatListModel chat = chatList.get(position);
+
+        holder.checkBox.setChecked(isAllSelected || holder.checkBox.isChecked());
+
         holder.characterName.setText(chat.getCharacter().getCharacterName());
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
         holder.lastTalk.setText(chat.getLastMessage());
@@ -62,28 +73,11 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
             holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow));
         }
 
-        holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-
-                // 현재 포지션이 RecyclerView.NO_POSITION이 아닌지 확인
-                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
-                    // 선택된 포지션 업데이트
-                    selectedPosition = position;
-
-                    int clickedChatId = chatList.get(selectedPosition).getChatId();
-                    onItemClickListener.onItemClick(clickedChatId);
-
-                    if(holder.radioButton.isChecked()){
-                        holder.radioButton.setChecked(false);
-                    }else{
-                        holder.radioButton.setChecked(true);
-                    }
-
-                    // 변경된 선택 사항을 RecyclerView에 반영
-                    notifyDataSetChanged();
-                }
+        holder.itemMenuCharacter.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION && onItemClickListener != null) {
+                onItemClickListener.onItemClick(chatList.get(pos).getChatId());
+                holder.checkBox.setChecked(!holder.checkBox.isChecked()); // 선택 상태 반전
             }
         });
 
@@ -104,7 +98,7 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
 
     public class RemoveChatListViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout itemMenuCharacter;
-        RadioButton radioButton;
+        CheckBox checkBox;
         ImageView characterImage;
         TextView characterName;
         TextView lastTalk;
@@ -113,7 +107,7 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
         public RemoveChatListViewHolder(@NonNull View itemView) {
             super(itemView);
             itemMenuCharacter = itemView.findViewById(R.id.rm_my_chat_list_layout);
-            radioButton = itemView.findViewById(R.id.rm_select_Button);
+            checkBox = itemView.findViewById(R.id.rm_select_Button);
             characterImage = itemView.findViewById(R.id.rm_character_image);
             characterName = itemView.findViewById(R.id.rm_character_name);
             lastTalk = itemView.findViewById(R.id.rm_last_talk);

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -80,8 +81,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         super.onViewCreated(view, savedInstanceState);
         activity = (LoginActivity) getActivity();
 
-        SignInButton signInButton = view.findViewById(R.id.login_button);
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn(); // Google 로그인을 시작하는 메서드 호출

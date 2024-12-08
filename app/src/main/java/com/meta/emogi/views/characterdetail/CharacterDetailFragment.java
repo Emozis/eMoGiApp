@@ -43,6 +43,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     private int characterId;
     private String accessKey;
     private String chatUrl;
+    private String characterName;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -82,10 +83,12 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
         });
         viewModel.characterDetail().observe(this, characterDetail -> {
             chatUrl = characterDetail.getCharacterProfile();
+            characterName = characterDetail.getCharacterName();
 
             // 이미지 URL을 ImageView에 로드
             Glide.with(requireContext()).load(chatUrl).placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
                     .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
+                    .circleCrop()
                     .into(binding.characterProfileImage);
 
             List<CharacterModel.CharacterRelationship> relationshipList = characterDetail.getCharacterRelationships();
@@ -98,11 +101,12 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
 
             String nameAndGender = "#" + characterDetail.getCharacterName() + " #" + (characterDetail.getCharacterGender().equals("male") ? "남자" : "여자");
 
-            Markwon markwon = Markwon.create(requireContext());
-            Spanned markdownDetail = markwon.toMarkdown(characterDetail.getCharacterDetails());
+//            Markwon markwon = Markwon.create(requireContext());
+//            Spanned markdownDetail = markwon.toMarkdown(characterDetail.getCharacterDetails());
+            String Detail = characterDetail.getCharacterDetails();
 
             //마크다운으로 변환
-            viewModel.getCharacterDetailData(nameAndGender, characterDetail.getCharacterPersonality(), String.valueOf(sendRelationship), markdownDetail);
+            viewModel.getCharacterDetailData(nameAndGender, characterDetail.getCharacterPersonality(), String.valueOf(sendRelationship), Detail);
 
             //                        viewModel.getCharacterDetailData(nameAndGender, characterDetail.getCharacterPersonality(), String.valueOf(sendRelationship), characterDetail.getCharacterDetails());
 
@@ -110,7 +114,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
         });
 
         viewModel.chatRoom().observe(this, chatRoom -> {
-            activity.moveToChatRoom(chatRoom.getChatId(), chatUrl);
+            activity.moveToChatRoom(chatRoom.getChatId(), chatUrl,characterName);
         });
     }
 

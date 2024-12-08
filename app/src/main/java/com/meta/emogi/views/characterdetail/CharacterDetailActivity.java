@@ -55,16 +55,18 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
     public int getCharacterId() {
         return characterId;
     }
+
     public void setCharacterId(int characterId) {
         this.characterId = characterId;
     }
 
 
-    public void moveToChatRoom(int chatId,String chatUrl){
+    public void moveToChatRoom(int chatId,String chatUrl,String characterName){
         Intent intent = new Intent(CharacterDetailActivity.this, ChatRoomActivity.class);
         intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHAT_ID", chatId);
         intent.putExtra("CHAT_URL", chatUrl);
+        intent.putExtra("CHARACTER_NAME", characterName);
         startActivity(intent);
     }
 

@@ -32,9 +32,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="마이페이지"
+                android:text="내 계정"
                 android:textColor="@color/yellow"
-                android:textSize="32sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/manage_character"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,45 +45,36 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/gray"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:text="캐릭터 관리"
-                android:textSize="32sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_page"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/my_page_bar"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:isVisible="@{viewModel.isLoading()}"
-            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
-
-            <ProgressBar
-                android:id="@+id/loading_pb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:isVisible="@{viewModel.isShowProgress()}"
-                app:layout_constraintBottom_toTopOf="@+id/loading_text"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/manage_character_bar"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/manage_character_bar"
                 />
 
-            <TextView
-                android:id="@+id/loading_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@{viewModel.loadingText()}"
-                android:textSize="@dimen/error_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <View
+                android:id="@+id/manage_character_bar"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/my_page_bar"
+                app:layout_constraintTop_toBottomOf="@+id/my_page"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,8 +92,9 @@
             <ImageView
                 android:id="@+id/image_profile"
                 android:layout_width="@dimen/size_profile"
+                android:background="@drawable/drawable_background_rounded_image"
                 android:layout_height="@dimen/size_profile"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/mypage_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -113,9 +105,11 @@
                 android:id="@+id/profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                tools:text="google@gmail.com"
                 android:text="@{viewModel.email()}"
-                android:textSize="@dimen/common_text_size_very_large"
+                android:textSize="@dimen/common_text_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_profile" />
@@ -124,12 +118,46 @@
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
+                tools:text="내이름"
                 android:text="@{viewModel.nickName()}"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/common_text_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:isVisible="@{viewModel.isLoading()}"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp">
+
+                <ProgressBar
+                    android:id="@+id/loading_pb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:isVisible="@{viewModel.isShowProgress()}"
+                    app:layout_constraintBottom_toTopOf="@+id/loading_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/loading_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{viewModel.loadingText()}"
+                    android:textSize="@dimen/error_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

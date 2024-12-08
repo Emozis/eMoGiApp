@@ -19,6 +19,7 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
 
     private int chatId;
     private String chatUrl;
+    private String characterName;
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
@@ -41,6 +42,12 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
     public void setChatUrl(String chatUrl) {
         this.chatUrl = chatUrl;
     }
+    public String getCharacterName() {
+        return characterName;
+    }
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +55,10 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
         setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
         chatId = intent.getIntExtra("CHAT_ID",0);
         chatUrl = intent.getStringExtra("CHAT_URL");
+        characterName = intent.getStringExtra("CHARACTER_NAME");
         setChatId(chatId);
         setChatUrl(chatUrl);
+        setCharacterName(characterName);
     }
 
     @Override

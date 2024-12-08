@@ -11,6 +11,7 @@ import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
 import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.network.datamodels.UserData;
 import com.meta.emogi.util.ApiRepository;
 
 import java.io.IOException;
@@ -25,6 +26,8 @@ public class MenuViewModel extends BaseViewModel {
     private final MutableLiveData<Boolean> _isMyLoading = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> _isRankLoading = new MutableLiveData<>(true);
     private final SingleLiveEvent<Void> _menu2ManageProfile = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> _menu2MyPageProfile = new SingleLiveEvent<>();
+    private final MutableLiveData<UserData> _userData = new MutableLiveData<>();
 
     private final MutableLiveData<List<CharacterModel>> _myCharacterList = new MutableLiveData<>();
     private final MutableLiveData<List<CharacterModel>> _rankCharacterList = new MutableLiveData<>();
@@ -41,11 +44,18 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<Void> menu2ManageProfile() {
         return _menu2ManageProfile;
     }
+
+    public LiveData<Void> menu2MyPageProfile() {
+        return _menu2MyPageProfile;
+    }
     public LiveData<List<CharacterModel>> myCharacterList(){
         return _myCharacterList;
     }
     public LiveData<List<CharacterModel>> rankCharacterList(){
         return _rankCharacterList;
+    }
+    public LiveData<UserData> userData() {
+        return _userData;
     }
 
     public MenuViewModel(Application application) {
@@ -108,8 +118,28 @@ public class MenuViewModel extends BaseViewModel {
             _type.setValue(MoveType.MAKE_CHARACTER);
         } else if (btnResId == R.id.button_go_manage_profile) {
             _menu2ManageProfile.call();
+        }else if(btnResId ==R.id.image_profile){
+            _menu2MyPageProfile.call();
         }
     }
+
+    public void getUserData(String accessToken) {
+        repository.getUserData(accessToken, new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    _userData.setValue(response.body());
+                }else{
+                    Log.e("www", "getUserData 응답이 정상적이지 않음");
+                }
+            }
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Log.e("www", "getUserData API 호출 실패: " + t.getMessage());
+            }
+        });
+    }
+
 
     public void loadDoneMy() {
         _isMyLoading.setValue(false);

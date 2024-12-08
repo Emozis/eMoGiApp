@@ -42,7 +42,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int characterId, String clickedChatUrl);
+        void onItemClick(int characterId, String clickedChatUrl,String clickedCharacterName);
     }
 
     @Override
@@ -71,7 +71,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
 
                     int clickedChatId = chatList.get(selectedPosition).getChatId();
                     String clickedChatUrl = chatList.get(selectedPosition).getCharacter().getCharacterProfile();
-                    onItemClickListener.onItemClick(clickedChatId, clickedChatUrl);
+                    String clickedCharacterName = chatList.get(selectedPosition).getCharacter().getCharacterName();
+                    onItemClickListener.onItemClick(clickedChatId, clickedChatUrl,clickedCharacterName);
 
                     // 변경된 선택 사항을 RecyclerView에 반영
                     notifyDataSetChanged();

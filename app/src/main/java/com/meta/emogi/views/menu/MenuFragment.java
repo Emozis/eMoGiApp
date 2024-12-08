@@ -64,6 +64,10 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
             activity.moveToManageProfile();
         });
 
+        viewModel.menu2MyPageProfile().observe(this,unused -> {
+            activity.moveToMyPageProfile();
+        });
+
         viewModel.isMyLoading().observe(this, isMyLoading -> {
             if (!isMyLoading && !viewModel.isRankLoading().getValue()) {
                 viewModel.offLoading();
@@ -100,6 +104,15 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
             }
         });
 
+        viewModel.userData().observe(this, userData -> {
+            Glide.with(requireContext()).load(userData.getUserProfile()).placeholder(R.drawable.ic_profile) // 로딩 중일 때 보여줄 이미지
+                    .error(R.drawable.ic_profile) // 로딩 실패 시 보여줄 이미지
+                    .circleCrop() // 이미지를 동그랗게 만듭니다.
+                    .into(binding.imageProfile);
+
+            viewModel.offLoading();
+        });
+
     }
 
     @Override
@@ -112,8 +125,10 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
     public void onResume() {
         super.onResume();
         String key = activity.getAccessToken();
+        viewModel.getUserData(key);
         viewModel.getMyCharacters(key);
         viewModel.getRankCharacterList();
+
     }
 
     private void setClickListenerRecyclerView(MenuListAdapter menuListAdapter) {

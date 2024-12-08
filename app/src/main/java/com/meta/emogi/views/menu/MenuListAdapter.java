@@ -1,9 +1,7 @@
 package com.meta.emogi.views.menu;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +39,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_menu_chacter, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_menu_chracter, parent, false);
         return new CharacterViewHolder(view);
     }
 

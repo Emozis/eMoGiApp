@@ -42,7 +42,7 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("프로필");
+        return new ToolbarView.ToolbarRequest("마이페이지");
     }
     @Override
     protected int layoutId() {
@@ -61,8 +61,9 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
         viewModel.userData().observe(this, userData -> {
             viewModel.setUserData(userData.getUserEmail(), userData.getUserName());
 
-            Glide.with(requireContext()).load(userData.getUserProfile()).placeholder(R.drawable.drawable_background_toolbar_profile) // 로딩 중일 때 보여줄 이미지
-                    .error(R.drawable.drawable_background_toolbar_profile) // 로딩 실패 시 보여줄 이미지
+            Glide.with(requireContext()).load(userData.getUserProfile()).placeholder(R.drawable.ic_profile) // 로딩 중일 때 보여줄 이미지
+                    .error(R.drawable.ic_profile) // 로딩 실패 시 보여줄 이미지
+                    .circleCrop() // 이미지를 동그랗게 만듭니다.
                     .into(binding.imageProfile);
 
             viewModel.offLoading();

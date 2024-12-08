@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.meta.emogi.R;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.profile.ProfileActivity;
@@ -44,23 +48,32 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         ViewModelFactory factory = new ViewModelFactory(getApplication());
         toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
 
-        toolbarViewModel.toolbar2Profile().observe(this, unused -> {
-            toolbar2Profile(accessToken);
+        toolbarViewModel.back().observe(this, unused -> {
+            Log.d("BackPressed", "ToolbarViewModel에서 뒤로 가기 호출됨");
+            onBackPressedAction();
         });
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                onBackPressedAction(); // 커스터마이징 가능한 메서드 호출
+                Log.d("BackPressed", "onBackPressedDispatcher에서 호출됨");
+                onBackPressedAction();
             }
         });
+
+        setStatusBarColor();
+    }
+
+    private void setStatusBarColor(){
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.main_black));
     }
 
     protected void onBackPressedAction() {
         Intent intent = new Intent(BaseActivity.this, MenuActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        finish(); // 현재 액티비티를 종료하여 뒤로 가기 스택에서 제거
+        finish();
     }
 
     public void toolbar2Profile(String accessToken){

@@ -23,7 +23,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("채팅리스트");
+        return new ToolbarView.ToolbarRequest("내 채팅방");
     }
 
     public static ChatListFragment newInstance() {
@@ -74,10 +74,10 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
     }
 
     private void setClickListenerRecyclerView(ChatListAdapter chatListAdapter) {
-        chatListAdapter.setOnItemClickListener((characterId, clickedChatUrl) -> {
+        chatListAdapter.setOnItemClickListener((characterId, clickedChatUrl,clickedCharacterName) -> {
             // 클릭된 아이템의 CharacterId와 clickedChatUrl을 가져와서 처리
             if (characterId != -1) {
-                activity.moveToChatRoom(characterId, clickedChatUrl);
+                activity.moveToChatRoom(characterId, clickedChatUrl,clickedCharacterName);
             }
         });
     }

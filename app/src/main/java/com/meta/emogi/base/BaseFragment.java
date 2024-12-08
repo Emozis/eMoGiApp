@@ -54,17 +54,6 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         ToolbarView.ToolbarRequest request = toolbarCallback();
         if (request != null)
             ((BaseActivity<?>) requireActivity()).setToolbar(toolbarCallback());
-//
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-//            public void handleOnBackPressed() {
-//                // 홈 액티비티로 이동
-//                Intent intent = new Intent(getActivity(), MenuActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//                requireActivity().finish(); // 현재 Activity 종료
-//            }
-//        });
-
         return binding.getRoot();
     }
 
@@ -78,4 +67,11 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             }
         });
     }
+
+    protected void updateToolbar(ToolbarView.ToolbarRequest request) {
+        if (request != null) {
+            ((BaseActivity<?>) requireActivity()).setToolbar(request);
+        }
+    }
+
 }

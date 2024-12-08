@@ -74,7 +74,7 @@ public class ChatRoomViewModel extends BaseViewModel {
 
         chatWebSocket.start();
 
-        ChatContent chatContent = new ChatContent(TYPE_AUTH, "Bearer " + key, true);
+        ChatContent chatContent = new ChatContent(TYPE_AUTH, key, true);
         Gson gson = new Gson();
         String jsonMessage = gson.toJson(chatContent);
 

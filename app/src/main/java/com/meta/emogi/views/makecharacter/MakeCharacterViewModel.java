@@ -35,7 +35,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public final MutableLiveData<Boolean> _isMan = new MutableLiveData<>(true);
     public final MutableLiveData<String> _category = new MutableLiveData<>("");
     public final SingleLiveEvent<Void> _generate = new SingleLiveEvent<>();
-    public final MutableLiveData<Boolean> _isOpen = new MutableLiveData<>(false);
+    public final MutableLiveData<Boolean> _isOpen = new MutableLiveData<>(true);
     public final MutableLiveData<List<RelationshipModel>> _defaultRelationshipList = new MutableLiveData<>();
     public final MutableLiveData<List<ImageModel>> _defaultImageList = new MutableLiveData<>();
     public final MutableLiveData<MakeCharacterModel> _createdCharacter = new MutableLiveData<>();
@@ -94,6 +94,9 @@ public class MakeCharacterViewModel extends BaseViewModel {
             public void onResponse(Call<List<RelationshipModel>> call, Response<List<RelationshipModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _defaultRelationshipList.setValue(response.body());
+                    for(RelationshipModel r: response.body()){
+                        Log.d(TAG, r.getRelationshipName());
+                    }
                 } else {
                     failLoading();
                     Log.e("www", "getDefaultRelationshipList 응답이 정상적이지 않음");
