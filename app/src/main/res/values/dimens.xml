@@ -9,6 +9,10 @@
     <dimen name="common_text_size_very_large">30sp</dimen>
     <dimen name="error_text_size">26sp</dimen>
 
+
+    <!--    common-->
+    <dimen name="common_icon_size">24dp</dimen>
+
     <!--    chat list img-->
     <dimen name="chat_list_img">65dp</dimen>
 

@@ -20,7 +20,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_top_nav_height"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,9 +59,10 @@
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:background="@color/gray"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/manage_character_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/manage_character_bar"
+                app:layout_constraintTop_toBottomOf="@+id/my_page"
                 />
 
             <View
@@ -68,15 +70,38 @@
                 android:layout_width="0dp"
                 android:layout_height="3dp"
                 android:background="@color/yellow"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_page_bar"
-                app:layout_constraintTop_toBottomOf="@+id/my_page"
+                app:layout_constraintTop_toBottomOf="@+id/manage_character"
                 />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_edit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            >
+
+            <TextView
+                android:text="캐릭터 삭제"
+                android:textSize="@dimen/common_text_size_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/loading"
             android:layout_width="match_parent"
@@ -116,7 +141,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/layout_edit"
             app:isVisible="@{!viewModel.isLoading()}"
             app:layout_constraintVertical_weight="8">
 

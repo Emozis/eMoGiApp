@@ -13,58 +13,34 @@
 
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.makecharacter.MakeCharacterFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".views.makecharacter.MakeCharacterFragment">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/loading"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:isVisible="@{viewModel.isLoading()}">
-
-                <ProgressBar
-                    android:id="@+id/loading_pb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    app:isVisible="@{viewModel.isShowProgress()}"
-                    app:layout_constraintBottom_toTopOf="@+id/loading_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
-
-                <TextView
-                    android:id="@+id/loading_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@{viewModel.loadingText()}"
-                    android:textSize="@dimen/error_text_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/generate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:layout_marginBottom="10dp"
                 app:isVisible="@{!viewModel.isLoading()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/loading"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lyaout_make_character"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,9 +85,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_name"
-                        android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/layout_personality"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -191,10 +167,10 @@
                         android:id="@+id/layout_personality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/layout_category"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginBottom="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/layout_name"
                         >
 
@@ -269,6 +245,38 @@
 
                         </androidx.recyclerview.widget.RecyclerView>
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/loading"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:isVisible="@{viewModel.isLoading()}"
+                            >
+
+                            <ProgressBar
+                                android:id="@+id/loading_pb"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                app:isVisible="@{viewModel.isShowProgress()}"
+                                app:layout_constraintBottom_toTopOf="@+id/loading_text"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/loading_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{viewModel.loadingText()}"
+                                android:textSize="@dimen/error_text_size"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -327,16 +335,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/layout_detail">
 
-                        <ImageView
+                        <CheckBox
                             android:id="@+id/iv_is_open"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:layout_marginEnd="4dp"
                             android:onClick="@{v->viewModel.onButtonClicked(v)}"
-                            android:src="@drawable/drawable_background_is_open"
+                            android:theme="@style/checkBox"
                             app:layout_constraintBottom_toBottomOf="@+id/tv_is_open_text"
                             app:layout_constraintEnd_toStartOf="@+id/tv_is_open_text"
-                            app:layout_constraintTop_toTopOf="@+id/tv_is_open_text" />
+                            app:layout_constraintTop_toTopOf="@+id/tv_is_open_text"
+                            />
 
                         <TextView
                             android:id="@+id/tv_is_open_text"
@@ -345,31 +354,27 @@
                             android:layout_marginEnd="10dp"
                             android:text="캐릭터 공개"
                             android:textSize="@dimen/common_text_size_small"
-                            app:layout_constraintBottom_toTopOf="@+id/generate"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="parent" />
-
-                        <Button
-                            android:id="@+id/generate"
-                            style="@style/ButtonCharacterDetail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                            android:text="캐릭터 생성하기"
-                            android:textSize="@dimen/common_text_size_medium"
-                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.2"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_is_open_text" />
-
+                            app:layout_constraintEnd_toEndOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/generate"
+            style="@style/ButtonCharacterDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+            android:text="캐릭터 생성하기"
+            android:textSize="@dimen/common_text_size_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

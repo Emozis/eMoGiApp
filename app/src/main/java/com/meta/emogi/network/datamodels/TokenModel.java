@@ -7,7 +7,6 @@ import java.util.List;
 
 public class TokenModel {
 
-
     // 요청에 사용할 생성자
     public TokenModel(String idToken) {
         this.idToken = idToken;
@@ -17,46 +16,37 @@ public class TokenModel {
     public TokenModel() {}
 
     @SerializedName("idToken")
-    @Expose(serialize = true,
-            deserialize = false)
+    @Expose(serialize = true, deserialize = false)
     private String idToken;
 
     @SerializedName("status")
-    @Expose(serialize = false,
-            deserialize = true)
+    @Expose(serialize = false, deserialize = true)
     private String status;
 
     @SerializedName("message")
-    @Expose(serialize = false,
-            deserialize = true)
+    @Expose(serialize = false, deserialize = true)
     private String message;
 
     @SerializedName("user")
-    @Expose(serialize = false,
-            deserialize = true)
+    @Expose(serialize = false, deserialize = true)
     private User user;
 
     @SerializedName("accessToken")
-    @Expose(serialize = false,
-            deserialize = true)
+    @Expose(serialize = false, deserialize = true)
     private String accessToken;
 
     public static class User {
         @SerializedName("userId")
-        @Expose(serialize = false,
-                deserialize = true)
+        @Expose(serialize = false, deserialize = true)
         private int userId;
         @SerializedName("userEmail")
-        @Expose(serialize = false,
-                deserialize = true)
+        @Expose(serialize = false, deserialize = true)
         private String userEmail;
         @SerializedName("userName")
-        @Expose(serialize = false,
-                deserialize = true)
+        @Expose(serialize = false, deserialize = true)
         private String userName;
         @SerializedName("userProfile")
-        @Expose(serialize = false,
-                deserialize = true)
+        @Expose(serialize = false, deserialize = true)
         private String userProfile;
 
         public int getUserId() {

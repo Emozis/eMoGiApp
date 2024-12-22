@@ -17,7 +17,7 @@
             android:background="@drawable/drawable_background_ai_chat"
             android:text="hihi"
             android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_medium"
+            android:textSize="@dimen/common_text_size_small"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

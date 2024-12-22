@@ -77,7 +77,7 @@
                 android:layout_width="@dimen/chat_icon_size"
                 android:layout_height="@dimen/chat_icon_size"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="12dp"
                 android:background="@drawable/drawable_background_arrow_selector"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:padding="20dp"
