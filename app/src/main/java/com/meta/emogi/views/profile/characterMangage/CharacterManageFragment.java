@@ -34,6 +34,10 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
         viewModel.goToMyPage().observe(this, unused -> {
             Navigation.findNavController(requireView()).navigate(R.id.action_characterManageFragment_to_myPageFragment);
         });
+        viewModel.isActiveDeleteMode().observe(this,isActive->{
+            viewModel.setDeleteToggleString(isActive);
+            characterAdapter.setDeleteMode(isActive);
+        });
 
         viewModel.myCharacterList().observe(getViewLifecycleOwner(), myCharacterList -> {
             characterAdapter = new CharacterAdapter(myCharacterList);
@@ -54,7 +58,8 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
     public void onResume() {
         super.onResume();
         String key = activity.getAccessToken();
-        viewModel.getMyCharacters(key);
+//        viewModel.getMyCharacters(key);
+        viewModel.dummyCharacterModelList();
     }
 
     private void setClickListenerRecyclerView(CharacterAdapter chatListAdapter) {

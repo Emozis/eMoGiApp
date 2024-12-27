@@ -21,9 +21,15 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     private List<CharacterModel> characterList;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private OnItemClickListener onItemClickListener;
+    private boolean deleteMode = false;
 
     public CharacterAdapter(List<CharacterModel> characterList) {
         this.characterList = characterList;
+    }
+
+    public void setDeleteMode(boolean deleteMode){
+        this.deleteMode = deleteMode;
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -31,6 +37,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     }
     public interface OnItemClickListener {
         void onItemClick(int characterId);
+        void onEditItem(CharacterModel characterItem);
     }
 
     @NonNull
@@ -45,6 +52,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         CharacterModel characterItem = characterList.get(position);
         holder.myPageCharacterListLayout.setSelected(position == selectedPosition);
 
+        if(deleteMode){
+            holder.modifyCharacter.setText("수정");
+        }else{
+            holder.modifyCharacter.setText("삭제");
+        }
 
         String description="";
         description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자";
@@ -90,6 +102,24 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             }
         });
 
+        holder.modifyCharacter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // 이전에 선택된 아이템의 선택 상태를 해제
+                if (selectedPosition != RecyclerView.NO_POSITION) {
+                    notifyItemChanged(selectedPosition);
+                }
+
+                // 새로운 아이템을 선택하고 상태 업데이트
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(selectedPosition);
+
+                if (onItemClickListener != null) {
+                    onItemClickListener.onEditItem(characterItem);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -102,6 +132,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         ImageView characterImageView;
         TextView characterNameView;
         TextView characterDescriptionView;
+        TextView modifyCharacter;
 
         public CharacterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +140,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             characterImageView = itemView.findViewById(R.id.image_character);
             characterNameView = itemView.findViewById(R.id.name_character);
             characterDescriptionView = itemView.findViewById(R.id.description_character);
+            modifyCharacter = itemView.findViewById(R.id.modify_character);
+
 
         }
     }

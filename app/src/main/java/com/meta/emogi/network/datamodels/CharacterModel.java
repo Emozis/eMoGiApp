@@ -33,6 +33,18 @@ public class CharacterModel {
         this.isSelected = false;
     }
 
+    public CharacterModel(int characterId, String characterName, String characterProfile, String characterGender, String characterPersonality, String characterDetails, List<CharacterRelationship> characterRelationships, String characterCreatedAt, User user, boolean isSelected) {
+        this.characterId = characterId;
+        this.characterName = characterName;
+        this.characterProfile = characterProfile;
+        this.characterGender = characterGender;
+        this.characterPersonality = characterPersonality;
+        this.characterDetails = characterDetails;
+        this.characterRelationships = characterRelationships;
+        this.characterCreatedAt = characterCreatedAt;
+        this.user = user;
+        this.isSelected = isSelected;
+    }
     public static class CharacterRelationship {
 
         @SerializedName("relationship")
