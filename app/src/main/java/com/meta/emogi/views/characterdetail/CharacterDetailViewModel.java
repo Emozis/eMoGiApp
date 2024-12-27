@@ -80,8 +80,13 @@ public class CharacterDetailViewModel extends BaseViewModel {
         });
     }
 
-    public void createChatRoom(String accessToken, int characterId){
-        repository.createChatRoom(accessToken, characterId, new Callback<MakeChatRoom>() {
+    public void connectCreateChatRoom(String accessToken, int characterId){
+        MakeChatRoom makeChatRoom =  new MakeChatRoom(characterId);
+        createChatRoom(accessToken,makeChatRoom);
+    }
+
+    public void createChatRoom(String accessToken, MakeChatRoom makeChatRoom){
+        repository.createChatRoom(accessToken, makeChatRoom, new Callback<MakeChatRoom>() {
             @Override
             public void onResponse(Call<MakeChatRoom> call, Response<MakeChatRoom> response) {
                 if (response.isSuccessful() && response.body() != null) {
