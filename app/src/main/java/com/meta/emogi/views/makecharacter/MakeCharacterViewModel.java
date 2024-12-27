@@ -94,7 +94,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
             public void onResponse(Call<List<RelationshipModel>> call, Response<List<RelationshipModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _defaultRelationshipList.setValue(response.body());
-                    for (RelationshipModel r : response.body()) {
+                    for(RelationshipModel r: response.body()){
                         Log.d(TAG, r.getRelationshipName());
                     }
                 } else {
@@ -130,6 +130,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void createCharacter(String accessToken, MakeCharacterModel characterModel) {
+
         repository.createCharacter(accessToken, characterModel, new Callback<MakeCharacterModel>() {
             @Override
             public void onResponse(Call<MakeCharacterModel> call, Response<MakeCharacterModel> response) {

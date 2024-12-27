@@ -90,17 +90,14 @@
             >
 
             <TextView
-                android:id="@+id/toggle_delete"
-                android:text="@{viewModel.deleteToggleString()}"
+                android:text="캐릭터 삭제"
                 android:textSize="@dimen/common_text_size_medium"
-                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="10dp"
-                tools:text="삭제"
                 />
 
 

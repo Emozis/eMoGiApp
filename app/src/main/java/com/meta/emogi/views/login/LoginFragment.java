@@ -64,8 +64,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
             String accessedToken = accessToken.getAccessToken();
             ConfigUtil configUtil = new ConfigUtil(activity);
             String prefix = configUtil.getProperty("KEY_PREFIX");
-//            activity.setAccessToken(prefix + " " + accessedToken);
-            activity.setAccessToken(accessedToken);
+            activity.setAccessToken(prefix + " " + accessedToken);
             activity.moveActivity();
             Log.d("www", "Login 성공 토큰 :" + activity.getAccessToken());
         });

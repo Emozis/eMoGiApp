@@ -79,7 +79,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     @Override
     protected void registerObservers() {
         viewModel.isChatStart().observe(this, unused -> {
-            viewModel.connectCreateChatRoom(accessKey, characterId);
+            viewModel.createChatRoom(accessKey, characterId);
         });
         viewModel.characterDetail().observe(this, characterDetail -> {
             chatUrl = characterDetail.getCharacterProfile();
@@ -114,7 +114,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
         });
 
         viewModel.chatRoom().observe(this, chatRoom -> {
-            activity.moveToChatRoom(chatRoom.getData().getChatId(), chatUrl,characterName);
+            activity.moveToChatRoom(chatRoom.getChatId(), chatUrl,characterName);
         });
     }
 

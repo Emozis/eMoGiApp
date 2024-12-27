@@ -24,7 +24,7 @@ public class ChatWebSocket extends WebSocketListener {
     private OkHttpClient client;
     private MessageCallback callback;
     private MutableLiveData<String> _liveData;
-    private static String serverDefaultUrl = "ws://122.128.54.136:8200/api/v1/chatting/ws/";
+    private static String serverDefaultUrl = "ws://122.128.54.136:8100/api/v1/chatting/ws/";
     private static String serverUrl;
     private String get;
     private final Gson gson = new Gson();

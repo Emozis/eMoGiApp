@@ -62,6 +62,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
             MakeCharacterModel characterModel = viewModel.getSelectedCharacterOption(selectedImageUrl,gender,relationshipList);
 
             if (selectedImageUrl == null || viewModel.personality.getValue() == null || viewModel.detail.getValue() == null || viewModel.isOpen().getValue() == null || relationshipList.size() == 0) {
+
                 Toast.makeText(requireContext(), "설정하지 않은 값이 있습니다.", Toast.LENGTH_SHORT).show();
             } else {
                 String accessToken = activity.getAccessToken();
