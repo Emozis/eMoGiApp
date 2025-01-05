@@ -21,6 +21,7 @@ import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityProfileBinding;
 import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
 import com.meta.emogi.views.chatroom.ChatRoomActivity;
+import com.meta.emogi.views.makecharacter.MakeCharacterActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageFragment;
 import com.meta.emogi.views.toolbar.ToolbarView;
@@ -70,9 +71,13 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         startActivity(intent);
     }
 
-    @Override
-    public void toolbar2Profile(String accessToken){
+    public void moveToEditCharacter(int characterId){
+        Intent intent = new Intent(ProfileActivity.this, MakeCharacterActivity.class);
+        intent.putExtra("ACCESS_TOKEN", getAccessToken());
+        intent.putExtra("CHARACTER_ID", characterId);
+        startActivity(intent);
     }
+
 
     @Override
     public void onBackPressed() {

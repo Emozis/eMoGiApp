@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
 import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.network.datamodels.CharacterUserModel;
 import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
 

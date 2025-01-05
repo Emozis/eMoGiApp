@@ -1,4 +1,5 @@
 package com.meta.emogi.views.makecharacter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.R;
+import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.datamodels.RelationshipModel;
 
 import java.util.ArrayList;
 import java.util.List;
 public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapter.CategoryViewHolder> {
 
-    private List<RelationshipModel> relationshipModelList;
-    private final List<RelationshipModel> selectedItems = new ArrayList<>();
+    private List<CharacterModel.CharacterRelationships> relationshipModelList;
+    private final List<CharacterModel.CharacterRelationships> selectedItems = new ArrayList<>();
 
-    public RelationshipAdapter(List<RelationshipModel> relationshipModelList) {
+    public RelationshipAdapter(List<CharacterModel.CharacterRelationships> relationshipModelList) {
         this.relationshipModelList = relationshipModelList;
     }
     @NonNull
@@ -29,19 +31,26 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        RelationshipModel relationshipModel = relationshipModelList.get(position);
+        CharacterModel.CharacterRelationships relationshipModel = relationshipModelList.get(position);
         holder.textView.setText(relationshipModel.getRelationshipName());
+
         holder.itemView.setSelected(selectedItems.contains(relationshipModel));
+
+        boolean isSelected = isItemSelected(relationshipModel);
+        holder.itemView.setSelected(isSelected);
+
         holder.itemView.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition == RecyclerView.NO_POSITION)
                 return;
 
+            CharacterModel.CharacterRelationships selectedItem = findSelectedItemById(relationshipModel.getRelationshipId());
             // 선택된 상태라면 선택 해제
-            if (selectedItems.contains(relationshipModel)) {
-                selectedItems.remove(relationshipModel);
+            if (selectedItem != null) {
+                // 이미 선택된 아이템이면 제거
+                selectedItems.remove(selectedItem);
             } else {
-                // 선택된 항목이 3개 미만일 때만 추가
+                // 선택되지 않은 아이템이고, 3개 미만이면 추가
                 if (selectedItems.size() < 3) {
                     selectedItems.add(relationshipModel);
                 }
@@ -50,12 +59,34 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
         });
     }
 
-    public List<Integer> getSelectedRelationIds() {
-        List<Integer> selectedIds = new ArrayList<>();
-        for (RelationshipModel model : selectedItems) {
-            selectedIds.add(model.getRelationshipId());
+    private CharacterModel.CharacterRelationships findSelectedItemById(int relationshipId) {
+        for (CharacterModel.CharacterRelationships item : selectedItems) {
+            if (item.getRelationshipId() == relationshipId) {
+                return item;
+            }
         }
-        return selectedIds;
+        return null;
+    }
+
+
+
+    private boolean isItemSelected(CharacterModel.CharacterRelationships relationship) {
+        for (CharacterModel.CharacterRelationships selected : selectedItems) {
+            if (selected.getRelationshipId() == relationship.getRelationshipId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<CharacterModel.CharacterRelationships> getSelectedRelationIds() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<CharacterModel.CharacterRelationships> selectedList) {
+        selectedItems.clear(); // 기존 선택 항목 초기화
+        selectedItems.addAll(selectedList); // 새 선택 항목
+        notifyDataSetChanged(); // UI 업데이트
     }
 
     @Override

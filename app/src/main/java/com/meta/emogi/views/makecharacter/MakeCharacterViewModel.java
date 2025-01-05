@@ -8,12 +8,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
 import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.datamodels.ImageModel;
-import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.views.menu.MenuViewModel;
 
@@ -32,19 +32,18 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public final MutableLiveData<String> name = new MutableLiveData<>("");
     public final MutableLiveData<String> personality = new MutableLiveData<>("");
     public final MutableLiveData<String> detail = new MutableLiveData<>("");
+    public final MutableLiveData<String> _editBtn = new MutableLiveData<>("캐릭터 생성하기");
+    public final MutableLiveData<Boolean> _isEdit = new MutableLiveData<>(false);
     public final MutableLiveData<Boolean> _isMan = new MutableLiveData<>(true);
-    public final MutableLiveData<String> _category = new MutableLiveData<>("");
     public final SingleLiveEvent<Void> _generate = new SingleLiveEvent<>();
     public final MutableLiveData<Boolean> _isOpen = new MutableLiveData<>(true);
-    public final MutableLiveData<List<RelationshipModel>> _defaultRelationshipList = new MutableLiveData<>();
+    public final MutableLiveData<List<CharacterModel.CharacterRelationships>> _defaultRelationshipList = new MutableLiveData<>();
     public final MutableLiveData<List<ImageModel>> _defaultImageList = new MutableLiveData<>();
-    public final MutableLiveData<MakeCharacterModel> _createdCharacter = new MutableLiveData<>();
+    public final MutableLiveData<CharacterModel> _createdCharacter = new MutableLiveData<>();
+    public final MutableLiveData<CharacterModel> _currentCharacterData = new MutableLiveData<>();
 
     public LiveData<Boolean> isMan() {
         return _isMan;
-    }
-    public LiveData<String> category() {
-        return _category;
     }
     public LiveData<Void> generate() {
         return _generate;
@@ -53,7 +52,14 @@ public class MakeCharacterViewModel extends BaseViewModel {
         return _isOpen;
     }
 
-    public LiveData<List<RelationshipModel>> defaultRelationshipList() {
+    public LiveData<String> editBtn() {
+        return _editBtn;
+    }
+    public LiveData<Boolean> isEdit() {
+        return _isEdit;
+    }
+
+    public LiveData<List<CharacterModel.CharacterRelationships>> defaultRelationshipList() {
         return _defaultRelationshipList;
     }
 
@@ -61,8 +67,20 @@ public class MakeCharacterViewModel extends BaseViewModel {
         return _defaultImageList;
     }
 
-    public LiveData<MakeCharacterModel> createdCharacter() {
+    public LiveData<CharacterModel> createdCharacter() {
         return _createdCharacter;
+    }
+    public LiveData<CharacterModel> currentCharacterData() {
+        return _currentCharacterData;
+    }
+
+    public void setIsEdit(boolean isEdit) {
+        _isEdit.setValue(isEdit);
+        if (isEdit) {
+            _editBtn.setValue("캐릭터 수정하기");
+        } else {
+            _editBtn.setValue("캐릭터 생성하기");
+        }
     }
 
     @Override
@@ -85,16 +103,15 @@ public class MakeCharacterViewModel extends BaseViewModel {
         personality.setValue("");
         detail.setValue("");
         _isMan.setValue(true);
-        _category.setValue("");
     }
 
     public void getDefaultRelationshipList() {
-        repository.getDefaultRelationshipList(new Callback<List<RelationshipModel>>() {
+        repository.getDefaultRelationshipList(new Callback<List<CharacterModel.CharacterRelationships>>() {
             @Override
-            public void onResponse(Call<List<RelationshipModel>> call, Response<List<RelationshipModel>> response) {
+            public void onResponse(Call<List<CharacterModel.CharacterRelationships>> call, Response<List<CharacterModel.CharacterRelationships>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _defaultRelationshipList.setValue(response.body());
-                    for (RelationshipModel r : response.body()) {
+                    for (CharacterModel.CharacterRelationships r : response.body()) {
                         Log.d(TAG, r.getRelationshipName());
                     }
                 } else {
@@ -103,7 +120,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<List<RelationshipModel>> call, Throwable t) {
+            public void onFailure(Call<List<CharacterModel.CharacterRelationships>> call, Throwable t) {
                 failLoading();
                 Log.e("www", "getDefaultRelationshipList API 호출 실패: " + t.getMessage());
             }
@@ -129,10 +146,17 @@ public class MakeCharacterViewModel extends BaseViewModel {
         });
     }
 
-    public void createCharacter(String accessToken, MakeCharacterModel characterModel) {
-        repository.createCharacter(accessToken, characterModel, new Callback<MakeCharacterModel>() {
+    public void createCharacter(String accessToken, CharacterModel characterModel) {
+        Log.d("www", "accessToken: " + accessToken);
+        Log.d("www", "characterModel: " + new Gson().toJson(characterModel));
+        repository.createCharacter(accessToken, characterModel, new Callback<CharacterModel>() {
             @Override
-            public void onResponse(Call<MakeCharacterModel> call, Response<MakeCharacterModel> response) {
+            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+
+                Log.d("www", "Response Code: " + response.code());
+                Log.d("www", "Response Message: " + response.message());
+                Log.d("www", "Response Body: " + new Gson().toJson(response.body()));
+
                 if (response.isSuccessful() && response.body() != null) {
                     _createdCharacter.setValue(response.body());
                 } else {
@@ -141,15 +165,83 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<MakeCharacterModel> call, Throwable t) {
+            public void onFailure(Call<CharacterModel> call, Throwable t) {
                 failLoading();
                 Log.e("www", "createCharacter API 호출 실패: " + t.getMessage());
             }
         });
     }
 
-    public MakeCharacterModel getSelectedCharacterOption(String selectedImgUrl, String gender, ArrayList<Integer> relationships) {
-        return new MakeCharacterModel(name.getValue(), selectedImgUrl, gender, personality.getValue(), detail.getValue(), isOpen().getValue(), relationships);
+    public void updateCharacter(String accessToken, CharacterModel characterModel, int characterId) {
+        Log.d("www", "accessToken: " + accessToken);
+        Log.d("www", "characterModel: " + new Gson().toJson(characterModel));
+        repository.updateCharacter(accessToken, characterModel, characterId, new Callback<CharacterModel>() {
+            @Override
+            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+                Log.d("www", "Response Code: " + response.code());
+                Log.d("www", "Response Message: " + response.message());
+                Log.d("www", "Response Body: " + new Gson().toJson(response.body()));
+
+                if (response.isSuccessful() && response.body() != null) {
+                    _createdCharacter.setValue(response.body());
+                } else {
+                    failLoading();
+                    Log.e("www", "updateCharacter 응답이 정상적이지 않음");
+                }
+            }
+            @Override
+            public void onFailure(Call<CharacterModel> call, Throwable t) {
+                failLoading();
+                Log.e("www", "updateCharacter API 호출 실패: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getCharacterDetails(String accessToken, int characterId) {
+        repository.getCharacterDetails(accessToken, characterId, new Callback<CharacterModel>() {
+            @Override
+            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    transformCharacterModel(response.body());
+                } else {
+                    failLoading();
+                    Log.e("www", "getCharacterDetails 응답이 정상적이지 않음");
+                }
+            }
+            @Override
+            public void onFailure(Call<CharacterModel> call, Throwable t) {
+                failLoading();
+                Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
+            }
+        });
+    }
+
+    public void transformCharacterModel(CharacterModel characterModel) {
+        _currentCharacterData.setValue( new CharacterModel(
+                characterModel.getCharacterName(),
+                characterModel.getCharacterProfile(),
+                characterModel.getCharacterGender(),
+                characterModel.getCharacterPersonality(),
+                characterModel.getCharacterDetails(),
+                "Default Description",
+                "Default Greeting",
+                true,
+                characterModel.getCharacterRelationships()
+        ));
+    }
+
+    public void setCurrentCharaterData(CharacterModel currentCharaterData) {
+        name.setValue(currentCharaterData.getCharacterName());
+        personality.setValue(currentCharaterData.getCharacterPersonality());
+        detail.setValue(currentCharaterData.getCharacterDetails());
+        _isMan.setValue(currentCharaterData.getCharacterGender() == "male" ? true : false);
+    }
+
+
+    public CharacterModel getCurrentCharacterData(String selectedImgUrl, String gender, List<CharacterModel.CharacterRelationships> relationships) {
+        String characterDescription = "";
+        String characterGreeting = "";
+        return new CharacterModel(name.getValue(), selectedImgUrl, gender, personality.getValue(), detail.getValue(), characterDescription, characterGreeting, isOpen().getValue(), relationships);
     }
 
 }

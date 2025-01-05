@@ -1,4 +1,6 @@
 package com.meta.emogi.views.profile.characterMangage;
+import android.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +38,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         this.onItemClickListener = listener;
     }
     public interface OnItemClickListener {
-        void onItemClick(int characterId);
-        void onEditItem(CharacterModel characterItem);
+        void onItemClick(int characterId,int type); // 1 캐릭터 상세, 2 캐릭터 삭제 , 3 캐릭터 수정
     }
 
     @NonNull
@@ -53,17 +54,17 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         holder.myPageCharacterListLayout.setSelected(position == selectedPosition);
 
         if(deleteMode){
-            holder.modifyCharacter.setText("수정");
-        }else{
             holder.modifyCharacter.setText("삭제");
+        }else{
+            holder.modifyCharacter.setText("수정");
         }
 
         String description="";
         description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자";
         description += " / "+characterItem.getCharacterPersonality()+" / ";
-        List<CharacterModel.CharacterRelationship> realationships = characterItem.getCharacterRelationships();
-        for(CharacterModel.CharacterRelationship realationship :realationships){
-            description+=realationship.getRelationship().getRelationshipName()+" / ";
+        List<CharacterModel.CharacterRelationships> realationships = characterItem.getCharacterRelationships();
+        for(CharacterModel.CharacterRelationships realationship :realationships){
+            description+=realationship.getRelationshipName()+" / ";
         }
         description+=characterItem.getCharacterDetails();
 
@@ -97,29 +98,63 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
                 if (onItemClickListener != null) {
                     int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();
-                    onItemClickListener.onItemClick(clickedCharacterId);
+                    onItemClickListener.onItemClick(clickedCharacterId,1);
                 }
             }
         });
 
-        holder.modifyCharacter.setOnClickListener(new View.OnClickListener(){
+        holder.modifyCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 이전에 선택된 아이템의 선택 상태를 해제
-                if (selectedPosition != RecyclerView.NO_POSITION) {
+                // AlertDialog 생성
+                if(deleteMode){
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle("캐릭터 삭제")
+                            .setMessage("정말로 삭제하시겠습니까?")
+                            .setPositiveButton("삭제", (dialog, which) -> {
+                                // 이전에 선택된 아이템의 선택 상태를 해제
+                                if (selectedPosition != RecyclerView.NO_POSITION) {
+                                    notifyItemChanged(selectedPosition);
+                                }
+
+                                // 새로운 아이템을 선택하고 상태 업데이트
+                                selectedPosition = holder.getAdapterPosition();
+                                notifyItemChanged(selectedPosition);
+
+                                if (onItemClickListener != null) {
+                                    int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();
+                                    onItemClickListener.onItemClick(clickedCharacterId, 2);
+                                }
+                            })
+                            .setNegativeButton("취소", (dialog, which) -> dialog.dismiss()) // 취소 버튼 동작
+                            .show();
+                }else{
+                    if (selectedPosition != RecyclerView.NO_POSITION) {
+                        notifyItemChanged(selectedPosition);
+                    }
+
+                    // 새로운 아이템을 선택하고 상태 업데이트
+                    selectedPosition = holder.getAdapterPosition();
                     notifyItemChanged(selectedPosition);
+
+
+                    if (onItemClickListener != null) {
+                        int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();
+                        onItemClickListener.onItemClick(clickedCharacterId, 3);
+                    }
                 }
 
-                // 새로운 아이템을 선택하고 상태 업데이트
-                selectedPosition = holder.getAdapterPosition();
-                notifyItemChanged(selectedPosition);
-
-                if (onItemClickListener != null) {
-                    onItemClickListener.onEditItem(characterItem);
-                }
             }
         });
+    }
 
+    public void updateCharacterList(List<CharacterModel> updatedList) {
+        // 최신순 정렬 (Character ID가 클수록 최신)
+        updatedList.sort((c1, c2) -> Integer.compare(c2.getCharacterId(), c1.getCharacterId()));
+
+        // 리스트 업데이트
+        this.characterList = updatedList;
+        notifyDataSetChanged();
     }
 
     @Override

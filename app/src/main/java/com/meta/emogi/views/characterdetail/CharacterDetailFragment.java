@@ -91,11 +91,11 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                     .circleCrop()
                     .into(binding.characterProfileImage);
 
-            List<CharacterModel.CharacterRelationship> relationshipList = characterDetail.getCharacterRelationships();
+            List<CharacterModel.CharacterRelationships> relationshipList = characterDetail.getCharacterRelationships();
 
             StringBuilder sendRelationship = new StringBuilder();
-            for (CharacterModel.CharacterRelationship relationship : relationshipList) {
-                sendRelationship.append("#").append(relationship.getRelationship().getRelationshipName()).append(" ");
+            for (CharacterModel.CharacterRelationships relationship : relationshipList) {
+                sendRelationship.append("#").append(relationship.getRelationshipName()).append(" ");
             }
             characterDetail.getCharacterProfile();
 

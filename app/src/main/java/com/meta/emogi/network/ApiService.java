@@ -2,10 +2,10 @@ package com.meta.emogi.network;
 import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.ChatLogModel;
-import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
 import com.meta.emogi.network.datamodels.MessageResponse;
 import com.meta.emogi.network.datamodels.RelationshipModel;
+import com.meta.emogi.network.datamodels.ResponseModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
 import com.meta.emogi.network.datamodels.ImageModel;
@@ -18,6 +18,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 public interface ApiService {
@@ -32,7 +33,7 @@ public interface ApiService {
 
     //캐릭터 관련 api
     @POST("api/v1/character")
-    Call<MakeCharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body MakeCharacterModel characterModel);
+    Call<CharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body CharacterModel characterModel);
 
     @GET("api/v1/character/rank")
     Call<List<CharacterModel>> getRankCharacterList();
@@ -43,6 +44,12 @@ public interface ApiService {
     @GET("api/v1/character/{character_id}")
     Call<CharacterModel> getCharacterDetails(@Header("Authorization") String accessToken, @Path("character_id") int characterId);
 
+    @PUT("api/v1/character/{character_id}")
+    Call<CharacterModel> updateCharacter(@Header("Authorization") String accessToken, @Body CharacterModel characterModel, @Path("character_id") int characterId);
+
+    @DELETE("api/v1/character/{character_id}")
+    Call<ResponseModel> deleteCharacter(@Header("Authorization") String accessToken, @Path("character_id") int characterId);
+
     //기본 캐릭터 이미지 관련 api
 
     @GET("api/v1/default-image")
@@ -51,7 +58,7 @@ public interface ApiService {
     //캐릭터,유저 사이 관계 api
 
     @GET("api/v1/relationship")
-    Call<List<RelationshipModel>> getDefaultRelationshipList();
+    Call<List<CharacterModel.CharacterRelationships>> getDefaultRelationshipList();
 
     //채팅방 관련 api
 

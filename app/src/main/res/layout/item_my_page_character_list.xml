@@ -24,13 +24,14 @@
 
         <TextView
             android:id="@+id/name_character"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="캐릭터이름"
             android:textColor="@color/white"
             android:textSize="@dimen/common_text_size_medium"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/modify_character"
             app:layout_constraintStart_toEndOf="@+id/image_character"
             app:layout_constraintTop_toTopOf="parent" />
 

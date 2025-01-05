@@ -76,9 +76,4 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         finish();
     }
 
-    public void toolbar2Profile(String accessToken){
-        Intent intent = new Intent(BaseActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", accessToken);
-        startActivity(intent);
-    }
 }

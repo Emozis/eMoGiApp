@@ -368,7 +368,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-            android:text="캐릭터 생성하기"
+            android:text="@{viewModel.editBtn()}"
             android:textSize="@dimen/common_text_size_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

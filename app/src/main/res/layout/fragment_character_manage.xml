@@ -93,6 +93,7 @@
                 android:id="@+id/toggle_delete"
                 android:text="@{viewModel.deleteToggleString()}"
                 android:textSize="@dimen/common_text_size_medium"
+                app:setTextColor="@{viewModel.isActiveDeleteMode()}"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

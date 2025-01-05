@@ -19,6 +19,7 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBinding> {
 
+    private int characterId;
     @Override
     protected int layoutId() {
         return R.layout.activity_make_character;
@@ -29,11 +30,16 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         binding.toolbar.settingView(toolbarRequest);
     }
 
+    public void refreshToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
+        binding.toolbar.settingView(toolbarRequest);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
         setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
+        characterId = intent.getIntExtra("CHARACTER_ID", -1);
     }
 
     public void moveToMyProfile(){
@@ -41,5 +47,12 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
+    }
+
+    public int getCharacterId() {
+        return characterId;
+    }
+    public void setCharacterId(int characterId) {
+        this.characterId = characterId;
     }
 }

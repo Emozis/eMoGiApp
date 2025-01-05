@@ -5,9 +5,9 @@ import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.ChatLogModel;
 import com.meta.emogi.network.datamodels.ImageModel;
-import com.meta.emogi.network.datamodels.MakeCharacterModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
 import com.meta.emogi.network.datamodels.RelationshipModel;
+import com.meta.emogi.network.datamodels.ResponseModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
 import com.meta.emogi.network.datamodels.MessageResponse;
@@ -42,7 +42,7 @@ public class ApiRepository {
     }
 
     //makeCharacter
-    public void getDefaultRelationshipList(Callback<List<RelationshipModel>> callback) {
+    public void getDefaultRelationshipList(Callback<List<CharacterModel.CharacterRelationships>> callback) {
         apiService.getDefaultRelationshipList().enqueue(callback);
     }
 
@@ -71,10 +71,21 @@ public class ApiRepository {
         apiService.getCharacterDetails(accessToken, characterId).enqueue(callback);
     }
 
+    public void deleteCharacter(String accessToken, int characterId, Callback<ResponseModel> callback) {
+        apiService.deleteCharacter(accessToken, characterId).enqueue(callback);
+    }
+
+    //PUT
+    public void updateCharacter(String accessToken, CharacterModel characterModel, int characterId, Callback<CharacterModel> callback) {
+        apiService.updateCharacter(accessToken,characterModel, characterId).enqueue(callback);
+    }
+
+
+
     //// POST
 
     //makeCharacter
-    public void createCharacter(String accessToken, MakeCharacterModel characterModel, Callback<MakeCharacterModel> callback) {
+    public void createCharacter(String accessToken, CharacterModel characterModel, Callback<CharacterModel> callback) {
         apiService.createCharacter(accessToken, characterModel).enqueue(callback);
     }
 
