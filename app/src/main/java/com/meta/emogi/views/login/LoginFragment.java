@@ -105,11 +105,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
 
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
         try {
+            Log.d("www", "앱 실행체크");
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.d("www", "Google Sign-In 성공: " + account.getIdToken());
             TokenModel requestToken = new TokenModel(account.getIdToken());
             viewModel.createAccessToken(requestToken);
         } catch (ApiException e) {
-            Log.w(TAG, "signInResult: failed code=" + e.getStatusCode(), e);
+            Log.e("Www", "Google Sign-In 실패: 상태 코드 = " + e.getStatusCode(), e);
         }
     }
 

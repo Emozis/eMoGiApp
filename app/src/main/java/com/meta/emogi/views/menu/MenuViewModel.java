@@ -124,6 +124,7 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void getUserData(String accessToken) {
+        Log.d("wwwt", accessToken);
         repository.getUserData(accessToken, new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {

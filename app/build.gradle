@@ -11,8 +11,8 @@ android {
         applicationId "com.meta.emogi"
         minSdk 24
         targetSdk 34
-        versionCode 10300
-        versionName "1.03.00"
+        versionCode 10302
+        versionName "1.03.02"
         multiDexEnabled true  // MultiDex 활성화
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -85,6 +85,9 @@ dependencies {
 
     // 마크다운
     implementation 'io.noties.markwon:core:4.6.2'
+
+    // OkHttp Logging Interceptor 추가
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
 
 }
