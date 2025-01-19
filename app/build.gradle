@@ -79,6 +79,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 
 
+    //play store 버전확인 라이브러리
+    implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
+
     // 마크다운
     implementation 'io.noties.markwon:core:4.6.2'
 
