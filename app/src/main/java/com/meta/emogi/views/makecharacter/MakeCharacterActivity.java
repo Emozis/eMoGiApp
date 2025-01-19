@@ -55,4 +55,5 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     public void setCharacterId(int characterId) {
         this.characterId = characterId;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.meta.emogi.base;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,5 +74,6 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             ((BaseActivity<?>) requireActivity()).setToolbar(request);
         }
     }
+
 
 }

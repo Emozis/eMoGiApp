@@ -12,11 +12,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_menu_character"
-        android:layout_width="@dimen/menu_list_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:layout_marginTop="@dimen/common_space_small"
+        android:paddingStart="@dimen/common_space_semi_medium"
+        android:paddingEnd="@dimen/common_space_medium"
         >
 
         <ImageView
@@ -24,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/menu_list_width"
             android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,15 +33,16 @@
             android:id="@+id/character_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/common_space_small"
             android:ellipsize="end"
             android:gravity="left"
             android:maxLines="1"
+            android:paddingStart="@dimen/common_space_small"
+            android:paddingEnd="@dimen/common_space_small"
             android:text="hihi"
             android:textColor="@color/white"
             android:textSize="@dimen/common_text_size_medium"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/character_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/character_image" />
@@ -47,10 +50,12 @@
         <TextView
             android:id="@+id/character_description"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/common_space_small"
             android:ellipsize="end"
             android:maxLines="2"
+            android:paddingStart="@dimen/common_space_small"
+            android:paddingEnd="@dimen/common_space_small"
             android:text="설명설명\ndw\ndw"
             android:textColor="@color/white"
             android:textSize="@dimen/common_text_size_very_small"

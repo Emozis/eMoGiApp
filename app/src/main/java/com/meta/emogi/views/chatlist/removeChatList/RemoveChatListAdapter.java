@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.views.chatlist.chatList.ChatListAdapter;
@@ -44,6 +45,19 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
     public RemoveChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_rm_chat_list, parent, false);
+        int screenHeight = MyApplication.getDeviceHeightPx();
+        int itemHeight = (int) (screenHeight * 0.1f);
+
+        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                itemHeight
+        );
+
+        int margin = parent.getContext().getResources().getDimensionPixelSize(R.dimen.common_space_semi_medium);
+
+        params.setMargins(margin, margin, margin, 0); // 아이템 간 간격 추가
+
+        view.setLayoutParams(params);
         return new RemoveChatListViewHolder(view);
     }
 

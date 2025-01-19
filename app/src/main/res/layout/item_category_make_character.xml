@@ -1,26 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/common_space_medium"
+    android:paddingEnd="@dimen/common_space_medium"
+    android:paddingBottom="@dimen/common_space_medium">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/categoryView1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="4dp">
+        android:layout_margin="@dimen/common_space_small"
+        android:layout_weight="1"
+        android:background="@drawable/category_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="카테고리1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_text_size_small" />
 
-        <TextView
-            android:id="@+id/categoryView"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
-            android:background="@drawable/category_background"
-            android:gravity="center"
-            android:scaleType="centerCrop"
-            android:textSize="14sp"
-            android:text="카테고리"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/categoryView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_space_small"
+        android:layout_weight="1"
+        android:background="@drawable/category_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="카테고리2"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_text_size_small" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    <TextView
+        android:id="@+id/categoryView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_space_small"
+        android:layout_weight="1"
+        android:background="@drawable/category_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="카테고리3"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_text_size_small" />
+
+</LinearLayout>

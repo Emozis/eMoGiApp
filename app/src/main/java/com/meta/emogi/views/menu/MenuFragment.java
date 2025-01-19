@@ -7,14 +7,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.request.transition.Transition;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentMenuBinding;
@@ -82,6 +87,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
 
         viewModel.myCharacterList().observe(getViewLifecycleOwner(), myCharacterList -> {
             if (myCharacterList != null) {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                binding.listRankCharacter.setLayoutManager(layoutManager);
                 menuListAdapter = new MenuListAdapter(myCharacterList);
                 binding.listMyCharacter.setAdapter(menuListAdapter);
                 setClickListenerRecyclerView(menuListAdapter);
@@ -128,8 +135,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         viewModel.getUserData(key);
         viewModel.getMyCharacters(key);
         viewModel.getRankCharacterList();
-
     }
+
 
     private void setClickListenerRecyclerView(MenuListAdapter menuListAdapter) {
         menuListAdapter.setOnItemClickListener(characterId -> {

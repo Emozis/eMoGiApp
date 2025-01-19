@@ -9,11 +9,11 @@ public class ChatListModel {
     @SerializedName("chatId")
     private int chatId;
 
-    @SerializedName("userId")
-    private int userId;
+    @SerializedName("user")
+    private User user;
 
-    @SerializedName("characterId")
-    private int characterId;
+    @SerializedName("character")
+    private Character character;
 
     @SerializedName("chatCreateAt")
     private String chatCreateAt;
@@ -27,16 +27,12 @@ public class ChatListModel {
     @SerializedName("isEmptyChat")
     private Boolean isEmptyChat;
 
-    @SerializedName("chatLogs")
-    private List<ChatLogs> chatLogs;
+    @SerializedName("lastLog")
+    private LastLog chatLogs;
 
-    @SerializedName("user")
-    private User user;
 
-    @SerializedName("character")
-    private Character character;
 
-    public static class ChatLogs {
+    public static class LastLog {
         @SerializedName("logId")
         private int logId;
 
@@ -138,22 +134,6 @@ public class ChatListModel {
         this.chatId = chatId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getCharacterId() {
-        return characterId;
-    }
-
-    public void setCharacterId(int characterId) {
-        this.characterId = characterId;
-    }
-
     public String getChatCreateAt() {
         return chatCreateAt;
     }
@@ -182,11 +162,11 @@ public class ChatListModel {
         this.lastMessageAt = lastMessageAt;
     }
 
-    public List<ChatLogs> getChatLogs() {
+    public LastLog getLastLog() {
         return chatLogs;
     }
 
-    public void setChatLogs(List<ChatLogs> chatLogs) {
+    public void setLastLog(LastLog chatLogs) {
         this.chatLogs = chatLogs;
     }
 

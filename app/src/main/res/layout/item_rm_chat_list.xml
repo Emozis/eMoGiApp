@@ -7,25 +7,17 @@
         android:id="@+id/rm_my_chat_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingStart="@dimen/common_space_medium"
+        android:paddingEnd="@dimen/common_space_semi_medium"
         >
-
-<!--        <RadioButton-->
-<!--            android:id="@+id/rm_select_Button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/rm_character_image"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            />-->
-
 
         <CheckBox
             android:id="@+id/rm_select_Button"
             android:theme="@style/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleX="@dimen/chat_list_check_box"
+            android:scaleY="@dimen/chat_list_check_box"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/rm_character_image"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +27,10 @@
 
         <ImageView
             android:id="@+id/rm_character_image"
-            android:layout_width="@dimen/chat_list_img"
-            android:layout_height="@dimen/chat_list_img"
-            android:layout_marginStart="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.2"
+            android:layout_marginStart="@dimen/common_space_medium"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/rm_select_Button"
@@ -47,11 +40,11 @@
             android:id="@+id/rm_character_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/common_space_semi_medium"
             android:text="캐릭터 이름"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:textSize="@dimen/common_text_size_medium"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/rm_last_talk_time"
             app:layout_constraintHorizontal_weight="4"
             app:layout_constraintStart_toEndOf="@id/rm_character_image"
@@ -61,7 +54,7 @@
             android:id="@+id/rm_last_talk"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/common_space_semi_medium"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="2"

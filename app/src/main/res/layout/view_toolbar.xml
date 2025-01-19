@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_tool_bar">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
@@ -28,8 +28,10 @@
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="@dimen/common_icon_size"
-                android:layout_height="@dimen/common_icon_size"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintWidth_percent="0.07"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
@@ -48,7 +50,7 @@
                 android:maxLines="1"
                 android:text="@{viewModel.title()}"
                 android:textColor="@color/text_color_common"
-                android:textSize="20sp"
+                android:textSize="@dimen/common_text_size_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

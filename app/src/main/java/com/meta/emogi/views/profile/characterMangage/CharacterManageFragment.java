@@ -1,6 +1,7 @@
 package com.meta.emogi.views.profile.characterMangage;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
@@ -52,6 +53,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
             viewModel.offLoading();
             viewModel.setIsActiveDeleteMode();
         });
+
         viewModel.deleteCharacter().observe(this,unused -> {
             characterAdapter.notifyDataSetChanged();
         });

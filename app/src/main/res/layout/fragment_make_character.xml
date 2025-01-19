@@ -18,29 +18,21 @@
         android:layout_height="match_parent"
         tools:context=".views.makecharacter.MakeCharacterFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/generate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
+                android:id="@+id/scroll_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/common_space_medium"
                 app:isVisible="@{!viewModel.isLoading()}"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/generate"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lyaout_make_character"
+                    android:id="@+id/layout_make_character"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,12 +51,9 @@
                             android:id="@+id/title_iamge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
                             android:text="프로필 선택"
                             android:textColor="@color/white"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/common_text_size_medium"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/character_image"
                             app:layout_constraintStart_toStartOf="parent"
@@ -85,9 +74,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_percent="0.1"
                         app:layout_constraintBottom_toTopOf="@+id/layout_personality"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -95,22 +84,23 @@
 
                         <TextView
                             android:id="@+id/title_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:text="이름/성별"
                             android:textColor="@color/white"
                             android:textSize="@dimen/common_text_size_medium"
                             android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.3"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/title_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintHeight_percent="0.7"
+                            android:padding="@dimen/common_space_medium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +109,9 @@
                             <EditText
                                 android:id="@+id/field_name"
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="0dp"
+                                android:textColor="@color/white"
+                                app:layout_constraintWidth_percent="0.7"
                                 android:background="@drawable/drawable_background_character_create"
                                 android:hint="캐릭터 이름을 작성해 주세요"
                                 android:text="@={viewModel.name}"
@@ -132,10 +124,11 @@
                             <TextView
                                 android:id="@+id/gender_man"
                                 style="@style/ButtonCharacterDetailGender"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                app:layout_constraintWidth_percent="0.12"
+                                android:layout_marginStart="@dimen/common_space_medium"
+                                android:layout_marginEnd="@dimen/common_space_medium"
                                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                                 android:text="남"
                                 android:textColor="@drawable/text_color_selector"
@@ -148,8 +141,9 @@
                             <TextView
                                 android:id="@+id/gender_woman"
                                 style="@style/ButtonCharacterDetailGender"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                app:layout_constraintWidth_percent="0.12"
                                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                                 android:text="여"
                                 android:textColor="@drawable/text_color_selector"
@@ -165,9 +159,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_personality"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_percent="0.1"
                         app:layout_constraintBottom_toTopOf="@+id/layout_category"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -176,40 +170,50 @@
 
                         <TextView
                             android:id="@+id/title_personality"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:text="성격"
                             android:textColor="@color/white"
                             android:textSize="@dimen/common_text_size_medium"
                             android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.3"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <EditText
-                            android:id="@+id/personality"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:background="@drawable/drawable_background_character_create"
-                            android:hint="성격을 입력해 주세요"
-                            android:text="@={viewModel.personality}"
-                            android:textSize="@dimen/common_text_size_small"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/content_personality"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintHeight_percent="0.7"
+                            android:padding="@dimen/common_space_medium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/title_personality" />
+                            app:layout_constraintTop_toBottomOf="@+id/title_personality">
+                            <EditText
+                                android:id="@+id/personality"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/drawable_background_character_create"
+                                android:hint="성격을 입력해 주세요"
+                                android:text="@={viewModel.personality}"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/common_text_size_small"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_category"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_percent="0.3"
                         app:layout_constraintBottom_toTopOf="@+id/layout_detail"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -218,64 +222,32 @@
 
                         <TextView
                             android:id="@+id/title_category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:text="관계"
                             android:textColor="@color/white"
                             android:textSize="@dimen/common_text_size_medium"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/character_category"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.2"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/character_category"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
+                            android:layout_height="0dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/title_category"
-                            tools:itemCount="5"
+                            tools:itemCount="3"
                             tools:listitem="@layout/item_category_make_character"
                             >
 
                         </androidx.recyclerview.widget.RecyclerView>
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/loading"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:isVisible="@{viewModel.isLoading()}"
-                            >
-
-                            <ProgressBar
-                                android:id="@+id/loading_pb"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                app:isVisible="@{viewModel.isShowProgress()}"
-                                app:layout_constraintBottom_toTopOf="@+id/loading_text"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                />
-
-                            <TextView
-                                android:id="@+id/loading_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@{viewModel.loadingText()}"
-                                android:textSize="@dimen/error_text_size"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -303,24 +275,34 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <EditText
-                            android:id="@+id/detial"
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:background="@drawable/drawable_background_character_create"
-                            android:gravity="left"
-                            android:hint="캐릭터 상세정보을 작성해주세요"
-                            android:text="@={viewModel.detail}"
-                            android:textSize="@dimen/common_text_size_small"
-                            android:textStyle="bold"
+                            android:padding="@dimen/common_space_medium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/title_detail" />
+                            app:layout_constraintTop_toBottomOf="@+id/title_detail"
+                            >
+                            <EditText
+                                android:id="@+id/detial"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/drawable_background_character_create"
+                                android:gravity="left"
+                                android:hint="캐릭터 상세정보을 작성해주세요"
+                                android:textColor="@color/white"
+                                android:text="@={viewModel.detail}"
+                                android:textSize="@dimen/common_text_size_small"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -353,13 +335,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:text="캐릭터 공개"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/common_text_size_small"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/generate"

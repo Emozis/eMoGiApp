@@ -13,12 +13,12 @@
         android:layout_height="match_parent"
         tools:context=".views.menu.MenuActivity">
 
-<!--        <com.meta.emogi.views.toolbar.ToolbarView-->
-<!--            android:id="@+id/toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/height_tool_bar"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            />-->
+        <!--        <com.meta.emogi.views.toolbar.ToolbarView-->
+        <!--            android:id="@+id/toolbar"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/height_tool_bar"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            />-->
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView6"

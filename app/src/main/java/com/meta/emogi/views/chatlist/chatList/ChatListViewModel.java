@@ -54,6 +54,9 @@ public class ChatListViewModel extends BaseViewModel {
             public void onResponse(Call<List<ChatListModel>> call, Response<List<ChatListModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ChatListModel> ChatList = formatChatList(response.body());
+                    for(ChatListModel chat : ChatList){
+                        Log.d("www",chat.getLastMessage());
+                    }
                     _chatList.setValue(ChatList);
                     offLoading();
                 } else {
@@ -82,7 +85,7 @@ public class ChatListViewModel extends BaseViewModel {
 
     private List<ChatListModel> formatChatList(List<ChatListModel> chatlist){
         for(ChatListModel chat :chatlist){
-            Pair<String,Boolean> lastMessage = getLastMessage(chat.getChatLogs());
+            Pair<String,Boolean> lastMessage = getLastMessage(chat.getLastLog());
             chat.setLastMessage(lastMessage.first);
             chat.setEmptyChat(lastMessage.second);
 
@@ -93,17 +96,17 @@ public class ChatListViewModel extends BaseViewModel {
         return chatlist;
     }
 
-    private Pair<String,Boolean> getLastMessage(List<ChatListModel.ChatLogs> chatLogs){
+    private Pair<String,Boolean> getLastMessage(ChatListModel.LastLog lastLogs){
         String lastMessage;
         Boolean isEmptyChat;
-        if (chatLogs != null && !chatLogs.isEmpty()) {
-            lastMessage = chatLogs.get(chatLogs.size() - 1).getContents();
+        if (lastLogs != null) {
+            lastMessage = lastLogs.getContents();
             isEmptyChat=true;
         } else {
             lastMessage = "최근에 대화한 채팅이 없습니다.\n어서 이야기해보세요";
             isEmptyChat=false;
         }
-        return  new Pair<>(lastMessage,isEmptyChat);
+        return new Pair<>(lastMessage,isEmptyChat);
     }
 
     private String parseLastTime(String[] timeArr) {

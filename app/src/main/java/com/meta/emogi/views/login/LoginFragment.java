@@ -1,5 +1,7 @@
 package com.meta.emogi.views.login;
 
+import static com.meta.emogi.MyApplication.getDeviceHeightPx;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentLoginBinding;
@@ -62,12 +65,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     protected void registerObservers() {
         viewModel.accessToken().observe(this, accessToken -> {
             String accessedToken = accessToken.getAccessToken();
-            ConfigUtil configUtil = new ConfigUtil(activity);
-            String prefix = configUtil.getProperty("KEY_PREFIX");
-//            activity.setAccessToken(prefix + " " + accessedToken);
             activity.setAccessToken(accessedToken);
             activity.moveActivity();
-            Log.d("www", "Login 성공 토큰 :" + activity.getAccessToken());
+            Log.d("www", "Login 성공 / 토큰 : " + activity.getAccessToken());
         });
     }
     @Override
@@ -90,7 +90,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         });
     }
 
-    // ActivityResultLauncher for sign-in result handling
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == getActivity().RESULT_OK) {
             Intent data = result.getData();
@@ -107,11 +106,11 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.d(TAG, "login success :" + account.getIdToken());
             TokenModel requestToken = new TokenModel(account.getIdToken());
             viewModel.createAccessToken(requestToken);
         } catch (ApiException e) {
             Log.w(TAG, "signInResult: failed code=" + e.getStatusCode(), e);
         }
     }
+
 }

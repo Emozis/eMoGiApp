@@ -1,4 +1,5 @@
 package com.meta.emogi.views.chatlist.chatList;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.ChatListModel;
 
@@ -34,6 +36,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
     public ChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_chat_list, parent, false);
+
+        int screenHeight = MyApplication.getDeviceHeightPx();
+        int itemHeight = (int) (screenHeight * 0.1f);
+
+        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                itemHeight
+        );
+
+        int margin = parent.getContext().getResources().getDimensionPixelSize(R.dimen.common_space_semi_medium);
+
+        params.setMargins(margin, margin, margin, 0); // 아이템 간 간격 추가
+
+        view.setLayoutParams(params);
         return new ChatListViewHolder(view);
     }
 
@@ -50,6 +66,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         ChatListModel chat = chatList.get(position);
         holder.characterName.setText(chat.getCharacter().getCharacterName());
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
+        Log.d("www", chat.getLastMessage());
         holder.lastTalk.setText(chat.getLastMessage());
         holder.lastTalkTime.setText(chat.getLastMessageAt());
 

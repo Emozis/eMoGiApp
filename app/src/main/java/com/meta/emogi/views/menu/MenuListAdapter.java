@@ -1,4 +1,5 @@
 package com.meta.emogi.views.menu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.CharacterModel;
 
@@ -38,8 +40,18 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
     @NonNull
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_menu_chracter, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_menu_chracter, parent, false);
+
+        int screenWidth = MyApplication.getDeviceWidthPx();
+        int itemWidth = (int) (screenWidth * 0.4f);
+
+        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+                itemWidth,
+                RecyclerView.LayoutParams.MATCH_PARENT
+        );
+        view.setLayoutParams(params);
+
         return new CharacterViewHolder(view);
     }
 
@@ -47,7 +59,6 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
         CharacterModel character = characterList.get(position);
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
-
         holder.characterName.setText(character.getCharacterName());
         holder.characterDescription.setText(character.getCharacterDetails());
         // ImageView에 이미지를 로드하는 코드를 추가

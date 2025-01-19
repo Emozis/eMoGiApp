@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.databinding.ViewToolbarBinding;
 import com.meta.emogi.di.ViewModelFactory;
@@ -46,6 +47,7 @@ public class ToolbarView extends ConstraintLayout {
         Application application = (Application) context.getApplicationContext();
         ViewModelFactory factory = new ViewModelFactory(application);
         viewModel = new ViewModelProvider((ViewModelStoreOwner) context, factory).get(ToolbarViewModel.class);
+
         binding = DataBindingUtil.inflate(li, R.layout.view_toolbar, null, false);
         binding.setLifecycleOwner((LifecycleOwner) getContext());
         binding.setViewModel(viewModel);

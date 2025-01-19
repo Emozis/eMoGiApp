@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    text-->
+    <dimen name="common_text_size_very_small">16sp</dimen>
+    <dimen name="common_text_size_small">24sp</dimen>
+    <dimen name="common_text_size_medium">36sp</dimen>
+    <dimen name="common_text_size_large">40sp</dimen>
+    <dimen name="common_text_size_very_large">34sp</dimen>
+    <dimen name="error_text_size">26sp</dimen>
+
+    <!--    margin-->
+    <dimen name="common_space_small">12sp</dimen>
+    <dimen name="common_space_medium">16sp</dimen>
+    <dimen name="common_space_semi_medium">20sp</dimen>
+    <dimen name="common_space_large">28sp</dimen>
+
+    <!--    menu-->
+    <dimen name="menu_top_btn_size">250dp</dimen>
+    <dimen name="menu_top_btn_padding">50dp</dimen>
+    <dimen name="menu_top_btn_padding_top">90dp</dimen>
+
+    <!--    chat-->
+    <dimen name="chat_icon_size">40dp</dimen>
+    <dimen name="chat_character_img_size">60dp</dimen>
+
+    <!--    chat list img-->
+    <dimen name="chat_list_check_box">1.5</dimen>
+
+    <!--    character create-->
+    <dimen name="size_character_create_profile">150dp</dimen>
+
+    <!--    profile-->
+    <dimen name="size_profile">270dp</dimen>
+    <dimen name="profile_character_img">120dp</dimen>
+
+    <dimen name="menu_list_width">180dp</dimen>
+</resources>

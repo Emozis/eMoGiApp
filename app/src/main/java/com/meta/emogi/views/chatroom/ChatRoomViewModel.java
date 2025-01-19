@@ -84,10 +84,8 @@ public class ChatRoomViewModel extends BaseViewModel {
 
     @Override
     public void onButtonClicked(View v) {
-        Log.d(TAG, "onButtonClicked: ");
         int btnResId = v.getId();
         if (btnResId == R.id.transmit) {
-            Log.d(TAG, "몇번되는지 테스트");
             _isCanChat.setValue(false);
             _sendText.setValue(inputText.getValue());
             sendMessageToServer();

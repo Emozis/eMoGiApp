@@ -11,7 +11,7 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/size_character_create_profile"
             android:layout_height="@dimen/size_character_create_profile"
-            android:padding="5dp"
+            android:padding="4dp"
             android:background="@drawable/drawable_background_character_iamge"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"

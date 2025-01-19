@@ -61,48 +61,54 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_tool_bar"
+                android:layout_height="0dp"
                 android:background="@color/bg_toolbar"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/logo"
-                    android:layout_width="@dimen/common_icon_size"
-                    android:layout_height="@dimen/common_icon_size"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                     android:src="@drawable/logo"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_percent="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.1" />
 
                 <ImageView
                     android:id="@+id/title"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:src="@drawable/logo_t"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.25"
                     />
 
                 <ImageView
                     android:id="@+id/image_profile"
-                    android:layout_width="@dimen/common_icon_size"
-                    android:layout_height="@dimen/common_icon_size"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="16dp"
                     android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                     android:src="@drawable/mypage_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,28 +125,30 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_top"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="0dp"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline_35"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                app:layout_constraintBottom_toTopOf="@+id/layout_middle"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view1"
+                app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
                 >
 
                 <ImageView
                     android:id="@+id/move_to_chat_list"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/menu_top_btn_size"
+                    android:layout_height="@dimen/menu_top_btn_size"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/drawable_background_round_purple"
                     android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                    android:paddingStart="30dp"
-                    android:paddingTop="50dp"
-                    android:paddingEnd="30dp"
-                    android:paddingBottom="30dp"
+                    android:paddingStart="@dimen/menu_top_btn_padding"
+                    android:paddingTop="@dimen/menu_top_btn_padding_top"
+                    android:paddingEnd="@dimen/menu_top_btn_padding"
+                    android:paddingBottom="@dimen/menu_top_btn_padding"
                     android:src="@drawable/ic_my_chatroom"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@+id/move_to_make_character"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -148,17 +156,16 @@
 
                 <ImageView
                     android:id="@+id/move_to_make_character"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/menu_top_btn_size"
+                    android:layout_height="@dimen/menu_top_btn_size"
                     android:background="@drawable/drawable_background_round_dark_blue"
                     android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                    android:paddingStart="30dp"
-                    android:paddingTop="55dp"
-                    android:paddingEnd="30dp"
-                    android:paddingBottom="30dp"
+                    android:paddingStart="@dimen/menu_top_btn_padding"
+                    android:paddingTop="@dimen/menu_top_btn_padding_top"
+                    android:paddingEnd="@dimen/menu_top_btn_padding"
+                    android:paddingBottom="@dimen/menu_top_btn_padding"
                     android:src="@drawable/ic_create_character"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/move_to_chat_list"
                     app:layout_constraintTop_toTopOf="parent"
@@ -190,37 +197,32 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.35" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_middle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/guideline_65"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/layout_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.325"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline_35"
+                app:layout_constraintTop_toBottomOf="@+id/layout_top"
                 >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_middle_button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.15"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="@dimen/common_space_semi_medium"
                         android:text="랭킹"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/common_text_size_large"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -232,43 +234,39 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_rank_character"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/common_space_medium"
+                    android:layout_marginBottom="@dimen/common_space_medium"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_middle_button"
+                    app:layout_constraintVertical_bias="1.0"
                     tools:itemCount="5"
-                    tools:listitem="@layout/item_menu_chracter"
-                    />
+                    tools:listitem="@layout/item_menu_chracter" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_65"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.65" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.325"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline_65">
+                app:layout_constraintTop_toBottomOf="@+id/layout_middle">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_bottom_toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/list_my_character"
+                    android:layout_height="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.15"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     >
@@ -276,8 +274,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="@dimen/common_space_semi_medium"
                         android:text="내 캐릭터"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/common_text_size_large"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -304,7 +303,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_my_character"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/common_space_medium"
+                    android:layout_marginBottom="@dimen/common_space_medium"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -312,8 +313,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_bottom_toolbar"
                     tools:itemCount="5"
-                    tools:listitem="@layout/item_menu_chracter"
-                    />
+                    tools:listitem="@layout/item_menu_chracter" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

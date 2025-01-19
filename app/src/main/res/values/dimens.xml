@@ -9,14 +9,24 @@
     <dimen name="common_text_size_very_large">30sp</dimen>
     <dimen name="error_text_size">26sp</dimen>
 
+    <!--    space-->
+    <dimen name="common_space_small">4sp</dimen>
+    <dimen name="common_space_medium">8sp</dimen>
+    <dimen name="common_space_semi_medium">12sp</dimen>
+    <dimen name="common_space_large">16sp</dimen>
 
     <!--    common-->
     <dimen name="common_icon_size">24dp</dimen>
 
     <!--    chat list img-->
     <dimen name="chat_list_img">65dp</dimen>
+    <dimen name="chat_list_check_box">1</dimen>
 
     <!--    menu-->
+    <dimen name="menu_top_btn_size">130dp</dimen>
+    <dimen name="menu_top_btn_padding">30dp</dimen>
+    <dimen name="menu_top_btn_padding_top">55dp</dimen>
+
     <dimen name="menu_list_width">115dp</dimen>
     <dimen name="menu_button_size">120dp</dimen>
     <dimen name="menu_loading_my_height">100dp</dimen>

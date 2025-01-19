@@ -39,6 +39,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         binding.toolbar.settingView(toolbarRequest);
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -56,15 +57,19 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         NavController navController = Navigation.findNavController(this, R.id.profileChildFrag);
         NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.profile_nav);
 
-        if (Objects.equals(initFragment, "Character")) {
+        if (Objects.equals(initFragment, "Character")|| isBackToCharacterMangage) {
             navGraph.setStartDestination(R.id.characterManageFragment);
+            isBackToCharacterMangage=false;
         } else {
             navGraph.setStartDestination(R.id.myPageFragment);
         }
         navController.setGraph(navGraph);
     }
 
+    private boolean isBackToCharacterMangage = false;
+
     public void moveToDetail(int characterId){
+        isBackToCharacterMangage=true;
         Intent intent = new Intent(ProfileActivity.this, CharacterDetailActivity.class);
         intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
@@ -72,17 +77,12 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     }
 
     public void moveToEditCharacter(int characterId){
+        isBackToCharacterMangage=true;
         Intent intent = new Intent(ProfileActivity.this, MakeCharacterActivity.class);
         intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
 
-
-    @Override
-    public void onBackPressed() {
-        onBackPressedAction();
-        super.onBackPressed();
-    }
 
 }

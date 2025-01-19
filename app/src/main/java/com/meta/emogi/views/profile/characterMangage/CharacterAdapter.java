@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.CharacterModel;
 
@@ -45,7 +46,22 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_page_character_list, parent, false);
-        return new CharacterAdapter.CharacterViewHolder(view);
+
+        int screenHeight = MyApplication.getDeviceHeightPx();
+        int itemHeight = (int) (screenHeight * 0.1f);
+
+        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                itemHeight
+        );
+
+        int margin = parent.getContext().getResources().getDimensionPixelSize(R.dimen.common_space_semi_medium);
+
+        params.setMargins(margin, margin, margin, 0); // 아이템 간 간격 추가
+
+        view.setLayoutParams(params);
+
+        return new CharacterViewHolder(view);
     }
 
     @Override
@@ -77,7 +93,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         holder.characterNameView.setText(characterItem.getCharacterName());
 
         RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(12)); // 반지름 설정
-        
+
         Glide.with(holder.itemView.getContext()).load(characterItem.getCharacterProfile()) // characterProfile은 이미지 URL
                 .apply(requestOptions) // 둥근 모서리 적용
                 .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
@@ -176,8 +192,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             characterNameView = itemView.findViewById(R.id.name_character);
             characterDescriptionView = itemView.findViewById(R.id.description_character);
             modifyCharacter = itemView.findViewById(R.id.modify_character);
-
-
         }
     }
 }

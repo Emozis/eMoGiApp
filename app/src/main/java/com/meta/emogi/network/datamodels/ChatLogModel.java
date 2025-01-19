@@ -4,8 +4,8 @@ public class ChatLogModel {
     @SerializedName("logId")
     private int logId;
 
-    @SerializedName("chatId")
-    private int chatId;
+    @SerializedName("character")
+    private Character character;
 
     @SerializedName("role")
     private String role;
@@ -16,6 +16,21 @@ public class ChatLogModel {
     @SerializedName("logCreateAt")
     private String logCreateAt;
 
+    public static class Character{
+        @SerializedName("characterId")
+        private String characterId;
+
+        @SerializedName("characterName")
+        private String characterName;
+
+        @SerializedName("characterProfile")
+        private String characterProfile;
+
+
+    }
+
+
+
     // Getter and Setter methods
 
     public int getLogId() {
@@ -24,14 +39,6 @@ public class ChatLogModel {
 
     public void setLogId(int logId) {
         this.logId = logId;
-    }
-
-    public int getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
     }
 
     public String getRole() {

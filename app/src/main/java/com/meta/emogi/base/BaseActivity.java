@@ -49,17 +49,16 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
 
         toolbarViewModel.back().observe(this, unused -> {
-            Log.d("BackPressed", "ToolbarViewModel에서 뒤로 가기 호출됨");
             onBackPressedAction();
         });
 
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Log.d("BackPressed", "onBackPressedDispatcher에서 호출됨");
-                onBackPressedAction();
-            }
-        });
+//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Log.d("www", "onBackPressedDispatcher에서 호출됨");
+//                onBackPressedAction();
+//            }
+//        });
 
         setStatusBarColor();
     }

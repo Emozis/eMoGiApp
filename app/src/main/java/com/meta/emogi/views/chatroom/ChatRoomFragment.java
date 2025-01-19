@@ -97,7 +97,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.chatLogList().observe(this, chatLogList -> {
-            data = new ArrayList<>();
             for (ChatLogModel log : chatLogList) {
                 data.add(new ChatContent(log.getRole(), log.getContents(), activity.getChatUrl()));
             }
@@ -162,14 +161,13 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         recyclerView = binding.chatField;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        Log.d("www33", activity.getAccessToken());
         viewModel.getChatLogList(activity.getAccessToken(), activity.getChatId());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("www34", activity.getAccessToken());
+        data = new ArrayList<>();
         binding.transmit.setEnabled(false);
         viewModel.init(activity.getAccessToken(), activity.getChatId());
         ToolbarView.ToolbarRequest newToolbarRequest = new ToolbarView.ToolbarRequest(activity.getCharacterName());

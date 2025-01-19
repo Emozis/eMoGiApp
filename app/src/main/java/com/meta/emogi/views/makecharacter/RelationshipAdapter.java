@@ -1,5 +1,5 @@
 package com.meta.emogi.views.makecharacter;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,75 +8,95 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.RelationshipModel;
 
 import java.util.ArrayList;
 import java.util.List;
-public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapter.CategoryViewHolder> {
 
-    private List<CharacterModel.CharacterRelationships> relationshipModelList;
+public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapter.RowViewHolder> {
+
+    private final List<List<CharacterModel.CharacterRelationships>> groupedData = new ArrayList<>();
     private final List<CharacterModel.CharacterRelationships> selectedItems = new ArrayList<>();
 
     public RelationshipAdapter(List<CharacterModel.CharacterRelationships> relationshipModelList) {
-        this.relationshipModelList = relationshipModelList;
+        groupData(relationshipModelList);
     }
+
+    // 데이터를 3개씩 묶어 그룹화
+    private void groupData(List<CharacterModel.CharacterRelationships> relationshipModelList) {
+        List<CharacterModel.CharacterRelationships> currentRow = new ArrayList<>();
+        for (CharacterModel.CharacterRelationships item : relationshipModelList) {
+            currentRow.add(item);
+            if (currentRow.size() == 3) { // 3개씩 그룹화
+                groupedData.add(new ArrayList<>(currentRow));
+                currentRow.clear();
+            }
+        }
+        if (!currentRow.isEmpty()) {
+            groupedData.add(currentRow); // 남은 데이터 추가
+        }
+    }
+
     @NonNull
     @Override
-    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_make_character, parent, false);
-        return new CategoryViewHolder(view);
+
+        int screenHeight = MyApplication.getDeviceHeightPx();
+        int itemHeight = (int) (screenHeight * 0.1f);
+
+        RecyclerView.LayoutParams params =
+                new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, itemHeight);
+
+        view.setLayoutParams(params);
+        return new RowViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        CharacterModel.CharacterRelationships relationshipModel = relationshipModelList.get(position);
-        holder.textView.setText(relationshipModel.getRelationshipName());
+    public void onBindViewHolder(@NonNull RowViewHolder holder, int position) {
+        List<CharacterModel.CharacterRelationships> rowData = groupedData.get(position);
+        holder.bind(rowData);
+    }
 
-        holder.itemView.setSelected(selectedItems.contains(relationshipModel));
+    @Override
+    public int getItemCount() {
+        return groupedData.size();
+    }
 
-        boolean isSelected = isItemSelected(relationshipModel);
-        holder.itemView.setSelected(isSelected);
+    public class RowViewHolder extends RecyclerView.ViewHolder {
+        private final List<TextView> categoryViews = new ArrayList<>();
 
-        holder.itemView.setOnClickListener(v -> {
-            int adapterPosition = holder.getAdapterPosition();
-            if (adapterPosition == RecyclerView.NO_POSITION)
-                return;
+        public RowViewHolder(@NonNull View itemView) {
+            super(itemView);
+            categoryViews.add(itemView.findViewById(R.id.categoryView1));
+            categoryViews.add(itemView.findViewById(R.id.categoryView2));
+            categoryViews.add(itemView.findViewById(R.id.categoryView3));
+        }
 
-            CharacterModel.CharacterRelationships selectedItem = findSelectedItemById(relationshipModel.getRelationshipId());
-            // 선택된 상태라면 선택 해제
-            if (selectedItem != null) {
-                // 이미 선택된 아이템이면 제거
-                selectedItems.remove(selectedItem);
-            } else {
-                // 선택되지 않은 아이템이고, 3개 미만이면 추가
-                if (selectedItems.size() < 3) {
-                    selectedItems.add(relationshipModel);
+        public void bind(List<CharacterModel.CharacterRelationships> rowData) {
+            for (int i = 0; i < categoryViews.size(); i++) {
+                if (i < rowData.size()) {
+                    CharacterModel.CharacterRelationships item = rowData.get(i);
+                    categoryViews.get(i).setVisibility(View.VISIBLE);
+                    categoryViews.get(i).setText(item.getRelationshipName());
+                    categoryViews.get(i).setSelected(selectedItems.contains(item));
+
+                    // 클릭 리스너 설정
+                    categoryViews.get(i).setOnClickListener(v -> {
+                        if (selectedItems.contains(item)) {
+                            selectedItems.remove(item); // 선택 해제
+                        } else if (selectedItems.size() < 3) {
+                            selectedItems.add(item); // 최대 3개 선택 가능
+                        }
+                        notifyDataSetChanged();
+                    });
+                } else {
+                    categoryViews.get(i).setVisibility(View.INVISIBLE); // 빈 셀 숨김
                 }
             }
-            notifyDataSetChanged();
-        });
-    }
-
-    private CharacterModel.CharacterRelationships findSelectedItemById(int relationshipId) {
-        for (CharacterModel.CharacterRelationships item : selectedItems) {
-            if (item.getRelationshipId() == relationshipId) {
-                return item;
-            }
         }
-        return null;
-    }
-
-
-
-    private boolean isItemSelected(CharacterModel.CharacterRelationships relationship) {
-        for (CharacterModel.CharacterRelationships selected : selectedItems) {
-            if (selected.getRelationshipId() == relationship.getRelationshipId()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public List<CharacterModel.CharacterRelationships> getSelectedRelationIds() {
@@ -85,20 +105,7 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
 
     public void setSelectedItems(List<CharacterModel.CharacterRelationships> selectedList) {
         selectedItems.clear(); // 기존 선택 항목 초기화
-        selectedItems.addAll(selectedList); // 새 선택 항목
+        selectedItems.addAll(selectedList); // 새 선택 항목 추가
         notifyDataSetChanged(); // UI 업데이트
-    }
-
-    @Override
-    public int getItemCount() {
-        return relationshipModelList.size();
-    }
-    public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-
-        public CategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.categoryView);
-        }
     }
 }

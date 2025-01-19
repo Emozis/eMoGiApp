@@ -108,7 +108,7 @@ public class RemoveChatListViewModel extends BaseViewModel {
 
     private List<ChatListModel> formatChatList(List<ChatListModel> chatlist) {
         for (ChatListModel chat : chatlist) {
-            Pair<String, Boolean> lastMessage = getLastMessage(chat.getChatLogs());
+            Pair<String, Boolean> lastMessage = getLastMessage(chat.getLastLog());
             chat.setLastMessage(lastMessage.first);
             chat.setEmptyChat(lastMessage.second);
 
@@ -119,11 +119,11 @@ public class RemoveChatListViewModel extends BaseViewModel {
         return chatlist;
     }
 
-    private Pair<String, Boolean> getLastMessage(List<ChatListModel.ChatLogs> chatLogs) {
+    private Pair<String, Boolean> getLastMessage(ChatListModel.LastLog lastLog) {
         String lastMessage;
         Boolean isEmptyChat;
-        if (chatLogs != null && !chatLogs.isEmpty()) {
-            lastMessage = chatLogs.get(chatLogs.size() - 1).getContents();
+        if (lastLog != null) {
+            lastMessage = lastLog.getContents();
             isEmptyChat = true;
         } else {
             lastMessage = "최근에 대화한 채팅이 없습니다.\n어서 이야기해보세요";
