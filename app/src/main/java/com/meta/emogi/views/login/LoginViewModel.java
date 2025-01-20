@@ -40,7 +40,21 @@ public class LoginViewModel extends BaseViewModel {
                     _accessToken.setValue(response.body());
                 } else {
                     failLoading();
-                    Log.e("www", "createAccessToken 응답이 정상적이지 않음");
+
+                    int statusCode = response.code();
+                    String errorBody = null;
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        Log.e("www", "Error parsing errorBody: " + e.getMessage());
+                    }
+
+                    Log.e("www", "createAccessToken 응답이 정상적이지 않음. " +
+                            "Status Code: " + statusCode +
+                            ", Error Body: " + errorBody +
+                            ", Headers: " + response.headers().toString());
                 }
             }
             @Override
