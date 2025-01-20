@@ -11,8 +11,8 @@ android {
         applicationId "com.meta.emogi"
         minSdk 24
         targetSdk 34
-        versionCode 103022
-        versionName "1.03.022"
+        versionCode 103023
+        versionName "1.03.023"
         multiDexEnabled true  // MultiDex 활성화
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
