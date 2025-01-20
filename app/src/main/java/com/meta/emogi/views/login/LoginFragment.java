@@ -73,8 +73,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("www", "loginFragment oncreate 실행");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+        Log.d("www", "loginFragment oncreate 종료");
     }
 
     @Override
@@ -92,15 +94,21 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
 
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == getActivity().RESULT_OK) {
+            Log.d("www", "로그인 결과1");
             Intent data = result.getData();
+            Log.d("www", "로그인 결과2");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            Log.d("www", "로그인 결과3");
             handleSignInResult(task);
+            Log.d("www", "로그인 결과4");
         }
     });
 
     private void signIn() {
+        Log.d("www", "로그인 실행");
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         signInLauncher.launch(signInIntent);
+        Log.d("www", "로그인 종료");
     }
 
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {

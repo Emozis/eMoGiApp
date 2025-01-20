@@ -1,3 +1,4 @@
 /build
 /app/src/main/assets/config.properties
 /release
+.idea
