@@ -79,7 +79,7 @@ public class RemoveChatListViewModel extends BaseViewModel {
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     MessageResponse message = response.body();
-                    Log.d("www", chatId+"번 채팅 제거 성공 "+message.getMessage());
+                    Log.w("www", chatId+"번 채팅 제거 성공 "+message.getMessage());
                     _goToChatList.call();
                     offLoading();
                 } else {

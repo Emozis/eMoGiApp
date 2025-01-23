@@ -73,7 +73,7 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
+        Log.w(TAG, "onCreate: ");
         activity = (ProfileActivity) requireActivity();
     }
 

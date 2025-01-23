@@ -85,7 +85,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
 
     @Override
     public void onButtonClicked(View v) {
-        Log.d(TAG, "onButtonClicked: ");
+        Log.w(TAG, "onButtonClicked: ");
         int btnResId = v.getId();
         if (btnResId == R.id.generate) {
             _generate.call();
@@ -112,7 +112,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     _defaultRelationshipList.setValue(response.body());
                     for (CharacterModel.CharacterRelationships r : response.body()) {
-                        Log.d(TAG, r.getRelationshipName());
+                        Log.w(TAG, r.getRelationshipName());
                     }
                 } else {
                     failLoading();
@@ -147,15 +147,15 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void createCharacter(String accessToken, CharacterModel characterModel) {
-        Log.d("www", "accessToken: " + accessToken);
-        Log.d("www", "characterModel: " + new Gson().toJson(characterModel));
+        Log.w("www", "accessToken: " + accessToken);
+        Log.w("www", "characterModel: " + new Gson().toJson(characterModel));
         repository.createCharacter(accessToken, characterModel, new Callback<CharacterModel>() {
             @Override
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
 
-                Log.d("www", "Response Code: " + response.code());
-                Log.d("www", "Response Message: " + response.message());
-                Log.d("www", "Response Body: " + new Gson().toJson(response.body()));
+                Log.w("www", "Response Code: " + response.code());
+                Log.w("www", "Response Message: " + response.message());
+                Log.w("www", "Response Body: " + new Gson().toJson(response.body()));
 
                 if (response.isSuccessful() && response.body() != null) {
                     _createdCharacter.setValue(response.body());
@@ -173,14 +173,14 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void updateCharacter(String accessToken, CharacterModel characterModel, int characterId) {
-        Log.d("www", "accessToken: " + accessToken);
-        Log.d("www", "characterModel: " + new Gson().toJson(characterModel));
+        Log.w("www", "accessToken: " + accessToken);
+        Log.w("www", "characterModel: " + new Gson().toJson(characterModel));
         repository.updateCharacter(accessToken, characterModel, characterId, new Callback<CharacterModel>() {
             @Override
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
-                Log.d("www", "Response Code: " + response.code());
-                Log.d("www", "Response Message: " + response.message());
-                Log.d("www", "Response Body: " + new Gson().toJson(response.body()));
+                Log.w("www", "Response Code: " + response.code());
+                Log.w("www", "Response Message: " + response.message());
+                Log.w("www", "Response Body: " + new Gson().toJson(response.body()));
 
                 if (response.isSuccessful() && response.body() != null) {
                     _createdCharacter.setValue(response.body());

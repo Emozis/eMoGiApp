@@ -77,7 +77,7 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
         viewModel.setChatList(activity.getChatList());
         List<ChatListModel> chatList = activity.getChatList();
         if (chatList != null && !chatList.isEmpty()) {
-            Log.d("www", "onResume: ");
+            Log.w("www", "onResume: ");
             viewModel.setChatList(chatList);
         } else {
             Log.e("www", "chatList가 비어 있거나 null입니다.");

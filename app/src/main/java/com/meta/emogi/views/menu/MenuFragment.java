@@ -142,7 +142,7 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
         menuListAdapter.setOnItemClickListener(characterId -> {
             // 클릭된 아이템의 CharacterId를 가져와서 처리
             if (characterId != -1) {
-                Log.d(TAG, "Selected CharacterId: " + characterId);
+                Log.w(TAG, "Selected CharacterId: " + characterId);
                 activity.moveToCharacterDetail(characterId);
             }
         });

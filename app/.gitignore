@@ -2,3 +2,5 @@
 /app/src/main/assets/config.properties
 /release
 .idea
+google-services.json
+/src/main/assets/config.properties

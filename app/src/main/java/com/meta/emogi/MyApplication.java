@@ -25,7 +25,7 @@ public class MyApplication extends Application {
     private void getDeviceSize(){
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 
-        Log.d("www", "getDeviceSize:  ");
+        Log.w("www", "getDeviceSize:  ");
         deviceHeightPx = displayMetrics.heightPixels;
         deviceWidthPx = displayMetrics.widthPixels;
     }

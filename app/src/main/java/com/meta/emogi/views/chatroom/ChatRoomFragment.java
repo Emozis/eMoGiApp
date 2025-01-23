@@ -78,7 +78,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
             if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
-                Log.d("www", "메세지 받음 :"+recevied);
+                Log.w("www", "메세지 받음 :"+recevied);
 
                 Markwon markwon = Markwon.create(requireContext());
                 Spanned markdownContent = markwon.toMarkdown(recevied);

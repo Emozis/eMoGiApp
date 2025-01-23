@@ -55,7 +55,7 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
 //        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
 //            @Override
 //            public void handleOnBackPressed() {
-//                Log.d("www", "onBackPressedDispatcher에서 호출됨");
+//                Log.w("www", "onBackPressedDispatcher에서 호출됨");
 //                onBackPressedAction();
 //            }
 //        });

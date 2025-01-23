@@ -78,7 +78,7 @@ public class ChatRoomViewModel extends BaseViewModel {
         Gson gson = new Gson();
         String jsonMessage = gson.toJson(chatContent);
 
-        Log.d("www", "보낸 메시지: " + jsonMessage);
+        Log.w("www", "보낸 메시지: " + jsonMessage);
         chatWebSocket.sendMessage(jsonMessage);
     }
 
@@ -96,7 +96,7 @@ public class ChatRoomViewModel extends BaseViewModel {
         String message = _sendText.getValue();
         if (chatWebSocket != null && message != null && !message.isEmpty()) {
 
-            Log.d(TAG, "보낸 메시지: " + message);
+            Log.w(TAG, "보낸 메시지: " + message);
 
             ChatContent chatContent = new ChatContent(TYPE_USER, message);
             Gson gson = new Gson();

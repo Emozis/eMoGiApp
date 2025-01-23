@@ -52,11 +52,11 @@ public class ChatListViewModel extends BaseViewModel {
         repository.getChatList(accessToken, new Callback<List<ChatListModel>>() {
             @Override
             public void onResponse(Call<List<ChatListModel>> call, Response<List<ChatListModel>> response) {
-                Log.d("wwwt", accessToken);
+                Log.w("wwwt", accessToken);
                 if (response.isSuccessful() && response.body() != null) {
                     List<ChatListModel> ChatList = formatChatList(response.body());
                     for(ChatListModel chat : ChatList){
-                        Log.d("www",chat.getLastMessage());
+                        Log.w("www",chat.getLastMessage());
                     }
                     _chatList.setValue(ChatList);
                     offLoading();

@@ -72,7 +72,7 @@
 //    private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
 //        try {
 //            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-//            Log.d(TAG, "login success :" + account.getIdToken());
+//            Log.w(TAG, "login success :" + account.getIdToken());
 //            sendIdTokenToServer(account.getIdToken());
 //        } catch (ApiException e) {
 //            Log.w(TAG, "signInResult: failed code=" + e.getStatusCode(), e);
@@ -91,7 +91,7 @@
 //                    return;
 //                }
 //
-//                Log.d(TAG, "Token sent successfully.");
+//                Log.w(TAG, "Token sent successfully.");
 //            }
 //
 //            @Override

@@ -47,7 +47,7 @@ public class ChatWebSocket extends WebSocketListener {
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
-        Log.d(TAG, "WebSocket Opened: " + response);
+        Log.w(TAG, "WebSocket Opened: " + response);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ChatWebSocket extends WebSocketListener {
     @Override
     public void onClosing(WebSocket webSocket, int code, String reason) {
         webSocket.close(1000, null);
-        Log.d(TAG, "WebSocket Closing: " + code + " / " + reason);
+        Log.w(TAG, "WebSocket Closing: " + code + " / " + reason);
     }
 
     @Override

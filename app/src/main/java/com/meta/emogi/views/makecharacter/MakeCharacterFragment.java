@@ -122,7 +122,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                 viewModel.setCurrentCharaterData(currentCharacterData);
                 Gson gson = new Gson();
                 String jsonMessage = gson.toJson(currentCharacterData);
-                Log.d("www", jsonMessage);
+                Log.w("www", jsonMessage);
 
                 if (relationshipAdapter != null) {
                     relationshipAdapter.setSelectedItems(currentCharacterData.getCharacterRelationships());

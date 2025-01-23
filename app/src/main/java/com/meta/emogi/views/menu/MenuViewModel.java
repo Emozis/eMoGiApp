@@ -63,7 +63,7 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void getMyCharacters(String accessToken) {
-        Log.d("www", accessToken);
+        Log.w("www", accessToken);
         repository.getMyCharacterList(accessToken, new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
@@ -124,7 +124,7 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void getUserData(String accessToken) {
-        Log.d("wwwt", accessToken);
+        Log.w("wwwt", accessToken);
         repository.getUserData(accessToken, new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
