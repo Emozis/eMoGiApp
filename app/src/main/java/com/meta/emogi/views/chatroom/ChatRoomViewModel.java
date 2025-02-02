@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class ChatRoomViewModel extends BaseViewModel {
     private ChatWebSocket chatWebSocket;
     private StringBuilder messageBuilder = new StringBuilder();
-    private static final String TAG = "ChatRoomViewModel";
+    private static final String TAG = "www";
 
     public MutableLiveData<String> inputText = new MutableLiveData<>("");
     private MutableLiveData<String> _sendText = new MutableLiveData<>();
@@ -78,7 +78,7 @@ public class ChatRoomViewModel extends BaseViewModel {
         Gson gson = new Gson();
         String jsonMessage = gson.toJson(chatContent);
 
-        Log.w("www", "보낸 메시지: " + jsonMessage);
+        Log.w("www", "서버에게 소켓 인증 보내기 : " + jsonMessage);
         chatWebSocket.sendMessage(jsonMessage);
     }
 
@@ -95,14 +95,14 @@ public class ChatRoomViewModel extends BaseViewModel {
     public void sendMessageToServer() {
         String message = _sendText.getValue();
         if (chatWebSocket != null && message != null && !message.isEmpty()) {
-
-            Log.w(TAG, "보낸 메시지: " + message);
-
             ChatContent chatContent = new ChatContent(TYPE_USER, message);
             Gson gson = new Gson();
             String jsonMessage = gson.toJson(chatContent);
             chatWebSocket.sendMessage(jsonMessage);
             inputText.setValue(""); // 메시지를 보낸 후 EditText를 비웁니다.
+            Log.w(TAG, "메세지 보내기 성공: " + message);
+        }else{
+            Log.w(TAG, "메세지 보내기 실패: " + message);
         }
     }
 
@@ -113,12 +113,14 @@ public class ChatRoomViewModel extends BaseViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     _chatLogList.setValue(response.body());
                 } else {
+                    Log.d(TAG, "chat log test2");
                     failLoading();
                     Log.e("www", "getChatLogList 응답이 정상적이지 않음");
                 }
             }
             @Override
             public void onFailure(Call<List<ChatLogModel>> call, Throwable t) {
+                Log.d(TAG, "chat log test3");
                 Log.e("www", "getChatLogList API 호출 실패: " + t.getMessage());
             }
         });

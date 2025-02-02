@@ -90,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_layout"
-                app:layout_constraintVertical_weight="1">
+                app:layout_constraintVertical_weight="1.5">
 
                 <TextView
                     android:id="@+id/title_name_gender"
@@ -134,7 +134,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_gender_layout"
-                app:layout_constraintVertical_weight="1">
+                app:layout_constraintVertical_weight="1.5">
 
                 <TextView
                     android:id="@+id/title_personality"
@@ -160,8 +160,10 @@
                     android:textSize="@dimen/common_text_size_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_personality"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:text="#카카칠" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -177,7 +179,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/personality_layout"
-                app:layout_constraintVertical_weight="1">
+                app:layout_constraintVertical_weight="1.5">
 
                 <TextView
                     android:id="@+id/title_category"

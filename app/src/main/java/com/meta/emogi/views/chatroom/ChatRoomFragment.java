@@ -77,8 +77,9 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
-            if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(ChatContent.TYPE_CHARACTER)) {
-                Log.w("www", "메세지 받음 :"+recevied);
+            if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(
+                    ChatContent.TYPE_CHARACTER)) {
+                Log.w("www", "메세지 받음 :" + recevied);
 
                 Markwon markwon = Markwon.create(requireContext());
                 Spanned markdownContent = markwon.toMarkdown(recevied);
@@ -114,7 +115,8 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND) {
                     // 완료 또는 전송 액션일 때만 키보드를 숨깁니다.
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
                         imm.hideSoftInputFromWindow(binding.sendText.getWindowToken(), 0);
                     }
@@ -134,9 +136,9 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         binding.sendText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
                     binding.transmit.setEnabled(false);
-                }else{
+                } else {
                     binding.transmit.setEnabled(true);
                 }
             }
@@ -160,6 +162,11 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
 
         recyclerView = binding.chatField;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        data = new ArrayList<>();
+        adapter = new ChatListAdapter(data);
+        recyclerView.setAdapter(adapter);
+
 
         viewModel.getChatLogList(activity.getAccessToken(), activity.getChatId());
     }

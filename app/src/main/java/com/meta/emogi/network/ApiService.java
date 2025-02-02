@@ -51,28 +51,24 @@ public interface ApiService {
     Call<ResponseModel> deleteCharacter(@Header("Authorization") String accessToken, @Path("character_id") int characterId);
 
     //기본 캐릭터 이미지 관련 api
-
     @GET("api/v1/default-image")
     Call<List<ImageModel>> getDefaultImageList();
 
     //캐릭터,유저 사이 관계 api
-
     @GET("api/v1/relationship")
     Call<List<CharacterModel.CharacterRelationships>> getDefaultRelationshipList();
 
     //채팅방 관련 api
-
     @POST("api/v1/chat")
     Call<MakeChatRoom> createChatRoom(@Header("Authorization") String accessToken, @Body MakeChatRoom makeChatRoom);
 
-    @GET("api/v1/chat/me/")
+    @GET("api/v1/chat/me")
     Call<List<ChatListModel>> getChatList(@Header("Authorization") String accessToken);
 
     @DELETE("api/v1/chat/{chat_id}")
     Call<MessageResponse> deleteChat(@Header("Authorization") String accessToken, @Path("chat_id") int chat_id);
 
     //채팅 로그 관련 api
-
     @GET("api/v1/chat-log/chats/{chat_id}")
     Call<List<ChatLogModel>> getChatLog(@Header("Authorization") String accessToken, @Path("chat_id") int chatId);
 

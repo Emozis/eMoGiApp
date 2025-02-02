@@ -66,7 +66,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         ChatListModel chat = chatList.get(position);
         holder.characterName.setText(chat.getCharacter().getCharacterName());
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
-        Log.w("www", chat.getLastMessage());
         holder.lastTalk.setText(chat.getLastMessage());
         holder.lastTalkTime.setText(chat.getLastMessageAt());
 

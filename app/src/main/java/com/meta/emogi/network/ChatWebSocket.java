@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChatWebSocket extends WebSocketListener {
-    private static final String TAG = "ChatWebSocket";
+    private static final String TAG = "www Socket";
     private WebSocket webSocket;
     private OkHttpClient client;
     private MessageCallback callback;
@@ -37,6 +37,7 @@ public class ChatWebSocket extends WebSocketListener {
         this.callback = callback;
         client = new OkHttpClient();
         serverUrl = String.format(serverDefaultUrl + "%d", chatId);
+        Log.d("www", serverUrl);
     }
 
     public void start() {
@@ -85,6 +86,7 @@ public class ChatWebSocket extends WebSocketListener {
 
     public void sendMessage(String message) {
         if (webSocket != null) {
+            Log.d(TAG, "sendMessage: ");
             webSocket.send(message);
         } else {
             Log.e(TAG, "WebSocket is not connected");

@@ -1,4 +1,6 @@
 package com.meta.emogi.util;
+import android.util.Log;
+
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.CharacterModel;
@@ -52,7 +54,11 @@ public class ApiRepository {
     }
 
     //chatRoom
-    public void getChatLogList(String accessToken, int chatId, Callback<List<ChatLogModel>> callback) {
+    public void getChatLogList(
+            String accessToken,
+            int chatId,
+            Callback<List<ChatLogModel>> callback
+    ) {
         apiService.getChatLog(accessToken, chatId).enqueue(callback);
     }
 
@@ -67,25 +73,40 @@ public class ApiRepository {
     }
 
     //characterDetail
-    public void getCharacterDetails(String accessToken, int characterId, Callback<CharacterModel> callback) {
+    public void getCharacterDetails(
+            String accessToken,
+            int characterId,
+            Callback<CharacterModel> callback
+    ) {
         apiService.getCharacterDetails(accessToken, characterId).enqueue(callback);
     }
 
-    public void deleteCharacter(String accessToken, int characterId, Callback<ResponseModel> callback) {
+    public void deleteCharacter(
+            String accessToken,
+            int characterId,
+            Callback<ResponseModel> callback
+    ) {
         apiService.deleteCharacter(accessToken, characterId).enqueue(callback);
     }
 
     //PUT
-    public void updateCharacter(String accessToken, CharacterModel characterModel, int characterId, Callback<CharacterModel> callback) {
-        apiService.updateCharacter(accessToken,characterModel, characterId).enqueue(callback);
+    public void updateCharacter(
+            String accessToken,
+            CharacterModel characterModel,
+            int characterId,
+            Callback<CharacterModel> callback
+    ) {
+        apiService.updateCharacter(accessToken, characterModel, characterId).enqueue(callback);
     }
-
-
 
     //// POST
 
     //makeCharacter
-    public void createCharacter(String accessToken, CharacterModel characterModel, Callback<CharacterModel> callback) {
+    public void createCharacter(
+            String accessToken,
+            CharacterModel characterModel,
+            Callback<CharacterModel> callback
+    ) {
         apiService.createCharacter(accessToken, characterModel).enqueue(callback);
     }
 
@@ -95,7 +116,11 @@ public class ApiRepository {
     }
 
     //characterDetail
-    public void createChatRoom(String accessToken, MakeChatRoom makeChatRoom, Callback<MakeChatRoom> callback) {
+    public void createChatRoom(
+            String accessToken,
+            MakeChatRoom makeChatRoom,
+            Callback<MakeChatRoom> callback
+    ) {
         apiService.createChatRoom(accessToken, makeChatRoom).enqueue(callback);
     }
 
