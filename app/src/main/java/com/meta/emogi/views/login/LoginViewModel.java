@@ -23,6 +23,7 @@ import retrofit2.Response;
 public class LoginViewModel extends BaseViewModel {
 
     private final MutableLiveData<TokenModel> _accessToken = new MutableLiveData<>();
+    private final MutableLiveData<String> _appVersion = new MutableLiveData<>();
 
     public LoginViewModel(Application application) {
         super(application);
@@ -30,6 +31,14 @@ public class LoginViewModel extends BaseViewModel {
 
     public MutableLiveData<TokenModel> accessToken() {
         return _accessToken;
+    }
+
+    public MutableLiveData<String> appVersion() {
+        return _appVersion;
+    }
+
+    public void setAppVersion(String version) {
+        _appVersion.setValue(version);
     }
 
     public void createAccessToken(TokenModel requestToken) {

@@ -44,6 +44,7 @@
             android:exported="false" />
         <activity
             android:name=".views.chatroom.ChatRoomActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
         </activity>
         <activity

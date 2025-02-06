@@ -1,4 +1,6 @@
 package com.meta.emogi.base;
+import static com.meta.emogi.MyApplication.getDeviceHeightPx;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -73,6 +76,17 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
+    }
+
+
+    protected void setToolbarHeight(ToolbarView toolbar) {
+        ConstraintLayout.LayoutParams layoutParams =
+                (ConstraintLayout.LayoutParams) toolbar.getLayoutParams();
+
+        int heightInPx = (int) (getDeviceHeightPx() * 0.1);
+
+        layoutParams.height = heightInPx;
+        toolbar.setLayoutParams(layoutParams);
     }
 
 }

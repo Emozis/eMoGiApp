@@ -62,6 +62,18 @@
             />
 
 
+        <TextView
+            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.appVersion()}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_text_size_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="1.03.0300"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

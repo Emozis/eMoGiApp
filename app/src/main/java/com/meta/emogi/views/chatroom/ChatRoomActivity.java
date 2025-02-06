@@ -1,11 +1,15 @@
 package com.meta.emogi.views.chatroom;
 
+import static com.meta.emogi.MyApplication.getDeviceHeightPx;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -53,17 +57,17 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
-        chatId = intent.getIntExtra("CHAT_ID",0);
+        chatId = intent.getIntExtra("CHAT_ID", 0);
         chatUrl = intent.getStringExtra("CHAT_URL");
         characterName = intent.getStringExtra("CHARACTER_NAME");
         setChatId(chatId);
         setChatUrl(chatUrl);
         setCharacterName(characterName);
+        setToolbarHeight(binding.toolbar);
     }
 
     @Override
     protected void onBackPressedAction() {
         finish();
     }
-
 }

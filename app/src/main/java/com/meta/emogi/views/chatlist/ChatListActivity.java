@@ -40,7 +40,7 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
         Intent intent = getIntent();
         String data = intent.getStringExtra("ACCESS_TOKEN");
         setAccessToken(data);
-        //        Log.w(TAG, data);
+        setToolbarHeight(binding.toolbar);
     }
 
 

@@ -170,35 +170,73 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         viewModel.getDefaultImageList();
         viewModel.getDefaultRelationshipList();
 
-        int scrollHeight = MyApplication.getDeviceHeightPx();
-        //        ViewGroup.LayoutParams layoutParams = binding.scrollView.getLayoutParams();
-        //        layoutParams.height = (int) (scrollHeight * 1.5);
-        //        binding.scrollView.setLayoutParams(layoutParams);
 
-        ViewGroup.LayoutParams paramsImage = binding.layoutImage.getLayoutParams();
-        paramsImage.height = (int) (scrollHeight * 0.2f);
-        binding.layoutImage.setLayoutParams(paramsImage);
-
-        ViewGroup.LayoutParams paramsName = binding.layoutName.getLayoutParams();
-        paramsName.height = (int) (scrollHeight * 0.12f);
-        binding.layoutName.setLayoutParams(paramsName);
-
-        ViewGroup.LayoutParams paramsPersonality = binding.layoutPersonality.getLayoutParams();
-        paramsPersonality.height = (int) (scrollHeight * 0.12f);
-        binding.layoutPersonality.setLayoutParams(paramsPersonality);
-
-        ViewGroup.LayoutParams paramsCategory = binding.layoutCategory.getLayoutParams();
-        paramsCategory.height = (int) (scrollHeight * 0.25f);
-        binding.layoutCategory.setLayoutParams(paramsCategory);
-
-        ViewGroup.LayoutParams paramsDetail = binding.layoutDetail.getLayoutParams();
-        paramsDetail.height = (int) (scrollHeight * 0.3f);
-        binding.layoutDetail.setLayoutParams(paramsDetail);
-
-        ViewGroup.LayoutParams paramsIsOpen = binding.layoutIsOpen.getLayoutParams();
-        paramsIsOpen.height = (int) (scrollHeight * 0.05f);
-        binding.layoutIsOpen.setLayoutParams(paramsIsOpen);
+//
+//        int scrollHeight = MyApplication.getDeviceHeightPx();
+////        int scrollHeight = binding.makeCharacterFragment.getHeight();
+//        //        ViewGroup.LayoutParams layoutParams = binding.scrollView.getLayoutParams();
+//        //        layoutParams.height = (int) (scrollHeight * 1.5);
+//        //        binding.scrollView.setLayoutParams(layoutParams);
+//        Log.d("www", scrollHeight+"");
+//
+//        ViewGroup.LayoutParams paramsImage = binding.layoutImage.getLayoutParams();
+//        paramsImage.height = (int) (scrollHeight * 0.2f);
+//        binding.layoutImage.setLayoutParams(paramsImage);
+//
+//        ViewGroup.LayoutParams paramsName = binding.layoutName.getLayoutParams();
+//        paramsName.height = (int) (scrollHeight * 0.12f);
+//        binding.layoutName.setLayoutParams(paramsName);
+//
+//        ViewGroup.LayoutParams paramsPersonality = binding.layoutPersonality.getLayoutParams();
+//        paramsPersonality.height = (int) (scrollHeight * 0.12f);
+//        binding.layoutPersonality.setLayoutParams(paramsPersonality);
+//
+//        ViewGroup.LayoutParams paramsCategory = binding.layoutCategory.getLayoutParams();
+//        paramsCategory.height = (int) (scrollHeight * 0.25f);
+//        binding.layoutCategory.setLayoutParams(paramsCategory);
+//
+//        ViewGroup.LayoutParams paramsDetail = binding.layoutDetail.getLayoutParams();
+//        paramsDetail.height = (int) (scrollHeight * 0.3f);
+//        binding.layoutDetail.setLayoutParams(paramsDetail);
+//
+//        ViewGroup.LayoutParams paramsIsOpen = binding.layoutIsOpen.getLayoutParams();
+//        paramsIsOpen.height = (int) (scrollHeight * 0.05f);
+//        binding.layoutIsOpen.setLayoutParams(paramsIsOpen);
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.makeCharacterFragment.post(() -> {
+            // 2. px 단위 높이 가져오기
+            int scrollHeight = binding.makeCharacterFragment.getHeight();
+
+            ViewGroup.LayoutParams paramsImage = binding.layoutImage.getLayoutParams();
+            paramsImage.height = (int) (scrollHeight * 0.2f);
+            binding.layoutImage.setLayoutParams(paramsImage);
+
+            ViewGroup.LayoutParams paramsName = binding.layoutName.getLayoutParams();
+            paramsName.height = (int) (scrollHeight * 0.13f);
+            binding.layoutName.setLayoutParams(paramsName);
+
+            ViewGroup.LayoutParams paramsPersonality = binding.layoutPersonality.getLayoutParams();
+            paramsPersonality.height = (int) (scrollHeight * 0.13f);
+            binding.layoutPersonality.setLayoutParams(paramsPersonality);
+
+            ViewGroup.LayoutParams paramsCategory = binding.layoutCategory.getLayoutParams();
+            paramsCategory.height = (int) (scrollHeight * 0.25f);
+            binding.layoutCategory.setLayoutParams(paramsCategory);
+
+            ViewGroup.LayoutParams paramsDetail = binding.layoutDetail.getLayoutParams();
+            paramsDetail.height = (int) (scrollHeight * 0.3f);
+            binding.layoutDetail.setLayoutParams(paramsDetail);
+
+            ViewGroup.LayoutParams paramsIsOpen = binding.layoutIsOpen.getLayoutParams();
+            paramsIsOpen.height = (int) (scrollHeight * 0.05f);
+            binding.layoutIsOpen.setLayoutParams(paramsIsOpen);
+        });
+
+    }
 }

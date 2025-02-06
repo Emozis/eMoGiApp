@@ -44,6 +44,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     protected void onResume() {
         super.onResume();
         initFragment();
+        setToolbarHeight(binding.toolbar);
     }
 
 

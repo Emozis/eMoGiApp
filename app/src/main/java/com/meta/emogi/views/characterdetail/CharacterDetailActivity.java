@@ -49,6 +49,7 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
         String data = intent.getStringExtra("ACCESS_TOKEN");
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
         setAccessToken(data);
+        setToolbarHeight(binding.toolbar);
     }
 
     public int getCharacterId() {

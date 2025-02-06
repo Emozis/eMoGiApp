@@ -5,43 +5,26 @@ import static com.meta.emogi.MyApplication.getDeviceHeightPx;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.meta.emogi.BuildConfig;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentLoginBinding;
-import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.RetrofitClient;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.util.ConfigUtil;
 import com.meta.emogi.views.toolbar.ToolbarView;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> {
 
@@ -112,6 +95,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         } catch (Exception e) {
             Log.e(TAG, "Google Sign-In 초기화 실패: " + e.getMessage(), e);
         }
+
+        viewModel.setAppVersion(String.valueOf(BuildConfig.VERSION_NAME));
     }
 
     @Override

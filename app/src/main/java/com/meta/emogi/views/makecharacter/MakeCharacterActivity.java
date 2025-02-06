@@ -1,9 +1,12 @@
 package com.meta.emogi.views.makecharacter;
 
+import static com.meta.emogi.MyApplication.getDeviceHeightPx;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -40,6 +43,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         Intent intent = getIntent();
         setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
+        setToolbarHeight(binding.toolbar);
     }
 
     public void moveToMyProfile(){
@@ -55,5 +59,5 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     public void setCharacterId(int characterId) {
         this.characterId = characterId;
     }
-
+    
 }
