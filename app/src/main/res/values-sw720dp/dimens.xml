@@ -15,7 +15,7 @@
     <dimen name="common_space_large">28sp</dimen>
 
     <!--    menu-->
-    <dimen name="menu_top_btn_size">250dp</dimen>
+    <dimen name="menu_top_btn_size">200dp</dimen>
     <dimen name="menu_top_btn_padding">50dp</dimen>
     <dimen name="menu_top_btn_padding_top">90dp</dimen>
 

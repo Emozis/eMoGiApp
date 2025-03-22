@@ -129,6 +129,7 @@
                 android:orientation="horizontal"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
+                android:background="@color/gray"
                 app:layout_constraintBottom_toTopOf="@+id/layout_middle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.25"

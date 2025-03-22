@@ -7,7 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class RetrofitClient {
-    private static final String SERVER_URL = "https://emogi.site/";
+//    private static final String SERVER_URL = "https://emogi.site/";
+private static final String SERVER_URL = "http://122.128.54.136:8200/";
 
     public static Retrofit getRetrofitInstance() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

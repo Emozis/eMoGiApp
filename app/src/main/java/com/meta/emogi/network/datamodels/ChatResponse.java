@@ -5,6 +5,8 @@ public class ChatResponse {
     private int response_id;
     private String content; // 'character' 필드를 문자열로 가정
 
+    private String chatType;
+
     // Getters and Setters
     public String getType() {
         return type;
@@ -36,5 +38,12 @@ public class ChatResponse {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getChatType() {
+        return chatType;
+    }
+    public void setChatType(String chatType) {
+        this.chatType = chatType;
     }
 }

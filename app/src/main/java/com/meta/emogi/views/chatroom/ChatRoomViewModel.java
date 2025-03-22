@@ -19,6 +19,7 @@ import com.meta.emogi.network.datamodels.ChatLogModel;
 
 import org.checkerframework.checker.units.qual.C;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,9 +114,23 @@ public class ChatRoomViewModel extends BaseViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     _chatLogList.setValue(response.body());
                 } else {
-                    Log.d(TAG, "chat log test2");
                     failLoading();
-                    Log.e("www", "getChatLogList 응답이 정상적이지 않음");
+
+                    // 📌 응답 상태 코드, 에러 본문, 헤더 정보 출력
+                    int statusCode = response.code(); // HTTP 상태 코드 (ex. 401, 403, 500)
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string(); // 응답 본문 (에러 메시지)
+                        }
+                    } catch (IOException e) {
+                        Log.e("www", "에러 본문 읽기 실패: " + e.getMessage(), e);
+                    }
+
+                    Log.e("www", "getChatLogList 응답이 정상적이지 않음. " +
+                            "상태 코드: " + statusCode + ", " +
+                            "에러 본문: " + errorBody + ", " +
+                            "헤더: " + response.headers().toString());
                 }
             }
             @Override

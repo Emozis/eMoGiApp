@@ -24,7 +24,8 @@ public class ChatWebSocket extends WebSocketListener {
     private OkHttpClient client;
     private MessageCallback callback;
     private MutableLiveData<String> _liveData;
-    private static String serverDefaultUrl = "wss://emogi.site/api/v1/chatting/ws/";
+//    private static String serverDefaultUrl = "wss://emogi.site/api/v1/chatting/ws/";
+private static String serverDefaultUrl = "ws://122.128.54.136:8200/api/v1/chatting/ws/";
     private static String serverUrl;
     private String get;
     private final Gson gson = new Gson();
@@ -58,9 +59,14 @@ public class ChatWebSocket extends WebSocketListener {
             // JSON 파싱
             ChatResponse chatResponse = gson.fromJson(text, ChatResponse.class);
 
+            String test = chatResponse.getChatType();
+            Log.d("www", "test : "+test);
+
             if ("character".equals(chatResponse.getType())) {
                 String characterFragment = chatResponse.getContent();
+                Log.d("www", "채팅 내용 :"+characterFragment);
                 callback.onMessageReceived(characterFragment);
+
 
 //                _liveData.postValue(characterFragment);
 
