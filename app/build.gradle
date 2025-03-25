@@ -105,7 +105,8 @@ dependencies {
     // OkHttp Logging Interceptor 추가
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
-
+    // 구글 admob 추가
+    implementation 'com.google.android.gms:play-services-ads:23.0.0'
 
 }
 

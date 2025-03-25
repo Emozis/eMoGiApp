@@ -24,14 +24,16 @@ public class ChatWebSocket extends WebSocketListener {
     private OkHttpClient client;
     private MessageCallback callback;
     private MutableLiveData<String> _liveData;
-//    private static String serverDefaultUrl = "wss://emogi.site/api/v1/chatting/ws/";
-private static String serverDefaultUrl = "ws://122.128.54.136:8200/api/v1/chatting/ws/";
+    private static String serverDefaultUrl = "wss://emogi.site/api/v1/chatting/ws/";
+//    private static String serverDefaultUrl = "ws://122.128.54.136:8200/api/v1/chatting/ws/";
     private static String serverUrl;
     private String get;
     private final Gson gson = new Gson();
 
     public interface MessageCallback {
         void onMessageReceived(String message);
+        void onGreetReceived(String greetMessage);
+        void onEndReceived();
     }
 
     public ChatWebSocket(int chatId, MessageCallback callback) {
@@ -54,27 +56,42 @@ private static String serverDefaultUrl = "ws://122.128.54.136:8200/api/v1/chatti
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-
         try {
             // JSON 파싱
             ChatResponse chatResponse = gson.fromJson(text, ChatResponse.class);
 
-            String test = chatResponse.getChatType();
-            Log.d("www", "test : "+test);
-
-            if ("character".equals(chatResponse.getType())) {
-                String characterFragment = chatResponse.getContent();
-                Log.d("www", "채팅 내용 :"+characterFragment);
-                callback.onMessageReceived(characterFragment);
+            String type = chatResponse.getChatType();
 
 
-//                _liveData.postValue(characterFragment);
-
-
-            } else {
-                Log.e(TAG, "Unexpected message type or null chatResponse");
+            switch (type) {
+                case ChatResponse.GREET:
+                    String greetMessage = chatResponse.getContent();
+                    if(!greetMessage.isEmpty()){
+                        Log.d("www", "Greet :" +greetMessage);
+                        callback.onGreetReceived(greetMessage);
+                    }
+                    break;
+                case ChatResponse.CHAT:
+                    if ("character".equals(chatResponse.getType())) {
+                        String message = chatResponse.getContent();
+                        Log.d("www", "채팅 내용 :" + message);
+                        callback.onMessageReceived(message);
+                    }
+                    break;
+                case ChatResponse.END:
+                    callback.onEndReceived();
+                    break;
             }
 
+//            if ("character".equals(chatResponse.getType())) {
+//                String characterFragment = chatResponse.getContent();
+//                Log.d("www", "채팅 내용 :" + characterFragment);
+//                callback.onMessageReceived(characterFragment);
+//                //                _liveData.postValue(characterFragment);
+//
+//            } else {
+//                Log.e(TAG, "Unexpected message type or null chatResponse");
+//            }
         } catch (JsonSyntaxException e) {
             Log.e(TAG, "JSON Parsing Error: " + e.getMessage(), e);
         }

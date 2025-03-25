@@ -37,6 +37,7 @@ public class ChatRoomViewModel extends BaseViewModel {
     public MutableLiveData<String> inputText = new MutableLiveData<>("");
     private MutableLiveData<String> _sendText = new MutableLiveData<>();
     private MutableLiveData<String> _receivedText = new MutableLiveData<>();
+    private MutableLiveData<String> _receivedGreet = new MutableLiveData<>();
     private MutableLiveData<Boolean> _isCanChat = new MutableLiveData<>(true);
     private MutableLiveData<List<ChatLogModel>> _chatLogList = new MutableLiveData<>();
 
@@ -47,6 +48,10 @@ public class ChatRoomViewModel extends BaseViewModel {
     }
     public LiveData<String> receivedText() {
         return _receivedText;
+    }
+
+    public LiveData<String> receivedGreet() {
+        return _receivedGreet;
     }
     public LiveData<Boolean> isCanChat() {
         return _isCanChat;
@@ -61,16 +66,24 @@ public class ChatRoomViewModel extends BaseViewModel {
 
     private void connectNetwork(String key, int chatId) {
         chatWebSocket = new ChatWebSocket(chatId, new ChatWebSocket.MessageCallback() {
+
+            @Override
+            public void onGreetReceived(String greetMessage) {
+                _receivedGreet.postValue(greetMessage);
+                _isCanChat.postValue(true);
+            }
             @Override
             public void onMessageReceived(String message) {
-                if (message.equals("[EOS]")) {
-                    _isCanChat.postValue(true);
-                    messageBuilder = new StringBuilder();
-                } else {
-                    messageBuilder.append(message);
-                    _receivedText.postValue(messageBuilder.toString());
-                }
+                messageBuilder.append(message);
+                _receivedText.postValue(messageBuilder.toString());
             }
+
+            @Override
+            public void onEndReceived() {
+                _isCanChat.postValue(true);
+                messageBuilder = new StringBuilder();
+            }
+
         });
 
         chatWebSocket.start();
@@ -102,15 +115,18 @@ public class ChatRoomViewModel extends BaseViewModel {
             chatWebSocket.sendMessage(jsonMessage);
             inputText.setValue(""); // 메시지를 보낸 후 EditText를 비웁니다.
             Log.w(TAG, "메세지 보내기 성공: " + message);
-        }else{
+        } else {
             Log.w(TAG, "메세지 보내기 실패: " + message);
         }
     }
 
-    public void getChatLogList(String accessToken,int chatId){
+    public void getChatLogList(String accessToken, int chatId) {
         repository.getChatLogList(accessToken, chatId, new Callback<List<ChatLogModel>>() {
             @Override
-            public void onResponse(Call<List<ChatLogModel>> call, Response<List<ChatLogModel>> response) {
+            public void onResponse(
+                    Call<List<ChatLogModel>> call,
+                    Response<List<ChatLogModel>> response
+            ) {
                 if (response.isSuccessful() && response.body() != null) {
                     _chatLogList.setValue(response.body());
                 } else {
@@ -127,10 +143,10 @@ public class ChatRoomViewModel extends BaseViewModel {
                         Log.e("www", "에러 본문 읽기 실패: " + e.getMessage(), e);
                     }
 
-                    Log.e("www", "getChatLogList 응답이 정상적이지 않음. " +
-                            "상태 코드: " + statusCode + ", " +
-                            "에러 본문: " + errorBody + ", " +
-                            "헤더: " + response.headers().toString());
+                    Log.e(
+                            "www",
+                            "getChatLogList 응답이 정상적이지 않음. " + "상태 코드: " + statusCode + ", " + "에러 본문: " + errorBody + ", " + "헤더: " + response.headers().toString()
+                    );
                 }
             }
             @Override

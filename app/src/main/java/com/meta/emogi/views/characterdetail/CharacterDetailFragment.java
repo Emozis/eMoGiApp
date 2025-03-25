@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +73,7 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     @Override
     public void onResume() {
         super.onResume();
+        binding.contentPersonality.setMovementMethod(new ScrollingMovementMethod());
         accessKey = activity.getAccessToken();
         characterId = activity.getCharacterId();
         viewModel.getCharacterDetails(accessKey, characterId);

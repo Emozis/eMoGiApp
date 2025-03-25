@@ -1,5 +1,9 @@
 package com.meta.emogi.network.datamodels;
 public class ChatResponse {
+    public static final String GREET = "greeting";
+    public static final String CHAT = "chat";
+    public static final String END = "end";
+
     private String type;
     private String character_name;
     private int response_id;

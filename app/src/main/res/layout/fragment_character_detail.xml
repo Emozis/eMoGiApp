@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.meta.emogi.views.characterdetail.CharacterDetailViewModel" />
@@ -152,6 +151,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="4dp"
+                    android:maxLines="5"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="always"
                     android:background="@drawable/drawable_underline_character_detail"
                     android:gravity="left|center_vertical"
                     android:paddingBottom="8dp"

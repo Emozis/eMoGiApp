@@ -89,6 +89,12 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
             }
         });
 
+        viewModel.receivedGreet().observe(getViewLifecycleOwner(),greet ->{
+            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, greet, activity.getChatUrl()));
+            adapter.notifyItemInserted(data.size() - 1);
+            recyclerView.scrollToPosition(data.size() - 1);
+        });
+
         viewModel.isCanChat().observe(getViewLifecycleOwner(), isCanChat -> {
             if (isCanChat) {
                 binding.transmit.setEnabled(true);
