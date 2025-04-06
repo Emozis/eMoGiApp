@@ -30,7 +30,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         this.characterList = characterList;
     }
 
-    public void setDeleteMode(boolean deleteMode){
+    public void setDeleteMode(boolean deleteMode) {
         this.deleteMode = deleteMode;
         notifyDataSetChanged();
     }
@@ -39,20 +39,23 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         this.onItemClickListener = listener;
     }
     public interface OnItemClickListener {
-        void onItemClick(int characterId,int type); // 1 캐릭터 상세, 2 캐릭터 삭제 , 3 캐릭터 수정
+        void onItemClick(int characterId, int type); // 1 캐릭터 상세, 2 캐릭터 삭제 , 3 캐릭터 수정
     }
 
     @NonNull
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_page_character_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.item_my_page_character_list,
+                parent,
+                false
+        );
 
         int screenHeight = MyApplication.getDeviceHeightPx();
         int itemHeight = (int) (screenHeight * 0.1f);
 
-        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
-                RecyclerView.LayoutParams.MATCH_PARENT,
-                itemHeight
+        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                                                                         itemHeight
         );
 
         int margin = parent.getContext().getResources().getDimensionPixelSize(R.dimen.common_space_semi_medium);
@@ -69,20 +72,20 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         CharacterModel characterItem = characterList.get(position);
         holder.myPageCharacterListLayout.setSelected(position == selectedPosition);
 
-        if(deleteMode){
+        if (deleteMode) {
             holder.modifyCharacter.setText("삭제");
-        }else{
+        } else {
             holder.modifyCharacter.setText("수정");
         }
 
-        String description="";
+        String description = "";
         description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자";
-        description += " / "+characterItem.getCharacterPersonality()+" / ";
+        description += " / " + characterItem.getCharacterPersonality() + " / ";
         List<CharacterModel.CharacterRelationships> realationships = characterItem.getCharacterRelationships();
-        for(CharacterModel.CharacterRelationships realationship :realationships){
-            description+=realationship.getRelationshipName()+" / ";
+        for (CharacterModel.CharacterRelationships realationship : realationships) {
+            description += realationship.getRelationshipName() + " / ";
         }
-        description+=characterItem.getCharacterDetails();
+        description += characterItem.getCharacterDetails();
 
         if (description.endsWith("/")) {
             description = description.substring(0, description.length() - 1);
@@ -114,7 +117,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
                 if (onItemClickListener != null) {
                     int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();
-                    onItemClickListener.onItemClick(clickedCharacterId,1);
+                    onItemClickListener.onItemClick(clickedCharacterId, 1);
                 }
             }
         });
@@ -123,11 +126,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             @Override
             public void onClick(View v) {
                 // AlertDialog 생성
-                if(deleteMode){
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("캐릭터 삭제")
-                            .setMessage("정말로 삭제하시겠습니까?")
-                            .setPositiveButton("삭제", (dialog, which) -> {
+                if (deleteMode) {
+                    new AlertDialog.Builder(v.getContext()).setTitle("캐릭터 삭제").setMessage(
+                                    "정말로 삭제하시겠습니까?").setPositiveButton("삭제", (dialog, which) -> {
                                 // 이전에 선택된 아이템의 선택 상태를 해제
                                 if (selectedPosition != RecyclerView.NO_POSITION) {
                                     notifyItemChanged(selectedPosition);
@@ -141,10 +142,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                                     int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();
                                     onItemClickListener.onItemClick(clickedCharacterId, 2);
                                 }
-                            })
-                            .setNegativeButton("취소", (dialog, which) -> dialog.dismiss()) // 취소 버튼 동작
+                            }).setNegativeButton("취소", (dialog, which) -> dialog.dismiss()) // 취소 버튼 동작
                             .show();
-                }else{
+                } else {
                     if (selectedPosition != RecyclerView.NO_POSITION) {
                         notifyItemChanged(selectedPosition);
                     }
@@ -152,7 +152,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                     // 새로운 아이템을 선택하고 상태 업데이트
                     selectedPosition = holder.getAdapterPosition();
                     notifyItemChanged(selectedPosition);
-
 
                     if (onItemClickListener != null) {
                         int clickedCharacterId = characterList.get(selectedPosition).getCharacterId();

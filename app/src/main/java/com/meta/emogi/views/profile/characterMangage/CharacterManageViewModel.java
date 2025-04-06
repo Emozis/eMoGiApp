@@ -50,52 +50,12 @@ public class CharacterManageViewModel extends BaseViewModel {
         _isActiveDeleteMode.setValue(false);
     }
 
-//    public void dummyCharacterModelList() {
-//        // CharacterModel 객체 리스트 선언
-//        List<CharacterModel> characterList = new ArrayList<>();
-//
-//        // CharacterRelationship.Relationship 더미 데이터 생성
-//        CharacterModel.CharacterRelationships relationship = new CharacterModel.CharacterRelationships.Relationship();
-//        relationship.setRelationshipId(1);
-//        relationship.setRelationshipName("Friend");
-//
-//        // CharacterRelationship 더미 데이터 생성
-//        CharacterModel.CharacterRelationships characterRelationship = new CharacterModel.CharacterRelationships();
-//        characterRelationship.setRelationship(relationship);
-//
-//        // User 더미 데이터 생성
-//        CharacterModel.User user = new CharacterModel.User();
-//        user.setUserId(1);
-//        user.setUserEmail("dummyuser@example.com");
-//        user.setUserName("Dummy User");
-//        user.setUserProfile("dummy_profile_url");
-//
-//        // CharacterModel 더미 데이터 생성
-//        CharacterModel dummyCharacter = new CharacterModel(
-//                101, // characterId
-//                "Dummy Character", // characterName
-//                "dummy_profile_url", // characterProfile
-//                "Male", // characterGender
-//                "Brave", // characterPersonality
-//                "This is a detailed description of the dummy character.", // characterDetails
-//                List.of(characterRelationship), // characterRelationships
-//                "2024-12-26T12:00:00Z", // characterCreatedAt
-//                user, // user
-//                false // isSelected
-//        );
-//
-//        // CharacterModel 객체 추가
-//        characterList.add(dummyCharacter);
-//        _myCharacterList.setValue(characterList);
-//        _isActiveDeleteMode.setValue(false);
-//    }
-
     public LiveData<String> deleteToggleString() {
         return _deleteToggleString;
     }
 
-    public void getMyCharacters(String accessToken) {
-        repository.getMyCharacterList(accessToken, new Callback<List<CharacterModel>>() {
+    public void getMyCharacters() {
+        repository.getMyCharacterList(new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -112,8 +72,8 @@ public class CharacterManageViewModel extends BaseViewModel {
     }
 
 
-    public void deleteCharacter(String accessToken,int characterId) {
-        repository.deleteCharacter(accessToken, characterId, new Callback<ResponseModel>() {
+    public void deleteCharacter(int characterId) {
+        repository.deleteCharacter(characterId, new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 if (response.isSuccessful() && response.body() != null) {

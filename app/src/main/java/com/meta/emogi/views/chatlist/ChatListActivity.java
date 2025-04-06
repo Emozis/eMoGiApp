@@ -38,15 +38,12 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        String data = intent.getStringExtra("ACCESS_TOKEN");
-        setAccessToken(data);
         setToolbarHeight(binding.toolbar);
     }
 
 
     public void moveToChatRoom(int chatId,String chatUrl,String characterName){
         Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHAT_ID", chatId);
         intent.putExtra("CHAT_URL", chatUrl);
         intent.putExtra("CHARACTER_NAME", characterName);
@@ -56,7 +53,6 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
 
     public void moveToMyProfile(){
         Intent intent = new Intent(ChatListActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
     }

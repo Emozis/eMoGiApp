@@ -20,7 +20,6 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
 
     private ProfileActivity activity;
     private CharacterAdapter characterAdapter;
-    private String accessKey;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -69,8 +68,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
     @Override
     public void onResume() {
         super.onResume();
-        accessKey = activity.getAccessToken();
-        viewModel.getMyCharacters(accessKey);
+        viewModel.getMyCharacters();
         //        viewModel.dummyCharacterModelList();
     }
 
@@ -80,7 +78,7 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
                 if(type == 1){
                     activity.moveToDetail(characterId);
                 }else if(type == 2){
-                    viewModel.deleteCharacter(accessKey,characterId);
+                    viewModel.deleteCharacter(characterId);
                 }else if (type==3){
                     activity.moveToEditCharacter(characterId);
                 }

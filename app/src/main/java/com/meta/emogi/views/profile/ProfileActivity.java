@@ -50,14 +50,11 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     private void initFragment(){
         Intent intent = getIntent();
-        String data = intent.getStringExtra("ACCESS_TOKEN");
         String initFragment = intent.getStringExtra("INIT_FRAGMENT");
-
-        setAccessToken(data);
-
         NavController navController = Navigation.findNavController(this, R.id.profileChildFrag);
         NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.profile_nav);
 
+        Log.d("www", "현재 페이지 확인 : "+initFragment);
         if (Objects.equals(initFragment, "Character")|| isBackToCharacterMangage) {
             navGraph.setStartDestination(R.id.characterManageFragment);
             isBackToCharacterMangage=false;
@@ -72,7 +69,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     public void moveToDetail(int characterId){
         isBackToCharacterMangage=true;
         Intent intent = new Intent(ProfileActivity.this, CharacterDetailActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
@@ -80,7 +76,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     public void moveToEditCharacter(int characterId){
         isBackToCharacterMangage=true;
         Intent intent = new Intent(ProfileActivity.this, MakeCharacterActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }

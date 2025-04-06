@@ -1,14 +1,12 @@
 package com.meta.emogi.util;
-import android.util.Log;
-
 import com.meta.emogi.network.ApiService;
 import com.meta.emogi.network.RetrofitClient;
+import com.meta.emogi.network.TokenManager;
 import com.meta.emogi.network.datamodels.CharacterModel;
 import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.ChatLogModel;
 import com.meta.emogi.network.datamodels.ImageModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
-import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.network.datamodels.ResponseModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
@@ -21,6 +19,8 @@ import retrofit2.Retrofit;
 public class ApiRepository {
     private ApiService apiService;
 
+    String token = TokenManager.getInstance().getTotken();
+
     public ApiRepository() {
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         apiService = retrofit.create(ApiService.class);
@@ -29,8 +29,8 @@ public class ApiRepository {
     /// GET
 
     //Menu, profile_characterMange
-    public void getMyCharacterList(String accessToken, Callback<List<CharacterModel>> callback) {
-        apiService.getMyCharacterList(accessToken).enqueue(callback);
+    public void getMyCharacterList(Callback<List<CharacterModel>> callback) {
+        apiService.getMyCharacterList(token).enqueue(callback);
     }
 
     //Menu
@@ -39,8 +39,8 @@ public class ApiRepository {
     }
 
     //profile_myPage
-    public void getUserData(String accessToken, Callback<UserData> callback) {
-        apiService.getUserData(accessToken).enqueue(callback);
+    public void getUserData(Callback<UserData> callback) {
+        apiService.getUserData(token).enqueue(callback);
     }
 
     //makeCharacter
@@ -55,59 +55,54 @@ public class ApiRepository {
 
     //chatRoom
     public void getChatLogList(
-            String accessToken,
             int chatId,
             Callback<List<ChatLogModel>> callback
     ) {
-        apiService.getChatLog(accessToken, chatId).enqueue(callback);
+        apiService.getChatLog(token, chatId).enqueue(callback);
     }
 
     //chatList
-    public void getChatList(String accessToken, Callback<List<ChatListModel>> callback) {
-        apiService.getChatList(accessToken).enqueue(callback);
+    public void getChatList(Callback<List<ChatListModel>> callback) {
+        apiService.getChatList(token).enqueue(callback);
     }
 
     //deletechat
-    public void deleteChat(String accessToken, int chatId, Callback<MessageResponse> callback) {
-        apiService.deleteChat(accessToken, chatId).enqueue(callback);
+    public void deleteChat(int chatId, Callback<MessageResponse> callback) {
+        apiService.deleteChat(token, chatId).enqueue(callback);
     }
 
     //characterDetail
     public void getCharacterDetails(
-            String accessToken,
             int characterId,
             Callback<CharacterModel> callback
     ) {
-        apiService.getCharacterDetails(accessToken, characterId).enqueue(callback);
+        apiService.getCharacterDetails(token, characterId).enqueue(callback);
     }
 
     public void deleteCharacter(
-            String accessToken,
             int characterId,
             Callback<ResponseModel> callback
     ) {
-        apiService.deleteCharacter(accessToken, characterId).enqueue(callback);
+        apiService.deleteCharacter(token, characterId).enqueue(callback);
     }
 
     //PUT
     public void updateCharacter(
-            String accessToken,
             CharacterModel characterModel,
             int characterId,
             Callback<CharacterModel> callback
     ) {
-        apiService.updateCharacter(accessToken, characterModel, characterId).enqueue(callback);
+        apiService.updateCharacter(token, characterModel, characterId).enqueue(callback);
     }
 
     //// POST
 
     //makeCharacter
     public void createCharacter(
-            String accessToken,
             CharacterModel characterModel,
             Callback<CharacterModel> callback
     ) {
-        apiService.createCharacter(accessToken, characterModel).enqueue(callback);
+        apiService.createCharacter(token, characterModel).enqueue(callback);
     }
 
     //login
@@ -117,11 +112,10 @@ public class ApiRepository {
 
     //characterDetail
     public void createChatRoom(
-            String accessToken,
             MakeChatRoom makeChatRoom,
             Callback<MakeChatRoom> callback
     ) {
-        apiService.createChatRoom(accessToken, makeChatRoom).enqueue(callback);
+        apiService.createChatRoom(token, makeChatRoom).enqueue(callback);
     }
 
 }

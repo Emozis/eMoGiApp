@@ -62,9 +62,8 @@ public class MenuViewModel extends BaseViewModel {
         super(application);
     }
 
-    public void getMyCharacters(String accessToken) {
-        Log.w("www", accessToken);
-        repository.getMyCharacterList(accessToken, new Callback<List<CharacterModel>>() {
+    public void getMyCharacters() {
+        repository.getMyCharacterList( new Callback<List<CharacterModel>>() {
             @Override
             public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
                 if(response.isSuccessful()){
@@ -123,8 +122,8 @@ public class MenuViewModel extends BaseViewModel {
         }
     }
 
-    public void getUserData(String accessToken) {
-        repository.getUserData(accessToken, new Callback<UserData>() {
+    public void getUserData() {
+        repository.getUserData(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if (response.isSuccessful() && response.body() != null) {

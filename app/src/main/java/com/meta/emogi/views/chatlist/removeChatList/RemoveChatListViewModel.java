@@ -73,8 +73,8 @@ public class RemoveChatListViewModel extends BaseViewModel {
         _chatList.setValue(chatList);
     }
 
-    public void DeleteChat(String accessToken, int chatId) {
-        repository.deleteChat(accessToken, chatId, new Callback<MessageResponse>() {
+    public void DeleteChat( int chatId) {
+        repository.deleteChat( chatId, new Callback<MessageResponse>() {
             @Override
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

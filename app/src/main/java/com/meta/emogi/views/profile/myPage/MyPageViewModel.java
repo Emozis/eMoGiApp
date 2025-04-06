@@ -57,8 +57,8 @@ public class MyPageViewModel extends BaseViewModel {
         _nickName.setValue(nickName);
     }
 
-    public void getUserData(String accessToken) {
-        repository.getUserData(accessToken, new Callback<UserData>() {
+    public void getUserData() {
+        repository.getUserData(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if (response.isSuccessful() && response.body() != null) {

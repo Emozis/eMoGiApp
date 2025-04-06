@@ -1,5 +1,6 @@
 package com.meta.emogi.views.makecharacter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,20 +82,40 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
                     CharacterModel.CharacterRelationships item = rowData.get(i);
                     categoryViews.get(i).setVisibility(View.VISIBLE);
                     categoryViews.get(i).setText(item.getRelationshipName());
-                    categoryViews.get(i).setSelected(selectedItems.contains(item));
+                    categoryViews.get(i).setSelected(isSelected(item));
 
                     // 클릭 리스너 설정
                     categoryViews.get(i).setOnClickListener(v -> {
-                        if (selectedItems.contains(item)) {
-                            selectedItems.remove(item); // 선택 해제
+                        if (isSelected(item)) {
+                            removeById(item); // 선택 해제
                         } else if (selectedItems.size() < 3) {
                             selectedItems.add(item); // 최대 3개 선택 가능
                         }
+
                         notifyDataSetChanged();
+                        Log.d("www", item.getRelationshipName());
                     });
                 } else {
                     categoryViews.get(i).setVisibility(View.INVISIBLE); // 빈 셀 숨김
                 }
+            }
+        }
+    }
+
+    private boolean isSelected(CharacterModel.CharacterRelationships item) {
+        for (CharacterModel.CharacterRelationships selected : selectedItems) {
+            if (selected.getRelationshipId() == item.getRelationshipId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void removeById(CharacterModel.CharacterRelationships item) {
+        for (int i = 0; i < selectedItems.size(); i++) {
+            if (selectedItems.get(i).getRelationshipId() == item.getRelationshipId()) {
+                selectedItems.remove(i);
+                return;
             }
         }
     }

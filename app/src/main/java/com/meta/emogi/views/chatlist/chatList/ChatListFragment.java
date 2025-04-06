@@ -62,8 +62,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
     public void onResume() {
         super.onResume();
         setAdapter();
-        String key = activity.getAccessToken();
-        viewModel.getChatList(key);
+        viewModel.getChatList();
     }
 
     private void setAdapter() {

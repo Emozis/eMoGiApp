@@ -42,7 +42,6 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
 
     private CharacterDetailActivity activity;
     private int characterId;
-    private String accessKey;
     private String chatUrl;
     private String characterName;
 
@@ -74,14 +73,13 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
     public void onResume() {
         super.onResume();
         binding.contentPersonality.setMovementMethod(new ScrollingMovementMethod());
-        accessKey = activity.getAccessToken();
         characterId = activity.getCharacterId();
-        viewModel.getCharacterDetails(accessKey, characterId);
+        viewModel.getCharacterDetails(characterId);
     }
     @Override
     protected void registerObservers() {
         viewModel.isChatStart().observe(this, unused -> {
-            viewModel.connectCreateChatRoom(accessKey, characterId);
+            viewModel.connectCreateChatRoom(characterId);
         });
         viewModel.characterDetail().observe(this, characterDetail -> {
             chatUrl = characterDetail.getCharacterProfile();

@@ -29,7 +29,6 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
 
     private ChatListActivity activity;
     private RemoveChatListAdapter adapter;
-    private String key;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -53,7 +52,7 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
         });
         viewModel.isPressDelete().observe(this,deleteChatList->{
             for(int chatId:deleteChatList){
-                viewModel.DeleteChat(key,chatId);
+                viewModel.DeleteChat(chatId);
             }
         });
         viewModel.goToChatList().observe(this,unused -> {
@@ -73,7 +72,6 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
     public void onResume() {
         super.onResume();
         setAdapter();
-        key = activity.getAccessToken();
         viewModel.setChatList(activity.getChatList());
         List<ChatListModel> chatList = activity.getChatList();
         if (chatList != null && !chatList.isEmpty()) {

@@ -55,6 +55,10 @@ public class CharacterModel {
     }
     public static class CharacterRelationships {
 
+
+
+
+
         public CharacterRelationships(int relationshipId, String relationshipName) {
             this.relationshipId = relationshipId;
             this.relationshipName = relationshipName;

@@ -60,16 +60,16 @@ public class ChatRoomViewModel extends BaseViewModel {
         return _chatLogList;
     }
 
-    public void init(String key, int chatId) {
-        connectNetwork(key, chatId);
+    public void init( int chatId) {
+        connectNetwork(chatId);
     }
 
-    private void connectNetwork(String key, int chatId) {
+    private void connectNetwork(int chatId) {
         chatWebSocket = new ChatWebSocket(chatId, new ChatWebSocket.MessageCallback() {
 
             @Override
             public void onGreetReceived(String greetMessage) {
-                _receivedGreet.postValue(greetMessage);
+                _receivedGreet .postValue(greetMessage);
                 _isCanChat.postValue(true);
             }
             @Override
@@ -88,7 +88,7 @@ public class ChatRoomViewModel extends BaseViewModel {
 
         chatWebSocket.start();
 
-        ChatContent chatContent = new ChatContent(TYPE_AUTH, key, true);
+        ChatContent chatContent = new ChatContent(TYPE_AUTH);
         Gson gson = new Gson();
         String jsonMessage = gson.toJson(chatContent);
 
@@ -120,8 +120,8 @@ public class ChatRoomViewModel extends BaseViewModel {
         }
     }
 
-    public void getChatLogList(String accessToken, int chatId) {
-        repository.getChatLogList(accessToken, chatId, new Callback<List<ChatLogModel>>() {
+    public void getChatLogList(int chatId) {
+        repository.getChatLogList( chatId, new Callback<List<ChatLogModel>>() {
             @Override
             public void onResponse(
                     Call<List<ChatLogModel>> call,

@@ -38,7 +38,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             for (int i = 0; i < imageModelList.size(); i++) {
                 if (imageModelList.get(i).getImageUrl().equals(imageUrl)) {
                     selectedPosition = i;
-                    notifyDataSetChanged();
+                    notifyItemChanged(selectedPosition);
                     break;
                 }
             }

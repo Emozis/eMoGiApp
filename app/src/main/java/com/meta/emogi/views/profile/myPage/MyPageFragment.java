@@ -90,7 +90,6 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onResume() {
         super.onResume();
-        String key = activity.getAccessToken();
-        viewModel.getUserData(key);
+        viewModel.getUserData();
     }
 }

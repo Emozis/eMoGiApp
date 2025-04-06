@@ -48,8 +48,8 @@ public class ChatListViewModel extends BaseViewModel {
         }
     }
 
-    public void getChatList(String accessToken) {
-        repository.getChatList(accessToken, new Callback<List<ChatListModel>>() {
+    public void getChatList() {
+        repository.getChatList( new Callback<List<ChatListModel>>() {
             @Override
             public void onResponse(Call<List<ChatListModel>> call, Response<List<ChatListModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -88,6 +88,7 @@ public class ChatListViewModel extends BaseViewModel {
 
             String[] timeArr = chat.getLastMessageAt().split("[-T:.]");
             String lastMessageAt = parseLastTime(timeArr);
+            Log.d("wwwt", "시간은말이지"+lastMessageAt);
             chat.setLastMessageAt(lastMessageAt);
         }
         return chatlist;
@@ -112,6 +113,9 @@ public class ChatListViewModel extends BaseViewModel {
         String nowYear = String.valueOf(calendar.get(Calendar.YEAR));
         String nowMonth = "0"+String.valueOf(calendar.get(Calendar.MONTH) + 1); // 0 부터시작
         String nowDay = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+
+        Log.d("www", "지금시간"+nowYear+nowMonth+nowDay);
+        Log.d("www", "지금시간"+timeArr[3]+timeArr[4]);
 
         nowDay = nowDay.length()==1?"0"+nowDay:nowDay;
 

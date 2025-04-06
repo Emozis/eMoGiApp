@@ -27,16 +27,9 @@ import com.meta.emogi.views.toolbar.ToolbarViewModel;
 public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
 
     protected V binding;
-    private String accessToken;
     private ToolbarViewModel toolbarViewModel;
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+    private boolean backStatus = false;
 
     protected abstract @LayoutRes int layoutId();
 
@@ -52,7 +45,17 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
 
         toolbarViewModel.back().observe(this, unused -> {
-            onBackPressedAction();
+
+
+            if (backStatus) {
+                Log.d("www", "프레그먼트 뒤로가기눌림");
+                getOnBackPressedDispatcher().onBackPressed();
+                backStatus =false;
+            }else{
+                Log.d("www", "액티비티 뒤로가기눌림");
+                onBackPressedAction();
+            }
+
         });
 
 //        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -64,6 +67,11 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
 //        });
 
         setStatusBarColor();
+    }
+
+
+    public void changeBackStatus(){
+        backStatus =true;
     }
 
     private void setStatusBarColor(){

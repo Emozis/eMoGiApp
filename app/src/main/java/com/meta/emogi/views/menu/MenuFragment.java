@@ -131,9 +131,8 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
     @Override
     public void onResume() {
         super.onResume();
-        String key = activity.getAccessToken();
-        viewModel.getUserData(key);
-        viewModel.getMyCharacters(key);
+        viewModel.getUserData();
+        viewModel.getMyCharacters();
         viewModel.getRankCharacterList();
     }
 

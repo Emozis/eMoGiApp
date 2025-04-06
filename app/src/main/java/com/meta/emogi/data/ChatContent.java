@@ -1,5 +1,7 @@
 package com.meta.emogi.data;
 import android.text.Spanned;
+
+import com.meta.emogi.network.TokenManager;
 public class ChatContent {
     public static final String TYPE_AUTH = "auth";
     public static final String TYPE_USER = "user";
@@ -12,9 +14,9 @@ public class ChatContent {
     private Spanned spannedContent;
 
     // 인증 메시지 생성자를 추가합니다.
-    public ChatContent(String type, String token, boolean notUse) {
+    public ChatContent(String type) {
         this.type = type;
-        this.token = token;
+        this.token = TokenManager.getInstance().getTotken();
     }
 
     // 채팅 메시지 생성자를 유지합니다.
@@ -44,14 +46,6 @@ public class ChatContent {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public void appendContent(String additionalContent) {

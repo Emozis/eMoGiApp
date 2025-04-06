@@ -46,9 +46,7 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        String data = intent.getStringExtra("ACCESS_TOKEN");
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
-        setAccessToken(data);
         setToolbarHeight(binding.toolbar);
     }
 
@@ -63,7 +61,6 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
 
     public void moveToChatRoom(int chatId,String chatUrl,String characterName){
         Intent intent = new Intent(CharacterDetailActivity.this, ChatRoomActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHAT_ID", chatId);
         intent.putExtra("CHAT_URL", chatUrl);
         intent.putExtra("CHARACTER_NAME", characterName);

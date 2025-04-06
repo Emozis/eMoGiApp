@@ -47,40 +47,33 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        String data = intent.getStringExtra("ACCESS_TOKEN");
-        setAccessToken(data);
     }
 
 
     public void moveToChatList(){
         Intent intent = new Intent(MenuActivity.this, ChatListActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 
     public void moveToMakeCharacter(){
         Intent intent = new Intent(MenuActivity.this, MakeCharacterActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 
     public void moveToCharacterDetail(int characterId){
         Intent intent = new Intent(MenuActivity.this, CharacterDetailActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
 
     public void moveToManageProfile(){
         Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
     }
 
     public void moveToMyPageProfile(){
         Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 

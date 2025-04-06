@@ -174,7 +174,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         recyclerView.setAdapter(adapter);
 
 
-        viewModel.getChatLogList(activity.getAccessToken(), activity.getChatId());
+        viewModel.getChatLogList(activity.getChatId());
     }
 
     @Override
@@ -182,7 +182,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         super.onResume();
         data = new ArrayList<>();
         binding.transmit.setEnabled(false);
-        viewModel.init(activity.getAccessToken(), activity.getChatId());
+        viewModel.init(activity.getChatId());
         ToolbarView.ToolbarRequest newToolbarRequest = new ToolbarView.ToolbarRequest(activity.getCharacterName());
         updateToolbar(newToolbarRequest);
     }

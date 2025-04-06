@@ -146,10 +146,9 @@ public class MakeCharacterViewModel extends BaseViewModel {
         });
     }
 
-    public void createCharacter(String accessToken, CharacterModel characterModel) {
-        Log.w("www", "accessToken: " + accessToken);
+    public void createCharacter(CharacterModel characterModel) {
         Log.w("www", "characterModel: " + new Gson().toJson(characterModel));
-        repository.createCharacter(accessToken, characterModel, new Callback<CharacterModel>() {
+        repository.createCharacter(characterModel, new Callback<CharacterModel>() {
             @Override
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
 
@@ -172,10 +171,9 @@ public class MakeCharacterViewModel extends BaseViewModel {
         });
     }
 
-    public void updateCharacter(String accessToken, CharacterModel characterModel, int characterId) {
-        Log.w("www", "accessToken: " + accessToken);
+    public void updateCharacter( CharacterModel characterModel, int characterId) {
         Log.w("www", "characterModel: " + new Gson().toJson(characterModel));
-        repository.updateCharacter(accessToken, characterModel, characterId, new Callback<CharacterModel>() {
+        repository.updateCharacter( characterModel, characterId, new Callback<CharacterModel>() {
             @Override
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
                 Log.w("www", "Response Code: " + response.code());
@@ -197,8 +195,8 @@ public class MakeCharacterViewModel extends BaseViewModel {
         });
     }
 
-    public void getCharacterDetails(String accessToken, int characterId) {
-        repository.getCharacterDetails(accessToken, characterId, new Callback<CharacterModel>() {
+    public void getCharacterDetails( int characterId) {
+        repository.getCharacterDetails(characterId, new Callback<CharacterModel>() {
             @Override
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
                 if (response.isSuccessful() && response.body() != null) {

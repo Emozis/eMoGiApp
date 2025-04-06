@@ -79,7 +79,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     public void moveActivity(){
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         startActivity(intent);
     }
 

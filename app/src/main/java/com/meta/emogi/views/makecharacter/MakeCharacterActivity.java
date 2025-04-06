@@ -50,92 +50,88 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         AdRequest adRequest = new AdRequest.Builder().build();
 
         //실제 id
-//        String adId = "ca-app-pub-2352851052199103/1924810392";
+                String adId = "ca-app-pub-2352851052199103/1924810392";
         //테스트용 id
-        String adId = "ca-app-pub-3940256099942544/1033173712";
+//        String adId = "ca-app-pub-3940256099942544/1033173712";
 
-        InterstitialAd.load(this,
-                            adId,
-                            adRequest,
-                            new InterstitialAdLoadCallback() {
-                                @Override
-                                public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                    // The mInterstitialAd reference will be null until
-                                    // an ad is loaded.
-                                    mInterstitialAd = interstitialAd;
-                                    Log.d("wwwM", "mInterstitialAd 객체 생성 성공");
-                                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
-                                        @Override
-                                        public void onAdClicked() {
-                                            // Called when a click is recorded for an ad.
-                                            Log.d(TAG, "Ad was clicked.");
-                                        }
+        InterstitialAd.load(this, adId, adRequest, new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                // The mInterstitialAd reference will be null until
+                // an ad is loaded.
+                mInterstitialAd = interstitialAd;
+                Log.d("wwwM", "mInterstitialAd 객체 생성 성공");
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdClicked() {
+                        // Called when a click is recorded for an ad.
+                        Log.d(TAG, "Ad was clicked.");
+                    }
 
-                                        @Override
-                                        public void onAdDismissedFullScreenContent() {
-                                            // Called when ad is dismissed.
-                                            // Set the ad reference to null so you don't show the ad a second time.
-                                            Log.d(TAG, "Ad dismissed fullscreen content.");
-                                            mInterstitialAd = null;
-                                            moveToMyProfile();
-                                        }
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        // Called when ad is dismissed.
+                        // Set the ad reference to null so you don't show the ad a second time.
+                        Log.d(TAG, "Ad dismissed fullscreen content.");
+                        mInterstitialAd = null;
+                        moveToMyProfile();
+                    }
 
-                                        @Override
-                                        public void onAdFailedToShowFullScreenContent(AdError adError) {
-                                            // Called when ad fails to show.
-                                            Log.e(TAG, "Ad failed to show fullscreen content.");
-                                            mInterstitialAd = null;
-                                            moveToMyProfile();
-                                        }
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                        // Called when ad fails to show.
+                        Log.e(TAG, "Ad failed to show fullscreen content.");
+                        mInterstitialAd = null;
+                        moveToMyProfile();
+                    }
 
-                                        @Override
-                                        public void onAdImpression() {
-                                            // Called when an impression is recorded for an ad.
-                                            Log.d(TAG, "Ad recorded an impression.");
-                                        }
+                    @Override
+                    public void onAdImpression() {
+                        // Called when an impression is recorded for an ad.
+                        Log.d(TAG, "Ad recorded an impression.");
+                    }
 
-                                        @Override
-                                        public void onAdShowedFullScreenContent() {
-                                            // Called when ad is shown.
-                                            Log.d(TAG, "Ad showed fullscreen content.");
-                                        }
-                                    });
-                                }
+                    @Override
+                    public void onAdShowedFullScreenContent() {
+                        // Called when ad is shown.
+                        Log.d(TAG, "Ad showed fullscreen content.");
+                    }
+                });
+            }
 
-                                @Override
-                                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                    // Handle the error
-                                    String error =
-                                            String.format(
-                                                    java.util.Locale.US,
-                                                    "domain: %s, code: %d, message: %s",
-                                                    loadAdError.getDomain(),
-                                                    loadAdError.getCode(),
-                                                    loadAdError.getMessage());
-                                    Log.d("wwwM", "mInterstitialAd 객체 생성 실패");
-                                    Log.d("wwwM", error);
-                                    mInterstitialAd = null;
-                                }
-                            }
-        );
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                // Handle the error
+                String error = String.format(java.util.Locale.US,
+                                             "domain: %s, code: %d, message: %s",
+                                             loadAdError.getDomain(),
+                                             loadAdError.getCode(),
+                                             loadAdError.getMessage()
+                );
+                Log.d("wwwM", "mInterstitialAd 객체 생성 실패");
+                Log.d("wwwM", error);
+                mInterstitialAd = null;
+            }
+        });
     }
     @Override
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        setAccessToken(intent.getStringExtra("ACCESS_TOKEN"));
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
+        if(characterId!=-1){
+            changeBackStatus();
+        }
         setToolbarHeight(binding.toolbar);
     }
 
     public void moveToMyProfile() {
         Intent intent = new Intent(MakeCharacterActivity.this, ProfileActivity.class);
-        intent.putExtra("ACCESS_TOKEN", getAccessToken());
         intent.putExtra("INIT_FRAGMENT", "Character");
         startActivity(intent);
     }
 
-    public void showAds(){
+    public void showAds() {
         if (mInterstitialAd != null) {
             mInterstitialAd.show(MakeCharacterActivity.this);
         } else {

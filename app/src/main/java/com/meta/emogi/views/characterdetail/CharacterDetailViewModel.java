@@ -61,8 +61,8 @@ public class CharacterDetailViewModel extends BaseViewModel {
         _isChatStart.call();
     }
 
-    public void getCharacterDetails(String accessToken, int characterId){
-        repository.getCharacterDetails(accessToken, characterId, new Callback<CharacterModel>() {
+    public void getCharacterDetails( int characterId){
+        repository.getCharacterDetails(characterId, new Callback<CharacterModel>() {
             @Override
             public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -81,13 +81,13 @@ public class CharacterDetailViewModel extends BaseViewModel {
         });
     }
 
-    public void connectCreateChatRoom(String accessToken, int characterId){
+    public void connectCreateChatRoom(int characterId){
         MakeChatRoom makeChatRoom =  new MakeChatRoom(characterId);
-        createChatRoom(accessToken,makeChatRoom);
+        createChatRoom(makeChatRoom);
     }
 
-    public void createChatRoom(String accessToken, MakeChatRoom makeChatRoom){
-        repository.createChatRoom(accessToken, makeChatRoom, new Callback<MakeChatRoom>() {
+    public void createChatRoom(MakeChatRoom makeChatRoom){
+        repository.createChatRoom(makeChatRoom, new Callback<MakeChatRoom>() {
             @Override
             public void onResponse(Call<MakeChatRoom> call, Response<MakeChatRoom> response) {
                 if (response.isSuccessful() && response.body() != null) {

@@ -4,7 +4,6 @@ import com.meta.emogi.network.datamodels.ChatListModel;
 import com.meta.emogi.network.datamodels.ChatLogModel;
 import com.meta.emogi.network.datamodels.MakeChatRoom;
 import com.meta.emogi.network.datamodels.MessageResponse;
-import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.network.datamodels.ResponseModel;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.network.datamodels.UserData;
@@ -20,7 +19,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 public interface ApiService {
 
     //로그인 권한 관련 api
@@ -29,26 +27,26 @@ public interface ApiService {
 
     //유저 관련 api
     @GET("api/v1/user/me")
-    Call<UserData> getUserData(@Header("Authorization") String accessToken);
+    Call<UserData> getUserData(@Header("Authorization") String token);
 
     //캐릭터 관련 api
     @POST("api/v1/character")
-    Call<CharacterModel> createCharacter(@Header("Authorization") String accessToken, @Body CharacterModel characterModel);
+    Call<CharacterModel> createCharacter(@Header("Authorization") String token, @Body CharacterModel characterModel);
 
     @GET("api/v1/character/rank")
     Call<List<CharacterModel>> getRankCharacterList();
 
     @GET("api/v1/character/me")
-    Call<List<CharacterModel>> getMyCharacterList(@Header("Authorization") String accessToken);
+    Call<List<CharacterModel>> getMyCharacterList(@Header("Authorization") String token);
 
     @GET("api/v1/character/{character_id}")
-    Call<CharacterModel> getCharacterDetails(@Header("Authorization") String accessToken, @Path("character_id") int characterId);
+    Call<CharacterModel> getCharacterDetails(@Header("Authorization") String token, @Path("character_id") int characterId);
 
     @PUT("api/v1/character/{character_id}")
-    Call<CharacterModel> updateCharacter(@Header("Authorization") String accessToken, @Body CharacterModel characterModel, @Path("character_id") int characterId);
+    Call<CharacterModel> updateCharacter(@Header("Authorization") String token, @Body CharacterModel characterModel, @Path("character_id") int characterId);
 
     @DELETE("api/v1/character/{character_id}")
-    Call<ResponseModel> deleteCharacter(@Header("Authorization") String accessToken, @Path("character_id") int characterId);
+    Call<ResponseModel> deleteCharacter(@Header("Authorization") String token, @Path("character_id") int characterId);
 
     //기본 캐릭터 이미지 관련 api
     @GET("api/v1/default-image")
@@ -60,17 +58,17 @@ public interface ApiService {
 
     //채팅방 관련 api
     @POST("api/v1/chat")
-    Call<MakeChatRoom> createChatRoom(@Header("Authorization") String accessToken, @Body MakeChatRoom makeChatRoom);
+    Call<MakeChatRoom> createChatRoom(@Header("Authorization") String token, @Body MakeChatRoom makeChatRoom);
 
     @GET("api/v1/chat/me")
-    Call<List<ChatListModel>> getChatList(@Header("Authorization") String accessToken);
+    Call<List<ChatListModel>> getChatList(@Header("Authorization") String token);
 
     @DELETE("api/v1/chat/{chat_id}")
-    Call<MessageResponse> deleteChat(@Header("Authorization") String accessToken, @Path("chat_id") int chat_id);
+    Call<MessageResponse> deleteChat(@Header("Authorization") String token, @Path("chat_id") int chat_id);
 
     //채팅 로그 관련 api
     @GET("api/v1/chat-log/chats/{chat_id}")
-    Call<List<ChatLogModel>> getChatLog(@Header("Authorization") String accessToken, @Path("chat_id") int chatId);
+    Call<List<ChatLogModel>> getChatLog(@Header("Authorization") String token, @Path("chat_id") int chatId);
 
 }
 

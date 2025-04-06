@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentLoginBinding;
+import com.meta.emogi.network.TokenManager;
 import com.meta.emogi.network.datamodels.TokenModel;
 import com.meta.emogi.util.ConfigUtil;
 import com.meta.emogi.views.toolbar.ToolbarView;
@@ -54,9 +55,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
     protected void registerObservers() {
         viewModel.accessToken().observe(this, accessToken -> {
             String accessedToken = accessToken.getAccessToken();
-            activity.setAccessToken(accessedToken);
+            TokenManager.getInstance().setTotken(accessedToken);
             activity.moveActivity();
-            Log.w("www", "Login 성공 / 토큰 : " + activity.getAccessToken());
         });
     }
     @Override

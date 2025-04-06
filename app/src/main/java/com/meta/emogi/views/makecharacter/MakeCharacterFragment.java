@@ -42,7 +42,6 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     private ImageAdapter imageAdapter;
     private RelationshipAdapter relationshipAdapter;
     private MakeCharacterActivity activity;
-    private String accessToken;
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
@@ -70,11 +69,17 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
             if (selectedImageUrl == null || viewModel.personality.getValue() == null || viewModel.detail.getValue() == null || viewModel.isOpen().getValue() == null || relationshipList.size() == 0) {
                 Toast.makeText(requireContext(), "설정하지 않은 값이 있습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                CharacterModel characterModel = viewModel.getCurrentCharacterData(selectedImageUrl, gender, relationshipList);
+                CharacterModel characterModel = viewModel.getCurrentCharacterData(selectedImageUrl,
+                                                                                  gender,
+                                                                                  relationshipList
+                );
                 if (viewModel.isEdit().getValue()) {
-                    viewModel.updateCharacter(accessToken, characterModel, activity.getCharacterId());
+                    viewModel.updateCharacter(
+                                              characterModel,
+                                              activity.getCharacterId()
+                    );
                 } else {
-                    viewModel.createCharacter(accessToken, characterModel);
+                    viewModel.createCharacter( characterModel);
                 }
             }
         });
@@ -92,23 +97,26 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         });
 
         viewModel.defaultRelationshipList().observe(this, defaultRelationshipList -> {
-
             binding.characterCategory.setAdapter(relationshipAdapter);
             relationshipAdapter = new RelationshipAdapter(defaultRelationshipList);
-            binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.HORIZONTAL, false));
+            binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(),
+                                                                             3,
+                                                                             GridLayoutManager.HORIZONTAL,
+                                                                             false));
             binding.characterCategory.setAdapter(relationshipAdapter);
-
-            if (activity.getCharacterId() != -1) {
-                viewModel.getCharacterDetails(accessToken, activity.getCharacterId());
-            }
         });
-
 
         viewModel.defaultImageList().observe(this, defaultImageList -> {
             imageAdapter = new ImageAdapter(defaultImageList);
-            binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            binding.characterImage.setLayoutManager(new LinearLayoutManager(getContext(),
+                                                                            LinearLayoutManager.HORIZONTAL,
+                                                                            false
+            ));
             binding.characterImage.setAdapter(imageAdapter);
             viewModel.offLoading();
+            if (activity.getCharacterId() != -1) {
+                viewModel.getCharacterDetails( activity.getCharacterId());
+            }
         });
 
         viewModel.createdCharacter().observe(this, createdCharacter -> {
@@ -135,30 +143,6 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         });
     }
 
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-        private final int spacing; // 간격
-        private final int spanCount; // 열 수
-
-        public GridSpacingItemDecoration(int spanCount, int spacing) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // 항목의 위치
-            int column = position % spanCount; // 열 위치 계산
-
-            outRect.left = spacing - column * spacing / spanCount;
-            outRect.right = (column + 1) * spacing / spanCount;
-
-            if (position < spanCount) { // 첫 번째 행
-                outRect.top = spacing;
-            }
-            outRect.bottom = spacing; // 마지막 간격 설정
-        }
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,12 +152,11 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     public void onResume() {
         super.onResume();
         textViewMakesScroll();
-        accessToken = activity.getAccessToken();
         viewModel.getDefaultImageList();
         viewModel.getDefaultRelationshipList();
     }
 
-    private void textViewMakesScroll(){
+    private void textViewMakesScroll() {
         binding.personality.setOnTouchListener((v, event) -> {
             v.getParent().requestDisallowInterceptTouchEvent(true);
             return false;
