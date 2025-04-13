@@ -81,7 +81,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
             }
         });
 
-        viewModel.receivedGreet().observe(getViewLifecycleOwner(),greet ->{
+        viewModel.receivedGreet().observe(getViewLifecycleOwner(), greet -> {
             data.add(new ChatUiModel(ChatUiModel.TYPE_CHARACTER, greet, activity.getChatUrl()));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
@@ -96,9 +96,15 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.chatLogList().observe(this, chatLogList -> {
+            boolean isGreet = true;
             for (ChatLogResponse log : chatLogList) {
-                Log.d(TAG, "log: "+log.getContents());
+                if (isGreet && log.getContents().isEmpty()) {
+                    isGreet = false;
+                    continue;
+                }
+                Log.d(TAG, "log: " + log.getContents());
                 data.add(new ChatUiModel(log.getRole(), log.getContents(), activity.getChatUrl()));
+
             }
 
             adapter = new ChatListAdapter(data);
@@ -124,7 +130,13 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
                     // 엔터 키를 눌렀을 때 줄바꿈을 추가합니다.
                     int start = binding.sendText.getSelectionStart();
                     int end = binding.sendText.getSelectionEnd();
-                    binding.sendText.getText().replace(Math.min(start, end), Math.max(start, end), "\n", 0, 1);
+                    binding.sendText.getText().replace(
+                            Math.min(start, end),
+                            Math.max(start, end),
+                            "\n",
+                            0,
+                            1
+                    );
                     binding.sendText.setSelection(start + 1);
                     return true;
                 }
@@ -165,7 +177,6 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         data = new ArrayList<>();
         adapter = new ChatListAdapter(data);
         recyclerView.setAdapter(adapter);
-
 
         viewModel.getChatLogList(activity.getChatId());
     }
