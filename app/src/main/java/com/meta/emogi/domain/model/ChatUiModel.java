@@ -1,8 +1,8 @@
-package com.meta.emogi.data;
+package com.meta.emogi.domain.model;
 import android.text.Spanned;
 
-import com.meta.emogi.network.TokenManager;
-public class ChatContent {
+import com.meta.emogi.domain.TokenManager;
+public class ChatUiModel {
     public static final String TYPE_AUTH = "auth";
     public static final String TYPE_USER = "user";
     public static final String TYPE_CHARACTER = "character";
@@ -14,18 +14,18 @@ public class ChatContent {
     private Spanned spannedContent;
 
     // 인증 메시지 생성자를 추가합니다.
-    public ChatContent(String type) {
+    public ChatUiModel(String type) {
         this.type = type;
         this.token = TokenManager.getInstance().getTotken();
     }
 
     // 채팅 메시지 생성자를 유지합니다.
-    public ChatContent(String type, String content) {
+    public ChatUiModel(String type, String content) {
         this.type = type;
         this.content = content;
     }
 
-    public ChatContent(String type, String content,String aiUrl) {
+    public ChatUiModel(String type, String content, String aiUrl) {
         this.type = type;
         this.content = content;
         this.aiUrl = aiUrl;

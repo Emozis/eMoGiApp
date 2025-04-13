@@ -1,6 +1,5 @@
 package com.meta.emogi.views.profile.characterMangage;
 import android.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.data.network.model.CharacterResponse;
 
 import java.util.List;
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
 
-    private List<CharacterModel> characterList;
+    private List<CharacterResponse> characterList;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private OnItemClickListener onItemClickListener;
     private boolean deleteMode = false;
 
-    public CharacterAdapter(List<CharacterModel> characterList) {
+    public CharacterAdapter(List<CharacterResponse> characterList) {
         this.characterList = characterList;
     }
 
@@ -69,7 +68,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
     @Override
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-        CharacterModel characterItem = characterList.get(position);
+        CharacterResponse characterItem = characterList.get(position);
         holder.myPageCharacterListLayout.setSelected(position == selectedPosition);
 
         if (deleteMode) {
@@ -81,8 +80,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         String description = "";
         description += characterItem.getCharacterGender().equals("male") ? "남자" : "여자";
         description += " / " + characterItem.getCharacterPersonality() + " / ";
-        List<CharacterModel.CharacterRelationships> realationships = characterItem.getCharacterRelationships();
-        for (CharacterModel.CharacterRelationships realationship : realationships) {
+        List<CharacterResponse.CharacterRelationships> realationships = characterItem.getCharacterRelationships();
+        for (CharacterResponse.CharacterRelationships realationship : realationships) {
             description += realationship.getRelationshipName() + " / ";
         }
         description += characterItem.getCharacterDetails();
@@ -163,7 +162,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         });
     }
 
-    public void updateCharacterList(List<CharacterModel> updatedList) {
+    public void updateCharacterList(List<CharacterResponse> updatedList) {
         // 최신순 정렬 (Character ID가 클수록 최신)
         updatedList.sort((c1, c2) -> Integer.compare(c2.getCharacterId(), c1.getCharacterId()));
 

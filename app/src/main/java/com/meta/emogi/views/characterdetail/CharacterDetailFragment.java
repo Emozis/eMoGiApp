@@ -1,42 +1,21 @@
 package com.meta.emogi.views.characterdetail;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
+import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.databinding.FragmentCharacterDetailBinding;
-import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.RetrofitClient;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.MakeChatRoom;
-import com.meta.emogi.views.makecharacter.ImageAdapter;
-import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import io.noties.markwon.Markwon;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetailBinding, CharacterDetailViewModel> {
 
@@ -91,10 +70,10 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
                     .circleCrop()
                     .into(binding.characterProfileImage);
 
-            List<CharacterModel.CharacterRelationships> relationshipList = characterDetail.getCharacterRelationships();
+            List<CharacterResponse.CharacterRelationships> relationshipList = characterDetail.getCharacterRelationships();
 
             StringBuilder sendRelationship = new StringBuilder();
-            for (CharacterModel.CharacterRelationships relationship : relationshipList) {
+            for (CharacterResponse.CharacterRelationships relationship : relationshipList) {
                 sendRelationship.append("#").append(relationship.getRelationshipName()).append(" ");
             }
             characterDetail.getCharacterProfile();

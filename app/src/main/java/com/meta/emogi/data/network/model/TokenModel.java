@@ -1,9 +1,7 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class TokenModel {
 

@@ -1,8 +1,8 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.data.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ImageModel {
+public class CharacterImageResponse {
     @SerializedName("imageId")
     private int imageId;
     @SerializedName("imageName")
@@ -23,7 +23,7 @@ public class ImageModel {
     private boolean isSelected; // 선택 상태를 저장하는 필드 추가
 
     // 생성자 추가
-    public ImageModel(int imageId, String imageName, String imageUrl, String imageGender, String imageAgeGroup, String imageEmotion, String imageCreatedAt, String imageUpdatedAt, boolean isSelected) {
+    public CharacterImageResponse(int imageId, String imageName, String imageUrl, String imageGender, String imageAgeGroup, String imageEmotion, String imageCreatedAt, String imageUpdatedAt, boolean isSelected) {
         this.imageId = imageId;
         this.imageName = imageName;
         this.imageUrl = imageUrl;

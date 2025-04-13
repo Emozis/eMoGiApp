@@ -6,18 +6,14 @@ import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.ImageModel;
-import com.meta.emogi.network.datamodels.RelationshipModel;
-import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.data.network.model.CharacterResponse;
+import com.meta.emogi.data.network.model.CharacterImageResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,10 +33,10 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public final MutableLiveData<Boolean> _isMan = new MutableLiveData<>(true);
     public final SingleLiveEvent<Void> _generate = new SingleLiveEvent<>();
     public final MutableLiveData<Boolean> _isOpen = new MutableLiveData<>(true);
-    public final MutableLiveData<List<CharacterModel.CharacterRelationships>> _defaultRelationshipList = new MutableLiveData<>();
-    public final MutableLiveData<List<ImageModel>> _defaultImageList = new MutableLiveData<>();
-    public final MutableLiveData<CharacterModel> _createdCharacter = new MutableLiveData<>();
-    public final MutableLiveData<CharacterModel> _currentCharacterData = new MutableLiveData<>();
+    public final MutableLiveData<List<CharacterResponse.CharacterRelationships>> _defaultRelationshipList = new MutableLiveData<>();
+    public final MutableLiveData<List<CharacterImageResponse>> _defaultImageList = new MutableLiveData<>();
+    public final MutableLiveData<CharacterResponse> _createdCharacter = new MutableLiveData<>();
+    public final MutableLiveData<CharacterResponse> _currentCharacterData = new MutableLiveData<>();
 
     public LiveData<Boolean> isMan() {
         return _isMan;
@@ -59,18 +55,18 @@ public class MakeCharacterViewModel extends BaseViewModel {
         return _isEdit;
     }
 
-    public LiveData<List<CharacterModel.CharacterRelationships>> defaultRelationshipList() {
+    public LiveData<List<CharacterResponse.CharacterRelationships>> defaultRelationshipList() {
         return _defaultRelationshipList;
     }
 
-    public LiveData<List<ImageModel>> defaultImageList() {
+    public LiveData<List<CharacterImageResponse>> defaultImageList() {
         return _defaultImageList;
     }
 
-    public LiveData<CharacterModel> createdCharacter() {
+    public LiveData<CharacterResponse> createdCharacter() {
         return _createdCharacter;
     }
-    public LiveData<CharacterModel> currentCharacterData() {
+    public LiveData<CharacterResponse> currentCharacterData() {
         return _currentCharacterData;
     }
 
@@ -106,12 +102,12 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void getDefaultRelationshipList() {
-        repository.getDefaultRelationshipList(new Callback<List<CharacterModel.CharacterRelationships>>() {
+        apiRepository.getDefaultRelationshipList(new Callback<List<CharacterResponse.CharacterRelationships>>() {
             @Override
-            public void onResponse(Call<List<CharacterModel.CharacterRelationships>> call, Response<List<CharacterModel.CharacterRelationships>> response) {
+            public void onResponse(Call<List<CharacterResponse.CharacterRelationships>> call, Response<List<CharacterResponse.CharacterRelationships>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _defaultRelationshipList.setValue(response.body());
-                    for (CharacterModel.CharacterRelationships r : response.body()) {
+                    for (CharacterResponse.CharacterRelationships r : response.body()) {
                         Log.w(TAG, r.getRelationshipName());
                     }
                 } else {
@@ -120,7 +116,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<List<CharacterModel.CharacterRelationships>> call, Throwable t) {
+            public void onFailure(Call<List<CharacterResponse.CharacterRelationships>> call, Throwable t) {
                 failLoading();
                 Log.e("www", "getDefaultRelationshipList API 호출 실패: " + t.getMessage());
             }
@@ -128,9 +124,9 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void getDefaultImageList() {
-        repository.getDefaultImageList(new Callback<List<ImageModel>>() {
+        apiRepository.getDefaultImageList(new Callback<List<CharacterImageResponse>>() {
             @Override
-            public void onResponse(Call<List<ImageModel>> call, Response<List<ImageModel>> response) {
+            public void onResponse(Call<List<CharacterImageResponse>> call, Response<List<CharacterImageResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _defaultImageList.setValue(response.body());
                 } else {
@@ -139,18 +135,18 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<List<ImageModel>> call, Throwable t) {
+            public void onFailure(Call<List<CharacterImageResponse>> call, Throwable t) {
                 failLoading();
                 Log.e("www", "getDefaultImageList API 호출 실패: " + t.getMessage());
             }
         });
     }
 
-    public void createCharacter(CharacterModel characterModel) {
-        Log.w("www", "characterModel: " + new Gson().toJson(characterModel));
-        repository.createCharacter(characterModel, new Callback<CharacterModel>() {
+    public void createCharacter(CharacterResponse characterResponse) {
+        Log.w("www", "characterModel: " + new Gson().toJson(characterResponse));
+        apiRepository.createCharacter(characterResponse, new Callback<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
 
                 Log.w("www", "Response Code: " + response.code());
                 Log.w("www", "Response Message: " + response.message());
@@ -164,18 +160,18 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<CharacterModel> call, Throwable t) {
+            public void onFailure(Call<CharacterResponse> call, Throwable t) {
                 failLoading();
                 Log.e("www", "createCharacter API 호출 실패: " + t.getMessage());
             }
         });
     }
 
-    public void updateCharacter( CharacterModel characterModel, int characterId) {
-        Log.w("www", "characterModel: " + new Gson().toJson(characterModel));
-        repository.updateCharacter( characterModel, characterId, new Callback<CharacterModel>() {
+    public void updateCharacter(CharacterResponse characterResponse, int characterId) {
+        Log.w("www", "characterModel: " + new Gson().toJson(characterResponse));
+        apiRepository.updateCharacter(characterResponse, characterId, new Callback<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
                 Log.w("www", "Response Code: " + response.code());
                 Log.w("www", "Response Message: " + response.message());
                 Log.w("www", "Response Body: " + new Gson().toJson(response.body()));
@@ -188,7 +184,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<CharacterModel> call, Throwable t) {
+            public void onFailure(Call<CharacterResponse> call, Throwable t) {
                 failLoading();
                 Log.e("www", "updateCharacter API 호출 실패: " + t.getMessage());
             }
@@ -196,9 +192,9 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void getCharacterDetails( int characterId) {
-        repository.getCharacterDetails(characterId, new Callback<CharacterModel>() {
+        apiRepository.getCharacterDetails(characterId, new Callback<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     transformCharacterModel(response.body());
                 } else {
@@ -207,28 +203,28 @@ public class MakeCharacterViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<CharacterModel> call, Throwable t) {
+            public void onFailure(Call<CharacterResponse> call, Throwable t) {
                 failLoading();
                 Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
             }
         });
     }
 
-    public void transformCharacterModel(CharacterModel characterModel) {
-        _currentCharacterData.setValue( new CharacterModel(
-                characterModel.getCharacterName(),
-                characterModel.getCharacterProfile(),
-                characterModel.getCharacterGender(),
-                characterModel.getCharacterPersonality(),
-                characterModel.getCharacterDetails(),
+    public void transformCharacterModel(CharacterResponse characterResponse) {
+        _currentCharacterData.setValue( new CharacterResponse(
+                characterResponse.getCharacterName(),
+                characterResponse.getCharacterProfile(),
+                characterResponse.getCharacterGender(),
+                characterResponse.getCharacterPersonality(),
+                characterResponse.getCharacterDetails(),
                 "Default Description",
                 "Default Greeting",
                 true,
-                characterModel.getCharacterRelationships()
+                characterResponse.getCharacterRelationships()
         ));
     }
 
-    public void setCurrentCharaterData(CharacterModel currentCharaterData) {
+    public void setCurrentCharaterData(CharacterResponse currentCharaterData) {
         name.setValue(currentCharaterData.getCharacterName());
         personality.setValue(currentCharaterData.getCharacterPersonality());
         detail.setValue(currentCharaterData.getCharacterDetails());
@@ -236,10 +232,10 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
 
-    public CharacterModel getCurrentCharacterData(String selectedImgUrl, String gender, List<CharacterModel.CharacterRelationships> relationships) {
+    public CharacterResponse getCurrentCharacterData(String selectedImgUrl, String gender, List<CharacterResponse.CharacterRelationships> relationships) {
         String characterDescription = "";
         String characterGreeting = "";
-        return new CharacterModel(name.getValue(), selectedImgUrl, gender, personality.getValue(), detail.getValue(), characterDescription, characterGreeting, isOpen().getValue(), relationships);
+        return new CharacterResponse(name.getValue(), selectedImgUrl, gender, personality.getValue(), detail.getValue(), characterDescription, characterGreeting, isOpen().getValue(), relationships);
     }
 
 }

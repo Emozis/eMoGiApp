@@ -12,8 +12,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
-import com.meta.emogi.network.datamodels.ChatListModel;
-import com.meta.emogi.network.datamodels.MessageResponse;
+import com.meta.emogi.data.network.model.ChatResponse;
+import com.meta.emogi.data.network.model.DeleteChatResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 public class RemoveChatListViewModel extends BaseViewModel {
 
-    private final MutableLiveData<List<ChatListModel>> _chatList = new MutableLiveData<>();
+    private final MutableLiveData<List<ChatResponse>> _chatList = new MutableLiveData<>();
     private final MutableLiveData<List<Integer>> _isPressDelete = new MutableLiveData<>();
     private final SingleLiveEvent<Void> _goToChatList = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> _selectAll = new SingleLiveEvent<>();
@@ -34,7 +34,7 @@ public class RemoveChatListViewModel extends BaseViewModel {
 
 
 
-    public LiveData<List<ChatListModel>> chatList() {return _chatList;}
+    public LiveData<List<ChatResponse>> chatList() {return _chatList;}
     public LiveData<List<Integer>> isPressDelete() {return _isPressDelete;}
     public LiveData<Void> goToChatList() {return _goToChatList;}
     public LiveData<Void> selectAll() {return _selectAll;}
@@ -69,16 +69,16 @@ public class RemoveChatListViewModel extends BaseViewModel {
         }
     }
 
-    public void setChatList(List<ChatListModel> chatList){
+    public void setChatList(List<ChatResponse> chatList){
         _chatList.setValue(chatList);
     }
 
     public void DeleteChat( int chatId) {
-        repository.deleteChat( chatId, new Callback<MessageResponse>() {
+        apiRepository.deleteChat( chatId, new Callback<DeleteChatResponse>() {
             @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+            public void onResponse(Call<DeleteChatResponse> call, Response<DeleteChatResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    MessageResponse message = response.body();
+                    DeleteChatResponse message = response.body();
                     Log.w("www", chatId+"번 채팅 제거 성공 "+message.getMessage());
                     _goToChatList.call();
                     offLoading();
@@ -99,15 +99,15 @@ public class RemoveChatListViewModel extends BaseViewModel {
 
             }
             @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
+            public void onFailure(Call<DeleteChatResponse> call, Throwable t) {
                 failLoading();
                 Log.e("www", "DeleteChat API 호출 실패: " + t.getMessage());
             }
         });
     }
 
-    private List<ChatListModel> formatChatList(List<ChatListModel> chatlist) {
-        for (ChatListModel chat : chatlist) {
+    private List<ChatResponse> formatChatList(List<ChatResponse> chatlist) {
+        for (ChatResponse chat : chatlist) {
             Pair<String, Boolean> lastMessage = getLastMessage(chat.getLastLog());
             chat.setLastMessage(lastMessage.first);
             chat.setEmptyChat(lastMessage.second);
@@ -119,7 +119,7 @@ public class RemoveChatListViewModel extends BaseViewModel {
         return chatlist;
     }
 
-    private Pair<String, Boolean> getLastMessage(ChatListModel.LastLog lastLog) {
+    private Pair<String, Boolean> getLastMessage(ChatResponse.LastLog lastLog) {
         String lastMessage;
         Boolean isEmptyChat;
         if (lastLog != null) {

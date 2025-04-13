@@ -1,20 +1,16 @@
 package com.meta.emogi.views.characterdetail;
 
 import android.app.Application;
-import android.text.Spanned;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.CharacterUserModel;
-import com.meta.emogi.network.datamodels.ChatListModel;
-import com.meta.emogi.network.datamodels.MakeChatRoom;
+import com.meta.emogi.data.network.model.CharacterResponse;
+import com.meta.emogi.data.network.model.CreateChatResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,8 +26,8 @@ public class CharacterDetailViewModel extends BaseViewModel {
     private final MutableLiveData<String> _category = new MutableLiveData<>("카테고리");
     private final MutableLiveData<String> _detail = new MutableLiveData<>();
     private final SingleLiveEvent<Void> _isChatStart = new SingleLiveEvent<>();
-    private final MutableLiveData<CharacterModel> _characterDetail = new MutableLiveData<>();
-    private final MutableLiveData<MakeChatRoom> _chatRoom = new MutableLiveData<>();
+    private final MutableLiveData<CharacterResponse> _characterDetail = new MutableLiveData<>();
+    private final MutableLiveData<CreateChatResponse> _chatRoom = new MutableLiveData<>();
 
     public LiveData<String> nameAndGender() {
         return _nameAndGender;
@@ -46,8 +42,8 @@ public class CharacterDetailViewModel extends BaseViewModel {
         return _detail;
     }
     public LiveData<Void> isChatStart() {return _isChatStart;}
-    public LiveData<CharacterModel> characterDetail() {return _characterDetail;}
-    public LiveData<MakeChatRoom> chatRoom() {return _chatRoom;}
+    public LiveData<CharacterResponse> characterDetail() {return _characterDetail;}
+    public LiveData<CreateChatResponse> chatRoom() {return _chatRoom;}
 
 
     public void getCharacterDetailData(String nameAndGender, String personality, String category, String detail) {
@@ -62,9 +58,9 @@ public class CharacterDetailViewModel extends BaseViewModel {
     }
 
     public void getCharacterDetails( int characterId){
-        repository.getCharacterDetails(characterId, new Callback<CharacterModel>() {
+        apiRepository.getCharacterDetails(characterId, new Callback<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterModel> call, Response<CharacterModel> response) {
+            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _characterDetail.setValue(response.body());
                     offLoading();
@@ -74,7 +70,7 @@ public class CharacterDetailViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<CharacterModel> call, Throwable t) {
+            public void onFailure(Call<CharacterResponse> call, Throwable t) {
                 failLoading();
                 Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
             }
@@ -82,14 +78,14 @@ public class CharacterDetailViewModel extends BaseViewModel {
     }
 
     public void connectCreateChatRoom(int characterId){
-        MakeChatRoom makeChatRoom =  new MakeChatRoom(characterId);
-        createChatRoom(makeChatRoom);
+        CreateChatResponse createChatResponse =  new CreateChatResponse(characterId);
+        createChatRoom(createChatResponse);
     }
 
-    public void createChatRoom(MakeChatRoom makeChatRoom){
-        repository.createChatRoom(makeChatRoom, new Callback<MakeChatRoom>() {
+    public void createChatRoom(CreateChatResponse createChatResponse){
+        apiRepository.createChatRoom(createChatResponse, new Callback<CreateChatResponse>() {
             @Override
-            public void onResponse(Call<MakeChatRoom> call, Response<MakeChatRoom> response) {
+            public void onResponse(Call<CreateChatResponse> call, Response<CreateChatResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _chatRoom.setValue(response.body());
                     offLoading();
@@ -99,7 +95,7 @@ public class CharacterDetailViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<MakeChatRoom> call, Throwable t) {
+            public void onFailure(Call<CreateChatResponse> call, Throwable t) {
                 Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
             }
         });

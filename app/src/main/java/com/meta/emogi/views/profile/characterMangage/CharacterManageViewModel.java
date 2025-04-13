@@ -7,16 +7,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.google.gson.Gson;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.ResponseModel;
-import com.meta.emogi.util.ApiRepository;
-import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.data.network.model.CharacterResponse;
+import com.meta.emogi.data.network.model.ResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +23,7 @@ import retrofit2.Response;
 
 public class CharacterManageViewModel extends BaseViewModel {
     private final SingleLiveEvent<Void> _goToMyPage = new SingleLiveEvent<>();
-    private final MutableLiveData<List<CharacterModel>> _myCharacterList = new MutableLiveData<>();
+    private final MutableLiveData<List<CharacterResponse>> _myCharacterList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> _isActiveDeleteMode = new MutableLiveData<>();
     private final MutableLiveData<String> _deleteToggleString = new MutableLiveData<>("삭제");
     private final SingleLiveEvent<Void> _deleteCharacter = new SingleLiveEvent<>();
@@ -39,7 +35,7 @@ public class CharacterManageViewModel extends BaseViewModel {
     public LiveData<Void> deleteCharacter() {
         return _deleteCharacter;
     }
-    public LiveData<List<CharacterModel>> myCharacterList() {
+    public LiveData<List<CharacterResponse>> myCharacterList() {
         return _myCharacterList;
     }
     public LiveData<Boolean> isActiveDeleteMode() {
@@ -55,9 +51,9 @@ public class CharacterManageViewModel extends BaseViewModel {
     }
 
     public void getMyCharacters() {
-        repository.getMyCharacterList(new Callback<List<CharacterModel>>() {
+        apiRepository.getMyCharacterList(new Callback<List<CharacterResponse>>() {
             @Override
-            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
+            public void onResponse(Call<List<CharacterResponse>> call, Response<List<CharacterResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     _myCharacterList.setValue(response.body());
                 } else {
@@ -65,7 +61,7 @@ public class CharacterManageViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+            public void onFailure(Call<List<CharacterResponse>> call, Throwable t) {
                 Log.e("www", "getMyCharacters API 호출 실패: " + t.getMessage());
             }
         });
@@ -73,11 +69,11 @@ public class CharacterManageViewModel extends BaseViewModel {
 
 
     public void deleteCharacter(int characterId) {
-        repository.deleteCharacter(characterId, new Callback<ResponseModel>() {
+        apiRepository.deleteCharacter(characterId, new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<CharacterModel> updatedList = new ArrayList<>(_myCharacterList.getValue());
+                    List<CharacterResponse> updatedList = new ArrayList<>(_myCharacterList.getValue());
                     for (int i = 0; i < updatedList.size(); i++) {
                         if (updatedList.get(i).getCharacterId() == characterId) {
                             updatedList.remove(i);

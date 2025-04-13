@@ -12,13 +12,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.R;
-import com.meta.emogi.data.ChatContent;
+import com.meta.emogi.domain.model.ChatUiModel;
 
 import java.util.List;
 import java.util.Objects;
 public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ChatContent> mData;
+    private List<ChatUiModel> mData;
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView chatText;
@@ -42,14 +42,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public ChatListAdapter(List<ChatContent> data) {
+    public ChatListAdapter(List<ChatUiModel> data) {
         mData = data;
     }
 
     @Override
     public int getItemViewType(int position) {
         String type = mData.get(position).getType();
-        if (Objects.equals(type, ChatContent.TYPE_USER)) {
+        if (Objects.equals(type, ChatUiModel.TYPE_USER)) {
             return 0; // Return a unique integer for user type
         } else {
             return 1; // Return a different integer for other type
@@ -72,7 +72,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ChatContent message = mData.get(position);
+        ChatUiModel message = mData.get(position);
         if (holder.getItemViewType() == 0) {
             UserViewHolder userHolder = (UserViewHolder) holder;
             userHolder.chatText.setText(message.getContent());

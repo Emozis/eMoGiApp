@@ -1,6 +1,6 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.data.network.model;
 import com.google.gson.annotations.SerializedName;
-public class MessageResponse {
+public class DeleteChatResponse {
 
     @SerializedName("message")
     private String message;

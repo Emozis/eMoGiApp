@@ -1,41 +1,25 @@
 package com.meta.emogi.views.makecharacter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
+import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.databinding.FragmentMakeCharacterBinding;
-import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.RetrofitClient;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.ImageModel;
-import com.meta.emogi.network.datamodels.RelationshipModel;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBinding, MakeCharacterViewModel> {
 
@@ -64,22 +48,22 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
         viewModel.generate().observe(this, unused -> {
             String selectedImageUrl = imageAdapter.getSelectedImageUrl();
             String gender = viewModel.isMan().getValue() ? "male" : "female";
-            List<CharacterModel.CharacterRelationships> relationshipList = relationshipAdapter.getSelectedRelationIds();
+            List<CharacterResponse.CharacterRelationships> relationshipList = relationshipAdapter.getSelectedRelationIds();
 
             if (selectedImageUrl == null || viewModel.personality.getValue() == null || viewModel.detail.getValue() == null || viewModel.isOpen().getValue() == null || relationshipList.size() == 0) {
                 Toast.makeText(requireContext(), "설정하지 않은 값이 있습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                CharacterModel characterModel = viewModel.getCurrentCharacterData(selectedImageUrl,
-                                                                                  gender,
-                                                                                  relationshipList
+                CharacterResponse characterResponse = viewModel.getCurrentCharacterData(selectedImageUrl,
+                                                                                        gender,
+                                                                                        relationshipList
                 );
                 if (viewModel.isEdit().getValue()) {
                     viewModel.updateCharacter(
-                                              characterModel,
+                            characterResponse,
                                               activity.getCharacterId()
                     );
                 } else {
-                    viewModel.createCharacter( characterModel);
+                    viewModel.createCharacter(characterResponse);
                 }
             }
         });

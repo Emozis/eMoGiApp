@@ -7,14 +7,13 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.meta.emogi.util.ApiRepository;
-import com.meta.emogi.views.toolbar.ToolbarViewModel;
+import com.meta.emogi.data.repository.ApiRepository;
 
 public class BaseViewModel extends AndroidViewModel {
 
     private long buttonLastClickTime;
     private static final int CLICK_INTERVAL = 500;
-    protected ApiRepository repository;
+    protected ApiRepository apiRepository;
 
     private final SingleLiveEvent<Integer> _buttonClicked = new SingleLiveEvent<>();
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
@@ -37,7 +36,7 @@ public class BaseViewModel extends AndroidViewModel {
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
-        repository = new ApiRepository();
+        apiRepository = new ApiRepository();
     }
 
     public void onLoading(){

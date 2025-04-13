@@ -1,4 +1,4 @@
-package com.meta.emogi.network;
+package com.meta.emogi.data.network.api;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

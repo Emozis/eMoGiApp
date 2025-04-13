@@ -1,5 +1,4 @@
 package com.meta.emogi.views.menu;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +14,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.data.network.model.CharacterResponse;
 
 import java.util.List;
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.CharacterViewHolder> {
-    private List<CharacterModel> characterList;
+    private List<CharacterResponse> characterList;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private OnItemClickListener onItemClickListener;
 
     private static final String TAG = "MenuListAdapter";
 
-    public MenuListAdapter(List<CharacterModel> characterList) {
+    public MenuListAdapter(List<CharacterResponse> characterList) {
         this.characterList = characterList;
     }
 
@@ -57,7 +56,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
 
     @Override
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-        CharacterModel character = characterList.get(position);
+        CharacterResponse character = characterList.get(position);
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
         holder.characterName.setText(character.getCharacterName());
         holder.characterDescription.setText(character.getCharacterDetails());

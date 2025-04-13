@@ -1,5 +1,4 @@
 package com.meta.emogi.views.makecharacter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,30 +12,29 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.ImageModel;
+import com.meta.emogi.data.network.model.CharacterImageResponse;
 
 import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
-    private List<ImageModel> imageModelList;
+    private List<CharacterImageResponse> characterImageResponseList;
     private int selectedPosition = RecyclerView.NO_POSITION;
 
-    public ImageAdapter(List<ImageModel> imageModelList) {
-        this.imageModelList = imageModelList;
+    public ImageAdapter(List<CharacterImageResponse> characterImageResponseList) {
+        this.characterImageResponseList = characterImageResponseList;
     }
 
     public String getSelectedImageUrl() {
         if (selectedPosition != RecyclerView.NO_POSITION) {
-            return imageModelList.get(selectedPosition).getImageUrl();
+            return characterImageResponseList.get(selectedPosition).getImageUrl();
         }
         return null;
     }
 
     public void setSelectedImageUrl(String imageUrl) {
         if (imageUrl != null) {
-            for (int i = 0; i < imageModelList.size(); i++) {
-                if (imageModelList.get(i).getImageUrl().equals(imageUrl)) {
+            for (int i = 0; i < characterImageResponseList.size(); i++) {
+                if (characterImageResponseList.get(i).getImageUrl().equals(imageUrl)) {
                     selectedPosition = i;
                     notifyItemChanged(selectedPosition);
                     break;
@@ -65,14 +63,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        ImageModel imageModel = imageModelList.get(position);
+        CharacterImageResponse characterImageResponse = characterImageResponseList.get(position);
 
         boolean isSelected = position == selectedPosition;
         holder.imageView.setSelected(isSelected);
 
         RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 둥근 모서리 설정
 
-        Glide.with(holder.itemView.getContext()).load(imageModel.getImageUrl()) // 이미지 URL 로드
+        Glide.with(holder.itemView.getContext()).load(characterImageResponse.getImageUrl()) // 이미지 URL 로드
                 .apply(requestOptions) // 둥근 모서리 적용
                 .placeholder(R.drawable.drawable_background_toolbar_profile) // 플레이스홀더 이미지
                 .error(R.drawable.drawable_background_toolbar_profile) // 오류 발생 시 대체 이미지
@@ -95,7 +93,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public int getItemCount() {
-        return imageModelList.size();
+        return characterImageResponseList.size();
     }
     public class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;

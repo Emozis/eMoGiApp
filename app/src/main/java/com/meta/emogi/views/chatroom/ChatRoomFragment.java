@@ -1,7 +1,5 @@
 package com.meta.emogi.views.chatroom;
 
-import androidx.lifecycle.Observer;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,26 +20,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
-import com.meta.emogi.data.ChatContent;
+import com.meta.emogi.domain.model.ChatUiModel;
 import com.meta.emogi.databinding.FragmentChatRoomBinding;
-import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.RetrofitClient;
-import com.meta.emogi.network.datamodels.ChatLogModel;
+import com.meta.emogi.data.network.model.ChatLogResponse;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.noties.markwon.Markwon;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel> {
 
     private ChatListAdapter adapter;
-    private List<ChatContent> data;
+    private List<ChatUiModel> data;
     private RecyclerView recyclerView;
     private ChatRoomActivity activity;
 
@@ -67,18 +59,18 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
     @Override
     protected void registerObservers() {
         viewModel.sendText().observe(getViewLifecycleOwner(), sendText -> {
-            data.add(new ChatContent(ChatContent.TYPE_USER, sendText));
+            data.add(new ChatUiModel(ChatUiModel.TYPE_USER, sendText));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
 
-            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, "", activity.getChatUrl()));
+            data.add(new ChatUiModel(ChatUiModel.TYPE_CHARACTER, "", activity.getChatUrl()));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
         });
 
         viewModel.receivedText().observe(getViewLifecycleOwner(), recevied -> {
             if (!recevied.isEmpty() && !data.isEmpty() && data.get(data.size() - 1).getType().equals(
-                    ChatContent.TYPE_CHARACTER)) {
+                    ChatUiModel.TYPE_CHARACTER)) {
                 Log.w("www", "메세지 받음 :" + recevied);
 
                 Markwon markwon = Markwon.create(requireContext());
@@ -90,7 +82,7 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.receivedGreet().observe(getViewLifecycleOwner(),greet ->{
-            data.add(new ChatContent(ChatContent.TYPE_CHARACTER, greet, activity.getChatUrl()));
+            data.add(new ChatUiModel(ChatUiModel.TYPE_CHARACTER, greet, activity.getChatUrl()));
             adapter.notifyItemInserted(data.size() - 1);
             recyclerView.scrollToPosition(data.size() - 1);
         });
@@ -104,8 +96,9 @@ public class ChatRoomFragment extends BaseFragment<FragmentChatRoomBinding, Chat
         });
 
         viewModel.chatLogList().observe(this, chatLogList -> {
-            for (ChatLogModel log : chatLogList) {
-                data.add(new ChatContent(log.getRole(), log.getContents(), activity.getChatUrl()));
+            for (ChatLogResponse log : chatLogList) {
+                Log.d(TAG, "log: "+log.getContents());
+                data.add(new ChatUiModel(log.getRole(), log.getContents(), activity.getChatUrl()));
             }
 
             adapter = new ChatListAdapter(data);

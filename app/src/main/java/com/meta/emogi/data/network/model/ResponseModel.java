@@ -1,4 +1,4 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.data.network.model;
 public class ResponseModel {
     private String message;
     private Data data;

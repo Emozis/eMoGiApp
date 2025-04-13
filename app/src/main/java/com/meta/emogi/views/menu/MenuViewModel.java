@@ -10,11 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
-import com.meta.emogi.network.datamodels.CharacterModel;
-import com.meta.emogi.network.datamodels.UserData;
-import com.meta.emogi.util.ApiRepository;
+import com.meta.emogi.data.network.model.CharacterResponse;
+import com.meta.emogi.data.network.model.UserData;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,23 +21,15 @@ import retrofit2.Response;
 
 public class MenuViewModel extends BaseViewModel {
     private final MutableLiveData<MoveType> _type = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> _isMyLoading = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> _isRankLoading = new MutableLiveData<>(true);
     private final SingleLiveEvent<Void> _menu2ManageProfile = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> _menu2MyPageProfile = new SingleLiveEvent<>();
     private final MutableLiveData<UserData> _userData = new MutableLiveData<>();
 
-    private final MutableLiveData<List<CharacterModel>> _myCharacterList = new MutableLiveData<>();
-    private final MutableLiveData<List<CharacterModel>> _rankCharacterList = new MutableLiveData<>();
+    private final MutableLiveData<List<CharacterResponse>> _myCharacterList = new MutableLiveData<>();
+    private final MutableLiveData<List<CharacterResponse>> _rankCharacterList = new MutableLiveData<>();
 
     public LiveData<MoveType> type() {
         return _type;
-    }
-    public LiveData<Boolean> isMyLoading() {
-        return _isMyLoading;
-    }
-    public LiveData<Boolean> isRankLoading() {
-        return _isRankLoading;
     }
     public LiveData<Void> menu2ManageProfile() {
         return _menu2ManageProfile;
@@ -48,10 +38,10 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<Void> menu2MyPageProfile() {
         return _menu2MyPageProfile;
     }
-    public LiveData<List<CharacterModel>> myCharacterList(){
+    public LiveData<List<CharacterResponse>> myCharacterList(){
         return _myCharacterList;
     }
-    public LiveData<List<CharacterModel>> rankCharacterList(){
+    public LiveData<List<CharacterResponse>> rankCharacterList(){
         return _rankCharacterList;
     }
     public LiveData<UserData> userData() {
@@ -62,47 +52,62 @@ public class MenuViewModel extends BaseViewModel {
         super(application);
     }
 
-    public void getMyCharacters() {
-        repository.getMyCharacterList( new Callback<List<CharacterModel>>() {
+    public void getUserData() {
+        apiRepository.getUserData(new Callback<UserData>() {
             @Override
-            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
-                if(response.isSuccessful()){
-                    _myCharacterList.setValue(response.body());
-                }else {
-                    // HTTP 상태 코드와 에러 메시지 로그 추가
-                    int statusCode = response.code();
-                    String errorBody = "";
-                    try {
-                        if (response.errorBody() != null) {
-                            errorBody = response.errorBody().string();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    // 로그에 상태 코드와 에러 메시지 출력
-                    Log.e("www", "getMyCharacters 응답이 정상적이지 않음. 상태 코드: " + statusCode + ", 에러 본문: " + errorBody);
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    _userData.setValue(response.body());
+                }else{
+                    failLoading();
+                    Log.e("www", "getUserData 응답이 정상적이지 않음");
                 }
             }
             @Override
-            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+            public void onFailure(Call<UserData> call, Throwable t) {
+                failLoading();
+                Log.e("www", "getUserData API 호출 실패: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getMyCharacters() {
+        apiRepository.getMyCharacterList( new Callback<List<CharacterResponse>>() {
+            @Override
+            public void onResponse(Call<List<CharacterResponse>> call, Response<List<CharacterResponse>> response) {
+                if(response.isSuccessful()){
+                    _myCharacterList.setValue(response.body());
+                }else {
+                    failLoading();
+                    if (response.errorBody() != null) {
+                        Log.e("www", "getMyCharacters 응답이 정상적이지 않음. " +
+                                "상태 코드: " + response.code()+ ", " +
+                                "에러 본문: " + response.errorBody());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<CharacterResponse>> call, Throwable t) {
+                failLoading();
                 Log.e("www", "getMyCharacters API 호출 실패: " + t.getMessage());
             }
         });
     }
 
     public void getRankCharacterList(){
-        repository.getRankCharacterList(new Callback<List<CharacterModel>>() {
+        apiRepository.getRankCharacterList(new Callback<List<CharacterResponse>>() {
             @Override
-            public void onResponse(Call<List<CharacterModel>> call, Response<List<CharacterModel>> response) {
+            public void onResponse(Call<List<CharacterResponse>> call, Response<List<CharacterResponse>> response) {
                 if(response.isSuccessful()){
                     _rankCharacterList.setValue(response.body());
                 }else{
+                    failLoading();
                     Log.e("www", "getRankCharacters 응답이 정상적이지 않음");
                 }
             }
             @Override
-            public void onFailure(Call<List<CharacterModel>> call, Throwable t) {
+            public void onFailure(Call<List<CharacterResponse>> call, Throwable t) {
+                failLoading();
                 Log.e("www", "getRankCharacters API 호출 실패: " + t.getMessage());
             }
         });
@@ -122,30 +127,26 @@ public class MenuViewModel extends BaseViewModel {
         }
     }
 
-    public void getUserData() {
-        repository.getUserData(new Callback<UserData>() {
-            @Override
-            public void onResponse(Call<UserData> call, Response<UserData> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _userData.setValue(response.body());
-                }else{
-                    Log.e("www", "getUserData 응답이 정상적이지 않음");
-                }
-            }
-            @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
-                Log.e("www", "getUserData API 호출 실패: " + t.getMessage());
-            }
-        });
-    }
 
+
+
+    private boolean isMyCharacterLoaded = false;
+    private boolean isRankCharacterLoaded = false;
 
     public void loadDoneMy() {
-        _isMyLoading.setValue(false);
+        isMyCharacterLoaded=true;
+        isAllLoaded();
     }
 
     public void loadDoneRank() {
-        _isRankLoading.setValue(false);
+        isRankCharacterLoaded =true;
+        isAllLoaded();
+    }
+
+    private void isAllLoaded(){
+        if(isMyCharacterLoaded && isRankCharacterLoaded){
+            offLoading();
+        }
     }
 
     public enum MoveType {

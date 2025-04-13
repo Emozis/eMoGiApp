@@ -7,7 +7,7 @@
 
         <variable
             name="character"
-            type="com.meta.emogi.network.datamodels.CharacterModel" />
+            type="com.meta.emogi.data.network.model.CharacterResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

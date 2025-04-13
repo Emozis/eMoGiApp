@@ -7,14 +7,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
-import com.meta.emogi.network.datamodels.UserData;
-
-import java.util.List;
+import com.meta.emogi.data.network.model.UserData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,7 +55,7 @@ public class MyPageViewModel extends BaseViewModel {
     }
 
     public void getUserData() {
-        repository.getUserData(new Callback<UserData>() {
+        apiRepository.getUserData(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if (response.isSuccessful() && response.body() != null) {

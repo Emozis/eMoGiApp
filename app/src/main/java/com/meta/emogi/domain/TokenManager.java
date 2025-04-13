@@ -1,4 +1,4 @@
-package com.meta.emogi.network;
+package com.meta.emogi.domain;
 
 public class TokenManager {
 

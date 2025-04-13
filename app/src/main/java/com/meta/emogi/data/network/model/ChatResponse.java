@@ -1,10 +1,8 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.data.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class ChatListModel {
+public class ChatResponse {
 
     @SerializedName("chatId")
     private int chatId;

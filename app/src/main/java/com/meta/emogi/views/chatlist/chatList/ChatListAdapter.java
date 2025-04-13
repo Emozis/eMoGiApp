@@ -1,5 +1,4 @@
 package com.meta.emogi.views.chatlist.chatList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +15,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.ChatListModel;
+import com.meta.emogi.data.network.model.ChatResponse;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder> {
-    private List<ChatListModel> chatList;
+    private List<ChatResponse> chatList;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private static final String TAG = "ChatListAdapter";
     private OnItemClickListener onItemClickListener;
 
-    public ChatListAdapter(List<ChatListModel> chatList) {
+    public ChatListAdapter(List<ChatResponse> chatList) {
         this.chatList = chatList;
     }
 
@@ -63,7 +61,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
 
     @Override
     public void onBindViewHolder(@NonNull ChatListViewHolder holder, int position) {
-        ChatListModel chat = chatList.get(position);
+        ChatResponse chat = chatList.get(position);
         holder.characterName.setText(chat.getCharacter().getCharacterName());
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
         holder.lastTalk.setText(chat.getLastMessage());

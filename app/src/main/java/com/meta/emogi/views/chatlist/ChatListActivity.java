@@ -1,21 +1,12 @@
 package com.meta.emogi.views.chatlist;
 
 import android.content.Intent;
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.MutableLiveData;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityChatListBinding;
-import com.meta.emogi.network.datamodels.ChatListModel;
-import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
+import com.meta.emogi.data.network.model.ChatResponse;
 import com.meta.emogi.views.chatroom.ChatRoomActivity;
-import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
@@ -23,7 +14,7 @@ import java.util.List;
 
 public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
 
-    public List<ChatListModel> chatList;
+    public List<ChatResponse> chatList;
 
     @Override
     protected int layoutId() {
@@ -57,10 +48,10 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
         startActivity(intent);
     }
 
-    public List<ChatListModel> getChatList() {
+    public List<ChatResponse> getChatList() {
         return chatList;
     }
-    public void setChatList(List<ChatListModel> chatList) {
+    public void setChatList(List<ChatResponse> chatList) {
         this.chatList = chatList;
     }
 }

@@ -1,7 +1,7 @@
 package com.meta.emogi.views.chatroom;
 
-import static com.meta.emogi.data.ChatContent.TYPE_AUTH;
-import static com.meta.emogi.data.ChatContent.TYPE_USER;
+import static com.meta.emogi.domain.model.ChatUiModel.TYPE_AUTH;
+import static com.meta.emogi.domain.model.ChatUiModel.TYPE_USER;
 
 import android.app.Application;
 import android.util.Log;
@@ -13,17 +13,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
-import com.meta.emogi.data.ChatContent;
-import com.meta.emogi.network.ChatWebSocket;
-import com.meta.emogi.network.datamodels.ChatLogModel;
-
-import org.checkerframework.checker.units.qual.C;
+import com.meta.emogi.domain.model.ChatUiModel;
+import com.meta.emogi.data.network.socket.ChatWebSocket;
+import com.meta.emogi.data.network.model.ChatLogResponse;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.PropertyResourceBundle;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +34,7 @@ public class ChatRoomViewModel extends BaseViewModel {
     private MutableLiveData<String> _receivedText = new MutableLiveData<>();
     private MutableLiveData<String> _receivedGreet = new MutableLiveData<>();
     private MutableLiveData<Boolean> _isCanChat = new MutableLiveData<>(true);
-    private MutableLiveData<List<ChatLogModel>> _chatLogList = new MutableLiveData<>();
+    private MutableLiveData<List<ChatLogResponse>> _chatLogList = new MutableLiveData<>();
 
     public ChatRoomViewModel(Application application) {super(application);}
 
@@ -56,11 +51,11 @@ public class ChatRoomViewModel extends BaseViewModel {
     public LiveData<Boolean> isCanChat() {
         return _isCanChat;
     }
-    public LiveData<List<ChatLogModel>> chatLogList() {
+    public LiveData<List<ChatLogResponse>> chatLogList() {
         return _chatLogList;
     }
 
-    public void init( int chatId) {
+    public void init(int chatId) {
         connectNetwork(chatId);
     }
 
@@ -69,7 +64,7 @@ public class ChatRoomViewModel extends BaseViewModel {
 
             @Override
             public void onGreetReceived(String greetMessage) {
-                _receivedGreet .postValue(greetMessage);
+                _receivedGreet.postValue(greetMessage);
                 _isCanChat.postValue(true);
             }
             @Override
@@ -88,9 +83,9 @@ public class ChatRoomViewModel extends BaseViewModel {
 
         chatWebSocket.start();
 
-        ChatContent chatContent = new ChatContent(TYPE_AUTH);
+        ChatUiModel chatUiModel = new ChatUiModel(TYPE_AUTH);
         Gson gson = new Gson();
-        String jsonMessage = gson.toJson(chatContent);
+        String jsonMessage = gson.toJson(chatUiModel);
 
         Log.w("www", "서버에게 소켓 인증 보내기 : " + jsonMessage);
         chatWebSocket.sendMessage(jsonMessage);
@@ -109,9 +104,9 @@ public class ChatRoomViewModel extends BaseViewModel {
     public void sendMessageToServer() {
         String message = _sendText.getValue();
         if (chatWebSocket != null && message != null && !message.isEmpty()) {
-            ChatContent chatContent = new ChatContent(TYPE_USER, message);
+            ChatUiModel chatUiModel = new ChatUiModel(TYPE_USER, message);
             Gson gson = new Gson();
-            String jsonMessage = gson.toJson(chatContent);
+            String jsonMessage = gson.toJson(chatUiModel);
             chatWebSocket.sendMessage(jsonMessage);
             inputText.setValue(""); // 메시지를 보낸 후 EditText를 비웁니다.
             Log.w(TAG, "메세지 보내기 성공: " + message);
@@ -121,11 +116,10 @@ public class ChatRoomViewModel extends BaseViewModel {
     }
 
     public void getChatLogList(int chatId) {
-        repository.getChatLogList( chatId, new Callback<List<ChatLogModel>>() {
+        apiRepository.getChatLogList(chatId, new Callback<List<ChatLogResponse>>() {
             @Override
             public void onResponse(
-                    Call<List<ChatLogModel>> call,
-                    Response<List<ChatLogModel>> response
+                    Call<List<ChatLogResponse>> call, Response<List<ChatLogResponse>> response
             ) {
                 if (response.isSuccessful() && response.body() != null) {
                     _chatLogList.setValue(response.body());
@@ -150,7 +144,7 @@ public class ChatRoomViewModel extends BaseViewModel {
                 }
             }
             @Override
-            public void onFailure(Call<List<ChatLogModel>> call, Throwable t) {
+            public void onFailure(Call<List<ChatLogResponse>> call, Throwable t) {
                 Log.d(TAG, "chat log test3");
                 Log.e("www", "getChatLogList API 호출 실패: " + t.getMessage());
             }

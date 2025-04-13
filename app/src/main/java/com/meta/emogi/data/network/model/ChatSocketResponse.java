@@ -1,5 +1,5 @@
-package com.meta.emogi.network.datamodels;
-public class ChatResponse {
+package com.meta.emogi.data.network.model;
+public class ChatSocketResponse {
     public static final String GREET = "greeting";
     public static final String CHAT = "chat";
     public static final String END = "end";

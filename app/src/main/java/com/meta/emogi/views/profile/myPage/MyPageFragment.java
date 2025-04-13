@@ -1,40 +1,22 @@
 package com.meta.emogi.views.profile.myPage;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
-import com.meta.emogi.databinding.FragmentMenuBinding;
 import com.meta.emogi.databinding.FragmentMyPageBinding;
-import com.meta.emogi.network.ApiService;
-import com.meta.emogi.network.RetrofitClient;
-import com.meta.emogi.network.datamodels.UserData;
-import com.meta.emogi.network.datamodels.UserData;
-import com.meta.emogi.views.makecharacter.MakeCharacterActivity;
-import com.meta.emogi.views.menu.MenuViewModel;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageViewModel> {
 

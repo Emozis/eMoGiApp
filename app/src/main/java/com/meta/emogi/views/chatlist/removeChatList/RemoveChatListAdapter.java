@@ -1,11 +1,9 @@
 package com.meta.emogi.views.chatlist.removeChatList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,19 +16,18 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.ChatListModel;
-import com.meta.emogi.views.chatlist.chatList.ChatListAdapter;
+import com.meta.emogi.data.network.model.ChatResponse;
 
 import java.util.List;
 public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAdapter.RemoveChatListViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-    private List<ChatListModel> chatList;
+    private List<ChatResponse> chatList;
     private boolean isAllSelected = false;
     private int selectedPosition = RecyclerView.NO_POSITION;
 
     // 생성자 추가
-    public RemoveChatListAdapter(List<ChatListModel> chatList) {
+    public RemoveChatListAdapter(List<ChatResponse> chatList) {
         this.chatList = chatList;
     }
 
@@ -72,7 +69,7 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
 
     @Override
     public void onBindViewHolder(@NonNull RemoveChatListViewHolder holder, int position) {
-        ChatListModel chat = chatList.get(position);
+        ChatResponse chat = chatList.get(position);
 
         holder.checkBox.setChecked(isAllSelected || holder.checkBox.isChecked());
 

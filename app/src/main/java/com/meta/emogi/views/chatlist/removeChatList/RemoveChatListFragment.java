@@ -1,28 +1,20 @@
 package com.meta.emogi.views.chatlist.removeChatList;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
 import com.meta.emogi.databinding.FragmentRemoveChatListBinding;
-import com.meta.emogi.network.datamodels.ChatListModel;
+import com.meta.emogi.data.network.model.ChatResponse;
 import com.meta.emogi.views.chatlist.ChatListActivity;
-import com.meta.emogi.views.chatlist.chatList.ChatListAdapter;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListBinding,RemoveChatListViewModel> {
@@ -73,7 +65,7 @@ public class RemoveChatListFragment extends BaseFragment<FragmentRemoveChatListB
         super.onResume();
         setAdapter();
         viewModel.setChatList(activity.getChatList());
-        List<ChatListModel> chatList = activity.getChatList();
+        List<ChatResponse> chatList = activity.getChatList();
         if (chatList != null && !chatList.isEmpty()) {
             Log.w("www", "onResume: ");
             viewModel.setChatList(chatList);

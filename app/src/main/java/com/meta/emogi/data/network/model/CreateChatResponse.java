@@ -1,6 +1,6 @@
-package com.meta.emogi.network.datamodels;
+package com.meta.emogi.data.network.model;
 import com.google.gson.annotations.SerializedName;
-public class MakeChatRoom {
+public class CreateChatResponse {
     @SerializedName("message")
     private String message;
     @SerializedName("characterId")
@@ -8,7 +8,7 @@ public class MakeChatRoom {
     @SerializedName("data")
     private Data data;
 
-    public MakeChatRoom(int characterId) {
+    public CreateChatResponse(int characterId) {
         this.characterId = characterId;
     }
 

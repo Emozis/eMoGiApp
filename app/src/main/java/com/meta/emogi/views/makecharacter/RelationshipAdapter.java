@@ -11,24 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
-import com.meta.emogi.network.datamodels.CharacterModel;
+import com.meta.emogi.data.network.model.CharacterResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapter.RowViewHolder> {
 
-    private final List<List<CharacterModel.CharacterRelationships>> groupedData = new ArrayList<>();
-    private final List<CharacterModel.CharacterRelationships> selectedItems = new ArrayList<>();
+    private final List<List<CharacterResponse.CharacterRelationships>> groupedData = new ArrayList<>();
+    private final List<CharacterResponse.CharacterRelationships> selectedItems = new ArrayList<>();
 
-    public RelationshipAdapter(List<CharacterModel.CharacterRelationships> relationshipModelList) {
+    public RelationshipAdapter(List<CharacterResponse.CharacterRelationships> relationshipModelList) {
         groupData(relationshipModelList);
     }
 
     // 데이터를 3개씩 묶어 그룹화
-    private void groupData(List<CharacterModel.CharacterRelationships> relationshipModelList) {
-        List<CharacterModel.CharacterRelationships> currentRow = new ArrayList<>();
-        for (CharacterModel.CharacterRelationships item : relationshipModelList) {
+    private void groupData(List<CharacterResponse.CharacterRelationships> relationshipModelList) {
+        List<CharacterResponse.CharacterRelationships> currentRow = new ArrayList<>();
+        for (CharacterResponse.CharacterRelationships item : relationshipModelList) {
             currentRow.add(item);
             if (currentRow.size() == 3) { // 3개씩 그룹화
                 groupedData.add(new ArrayList<>(currentRow));
@@ -57,7 +57,7 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RowViewHolder holder, int position) {
-        List<CharacterModel.CharacterRelationships> rowData = groupedData.get(position);
+        List<CharacterResponse.CharacterRelationships> rowData = groupedData.get(position);
         holder.bind(rowData);
     }
 
@@ -76,10 +76,10 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
             categoryViews.add(itemView.findViewById(R.id.categoryView3));
         }
 
-        public void bind(List<CharacterModel.CharacterRelationships> rowData) {
+        public void bind(List<CharacterResponse.CharacterRelationships> rowData) {
             for (int i = 0; i < categoryViews.size(); i++) {
                 if (i < rowData.size()) {
-                    CharacterModel.CharacterRelationships item = rowData.get(i);
+                    CharacterResponse.CharacterRelationships item = rowData.get(i);
                     categoryViews.get(i).setVisibility(View.VISIBLE);
                     categoryViews.get(i).setText(item.getRelationshipName());
                     categoryViews.get(i).setSelected(isSelected(item));
@@ -102,8 +102,8 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
         }
     }
 
-    private boolean isSelected(CharacterModel.CharacterRelationships item) {
-        for (CharacterModel.CharacterRelationships selected : selectedItems) {
+    private boolean isSelected(CharacterResponse.CharacterRelationships item) {
+        for (CharacterResponse.CharacterRelationships selected : selectedItems) {
             if (selected.getRelationshipId() == item.getRelationshipId()) {
                 return true;
             }
@@ -111,7 +111,7 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
         return false;
     }
 
-    private void removeById(CharacterModel.CharacterRelationships item) {
+    private void removeById(CharacterResponse.CharacterRelationships item) {
         for (int i = 0; i < selectedItems.size(); i++) {
             if (selectedItems.get(i).getRelationshipId() == item.getRelationshipId()) {
                 selectedItems.remove(i);
@@ -120,11 +120,11 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
         }
     }
 
-    public List<CharacterModel.CharacterRelationships> getSelectedRelationIds() {
+    public List<CharacterResponse.CharacterRelationships> getSelectedRelationIds() {
         return selectedItems;
     }
 
-    public void setSelectedItems(List<CharacterModel.CharacterRelationships> selectedList) {
+    public void setSelectedItems(List<CharacterResponse.CharacterRelationships> selectedList) {
         selectedItems.clear(); // 기존 선택 항목 초기화
         selectedItems.addAll(selectedList); // 새 선택 항목 추가
         notifyDataSetChanged(); // UI 업데이트
