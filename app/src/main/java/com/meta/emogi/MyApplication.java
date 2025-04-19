@@ -15,12 +15,10 @@ public class MyApplication extends Application {
         instance = this;
     }
 
-    public static synchronized MyApplication getInstance(){
-        if (instance == null) {
-            instance = new MyApplication();
-        }
+    public synchronized static MyApplication getInstance(){
         return instance;
     }
+
 
     private void getDeviceSize(){
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();

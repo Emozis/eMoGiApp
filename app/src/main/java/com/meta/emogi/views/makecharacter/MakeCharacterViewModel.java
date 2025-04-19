@@ -11,8 +11,11 @@ import com.google.gson.Gson;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.data.network.model.CharacterImageResponse;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.List;
 
@@ -102,110 +105,69 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void getDefaultRelationshipList() {
-        apiRepository.getDefaultRelationshipList(new Callback<List<CharacterResponse.CharacterRelationships>>() {
+        apiRepository.getDefaultRelationshipList(new ApiCallBack.ApiResultHandler<List<CharacterResponse.CharacterRelationships>>() {
             @Override
-            public void onResponse(Call<List<CharacterResponse.CharacterRelationships>> call, Response<List<CharacterResponse.CharacterRelationships>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _defaultRelationshipList.setValue(response.body());
-                    for (CharacterResponse.CharacterRelationships r : response.body()) {
-                        Log.w(TAG, r.getRelationshipName());
-                    }
-                } else {
-                    failLoading();
-                    Log.e("www", "getDefaultRelationshipList 응답이 정상적이지 않음");
-                }
+            public void onSuccess(List<CharacterResponse.CharacterRelationships> data) {
+                _defaultRelationshipList.setValue(data);
             }
             @Override
-            public void onFailure(Call<List<CharacterResponse.CharacterRelationships>> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getDefaultRelationshipList API 호출 실패: " + t.getMessage());
             }
         });
     }
 
     public void getDefaultImageList() {
-        apiRepository.getDefaultImageList(new Callback<List<CharacterImageResponse>>() {
+        apiRepository.getDefaultImageList(new ApiCallBack.ApiResultHandler<List<CharacterImageResponse>>() {
             @Override
-            public void onResponse(Call<List<CharacterImageResponse>> call, Response<List<CharacterImageResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _defaultImageList.setValue(response.body());
-                } else {
-                    failLoading();
-                    Log.e("www", "getDefaultImageList 응답이 정상적이지 않음");
-                }
+            public void onSuccess(List<CharacterImageResponse> data) {
+                _defaultImageList.setValue(data);
             }
             @Override
-            public void onFailure(Call<List<CharacterImageResponse>> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getDefaultImageList API 호출 실패: " + t.getMessage());
             }
         });
     }
 
     public void createCharacter(CharacterResponse characterResponse) {
         Log.w("www", "characterModel: " + new Gson().toJson(characterResponse));
-        apiRepository.createCharacter(characterResponse, new Callback<CharacterResponse>() {
+        apiRepository.createCharacter(characterResponse, new ApiCallBack.ApiResultHandler<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
-
-                Log.w("www", "Response Code: " + response.code());
-                Log.w("www", "Response Message: " + response.message());
-                Log.w("www", "Response Body: " + new Gson().toJson(response.body()));
-
-                if (response.isSuccessful() && response.body() != null) {
-                    _createdCharacter.setValue(response.body());
-                } else {
-                    failLoading();
-                    Log.e("www", "createCharacter 응답이 정상적이지 않음");
-                }
+            public void onSuccess(CharacterResponse data) {
+                Log.w("www", "Response Body: " + new Gson().toJson(data));
+                _createdCharacter.setValue(data);
             }
             @Override
-            public void onFailure(Call<CharacterResponse> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "createCharacter API 호출 실패: " + t.getMessage());
             }
         });
     }
 
     public void updateCharacter(CharacterResponse characterResponse, int characterId) {
         Log.w("www", "characterModel: " + new Gson().toJson(characterResponse));
-        apiRepository.updateCharacter(characterResponse, characterId, new Callback<CharacterResponse>() {
+        apiRepository.updateCharacter(characterResponse, characterId, new ApiCallBack.ApiResultHandler<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
-                Log.w("www", "Response Code: " + response.code());
-                Log.w("www", "Response Message: " + response.message());
-                Log.w("www", "Response Body: " + new Gson().toJson(response.body()));
-
-                if (response.isSuccessful() && response.body() != null) {
-                    _createdCharacter.setValue(response.body());
-                } else {
-                    failLoading();
-                    Log.e("www", "updateCharacter 응답이 정상적이지 않음");
-                }
+            public void onSuccess(CharacterResponse data) {
+                _createdCharacter.setValue(data);
             }
             @Override
-            public void onFailure(Call<CharacterResponse> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "updateCharacter API 호출 실패: " + t.getMessage());
             }
         });
     }
 
     public void getCharacterDetails( int characterId) {
-        apiRepository.getCharacterDetails(characterId, new Callback<CharacterResponse>() {
+        apiRepository.getCharacterDetails(characterId, new ApiCallBack.ApiResultHandler<CharacterResponse>() {
             @Override
-            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    transformCharacterModel(response.body());
-                } else {
-                    failLoading();
-                    Log.e("www", "getCharacterDetails 응답이 정상적이지 않음");
-                }
+            public void onSuccess(CharacterResponse data) {
+                transformCharacterModel(data);
             }
             @Override
-            public void onFailure(Call<CharacterResponse> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
             }
         });
     }

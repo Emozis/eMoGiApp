@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.UserData;
 
 import retrofit2.Call;
@@ -55,18 +56,14 @@ public class MyPageViewModel extends BaseViewModel {
     }
 
     public void getUserData() {
-        apiRepository.getUserData(new Callback<UserData>() {
+        apiRepository.getUserData(new ApiCallBack.ApiResultHandler<UserData>() {
             @Override
-            public void onResponse(Call<UserData> call, Response<UserData> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _userData.setValue(response.body());
-                }else{
-                    Log.e("www", "getUserData 응답이 정상적이지 않음");
-                }
+            public void onSuccess(UserData data) {
+                _userData.setValue(data);
             }
             @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
-                Log.e("www", "getUserData API 호출 실패: " + t.getMessage());
+            public void onFailed(Throwable t) {
+
             }
         });
     }

@@ -34,6 +34,7 @@ public class BaseViewModel extends AndroidViewModel {
         return _isShowProgress;
     }
 
+
     public BaseViewModel(@NonNull Application application) {
         super(application);
         apiRepository = new ApiRepository();

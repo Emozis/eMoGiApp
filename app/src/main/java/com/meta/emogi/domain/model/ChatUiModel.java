@@ -16,7 +16,7 @@ public class ChatUiModel {
     // 인증 메시지 생성자를 추가합니다.
     public ChatUiModel(String type) {
         this.type = type;
-        this.token = TokenManager.getInstance().getTotken();
+        this.token = TokenManager.getInstance().getToken();
     }
 
     // 채팅 메시지 생성자를 유지합니다.

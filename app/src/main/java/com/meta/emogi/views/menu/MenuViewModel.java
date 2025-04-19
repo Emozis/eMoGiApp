@@ -10,8 +10,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.data.network.model.UserData;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.List;
 
@@ -38,10 +41,10 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<Void> menu2MyPageProfile() {
         return _menu2MyPageProfile;
     }
-    public LiveData<List<CharacterResponse>> myCharacterList(){
+    public LiveData<List<CharacterResponse>> myCharacterList() {
         return _myCharacterList;
     }
-    public LiveData<List<CharacterResponse>> rankCharacterList(){
+    public LiveData<List<CharacterResponse>> rankCharacterList() {
         return _rankCharacterList;
     }
     public LiveData<UserData> userData() {
@@ -53,62 +56,42 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void getUserData() {
-        apiRepository.getUserData(new Callback<UserData>() {
+        apiRepository.getUserData(new ApiCallBack.ApiResultHandler<UserData>() {
             @Override
-            public void onResponse(Call<UserData> call, Response<UserData> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _userData.setValue(response.body());
-                }else{
-                    failLoading();
-                    Log.e("www", "getUserData 응답이 정상적이지 않음");
-                }
+            public void onSuccess(UserData data) {
+                _userData.setValue(data);
             }
             @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getUserData API 호출 실패: " + t.getMessage());
             }
         });
     }
 
     public void getMyCharacters() {
-        apiRepository.getMyCharacterList( new Callback<List<CharacterResponse>>() {
+        apiRepository.getMyCharacterList(new ApiCallBack.ApiResultHandler<List<CharacterResponse>>() {
             @Override
-            public void onResponse(Call<List<CharacterResponse>> call, Response<List<CharacterResponse>> response) {
-                if(response.isSuccessful()){
-                    _myCharacterList.setValue(response.body());
-                }else {
-                    failLoading();
-                    if (response.errorBody() != null) {
-                        Log.e("www", "getMyCharacters 응답이 정상적이지 않음. " +
-                                "상태 코드: " + response.code()+ ", " +
-                                "에러 본문: " + response.errorBody());
-                    }
-                }
+            public void onSuccess(List<CharacterResponse> data) {
+                _myCharacterList.setValue(data);
             }
+
             @Override
-            public void onFailure(Call<List<CharacterResponse>> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getMyCharacters API 호출 실패: " + t.getMessage());
             }
         });
+
     }
 
-    public void getRankCharacterList(){
-        apiRepository.getRankCharacterList(new Callback<List<CharacterResponse>>() {
+    public void getRankCharacterList() {
+        apiRepository.getRankCharacterList(new ApiCallBack.ApiResultHandler<List<CharacterResponse>>() {
             @Override
-            public void onResponse(Call<List<CharacterResponse>> call, Response<List<CharacterResponse>> response) {
-                if(response.isSuccessful()){
-                    _rankCharacterList.setValue(response.body());
-                }else{
-                    failLoading();
-                    Log.e("www", "getRankCharacters 응답이 정상적이지 않음");
-                }
+            public void onSuccess(List<CharacterResponse> data) {
+                _rankCharacterList.setValue(data);
             }
             @Override
-            public void onFailure(Call<List<CharacterResponse>> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getRankCharacters API 호출 실패: " + t.getMessage());
             }
         });
     }
@@ -122,29 +105,26 @@ public class MenuViewModel extends BaseViewModel {
             _type.setValue(MoveType.MAKE_CHARACTER);
         } else if (btnResId == R.id.button_go_manage_profile) {
             _menu2ManageProfile.call();
-        }else if(btnResId ==R.id.image_profile){
+        } else if (btnResId == R.id.image_profile) {
             _menu2MyPageProfile.call();
         }
     }
-
-
-
 
     private boolean isMyCharacterLoaded = false;
     private boolean isRankCharacterLoaded = false;
 
     public void loadDoneMy() {
-        isMyCharacterLoaded=true;
+        isMyCharacterLoaded = true;
         isAllLoaded();
     }
 
     public void loadDoneRank() {
-        isRankCharacterLoaded =true;
+        isRankCharacterLoaded = true;
         isAllLoaded();
     }
 
-    private void isAllLoaded(){
-        if(isMyCharacterLoaded && isRankCharacterLoaded){
+    private void isAllLoaded() {
+        if (isMyCharacterLoaded && isRankCharacterLoaded) {
             offLoading();
         }
     }

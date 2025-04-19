@@ -66,7 +66,6 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                 viewModel.loadDoneMy();
             } else {
                 viewModel.failLoading();
-                Log.e(TAG, "Menu myCharacter 통신 오류");
             }
         });
 
@@ -78,7 +77,6 @@ public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewMode
                 viewModel.loadDoneRank();
             } else {
                 viewModel.failLoading();
-                Log.e(TAG, "Menu myCharacter 통신 오류");
             }
         });
     }

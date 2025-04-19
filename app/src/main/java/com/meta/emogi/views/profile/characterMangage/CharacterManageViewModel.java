@@ -11,8 +11,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.data.network.model.ResponseModel;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,47 +54,41 @@ public class CharacterManageViewModel extends BaseViewModel {
     }
 
     public void getMyCharacters() {
-        apiRepository.getMyCharacterList(new Callback<List<CharacterResponse>>() {
+        apiRepository.getMyCharacterList(new ApiCallBack.ApiResultHandler<List<CharacterResponse>>() {
             @Override
-            public void onResponse(Call<List<CharacterResponse>> call, Response<List<CharacterResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _myCharacterList.setValue(response.body());
-                } else {
-                    Log.e("www", "getMyCharacters 응답이 정상적이지 않음");
-                }
+            public void onSuccess(List<CharacterResponse> data) {
+                _myCharacterList.setValue(data);
             }
+
             @Override
-            public void onFailure(Call<List<CharacterResponse>> call, Throwable t) {
-                Log.e("www", "getMyCharacters API 호출 실패: " + t.getMessage());
+            public void onFailed(Throwable t) {
+                Log.e("www", "getMyCharacters 실패: " + t.getMessage());
             }
         });
     }
 
 
     public void deleteCharacter(int characterId) {
-        apiRepository.deleteCharacter(characterId, new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<CharacterResponse> updatedList = new ArrayList<>(_myCharacterList.getValue());
-                    for (int i = 0; i < updatedList.size(); i++) {
-                        if (updatedList.get(i).getCharacterId() == characterId) {
-                            updatedList.remove(i);
-                            break;
-                        }
-                    }
-                    _myCharacterList.setValue(updatedList); // 리스트 갱신
-                    _deleteCharacter.call();
-                } else {
-                    Log.e("www", "deleteCharacter 응답이 정상적이지 않음");
-                }
-            }
+        apiRepository.deleteCharacter(characterId,
+                                      new ApiCallBack.ApiResultHandler<ResponseModel>() {
+                                          @Override
+                                          public void onSuccess(ResponseModel data) {
+                                              List<CharacterResponse> updatedList = new ArrayList<>(_myCharacterList.getValue());
+                                              for (int i = 0; i < updatedList.size(); i++) {
+                                                  if (updatedList.get(i).getCharacterId() == characterId) {
+                                                      updatedList.remove(i);
+                                                      break;
+                                                  }
+                                              }
+                                              _myCharacterList.setValue(updatedList); // 리스트 갱신
+                                              _deleteCharacter.call();
+                                          }
+                                          @Override
+                                          public void onFailed(Throwable t) {
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Log.e("www", "deleteCharacter API 호출 실패: " + t.getMessage());
-            }
-        });
+                                          }
+                                      }
+        );
     }
 
 

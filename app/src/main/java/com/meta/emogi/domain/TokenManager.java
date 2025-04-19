@@ -4,7 +4,7 @@ public class TokenManager {
 
     private static final TokenManager instance = new TokenManager();
 
-    private String totken;
+    private String token;
 
     private TokenManager(){}
 
@@ -12,12 +12,12 @@ public class TokenManager {
         return instance;
     }
 
-    public void setTotken(String totken){
-        this.totken = totken;
+    public void setToken(String token){
+        this.token = token;
     }
 
-    public String getTotken(){
-        return totken;
+    public String getToken(){
+        return token;
     }
 
 }

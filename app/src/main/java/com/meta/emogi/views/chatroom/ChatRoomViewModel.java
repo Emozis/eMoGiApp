@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.domain.model.ChatUiModel;
 import com.meta.emogi.data.network.socket.ChatWebSocket;
 import com.meta.emogi.data.network.model.ChatLogResponse;
@@ -116,37 +117,14 @@ public class ChatRoomViewModel extends BaseViewModel {
     }
 
     public void getChatLogList(int chatId) {
-        apiRepository.getChatLogList(chatId, new Callback<List<ChatLogResponse>>() {
+        apiRepository.getChatLogList(chatId, new ApiCallBack.ApiResultHandler<List<ChatLogResponse>>() {
             @Override
-            public void onResponse(
-                    Call<List<ChatLogResponse>> call, Response<List<ChatLogResponse>> response
-            ) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _chatLogList.setValue(response.body());
-                } else {
-                    failLoading();
-
-                    // 📌 응답 상태 코드, 에러 본문, 헤더 정보 출력
-                    int statusCode = response.code(); // HTTP 상태 코드 (ex. 401, 403, 500)
-                    String errorBody = "";
-                    try {
-                        if (response.errorBody() != null) {
-                            errorBody = response.errorBody().string(); // 응답 본문 (에러 메시지)
-                        }
-                    } catch (IOException e) {
-                        Log.e("www", "에러 본문 읽기 실패: " + e.getMessage(), e);
-                    }
-
-                    Log.e(
-                            "www",
-                            "getChatLogList 응답이 정상적이지 않음. " + "상태 코드: " + statusCode + ", " + "에러 본문: " + errorBody + ", " + "헤더: " + response.headers().toString()
-                    );
-                }
+            public void onSuccess(List<ChatLogResponse> data) {
+                _chatLogList.setValue(data);
             }
             @Override
-            public void onFailure(Call<List<ChatLogResponse>> call, Throwable t) {
-                Log.d(TAG, "chat log test3");
-                Log.e("www", "getChatLogList API 호출 실패: " + t.getMessage());
+            public void onFailed(Throwable t) {
+                failLoading();
             }
         });
     }

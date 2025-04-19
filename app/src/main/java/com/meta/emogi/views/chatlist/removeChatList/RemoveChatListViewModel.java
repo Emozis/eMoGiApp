@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.ChatResponse;
 import com.meta.emogi.data.network.model.DeleteChatResponse;
 
@@ -74,34 +75,16 @@ public class RemoveChatListViewModel extends BaseViewModel {
     }
 
     public void DeleteChat( int chatId) {
-        apiRepository.deleteChat( chatId, new Callback<DeleteChatResponse>() {
+        apiRepository.deleteChat(chatId, new ApiCallBack.ApiResultHandler<DeleteChatResponse>() {
             @Override
-            public void onResponse(Call<DeleteChatResponse> call, Response<DeleteChatResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    DeleteChatResponse message = response.body();
-                    Log.w("www", chatId+"번 채팅 제거 성공 "+message.getMessage());
-                    _goToChatList.call();
-                    offLoading();
-                } else {
-                    failLoading();
-                    int statusCode = response.code();
-                    String errorBody = "";
-                    try {
-                        if (response.errorBody() != null) {
-                            errorBody = response.errorBody().string();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    // 로그에 상태 코드와 에러 메시지 출력
-                    Log.e("www", "DeleteChat 응답이 정상적이지 않음. 상태 코드: " + statusCode + ", 에러 본문: " + errorBody);
-                }
-
+            public void onSuccess(DeleteChatResponse data) {
+                Log.w("www", chatId+"번 채팅 제거 성공 "+data.getMessage());
+                _goToChatList.call();
+                offLoading();
             }
             @Override
-            public void onFailure(Call<DeleteChatResponse> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "DeleteChat API 호출 실패: " + t.getMessage());
             }
         });
     }

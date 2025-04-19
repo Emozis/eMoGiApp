@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.data.network.model.CreateChatResponse;
 
@@ -45,8 +46,12 @@ public class CharacterDetailViewModel extends BaseViewModel {
     public LiveData<CharacterResponse> characterDetail() {return _characterDetail;}
     public LiveData<CreateChatResponse> chatRoom() {return _chatRoom;}
 
-
-    public void getCharacterDetailData(String nameAndGender, String personality, String category, String detail) {
+    public void getCharacterDetailData(
+            String nameAndGender,
+            String personality,
+            String category,
+            String detail
+    ) {
         _nameAndGender.setValue(nameAndGender);
         _personality.setValue(personality);
         _category.setValue(category);
@@ -57,48 +62,42 @@ public class CharacterDetailViewModel extends BaseViewModel {
         _isChatStart.call();
     }
 
-    public void getCharacterDetails( int characterId){
-        apiRepository.getCharacterDetails(characterId, new Callback<CharacterResponse>() {
-            @Override
-            public void onResponse(Call<CharacterResponse> call, Response<CharacterResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _characterDetail.setValue(response.body());
-                    offLoading();
-                } else {
-                    failLoading();
-                    Log.e("www", "getCharacterDetails 응답이 정상적이지 않음");
-                }
-            }
-            @Override
-            public void onFailure(Call<CharacterResponse> call, Throwable t) {
-                failLoading();
-                Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
-            }
-        });
+    public void getCharacterDetails(int characterId) {
+        apiRepository.getCharacterDetails(characterId,
+                                          new ApiCallBack.ApiResultHandler<CharacterResponse>() {
+                                              @Override
+                                              public void onSuccess(CharacterResponse data) {
+                                                  _characterDetail.setValue(data);
+                                                  offLoading();
+                                              }
+                                              @Override
+                                              public void onFailed(Throwable t) {
+                                                  failLoading();
+                                              }
+                                          }
+        );
     }
 
-    public void connectCreateChatRoom(int characterId){
-        CreateChatResponse createChatResponse =  new CreateChatResponse(characterId);
+    public void connectCreateChatRoom(int characterId) {
+        CreateChatResponse createChatResponse = new CreateChatResponse(characterId);
         createChatRoom(createChatResponse);
     }
 
-    public void createChatRoom(CreateChatResponse createChatResponse){
-        apiRepository.createChatRoom(createChatResponse, new Callback<CreateChatResponse>() {
-            @Override
-            public void onResponse(Call<CreateChatResponse> call, Response<CreateChatResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _chatRoom.setValue(response.body());
-                    offLoading();
-                } else {
-                    failLoading();
-                    Log.e("www", "getCharacterDetails 응답이 정상적이지 않음");
+    public void createChatRoom(CreateChatResponse createChatResponse) {
+        apiRepository.createChatRoom(
+                createChatResponse,
+                new ApiCallBack.ApiResultHandler<CreateChatResponse>() {
+                    @Override
+                    public void onSuccess(CreateChatResponse data) {
+                        _chatRoom.setValue(data);
+                        offLoading();
+                    }
+                    @Override
+                    public void onFailed(Throwable t) {
+                        failLoading();
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Call<CreateChatResponse> call, Throwable t) {
-                Log.e("www", "getCharacterDetails API 호출 실패: " + t.getMessage());
-            }
-        });
+        );
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
+import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.ChatResponse;
 
 import java.io.IOException;
@@ -47,33 +48,16 @@ public class ChatListViewModel extends BaseViewModel {
     }
 
     public void getChatList() {
-        apiRepository.getChatList( new Callback<List<ChatResponse>>() {
+        apiRepository.getChatList(new ApiCallBack.ApiResultHandler<List<ChatResponse>>() {
             @Override
-            public void onResponse(Call<List<ChatResponse>> call, Response<List<ChatResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<ChatResponse> ChatList = formatChatList(response.body());
-                    _chatList.setValue(ChatList);
-                    offLoading();
-                } else {
-                    failLoading();
-                    int statusCode = response.code();
-                    String errorBody = "";
-                    try {
-                        if (response.errorBody() != null) {
-                            errorBody = response.errorBody().string();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    // 로그에 상태 코드와 에러 메시지 출력
-                    Log.e("www", "getChatList 응답이 정상적이지 않음. 상태 코드: " + statusCode + ", 에러 본문: " + errorBody);
-                }
-
+            public void onSuccess(List<ChatResponse> data) {
+                List<ChatResponse> ChatList = formatChatList(data);
+                _chatList.setValue(ChatList);
+                offLoading();
             }
             @Override
-            public void onFailure(Call<List<ChatResponse>> call, Throwable t) {
+            public void onFailed(Throwable t) {
                 failLoading();
-                Log.e("www", "getChatList API 호출 실패: " + t.getMessage());
             }
         });
     }
@@ -86,6 +70,7 @@ public class ChatListViewModel extends BaseViewModel {
 
             String[] timeArr = chat.getLastMessageAt().split("[-T:.]");
             String lastMessageAt = parseLastTime(timeArr);
+            Log.d("www", "lastMessage: "+lastMessageAt);
             chat.setLastMessageAt(lastMessageAt);
         }
         return chatlist;
