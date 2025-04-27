@@ -39,11 +39,15 @@ public class MyPageViewModel extends BaseViewModel {
     }
 
     @Override
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
         int btnResId = v.getId();
         if (btnResId == R.id.manage_character) {
             _goToMyPage.call();
         }
+        return true;
     }
 
     public void setUserData(String email, String nickName) {

@@ -37,13 +37,17 @@ public class ChatListViewModel extends BaseViewModel {
     public LiveData<List<ChatResponse>> chatList() {return _chatList;}
 
     @Override
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
         int btnResId = v.getId();
         if (btnResId == R.id.add_chat) {
             _goToProfile.call();
         }else if (btnResId == R.id.remove_chat){
             _goToEditChatList.call();
         }
+        return true;
     }
 
     public void getChatList() {

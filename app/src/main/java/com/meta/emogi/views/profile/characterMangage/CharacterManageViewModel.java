@@ -97,7 +97,11 @@ public class CharacterManageViewModel extends BaseViewModel {
     }
 
     @Override
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
+
         int btnResId = v.getId();
         if (btnResId == R.id.my_page) {
             _goToMyPage.call();
@@ -105,6 +109,7 @@ public class CharacterManageViewModel extends BaseViewModel {
             boolean isDelete = !_isActiveDeleteMode.getValue();
             _isActiveDeleteMode.setValue(isDelete);
         }
+        return true;
     }
 
     public void setDeleteToggleString(boolean isDelete){

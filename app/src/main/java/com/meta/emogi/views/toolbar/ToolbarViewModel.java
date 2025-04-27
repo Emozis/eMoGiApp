@@ -26,11 +26,15 @@ public class ToolbarViewModel extends BaseViewModel {
         return _back;
     }
 
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
         int btnResId = v.getId();
         if (btnResId == R.id.back) {
             _back.call();
         }
+        return true;
     }
 
 

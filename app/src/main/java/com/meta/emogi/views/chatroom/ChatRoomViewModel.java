@@ -94,13 +94,17 @@ public class ChatRoomViewModel extends BaseViewModel {
     }
 
     @Override
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
         int btnResId = v.getId();
         if (btnResId == R.id.transmit) {
             _isCanChat.setValue(false);
             _sendText.setValue(inputText.getValue());
             sendMessageToServer();
         }
+        return true;
     }
 
     public void sendMessageToServer() {

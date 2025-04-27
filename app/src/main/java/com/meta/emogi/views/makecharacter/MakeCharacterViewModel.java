@@ -80,7 +80,10 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     @Override
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
         Log.w(TAG, "onButtonClicked: ");
         int btnResId = v.getId();
         if (btnResId == R.id.generate) {
@@ -92,6 +95,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
         } else if (btnResId == R.id.iv_is_open) {
             _isOpen.setValue(!_isOpen.getValue());
         }
+        return true;
     }
 
     public void dataReset() {

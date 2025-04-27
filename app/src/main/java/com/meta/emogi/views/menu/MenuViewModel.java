@@ -99,7 +99,10 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     @Override
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
         int btnResId = v.getId();
         if (btnResId == R.id.move_to_chat_list) {
             _type.setValue(MoveType.CHAT_LIST);
@@ -110,6 +113,7 @@ public class MenuViewModel extends BaseViewModel {
         } else if (btnResId == R.id.image_profile) {
             _menu2MyPageProfile.call();
         }
+        return true;
     }
 
     private boolean isMyCharacterLoaded = false;

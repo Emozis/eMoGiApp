@@ -71,10 +71,11 @@ public class BaseViewModel extends AndroidViewModel {
     }
 
 
-    public void onButtonClicked(View v) {
+    public boolean onButtonClicked(View v) {
         if (System.currentTimeMillis() - buttonLastClickTime > CLICK_INTERVAL) {
             buttonLastClickTime = System.currentTimeMillis();
-            _buttonClicked.setValue(v.getId());
+            return true; // 클릭 허용
         }
+        return false; // 클릭 무시
     }
 }

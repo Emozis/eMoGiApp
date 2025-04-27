@@ -47,8 +47,11 @@ public class RemoveChatListViewModel extends BaseViewModel {
     }
 
     @Override
-    public void onButtonClicked(View v) {
-        super.onButtonClicked(v);
+    public boolean onButtonClicked(View v) {
+        if (!super.onButtonClicked(v)) {
+            return false;
+        }
+
         int btnResId = v.getId();
         if (btnResId == R.id.remove_chat) {
             _isPressDelete.setValue(DeleteChatIdList);
@@ -57,6 +60,7 @@ public class RemoveChatListViewModel extends BaseViewModel {
         }else if(btnResId == R.id.select_all){
             _selectAll.call();
         }
+        return true;
 
     }
 
