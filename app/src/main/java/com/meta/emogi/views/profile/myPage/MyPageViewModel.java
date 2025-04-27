@@ -38,10 +38,6 @@ public class MyPageViewModel extends BaseViewModel {
         return _userData;
     }
 
-    public MyPageViewModel(@NonNull Application application) {
-        super(application);
-    }
-
     @Override
     public void onButtonClicked(View v) {
         int btnResId = v.getId();
@@ -56,14 +52,16 @@ public class MyPageViewModel extends BaseViewModel {
     }
 
     public void getUserData() {
+        loading();
         apiRepository.getUserData(new ApiCallBack.ApiResultHandler<UserData>() {
             @Override
             public void onSuccess(UserData data) {
+                loadingSuccess();
                 _userData.setValue(data);
             }
             @Override
             public void onFailed(Throwable t) {
-
+                loadingFailed("유저 데이터 가져오기 작업");
             }
         });
     }

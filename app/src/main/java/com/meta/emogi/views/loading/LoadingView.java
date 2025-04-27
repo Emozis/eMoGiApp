@@ -2,36 +2,86 @@ package com.meta.emogi.views.loading;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewTreeLifecycleOwner;
+import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
+import com.meta.emogi.BR;
+import com.meta.emogi.R;
 import com.meta.emogi.databinding.ViewLoadingBinding;
+import com.meta.emogi.di.ViewModelFactory;
 public class LoadingView extends ConstraintLayout {
 
     private ViewLoadingBinding binding;
     private LoadingViewModel viewModel;
+    private boolean isInitialized = false;
 
     public LoadingView(@NonNull Context context) {
         super(context);
-        init(context);
+        init();
     }
     public LoadingView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init();
     }
     public LoadingView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init();
     }
 
-    private void init(Context context){
-        binding = ViewLoadingBinding.inflate(LayoutInflater.from(context), this, true);
-
-
+    private void init() {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        binding = DataBindingUtil.inflate(inflater, R.layout.view_loading, this, true);
     }
 
 
+    public void setViewModel(Object viewModel) {
+        LifecycleOwner lifecycleOwner = ViewTreeLifecycleOwner.get(this);
+        if (lifecycleOwner == null) {
+            throw new IllegalStateException("LifecycleOwner is null");
+        }
+
+        binding.setLifecycleOwner(lifecycleOwner);
+        binding.setVariable(BR.viewModel, viewModel);
+
+        if (viewModel instanceof LoadingViewModel) {
+            LoadingViewModel vm = (LoadingViewModel) viewModel;
+
+            vm.loadingState().observe(lifecycleOwner, state -> {
+                if (state == null) return;
+                switch (state) {
+                    case LOADING:
+                        Log.d("www", "로딩중: ");
+                        setVisibility(VISIBLE);
+                        binding.loadingPb.setVisibility(VISIBLE);
+                        binding.loadingText.setVisibility(VISIBLE);
+                        break;
+                    case SUCCESS:
+                        Log.d("www", "성공: ");
+                        setVisibility(GONE);
+                        binding.loadingPb.setVisibility(GONE);
+                        binding.loadingText.setVisibility(GONE);
+                        break;
+                    case FAILED:
+                        Log.d("www", "실패: ");
+                        setVisibility(VISIBLE);
+                        binding.loadingPb.setVisibility(GONE);
+                        binding.loadingText.setVisibility(VISIBLE);
+                        break;
+                    default:
+                        setVisibility(GONE);
+                        binding.loadingPb.setVisibility(GONE);
+                        binding.loadingText.setVisibility(GONE);
+                }
+            });
+        }
+    }
 }

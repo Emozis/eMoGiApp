@@ -37,7 +37,6 @@ public class ChatRoomViewModel extends BaseViewModel {
     private MutableLiveData<Boolean> _isCanChat = new MutableLiveData<>(true);
     private MutableLiveData<List<ChatLogResponse>> _chatLogList = new MutableLiveData<>();
 
-    public ChatRoomViewModel(Application application) {super(application);}
 
     public LiveData<String> sendText() {
         return _sendText;
@@ -61,6 +60,7 @@ public class ChatRoomViewModel extends BaseViewModel {
     }
 
     private void connectNetwork(int chatId) {
+        loading();
         chatWebSocket = new ChatWebSocket(chatId, new ChatWebSocket.MessageCallback() {
 
             @Override
@@ -83,6 +83,7 @@ public class ChatRoomViewModel extends BaseViewModel {
         });
 
         chatWebSocket.start();
+        loadingSuccess();
 
         ChatUiModel chatUiModel = new ChatUiModel(TYPE_AUTH);
         Gson gson = new Gson();
@@ -124,7 +125,6 @@ public class ChatRoomViewModel extends BaseViewModel {
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
             }
         });
     }

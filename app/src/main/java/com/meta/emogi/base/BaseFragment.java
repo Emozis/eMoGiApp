@@ -17,7 +17,10 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.meta.emogi.R;
 import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.views.loading.LoadingView;
+import com.meta.emogi.views.loading.LoadingViewModel;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
@@ -26,6 +29,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     protected static String TAG;
     protected V binding;
     protected VM viewModel;
+    protected LoadingViewModel loadingViewModel;
 
     protected abstract ToolbarView.ToolbarRequest toolbarCallback();
     protected abstract @LayoutRes int layoutId();
@@ -39,7 +43,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TAG = getClass().getSimpleName();
-        viewModel = new ViewModelProvider(this, new ViewModelFactory(requireActivity().getApplication())).get(viewModelClass());
+        viewModel = new ViewModelFactory(this).get(viewModelClass());
     }
 
     @Nullable
@@ -67,6 +71,13 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
                 requireActivity().finish();
             }
         });
+
+        LoadingView loadingView = view.findViewById(R.id.loading);
+        if (loadingView != null) {
+            loadingViewModel = new ViewModelFactory(this).get(LoadingViewModel.class);
+            loadingView.setViewModel(loadingViewModel);
+            viewModel.setLoadingViewModel(loadingViewModel);
+        }
     }
 
     protected void updateToolbar(ToolbarView.ToolbarRequest request) {
@@ -74,6 +85,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             ((BaseActivity<?>) requireActivity()).setToolbar(request);
         }
     }
+
 
 
 }

@@ -97,7 +97,6 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                                                                             false
             ));
             binding.characterImage.setAdapter(imageAdapter);
-            viewModel.offLoading();
             if (activity.getCharacterId() != -1) {
                 viewModel.getCharacterDetails( activity.getCharacterId());
             }

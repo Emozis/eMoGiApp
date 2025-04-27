@@ -42,8 +42,7 @@ public class RemoveChatListViewModel extends BaseViewModel {
 
     private ArrayList<Integer> DeleteChatIdList;
 
-    public RemoveChatListViewModel(@NonNull Application application) {
-        super(application);
+    public RemoveChatListViewModel() {
         DeleteChatIdList = new ArrayList<>();
     }
 
@@ -75,16 +74,17 @@ public class RemoveChatListViewModel extends BaseViewModel {
     }
 
     public void DeleteChat( int chatId) {
+        loading();
         apiRepository.deleteChat(chatId, new ApiCallBack.ApiResultHandler<DeleteChatResponse>() {
             @Override
             public void onSuccess(DeleteChatResponse data) {
+                loadingSuccess();
                 Log.w("www", chatId+"번 채팅 제거 성공 "+data.getMessage());
                 _goToChatList.call();
-                offLoading();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("캐릭터 삭제하기 작업");
             }
         });
     }

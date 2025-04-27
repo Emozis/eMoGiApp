@@ -54,14 +54,17 @@ public class CharacterManageViewModel extends BaseViewModel {
     }
 
     public void getMyCharacters() {
+        loading();
         apiRepository.getMyCharacterList(new ApiCallBack.ApiResultHandler<List<CharacterResponse>>() {
             @Override
             public void onSuccess(List<CharacterResponse> data) {
+                loadingSuccess();
                 _myCharacterList.setValue(data);
             }
 
             @Override
             public void onFailed(Throwable t) {
+                loadingFailed("내 캐릭터 가져오기 작업");
                 Log.e("www", "getMyCharacters 실패: " + t.getMessage());
             }
         });
@@ -69,10 +72,12 @@ public class CharacterManageViewModel extends BaseViewModel {
 
 
     public void deleteCharacter(int characterId) {
+        loading();
         apiRepository.deleteCharacter(characterId,
                                       new ApiCallBack.ApiResultHandler<ResponseModel>() {
                                           @Override
                                           public void onSuccess(ResponseModel data) {
+                                              loadingSuccess();
                                               List<CharacterResponse> updatedList = new ArrayList<>(_myCharacterList.getValue());
                                               for (int i = 0; i < updatedList.size(); i++) {
                                                   if (updatedList.get(i).getCharacterId() == characterId) {
@@ -85,16 +90,12 @@ public class CharacterManageViewModel extends BaseViewModel {
                                           }
                                           @Override
                                           public void onFailed(Throwable t) {
-
+                                              loadingFailed("캐릭터 삭제 작업");
                                           }
                                       }
         );
     }
 
-
-    public CharacterManageViewModel(@NonNull Application application) {
-        super(application);
-    }
     @Override
     public void onButtonClicked(View v) {
         int btnResId = v.getId();

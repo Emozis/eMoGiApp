@@ -106,37 +106,7 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
-            app:isVisible="@{viewModel.isLoading()}">
 
-            <ProgressBar
-                android:id="@+id/loading_pb"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/loading_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:isVisible="@{viewModel.isShowProgress()}"
-                />
-
-            <TextView
-                android:id="@+id/loading_text"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@{viewModel.loadingText()}"
-                android:textSize="@dimen/error_text_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_manage_character"
@@ -146,7 +116,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_edit"
-            app:isVisible="@{!viewModel.isLoading()}"
             app:layout_constraintVertical_weight="8">
 
 
@@ -163,6 +132,11 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.meta.emogi.views.loading.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

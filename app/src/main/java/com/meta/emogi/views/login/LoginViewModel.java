@@ -3,6 +3,7 @@ package com.meta.emogi.views.login;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.meta.emogi.base.BaseViewModel;
@@ -19,9 +20,7 @@ public class LoginViewModel extends BaseViewModel {
     private final MutableLiveData<TokenModel> _accessToken = new MutableLiveData<>();
     private final MutableLiveData<String> _appVersion = new MutableLiveData<>();
 
-    public LoginViewModel(Application application) {
-        super(application);
-    }
+
 
     public MutableLiveData<TokenModel> accessToken() {
         return _accessToken;
@@ -36,16 +35,17 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void createAccessToken(TokenModel requestToken) {
-
+        loading();
         apiRepository.createAccessToken(requestToken, new ApiCallBack.ApiResultHandler<TokenModel>(){
             @Override
             public void onSuccess(TokenModel data) {
+                loadingSuccess();
                 Log.d(TAG, "accessToken: "+data.getAccessToken());
                 _accessToken.setValue(data);
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("로그인 작업");
             }
         });
     }

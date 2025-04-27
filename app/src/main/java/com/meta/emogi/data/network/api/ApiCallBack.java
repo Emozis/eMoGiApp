@@ -30,8 +30,10 @@ public class ApiCallBack<T> implements Callback<T>{
         if(response.isSuccessful()){
             handler.onSuccess(response.body());
         }else{
-            Log.e("API_ERROR", "응답 실패 API: " + call.request().url());
-            handler.onFailed(new Throwable(response.message()));
+            Log.e("API_ERROR", "응답 실패 API: " + call.request().url()
+                    + ", HTTP Code: " + response.code()
+                    + ", Error Body: " + getErrorBody(response));
+            handler.onFailed(new Throwable("HTTP " + response.code() + " " + response.message()));
         }
     }
     @Override
@@ -42,9 +44,21 @@ public class ApiCallBack<T> implements Callback<T>{
                 originalCall.clone().enqueue(this);
             }, 3000);
         } else {
-            Log.e("API_ERROR", "응답 실패 API: " + call.request().url());
+            Log.e("API_ERROR", "통신 실패 API: " + call.request().url()
+                    + ", 에러: " + t.getMessage());
             handler.onFailed(t);
         }
+    }
+
+    private String getErrorBody(Response<T> response) {
+        try {
+            if (response.errorBody() != null) {
+                return response.errorBody().string();
+            }
+        } catch (Exception e) {
+            return "Error parsing errorBody";
+        }
+        return "No error body";
     }
 
     public interface ApiResultHandler<T> {

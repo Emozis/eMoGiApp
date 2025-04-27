@@ -87,5 +87,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.meta.emogi.views.loading.LoadingView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

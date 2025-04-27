@@ -23,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatListViewModel extends BaseViewModel {
-    public ChatListViewModel(Application application) {super(application);}
 
     private final SingleLiveEvent<Void> _goToProfile = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> _goToEditChatList = new SingleLiveEvent<>();
@@ -48,16 +47,17 @@ public class ChatListViewModel extends BaseViewModel {
     }
 
     public void getChatList() {
+         loading();
         apiRepository.getChatList(new ApiCallBack.ApiResultHandler<List<ChatResponse>>() {
             @Override
             public void onSuccess(List<ChatResponse> data) {
+                loadingSuccess();
                 List<ChatResponse> ChatList = formatChatList(data);
                 _chatList.setValue(ChatList);
-                offLoading();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("채팅 리스트 가져오기 작업");
             }
         });
     }

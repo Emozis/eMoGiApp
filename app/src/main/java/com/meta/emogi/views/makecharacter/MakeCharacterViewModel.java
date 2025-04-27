@@ -25,9 +25,7 @@ import retrofit2.Response;
 
 public class MakeCharacterViewModel extends BaseViewModel {
     private static final String TAG = "MakeCharacterViewModel";
-    public MakeCharacterViewModel(Application application) {
-        super(application);
-    }
+
     public final MutableLiveData<String> name = new MutableLiveData<>("");
     public final MutableLiveData<String> personality = new MutableLiveData<>("");
     public final MutableLiveData<String> detail = new MutableLiveData<>("");
@@ -61,7 +59,6 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public LiveData<List<CharacterResponse.CharacterRelationships>> defaultRelationshipList() {
         return _defaultRelationshipList;
     }
-
     public LiveData<List<CharacterImageResponse>> defaultImageList() {
         return _defaultImageList;
     }
@@ -105,69 +102,79 @@ public class MakeCharacterViewModel extends BaseViewModel {
     }
 
     public void getDefaultRelationshipList() {
+        loading();
         apiRepository.getDefaultRelationshipList(new ApiCallBack.ApiResultHandler<List<CharacterResponse.CharacterRelationships>>() {
             @Override
             public void onSuccess(List<CharacterResponse.CharacterRelationships> data) {
                 _defaultRelationshipList.setValue(data);
+                loadingSuccess();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("관계 가져오기 작업");
             }
         });
     }
 
     public void getDefaultImageList() {
+        loading();
         apiRepository.getDefaultImageList(new ApiCallBack.ApiResultHandler<List<CharacterImageResponse>>() {
             @Override
             public void onSuccess(List<CharacterImageResponse> data) {
                 _defaultImageList.setValue(data);
+                loadingSuccess();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("이미지 가져오기 작업");
             }
         });
     }
 
     public void createCharacter(CharacterResponse characterResponse) {
+        loading();
         Log.w("www", "characterModel: " + new Gson().toJson(characterResponse));
         apiRepository.createCharacter(characterResponse, new ApiCallBack.ApiResultHandler<CharacterResponse>() {
             @Override
             public void onSuccess(CharacterResponse data) {
                 Log.w("www", "Response Body: " + new Gson().toJson(data));
                 _createdCharacter.setValue(data);
+                loadingSuccess();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("캐릭터 생성하기 작업");
             }
         });
     }
 
     public void updateCharacter(CharacterResponse characterResponse, int characterId) {
+        loading();
         Log.w("www", "characterModel: " + new Gson().toJson(characterResponse));
         apiRepository.updateCharacter(characterResponse, characterId, new ApiCallBack.ApiResultHandler<CharacterResponse>() {
             @Override
             public void onSuccess(CharacterResponse data) {
                 _createdCharacter.setValue(data);
+                loadingSuccess();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("캐릭터 수정하기 작업");
             }
         });
     }
 
     public void getCharacterDetails( int characterId) {
+        loading();
         apiRepository.getCharacterDetails(characterId, new ApiCallBack.ApiResultHandler<CharacterResponse>() {
             @Override
             public void onSuccess(CharacterResponse data) {
                 transformCharacterModel(data);
+                loadingSuccess();
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("캐릭터 상세정보 가져오기 작업");
             }
         });
     }

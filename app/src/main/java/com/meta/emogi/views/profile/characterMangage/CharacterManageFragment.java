@@ -45,7 +45,6 @@ public class CharacterManageFragment extends BaseFragment<FragmentCharacterManag
             characterAdapter.updateCharacterList(myCharacterList);
             binding.rvCharacterList.setAdapter(characterAdapter);
             setClickListenerRecyclerView(characterAdapter);
-            viewModel.offLoading();
             viewModel.setIsActiveDeleteMode();
         });
 

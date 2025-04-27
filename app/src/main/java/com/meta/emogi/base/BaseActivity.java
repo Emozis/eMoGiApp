@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.meta.emogi.R;
 import com.meta.emogi.views.menu.MenuActivity;
@@ -41,11 +42,9 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         binding = DataBindingUtil.setContentView(this, layoutId());
         binding.setLifecycleOwner(this);
 
-        ViewModelFactory factory = new ViewModelFactory(getApplication());
-        toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
+        toolbarViewModel = new ViewModelFactory(this).get(ToolbarViewModel.class);
 
         toolbarViewModel.back().observe(this, unused -> {
-
 
             if (backStatus) {
                 Log.d("www", "프레그먼트 뒤로가기눌림");

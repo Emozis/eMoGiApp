@@ -51,47 +51,49 @@ public class MenuViewModel extends BaseViewModel {
         return _userData;
     }
 
-    public MenuViewModel(Application application) {
-        super(application);
-    }
-
     public void getUserData() {
+        loading();
         apiRepository.getUserData(new ApiCallBack.ApiResultHandler<UserData>() {
             @Override
             public void onSuccess(UserData data) {
+                loadingSuccess();
                 _userData.setValue(data);
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("유저 데이터 가져오는 작업");
             }
         });
     }
 
     public void getMyCharacters() {
+        loading();
         apiRepository.getMyCharacterList(new ApiCallBack.ApiResultHandler<List<CharacterResponse>>() {
             @Override
             public void onSuccess(List<CharacterResponse> data) {
+                loadingSuccess();
                 _myCharacterList.setValue(data);
             }
 
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("내 캐릭터 가져오기 작업");
             }
         });
 
     }
 
     public void getRankCharacterList() {
+        loading();
         apiRepository.getRankCharacterList(new ApiCallBack.ApiResultHandler<List<CharacterResponse>>() {
             @Override
             public void onSuccess(List<CharacterResponse> data) {
+                loadingSuccess();
                 _rankCharacterList.setValue(data);
             }
             @Override
             public void onFailed(Throwable t) {
-                failLoading();
+                loadingFailed("캐릭터 랭킹 가져오기 작업");
             }
         });
     }
@@ -125,7 +127,7 @@ public class MenuViewModel extends BaseViewModel {
 
     private void isAllLoaded() {
         if (isMyCharacterLoaded && isRankCharacterLoaded) {
-            offLoading();
+            loadingSuccess();
         }
     }
 

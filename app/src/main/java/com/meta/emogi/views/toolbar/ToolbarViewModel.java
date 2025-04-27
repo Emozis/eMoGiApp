@@ -11,9 +11,6 @@ import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.base.SingleLiveEvent;
 public class ToolbarViewModel extends BaseViewModel {
-    public ToolbarViewModel(@NonNull Application application) {
-        super(application);
-    }
 
     private final MutableLiveData<String> _title = new MutableLiveData<>();
     private final SingleLiveEvent<Void> _back = new SingleLiveEvent<>();

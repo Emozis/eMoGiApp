@@ -45,8 +45,8 @@ public class ToolbarView extends ConstraintLayout {
     private void init(Context context) {
         LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Application application = (Application) context.getApplicationContext();
-        ViewModelFactory factory = new ViewModelFactory(application);
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) context, factory).get(ToolbarViewModel.class);
+
+        viewModel = new ViewModelFactory((ViewModelStoreOwner) getContext()).get(ToolbarViewModel.class);
 
         binding = DataBindingUtil.inflate(li, R.layout.view_toolbar, null, false);
         binding.setLifecycleOwner((LifecycleOwner) getContext());

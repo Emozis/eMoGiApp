@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
@@ -22,8 +23,6 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetailBinding> {
-
-    private ToolbarViewModel toolbarViewModel;
     private int characterId;
 
     @Override
@@ -37,9 +36,6 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ViewModelFactory factory = new ViewModelFactory(getApplication());
-        toolbarViewModel = new ViewModelProvider(this, factory).get(ToolbarViewModel.class);
     }
 
     @Override

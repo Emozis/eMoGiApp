@@ -18,9 +18,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CharacterDetailViewModel extends BaseViewModel {
-    public CharacterDetailViewModel(@NonNull Application application) {
-        super(application);
-    }
 
     private final MutableLiveData<String> _nameAndGender = new MutableLiveData<>("이름");
     private final MutableLiveData<String> _personality = new MutableLiveData<>("성격");
@@ -63,16 +60,17 @@ public class CharacterDetailViewModel extends BaseViewModel {
     }
 
     public void getCharacterDetails(int characterId) {
+        loading();
         apiRepository.getCharacterDetails(characterId,
                                           new ApiCallBack.ApiResultHandler<CharacterResponse>() {
                                               @Override
                                               public void onSuccess(CharacterResponse data) {
+                                                  loadingSuccess();
                                                   _characterDetail.setValue(data);
-                                                  offLoading();
                                               }
                                               @Override
                                               public void onFailed(Throwable t) {
-                                                  failLoading();
+                                                  loadingFailed("캐릭터 상세 정보 가져오기 작업");
                                               }
                                           }
         );
@@ -84,17 +82,18 @@ public class CharacterDetailViewModel extends BaseViewModel {
     }
 
     public void createChatRoom(CreateChatResponse createChatResponse) {
+        loading();
         apiRepository.createChatRoom(
                 createChatResponse,
                 new ApiCallBack.ApiResultHandler<CreateChatResponse>() {
                     @Override
                     public void onSuccess(CreateChatResponse data) {
+                        loadingSuccess();
                         _chatRoom.setValue(data);
-                        offLoading();
                     }
                     @Override
                     public void onFailed(Throwable t) {
-                        failLoading();
+                        loadingFailed("채팅방 생성 작업");
                     }
                 }
         );

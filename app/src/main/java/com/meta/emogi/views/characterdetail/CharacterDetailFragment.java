@@ -89,7 +89,6 @@ public class CharacterDetailFragment extends BaseFragment<FragmentCharacterDetai
 
             //                        viewModel.getCharacterDetailData(nameAndGender, characterDetail.getCharacterPersonality(), String.valueOf(sendRelationship), characterDetail.getCharacterDetails());
 
-            viewModel.offLoading();
         });
 
         viewModel.chatRoom().observe(this, chatRoom -> {
