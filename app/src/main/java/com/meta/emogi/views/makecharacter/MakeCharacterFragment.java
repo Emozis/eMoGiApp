@@ -103,7 +103,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
 
         viewModel.createdCharacter().observe(this, createdCharacter -> {
             viewModel.dataReset();
-            activity.showAds();
+            activity.showAds(true);
         });
 
         viewModel.currentCharacterData().observe(this, currentCharacterData -> {
@@ -161,7 +161,6 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding.makeCharacterFragment.post(() -> {
             // 2. px 단위 높이 가져오기
             int scrollHeight = binding.makeCharacterFragment.getHeight();

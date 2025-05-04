@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.meta.emogi.util.ads.AdManager;
+
 public class MyApplication extends Application {
 
     private static MyApplication instance;
@@ -12,6 +14,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         getDeviceSize();
+        AdManager.init(this);
         instance = this;
     }
 
