@@ -1,28 +1,24 @@
 package com.meta.emogi.base;
 
-import android.app.Application;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.data.repository.ApiRepository;
-import com.meta.emogi.views.loading.LoadingViewModel;
 
 public class BaseViewModel extends AndroidViewModel {
 
     public enum LoadingState {
-        DEFAULT,LOADING, SUCCESS, FAILED
+        DEFAULT, LOADING,RETRY, SUCCESS, FAILED
     }
 
     private long buttonLastClickTime;
     private static final int CLICK_INTERVAL = 500;
 
-    private LoadingViewModel loadingViewModel;
     protected ApiRepository apiRepository;
     private final MutableLiveData<LoadingState> _loadingState = new MutableLiveData<>(LoadingState.DEFAULT);
     private final SingleLiveEvent<Integer> _buttonClicked = new SingleLiveEvent<>();
@@ -36,29 +32,24 @@ public class BaseViewModel extends AndroidViewModel {
         return _loadingState;
     }
 
-    public void setLoadingViewModel(LoadingViewModel loadingViewModel) {
-        this.loadingViewModel = loadingViewModel;
-    }
-
     public void loading() {
-        if (loadingViewModel != null) {
-            _loadingState.postValue(LoadingViewModel.LoadingState.LOADING);
+            _loadingState.postValue(LoadingState.LOADING);
             _loadingMessage.postValue("데이터 로딩중입니다.");
-        }
     }
 
     public void loadingFailed(String error) {
-        if (loadingViewModel != null) {
-            _loadingState.postValue(LoadingViewModel.LoadingState.FAILED);
-            _loadingMessage.postValue(error +" 중 데이터 로딩에 실패하였습니다.\n네트워크를 확인해주세요");
-        }
+            _loadingState.postValue(LoadingState.FAILED);
+            _loadingMessage.postValue(error +" 중\n 데이터 로딩에 실패하였습니다.\n\n증상이 반복된다면 문의 해주시면 감사하겠습니다.");
     }
 
     public void loadingSuccess() {
-        if (loadingViewModel != null) {
-            _loadingState.postValue(LoadingViewModel.LoadingState.SUCCESS);
+            _loadingState.postValue(LoadingState.SUCCESS);
             _loadingMessage.postValue("");
-        }
+    }
+
+    public void loadingRetry(){
+        _loadingState.postValue(LoadingState.RETRY);
+        _loadingMessage.postValue("데이터 로딩에 문제가 생겼습니다.\n 재시도 중입니다.\n\n잠시만 기다려주세요.");
     }
 
     public LiveData<Integer> buttonClicked() {

@@ -16,12 +16,12 @@ import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
 import com.meta.emogi.BR;
 import com.meta.emogi.R;
+import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.databinding.ViewLoadingBinding;
 import com.meta.emogi.di.ViewModelFactory;
 public class LoadingView extends ConstraintLayout {
 
     private ViewLoadingBinding binding;
-    private LoadingViewModel viewModel;
     private boolean isInitialized = false;
 
     public LoadingView(@NonNull Context context) {
@@ -52,8 +52,8 @@ public class LoadingView extends ConstraintLayout {
         binding.setLifecycleOwner(lifecycleOwner);
         binding.setVariable(BR.viewModel, viewModel);
 
-        if (viewModel instanceof LoadingViewModel) {
-            LoadingViewModel vm = (LoadingViewModel) viewModel;
+        if (viewModel instanceof BaseViewModel) {
+            BaseViewModel vm = (BaseViewModel) viewModel;
 
             vm.loadingState().observe(lifecycleOwner, state -> {
                 if (state == null) return;
@@ -76,11 +76,22 @@ public class LoadingView extends ConstraintLayout {
                         binding.loadingPb.setVisibility(GONE);
                         binding.loadingText.setVisibility(VISIBLE);
                         break;
+                    case RETRY:
+                        Log.d("www", "재시도: ");
+                        setVisibility(VISIBLE);
+                        binding.loadingPb.setVisibility(VISIBLE);
+                        binding.loadingText.setVisibility(VISIBLE);
+                        break;
                     default:
+                        Log.d("www", "기본: ");
                         setVisibility(GONE);
                         binding.loadingPb.setVisibility(GONE);
                         binding.loadingText.setVisibility(GONE);
                 }
+            });
+
+            vm.loadingMessage().observe(lifecycleOwner,message ->{
+                binding.loadingText.setText(message);
             });
         }
     }

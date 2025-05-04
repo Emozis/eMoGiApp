@@ -6,12 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.meta.emogi.views.loading.LoadingViewModel" />
+            type="com.meta.emogi.base.BaseViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loading"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

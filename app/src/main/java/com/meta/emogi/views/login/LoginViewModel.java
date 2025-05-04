@@ -47,6 +47,11 @@ public class LoginViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("로그인 작업");
             }
+
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 

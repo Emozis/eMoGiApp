@@ -130,6 +130,10 @@ public class ChatRoomViewModel extends BaseViewModel {
             @Override
             public void onFailed(Throwable t) {
             }
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 

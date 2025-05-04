@@ -63,6 +63,11 @@ public class ChatListViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("채팅 리스트 가져오기 작업");
             }
+
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 

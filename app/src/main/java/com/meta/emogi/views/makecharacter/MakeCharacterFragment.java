@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -58,10 +59,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                                                                                         relationshipList
                 );
                 if (viewModel.isEdit().getValue()) {
-                    viewModel.updateCharacter(
-                            characterResponse,
-                                              activity.getCharacterId()
-                    );
+                    viewModel.updateCharacter(characterResponse, activity.getCharacterId());
                 } else {
                     viewModel.createCharacter(characterResponse);
                 }
@@ -86,7 +84,8 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
             binding.characterCategory.setLayoutManager(new GridLayoutManager(getContext(),
                                                                              3,
                                                                              GridLayoutManager.HORIZONTAL,
-                                                                             false));
+                                                                             false
+            ));
             binding.characterCategory.setAdapter(relationshipAdapter);
         });
 
@@ -98,7 +97,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
             ));
             binding.characterImage.setAdapter(imageAdapter);
             if (activity.getCharacterId() != -1) {
-                viewModel.getCharacterDetails( activity.getCharacterId());
+                viewModel.getCharacterDetails(activity.getCharacterId());
             }
         });
 
@@ -124,6 +123,14 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
                 }
             }
         });
+        viewModel.isInitialDataLoaded().observe(this, currentLoadedState -> {
+            Boolean firstState = currentLoadedState.first;
+            Boolean secondState = currentLoadedState.second;
+            if (firstState && secondState) {
+                binding.generateBtn.setVisibility(View.VISIBLE);
+            }
+
+        });
     }
 
     @Override
@@ -134,6 +141,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
     @Override
     public void onResume() {
         super.onResume();
+        binding.generateBtn.setVisibility(View.GONE);
         textViewMakesScroll();
         viewModel.getDefaultImageList();
         viewModel.getDefaultRelationshipList();

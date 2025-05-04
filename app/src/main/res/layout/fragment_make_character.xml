@@ -26,7 +26,7 @@
                 android:padding="@dimen/common_space_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/generate"
+                app:layout_constraintBottom_toTopOf="@+id/generate_btn"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -349,7 +349,7 @@
             </ScrollView>
 
         <Button
-            android:id="@+id/generate"
+            android:id="@+id/generate_btn"
             style="@style/ButtonCharacterDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -72,6 +72,10 @@ public class CharacterDetailViewModel extends BaseViewModel {
                                               public void onFailed(Throwable t) {
                                                   loadingFailed("캐릭터 상세 정보 가져오기 작업");
                                               }
+                                              @Override
+                                              public void onRetry() {
+                                                  loadingRetry();
+                                              }
                                           }
         );
     }
@@ -94,6 +98,11 @@ public class CharacterDetailViewModel extends BaseViewModel {
                     @Override
                     public void onFailed(Throwable t) {
                         loadingFailed("채팅방 생성 작업");
+                    }
+
+                    @Override
+                    public void onRetry() {
+                        loadingRetry();
                     }
                 }
         );

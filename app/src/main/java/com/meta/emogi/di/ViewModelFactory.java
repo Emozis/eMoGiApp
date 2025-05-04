@@ -1,6 +1,5 @@
 package com.meta.emogi.di;
 
-import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,7 +10,6 @@ import com.meta.emogi.views.characterdetail.CharacterDetailViewModel;
 import com.meta.emogi.views.chatlist.chatList.ChatListViewModel;
 import com.meta.emogi.views.chatlist.removeChatList.RemoveChatListViewModel;
 import com.meta.emogi.views.chatroom.ChatRoomViewModel;
-import com.meta.emogi.views.loading.LoadingViewModel;
 import com.meta.emogi.views.login.LoginViewModel;
 import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
@@ -57,8 +55,6 @@ public class ViewModelFactory extends ViewModelProvider {
                 return (T) new CharacterDetailViewModel();
             } else if (modelClass.isAssignableFrom(RemoveChatListViewModel.class)) {
                 return (T) new RemoveChatListViewModel();
-            } else if (modelClass.isAssignableFrom(LoadingViewModel.class)) {
-                return (T) new LoadingViewModel();
             }
 
             throw new IllegalArgumentException("Unknown ViewModel class");

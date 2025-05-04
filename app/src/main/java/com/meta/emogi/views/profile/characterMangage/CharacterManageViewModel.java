@@ -45,7 +45,7 @@ public class CharacterManageViewModel extends BaseViewModel {
         return _isActiveDeleteMode;
     }
 
-    public void setIsActiveDeleteMode(){
+    public void setIsActiveDeleteMode() {
         _isActiveDeleteMode.setValue(false);
     }
 
@@ -67,9 +67,12 @@ public class CharacterManageViewModel extends BaseViewModel {
                 loadingFailed("내 캐릭터 가져오기 작업");
                 Log.e("www", "getMyCharacters 실패: " + t.getMessage());
             }
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
-
 
     public void deleteCharacter(int characterId) {
         loading();
@@ -78,7 +81,8 @@ public class CharacterManageViewModel extends BaseViewModel {
                                           @Override
                                           public void onSuccess(ResponseModel data) {
                                               loadingSuccess();
-                                              List<CharacterResponse> updatedList = new ArrayList<>(_myCharacterList.getValue());
+                                              List<CharacterResponse> updatedList = new ArrayList<>(
+                                                      _myCharacterList.getValue());
                                               for (int i = 0; i < updatedList.size(); i++) {
                                                   if (updatedList.get(i).getCharacterId() == characterId) {
                                                       updatedList.remove(i);
@@ -91,6 +95,11 @@ public class CharacterManageViewModel extends BaseViewModel {
                                           @Override
                                           public void onFailed(Throwable t) {
                                               loadingFailed("캐릭터 삭제 작업");
+                                          }
+
+                                          @Override
+                                          public void onRetry() {
+                                              loadingRetry();
                                           }
                                       }
         );
@@ -112,13 +121,12 @@ public class CharacterManageViewModel extends BaseViewModel {
         return true;
     }
 
-    public void setDeleteToggleString(boolean isDelete){
-        if(isDelete){
+    public void setDeleteToggleString(boolean isDelete) {
+        if (isDelete) {
             _deleteToggleString.setValue("완료");
-        }else{
+        } else {
             _deleteToggleString.setValue("삭제");
         }
     }
-
 
 }

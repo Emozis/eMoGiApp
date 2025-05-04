@@ -90,6 +90,11 @@ public class RemoveChatListViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("캐릭터 삭제하기 작업");
             }
+
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 

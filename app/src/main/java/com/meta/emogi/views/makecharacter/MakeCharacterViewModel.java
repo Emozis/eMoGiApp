@@ -2,6 +2,7 @@ package com.meta.emogi.views.makecharacter;
 
 import android.app.Application;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
@@ -39,6 +40,9 @@ public class MakeCharacterViewModel extends BaseViewModel {
     public final MutableLiveData<CharacterResponse> _createdCharacter = new MutableLiveData<>();
     public final MutableLiveData<CharacterResponse> _currentCharacterData = new MutableLiveData<>();
 
+    // <이미지, 관계>
+    public final MutableLiveData<Pair<Boolean,Boolean>> _isInitialDataLoaded = new MutableLiveData<>(new Pair<>(false,false));
+
     public LiveData<Boolean> isMan() {
         return _isMan;
     }
@@ -63,6 +67,11 @@ public class MakeCharacterViewModel extends BaseViewModel {
         return _defaultImageList;
     }
 
+    public LiveData<Pair<Boolean,Boolean>> isInitialDataLoaded() {
+        return _isInitialDataLoaded;
+    }
+
+
     public LiveData<CharacterResponse> createdCharacter() {
         return _createdCharacter;
     }
@@ -86,7 +95,7 @@ public class MakeCharacterViewModel extends BaseViewModel {
         }
         Log.w(TAG, "onButtonClicked: ");
         int btnResId = v.getId();
-        if (btnResId == R.id.generate) {
+        if (btnResId == R.id.generate_btn) {
             _generate.call();
         } else if (btnResId == R.id.gender_man) {
             _isMan.setValue(true);
@@ -112,10 +121,16 @@ public class MakeCharacterViewModel extends BaseViewModel {
             public void onSuccess(List<CharacterResponse.CharacterRelationships> data) {
                 _defaultRelationshipList.setValue(data);
                 loadingSuccess();
+                Pair<Boolean,Boolean> currentState=_isInitialDataLoaded.getValue();
+                _isInitialDataLoaded.postValue(new Pair<>(true,currentState.second));
             }
             @Override
             public void onFailed(Throwable t) {
                 loadingFailed("관계 가져오기 작업");
+            }
+            @Override
+            public void onRetry() {
+                loadingRetry();
             }
         });
     }
@@ -127,10 +142,16 @@ public class MakeCharacterViewModel extends BaseViewModel {
             public void onSuccess(List<CharacterImageResponse> data) {
                 _defaultImageList.setValue(data);
                 loadingSuccess();
+                Pair<Boolean,Boolean> currentState=_isInitialDataLoaded.getValue();
+                _isInitialDataLoaded.postValue(new Pair<>(currentState.first,true));
             }
             @Override
             public void onFailed(Throwable t) {
                 loadingFailed("이미지 가져오기 작업");
+            }
+            @Override
+            public void onRetry() {
+                loadingRetry();
             }
         });
     }
@@ -149,6 +170,10 @@ public class MakeCharacterViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("캐릭터 생성하기 작업");
             }
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 
@@ -165,6 +190,10 @@ public class MakeCharacterViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("캐릭터 수정하기 작업");
             }
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 
@@ -179,6 +208,10 @@ public class MakeCharacterViewModel extends BaseViewModel {
             @Override
             public void onFailed(Throwable t) {
                 loadingFailed("캐릭터 상세정보 가져오기 작업");
+            }
+            @Override
+            public void onRetry() {
+                loadingRetry();
             }
         });
     }

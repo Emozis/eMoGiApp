@@ -63,6 +63,10 @@ public class MenuViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("유저 데이터 가져오는 작업");
             }
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
     }
 
@@ -79,6 +83,10 @@ public class MenuViewModel extends BaseViewModel {
             public void onFailed(Throwable t) {
                 loadingFailed("내 캐릭터 가져오기 작업");
             }
+            @Override
+            public void onRetry() {
+                loadingRetry();
+            }
         });
 
     }
@@ -94,6 +102,10 @@ public class MenuViewModel extends BaseViewModel {
             @Override
             public void onFailed(Throwable t) {
                 loadingFailed("캐릭터 랭킹 가져오기 작업");
+            }
+            @Override
+            public void onRetry() {
+                loadingRetry();
             }
         });
     }

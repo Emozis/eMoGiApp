@@ -1,7 +1,5 @@
 package com.meta.emogi.base;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.meta.emogi.R;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.loading.LoadingView;
-import com.meta.emogi.views.loading.LoadingViewModel;
-import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends Fragment {
@@ -29,7 +24,6 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     protected static String TAG;
     protected V binding;
     protected VM viewModel;
-    protected LoadingViewModel loadingViewModel;
 
     protected abstract ToolbarView.ToolbarRequest toolbarCallback();
     protected abstract @LayoutRes int layoutId();
@@ -44,6 +38,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         super.onCreate(savedInstanceState);
         TAG = getClass().getSimpleName();
         viewModel = new ViewModelFactory(this).get(viewModelClass());
+
     }
 
     @Nullable
@@ -74,9 +69,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
         LoadingView loadingView = view.findViewById(R.id.loading);
         if (loadingView != null) {
-            loadingViewModel = new ViewModelFactory(this).get(LoadingViewModel.class);
-            loadingView.setViewModel(loadingViewModel);
-            viewModel.setLoadingViewModel(loadingViewModel);
+            loadingView.setViewModel(viewModel);
         }
     }
 
