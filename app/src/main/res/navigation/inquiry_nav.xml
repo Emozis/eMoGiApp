@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inquiry_nav"
+    app:startDestination="@id/createInquiryFragment">
+
+    <fragment
+        android:id="@+id/checkInquiryFragment"
+        android:name="com.meta.emogi.views.inquiry.checkInquiry.CheckInquiryFragment"
+        android:label="fragment_check_inquiry"
+        tools:layout="@layout/fragment_check_inquiry" >
+        <action
+            android:id="@+id/action_checkInquiryFragment_to_createInquiryFragment"
+            app:destination="@id/createInquiryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createInquiryFragment"
+        android:name="com.meta.emogi.views.inquiry.createInquiry.CreateInquiryFragment"
+        android:label="fragment_create_inquiry"
+        tools:layout="@layout/fragment_create_inquiry" >
+        <action
+            android:id="@+id/action_createInquiryFragment_to_checkInquiryFragment"
+            app:destination="@id/checkInquiryFragment" />
+    </fragment>
+</navigation>

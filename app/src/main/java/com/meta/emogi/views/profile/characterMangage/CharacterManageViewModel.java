@@ -1,10 +1,7 @@
 package com.meta.emogi.views.profile.characterMangage;
 
-import android.app.Application;
 import android.util.Log;
 import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,14 +12,9 @@ import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.CharacterResponse;
 import com.meta.emogi.data.network.model.ResponseModel;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CharacterManageViewModel extends BaseViewModel {
     private final SingleLiveEvent<Void> _goToMyPage = new SingleLiveEvent<>();
