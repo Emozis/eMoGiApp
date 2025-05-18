@@ -16,6 +16,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -48,8 +49,8 @@ public interface ApiService {
     Call<CharacterResponse> updateCharacter(@Header("Authorization") String token, @Body
     CharacterResponse characterResponse, @Path("character_id") int characterId);
 
-    @DELETE("api/v1/character/{character_id}")
-    Call<ResponseModel> deleteCharacter(@Header("Authorization") String token, @Path("character_id") int characterId);
+    @PATCH("api/v1/character/{character_id}/deactive")
+    Call<ResponseModel> deactivateCharacter(@Header("Authorization") String token, @Path("character_id") int characterId);
 
     //기본 캐릭터 이미지 관련 api
     @GET("api/v1/default-image")

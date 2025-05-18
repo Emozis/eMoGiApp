@@ -100,8 +100,8 @@ public class ApiRepository {
     }
 
 
-    public void deleteCharacter(int characterId, ApiCallBack.ApiResultHandler<ResponseModel> handler) {
-        Call<ResponseModel> call = apiService.deleteCharacter(token, characterId);
+    public void deactivateCharacter(int characterId, ApiCallBack.ApiResultHandler<ResponseModel> handler) {
+        Call<ResponseModel> call = apiService.deactivateCharacter(token, characterId);
         retryCall(call, handler);
     }
 

@@ -76,7 +76,7 @@ public class CharacterManageViewModel extends BaseViewModel {
 
     public void deleteCharacter(int characterId) {
         loading();
-        apiRepository.deleteCharacter(characterId,
+        apiRepository.deactivateCharacter(characterId,
                                       new ApiCallBack.ApiResultHandler<ResponseModel>() {
                                           @Override
                                           public void onSuccess(ResponseModel data) {
