@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -57,19 +58,24 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
             result -> {
                 Log.w(TAG, "ActivityResultLauncher 호출됨 - 결과 코드: " + result.getResultCode());
                 try {
-                    if (result.getResultCode() == getActivity().RESULT_OK) {
+                    if (result.getResultCode() == getActivity().RESULT_OK) {  // -1
+                        Log.d(TAG, "로그인 성공");
                         Intent data = result.getData();
                         if (data != null) {
                             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                             handleSignInResult(task);
                         }
+                    } else if (result.getResultCode() == getActivity().RESULT_CANCELED) {  // 0
+                        Log.d(TAG, "로그인 취소됨");
+                        Toast.makeText(getContext(), "구글 서버와 연결이 되지 않았습니다. 나중에 시도해주세요", Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.w(TAG, "알 수 없는 결과 코드: " + result.getResultCode());
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "ActivityResultLauncher 처리 중 예외 발생: " + e.getMessage(), e);
                 }
             }
     );
-
 
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
         try {

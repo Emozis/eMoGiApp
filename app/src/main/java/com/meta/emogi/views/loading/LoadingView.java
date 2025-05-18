@@ -79,7 +79,8 @@ public class LoadingView extends ConstraintLayout {
                         setVisibility(VISIBLE);
                         binding.loadingPb.setVisibility(GONE);
                         binding.loadingText.setVisibility(VISIBLE);
-                        binding.goToInquiry.setVisibility(VISIBLE);
+//                        binding.goToInquiry.setVisibility(VISIBLE);
+                        binding.goToInquiry.setVisibility(GONE);
                         break;
                     case RETRY:
                         Log.d("www", "재시도: ");
