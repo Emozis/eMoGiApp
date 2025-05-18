@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.meta.emogi.MyApplication;
+import com.meta.emogi.R;
 import com.meta.emogi.data.repository.ApiRepository;
 
 public class BaseViewModel extends AndroidViewModel {
@@ -23,6 +24,7 @@ public class BaseViewModel extends AndroidViewModel {
     private final MutableLiveData<LoadingState> _loadingState = new MutableLiveData<>(LoadingState.DEFAULT);
     private final SingleLiveEvent<Integer> _buttonClicked = new SingleLiveEvent<>();
     private final MutableLiveData<String> _loadingMessage = new MutableLiveData<>("");
+    private final SingleLiveEvent<Void> _goToInquiry = new SingleLiveEvent<>();
 
     public LiveData<String> loadingMessage() {
         return _loadingMessage;
@@ -30,6 +32,10 @@ public class BaseViewModel extends AndroidViewModel {
 
     public LiveData<LoadingState> loadingState() {
         return _loadingState;
+    }
+
+    public LiveData<Void> goToInquiryPage() {
+        return _goToInquiry;
     }
 
     public void loading() {
@@ -63,10 +69,16 @@ public class BaseViewModel extends AndroidViewModel {
 
 
     public boolean onButtonClicked(View v) {
+        int btnResId = v.getId();
+        if (btnResId == R.id.go_to_inquiry) {
+            Log.d("www", "onButtonClicked: ");
+            _goToInquiry.call();
+        }
         if (System.currentTimeMillis() - buttonLastClickTime > CLICK_INTERVAL) {
             buttonLastClickTime = System.currentTimeMillis();
             return true; // 클릭 허용
         }
+
         return false; // 클릭 무시
     }
 }

@@ -1,6 +1,7 @@
 package com.meta.emogi.views.loading;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.meta.emogi.R;
 import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.databinding.ViewLoadingBinding;
 import com.meta.emogi.di.ViewModelFactory;
+import com.meta.emogi.views.inquiry.InquiryActivity;
 public class LoadingView extends ConstraintLayout {
 
     private ViewLoadingBinding binding;
@@ -63,35 +65,45 @@ public class LoadingView extends ConstraintLayout {
                         setVisibility(VISIBLE);
                         binding.loadingPb.setVisibility(VISIBLE);
                         binding.loadingText.setVisibility(VISIBLE);
+                        binding.goToInquiry.setVisibility(GONE);
                         break;
                     case SUCCESS:
                         Log.d("www", "성공: ");
                         setVisibility(GONE);
                         binding.loadingPb.setVisibility(GONE);
                         binding.loadingText.setVisibility(GONE);
+                        binding.goToInquiry.setVisibility(GONE);
                         break;
                     case FAILED:
                         Log.d("www", "실패: ");
                         setVisibility(VISIBLE);
                         binding.loadingPb.setVisibility(GONE);
                         binding.loadingText.setVisibility(VISIBLE);
+                        binding.goToInquiry.setVisibility(VISIBLE);
                         break;
                     case RETRY:
                         Log.d("www", "재시도: ");
                         setVisibility(VISIBLE);
                         binding.loadingPb.setVisibility(VISIBLE);
                         binding.loadingText.setVisibility(VISIBLE);
+                        binding.goToInquiry.setVisibility(GONE);
                         break;
                     default:
                         Log.d("www", "기본: ");
                         setVisibility(GONE);
                         binding.loadingPb.setVisibility(GONE);
                         binding.loadingText.setVisibility(GONE);
+                        binding.goToInquiry.setVisibility(GONE);
                 }
             });
 
             vm.loadingMessage().observe(lifecycleOwner,message ->{
                 binding.loadingText.setText(message);
+            });
+
+            vm.goToInquiryPage().observe(lifecycleOwner,unused -> {
+                Intent intent = new Intent(getContext(), InquiryActivity.class);
+                getContext().startActivity(intent);
             });
         }
     }

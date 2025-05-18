@@ -18,7 +18,7 @@ public class InquiryActivity extends BaseActivity<ActivityInquiryBinding> {
 
     @Override
     protected int layoutId() {
-        return 0;
+        return R.layout.activity_inquiry;
     }
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {

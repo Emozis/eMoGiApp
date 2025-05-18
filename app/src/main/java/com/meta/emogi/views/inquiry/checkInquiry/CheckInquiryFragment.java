@@ -20,10 +20,6 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 public class CheckInquiryFragment extends BaseFragment<FragmentCheckInquiryBinding,CheckInquiryViewModel> {
 
 
-    public static CheckInquiryFragment newInstance() {
-        return new CheckInquiryFragment();
-    }
-
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
         return new ToolbarView.ToolbarRequest("문의하기");
@@ -34,16 +30,11 @@ public class CheckInquiryFragment extends BaseFragment<FragmentCheckInquiryBindi
     }
     @Override
     protected Class<CheckInquiryViewModel> viewModelClass() {
-        return null;
+        return CheckInquiryViewModel.class;
     }
     @Override
     protected void registerObservers() {
 
-    }
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_check_inquiry, container, false);
     }
 
 

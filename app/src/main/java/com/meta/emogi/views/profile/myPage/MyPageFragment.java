@@ -47,7 +47,6 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
                     .error(R.drawable.ic_profile) // 로딩 실패 시 보여줄 이미지
                     .circleCrop() // 이미지를 동그랗게 만듭니다.
                     .into(binding.imageProfile);
-
         });
     }
 
@@ -68,6 +67,7 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
             }
         });
     }
+
     @Override
     public void onResume() {
         super.onResume();
