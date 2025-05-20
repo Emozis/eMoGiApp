@@ -10,7 +10,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.meta.emogi.BuildConfig;
+
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,6 +28,8 @@ import com.meta.emogi.domain.TokenManager;
 import com.meta.emogi.data.network.model.TokenModel;
 import com.meta.emogi.util.ConfigUtil;
 import com.meta.emogi.views.toolbar.ToolbarView;
+
+import java.util.Arrays;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewModel> {
 
@@ -81,12 +86,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account != null) {
-                Log.w(TAG, "계정 정보 - 이메일: " + account.getEmail() +
-                        ", ID Token: " + account.getIdToken() +
-                        ", Display Name: " + account.getDisplayName());
+                getGoogleAccessToken(account);
 
-                TokenModel requestToken = new TokenModel(account.getIdToken());
-                viewModel.createAccessToken(requestToken);
+//                TokenModel requestToken = new TokenModel(account.getIdToken());
+//                viewModel.createAccessToken(requestToken);
             }
         } catch (ApiException e) {
             Log.e(TAG, "Google Sign-In 실패 - 상태 코드: " + e.getStatusCode() +
@@ -95,6 +98,40 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
             Log.e(TAG, "handleSignInResult 처리 중 예외 발생: " + e.getMessage(), e);
         }
     }
+
+    private void getGoogleAccessToken(GoogleSignInAccount account) {
+        try {
+            String scopes = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
+            GoogleAccountCredential credential =
+                    GoogleAccountCredential.usingOAuth2(
+                            requireContext(),
+                            Arrays.asList(scopes.split(" ")));
+
+            credential.setSelectedAccount(account.getAccount());
+
+            new Thread(() -> {
+                try {
+                    String Token = credential.getToken();
+                    Log.w(TAG, "Access Token: " + Token);
+
+                    TokenModel accessToken = new TokenModel(Token);
+                    viewModel.createAccessToken(accessToken);
+
+//                    requireActivity().runOnUiThread(() -> {
+//                        TokenModel requestToken = new TokenModel(accessToken);
+//                        viewModel.createAccessToken(requestToken);
+//                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "액세스 토큰 가져오기 실패: " + e.getMessage(), e);
+                }
+            }).start();
+        } catch (Exception e) {
+            Log.e(TAG, "액세스 토큰 설정 실패: " + e.getMessage(), e);
+        }
+    }
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

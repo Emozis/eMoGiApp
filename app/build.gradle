@@ -48,6 +48,18 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    packaging {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+            excludes += ['META-INF/LICENSE']
+            excludes += ['META-INF/LICENSE.txt']
+            excludes += ['META-INF/NOTICE']
+            excludes += ['META-INF/NOTICE.txt']
+            excludes += ['META-INF/INDEX.LIST']
+            excludes += ['META-INF/ASL2.0']
+        }
+    }
+
     buildFeatures {
         dataBinding = true
     }
@@ -109,6 +121,10 @@ dependencies {
 
     // 구글 admob 추가
     implementation 'com.google.android.gms:play-services-ads:23.0.0'
+
+    //구글 로그인
+    implementation 'com.google.api-client:google-api-client-android:1.32.1'
+    implementation 'com.google.http-client:google-http-client-gson:1.39.2'
 
 }
 

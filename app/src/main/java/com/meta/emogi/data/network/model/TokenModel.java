@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 public class TokenModel {
 
     // 요청에 사용할 생성자
-    public TokenModel(String idToken) {
-        this.idToken = idToken;
+    public TokenModel(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     // 기본 생성자 - 응답에 사용할 기본 생성자

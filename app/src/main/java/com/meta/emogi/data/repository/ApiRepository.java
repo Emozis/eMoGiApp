@@ -120,8 +120,8 @@ public class ApiRepository {
     }
 
     //login
-    public void createAccessToken(TokenModel requestToken, ApiCallBack.ApiResultHandler<TokenModel> handler) {
-        Call<TokenModel> call = apiService.createAccessToken(requestToken);
+    public void createAccessToken(TokenModel accessToken, ApiCallBack.ApiResultHandler<TokenModel> handler) {
+        Call<TokenModel> call = apiService.createAccessToken(accessToken);
         retryCall(call,handler);
     }
 

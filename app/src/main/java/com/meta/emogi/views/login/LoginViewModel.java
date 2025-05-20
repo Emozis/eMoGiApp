@@ -34,14 +34,14 @@ public class LoginViewModel extends BaseViewModel {
         _appVersion.setValue(version);
     }
 
-    public void createAccessToken(TokenModel requestToken) {
+    public void createAccessToken(TokenModel accessToken) {
         loading();
-        apiRepository.createAccessToken(requestToken, new ApiCallBack.ApiResultHandler<TokenModel>(){
+        apiRepository.createAccessToken(accessToken, new ApiCallBack.ApiResultHandler<TokenModel>(){
             @Override
-            public void onSuccess(TokenModel data) {
+            public void onSuccess(TokenModel receiveData) {
                 loadingSuccess();
-                Log.d(TAG, "accessToken: "+data.getAccessToken());
-                _accessToken.setValue(data);
+                Log.d(TAG, "accessToken: "+receiveData.getAccessToken());
+                _accessToken.setValue(receiveData);
             }
             @Override
             public void onFailed(Throwable t) {

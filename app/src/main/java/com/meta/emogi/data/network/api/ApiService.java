@@ -23,8 +23,8 @@ import retrofit2.http.Path;
 public interface ApiService {
 
     //로그인 권한 관련 api
-    @POST("api/v1/auth/login/google")
-    Call<TokenModel> createAccessToken(@Body TokenModel request);
+    @POST("api/v2/auth/login/google")
+    Call<TokenModel> createAccessToken(@Body TokenModel accessToken);
 
     //유저 관련 api
     @GET("api/v1/user/me")
