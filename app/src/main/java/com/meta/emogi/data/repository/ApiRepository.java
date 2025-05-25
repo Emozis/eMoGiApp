@@ -125,6 +125,11 @@ public class ApiRepository {
         retryCall(call,handler);
     }
 
+    public void createRefreshToken(TokenModel refreshToken, ApiCallBack.ApiResultHandler<TokenModel> handler) {
+        Call<TokenModel> call = apiService.createRefreshToken(refreshToken);
+        retryCall(call,handler);
+    }
+
     //characterDetail
     public void createChatRoom(CreateChatResponse createChatResponse, ApiCallBack.ApiResultHandler<CreateChatResponse> handler) {
         Call<CreateChatResponse> call = apiService.createChatRoom(token,createChatResponse);

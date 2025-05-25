@@ -26,6 +26,10 @@ public interface ApiService {
     @POST("api/v2/auth/login/google")
     Call<TokenModel> createAccessToken(@Body TokenModel accessToken);
 
+    //로그인 권한 관련 api
+    @POST("api/v2/auth/token/refresh")
+    Call<TokenModel> createRefreshToken(@Body TokenModel refreshToken);
+
     //유저 관련 api
     @GET("api/v1/user/me")
     Call<UserData> getUserData(@Header("Authorization") String token);

@@ -33,6 +33,10 @@ public class TokenModel {
     @Expose(serialize = false, deserialize = true)
     private String accessToken;
 
+    @SerializedName("refreshToken")
+    @Expose(serialize = false, deserialize = true)
+    private String refreshToken;
+
     public static class User {
         @SerializedName("userId")
         @Expose(serialize = false, deserialize = true)
@@ -102,5 +106,11 @@ public class TokenModel {
     }
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

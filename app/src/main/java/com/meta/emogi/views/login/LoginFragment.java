@@ -112,7 +112,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
             new Thread(() -> {
                 try {
                     String Token = credential.getToken();
-                    Log.w(TAG, "Access Token: " + Token);
+                    Log.w(TAG, "Google Access Token: " + Token);
 
                     TokenModel accessToken = new TokenModel(Token);
                     viewModel.createAccessToken(accessToken);

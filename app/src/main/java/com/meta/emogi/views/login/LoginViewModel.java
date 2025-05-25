@@ -40,7 +40,8 @@ public class LoginViewModel extends BaseViewModel {
             @Override
             public void onSuccess(TokenModel receiveData) {
                 loadingSuccess();
-                Log.d(TAG, "accessToken: "+receiveData.getAccessToken());
+                Log.d(TAG, "Receive accessToken: "+receiveData.getAccessToken());
+                Log.d(TAG, "Receive refreshToken: "+receiveData.getRefreshToken());
                 _accessToken.setValue(receiveData);
             }
             @Override
