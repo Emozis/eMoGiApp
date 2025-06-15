@@ -20,7 +20,10 @@ import retrofit2.Response;
 
 public class MyPageViewModel extends BaseViewModel {
 
+    private static final String TAG = "MyPageViewModel";
+
     private final SingleLiveEvent<Void> _goToMyPage = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> _logout = new SingleLiveEvent<>();
     private final MutableLiveData<String> _email = new MutableLiveData<>();
     private final MutableLiveData<String> _nickName = new MutableLiveData<>();
     private final MutableLiveData<UserData> _userData = new MutableLiveData<>();
@@ -31,6 +34,12 @@ public class MyPageViewModel extends BaseViewModel {
     public LiveData<String> email() {
         return _email;
     }
+
+    public LiveData<Void> logout() {
+        return _logout;
+    }
+
+
     public LiveData<String> nickName() {
         return _nickName;
     }
@@ -46,6 +55,9 @@ public class MyPageViewModel extends BaseViewModel {
         int btnResId = v.getId();
         if (btnResId == R.id.manage_character) {
             _goToMyPage.call();
+        } else if (btnResId == R.id.profile_logout) {
+            Log.d(TAG, "로그아웃 버튼눌림");
+            _logout.call();
         }
         return true;
     }

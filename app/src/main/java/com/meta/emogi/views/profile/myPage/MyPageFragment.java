@@ -39,7 +39,6 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
         viewModel.goToMyPage().observe(this, unused -> {
             Navigation.findNavController(requireView()).navigate(R.id.action_myPageFragment_to_characterManageFragment);
         });
-
         viewModel.userData().observe(this, userData -> {
             viewModel.setUserData(userData.getUserEmail(), userData.getUserName());
 
@@ -47,6 +46,9 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
                     .error(R.drawable.ic_profile) // 로딩 실패 시 보여줄 이미지
                     .circleCrop() // 이미지를 동그랗게 만듭니다.
                     .into(binding.imageProfile);
+        });
+        viewModel.logout().observe(this,unused -> {
+            activity.logout();
         });
     }
 
@@ -60,12 +62,15 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                requireActivity().finish();  // 현재 액티비티 종료
-            }
-        });
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        requireActivity().finish();  // 현재 액티비티 종료
+                    }
+                }
+        );
     }
 
     @Override

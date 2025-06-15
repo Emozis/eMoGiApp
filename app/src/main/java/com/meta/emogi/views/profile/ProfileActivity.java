@@ -30,6 +30,7 @@ import java.util.Objects;
 
 public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
+    private static final String TAG = "ProfileActivity";
     @Override
     protected int layoutId() {
         return R.layout.activity_profile;
@@ -61,6 +62,12 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         super.onResume();
         initFragment();
         setToolbarHeight(binding.toolbar);
+    }
+
+    @Override
+    public void logout(){
+        super.logout();
+        Log.d(TAG, "logout: 프로필액티비티에서 호출");
     }
 
 

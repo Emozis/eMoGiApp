@@ -30,7 +30,7 @@ import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 import com.meta.emogi.views.toolbar.ToolbarViewModel;
 public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
-
+    private static final String TAG = "BaseActivity";
     protected V binding;
     private ToolbarViewModel toolbarViewModel;
     protected UserPreferenceManager userPreferenceManager;
@@ -51,6 +51,7 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         binding = DataBindingUtil.setContentView(this, layoutId());
         binding.setLifecycleOwner(this);
 
+        userPreferenceManager = new UserPreferenceManager(this);
         toolbarViewModel = new ViewModelFactory(this).get(ToolbarViewModel.class);
 
         toolbarViewModel.back().observe(this, unused -> {
@@ -77,7 +78,9 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         setStatusBarColor();
     }
     protected void logout() {
-        userPreferenceManager.logout();
+        if (userPreferenceManager != null) {
+            userPreferenceManager.logout();
+        }
 
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -131,11 +131,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
 
     private void signIn() {
         try {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            if (signInIntent == null) {
-                return;
-            }
-            signInLauncher.launch(signInIntent);
+            // 로그인 전에 항상 로그아웃 (계정 선택 화면 강제)
+            mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity(), task -> {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                if (signInIntent != null) {
+                    signInLauncher.launch(signInIntent);
+                }
+            });
         } catch (Exception e) {
             Log.e(TAG, "signIn 메서드 예외 발생: " + e.getMessage(), e);
         }
