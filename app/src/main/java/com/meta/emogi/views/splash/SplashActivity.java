@@ -27,6 +27,17 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     }
 
     @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return false;
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);

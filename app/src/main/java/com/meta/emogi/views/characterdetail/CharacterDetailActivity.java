@@ -34,6 +34,17 @@ public class CharacterDetailActivity extends BaseActivity<ActivityCharacterDetai
         binding.toolbar.settingView(toolbarRequest);
     }
     @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return false;
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

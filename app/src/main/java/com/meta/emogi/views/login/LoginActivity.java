@@ -57,6 +57,17 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     }
 
     @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return false;
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UPDATE_REQUEST_CODE && resultCode != RESULT_OK) {
@@ -78,8 +89,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     }
 
     public void moveActivity(){
-        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
     }
 
 }

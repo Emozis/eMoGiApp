@@ -36,6 +36,17 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         binding.toolbar.settingView(toolbarRequest);
     }
 
+    @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
+
     public void refreshToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
     }
@@ -64,11 +75,11 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     }
 
     public void showAds(boolean isGoProfile) {
-        AdManager.showAdIfAvailable(this, () -> {
-            if(isGoProfile){
-                moveToMyProfile();
-            }
-        });
+//        AdManager.showAdIfAvailable(this, () -> {
+//            if(isGoProfile){
+//                moveToMyProfile();
+//            }
+//        });
     }
 
     public int getCharacterId() {

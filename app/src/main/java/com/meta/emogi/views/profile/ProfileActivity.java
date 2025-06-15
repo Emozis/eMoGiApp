@@ -39,6 +39,22 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         binding.toolbar.settingView(toolbarRequest);
     }
 
+    @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupBottomNavigation(binding.bottomNavigation, R.id.nav_profile);
+    }
 
     @Override
     protected void onResume() {

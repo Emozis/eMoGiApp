@@ -19,7 +19,9 @@ import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.meta.emogi.R;
+import com.meta.emogi.views.chatlist.ChatListActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.profile.ProfileActivity;
@@ -33,6 +35,12 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     private boolean backStatus = false;
 
     protected abstract @LayoutRes int layoutId();
+
+    protected BottomNavigationView bottomNavigation;
+    protected abstract boolean isMainActivity();
+    protected abstract boolean hasBottomNavigation();
+    protected int currentNavigationId = -1;
+
 
     protected abstract void setToolbar(ToolbarView.ToolbarRequest toolbarRequest);
 
@@ -69,6 +77,48 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 네비게이션이 있고 유효한 ID가 설정되어 있으면 업데이트
+        if (hasBottomNavigation() && bottomNavigation != null && currentNavigationId != -1) {
+            bottomNavigation.setSelectedItemId(currentNavigationId);
+        }
+    }
+
+    protected void setupBottomNavigation(BottomNavigationView bottomNav, int currentItemId){
+        this.bottomNavigation = bottomNav;
+        this.currentNavigationId = currentItemId; // ID 저장
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == currentItemId) {
+                return true;
+            }
+
+            Intent intent = null;
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                intent = new Intent(this, MenuActivity.class);
+            } else if (itemId == R.id.nav_chat_list) {
+                intent = new Intent(this, ChatListActivity.class);
+            } else if (itemId == R.id.nav_profile) {
+                intent = new Intent(this, ProfileActivity.class);
+            }
+
+            if (intent != null) {
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            }
+            return true;
+        });
+
+        bottomNavigation.setSelectedItemId(currentItemId);
+    }
+
+
     public void changeBackStatus(){
         backStatus =true;
     }
@@ -79,10 +129,11 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     }
 
     protected void onBackPressedAction() {
-        Intent intent = new Intent(BaseActivity.this, MenuActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
+        if (isMainActivity()) {
+            finishAffinity();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 
