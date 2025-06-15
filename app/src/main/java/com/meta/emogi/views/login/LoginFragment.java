@@ -49,7 +49,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
         viewModel.accessToken().observe(this, accessToken -> {
             String accessedToken = accessToken.getAccessToken();
             TokenManager.getInstance().setToken(accessedToken);
-            activity.moveActivity();
+            activity.onLoginSuccess();
         });
     }
 

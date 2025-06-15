@@ -238,7 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.chatStart()}"
-                android:text="채팅 시작하기"
+                android:text="새로운 채팅방으로 대화하기"
                 android:textColor="@color/black"
                 android:textSize="@dimen/common_text_size_medium"
                 android:textStyle="bold"

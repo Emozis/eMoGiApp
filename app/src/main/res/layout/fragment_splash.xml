@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="어플 실행중"
+            android:text="데이터를 가져오는중입니다."
             android:textSize="28dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/progressBar"

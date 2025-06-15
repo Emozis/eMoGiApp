@@ -19,7 +19,9 @@ import com.google.android.play.core.install.model.UpdateAvailability;
 import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
+import com.meta.emogi.data.internal.UserPreferenceManager;
 import com.meta.emogi.databinding.ActivityLoginBinding;
+import com.meta.emogi.domain.TokenManager;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.views.splash.SplashActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
@@ -28,11 +30,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     private static final int UPDATE_REQUEST_CODE = 1234;
     private AppUpdateManager appUpdateManager;
+    private UserPreferenceManager userPreferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
+
+        userPreferenceManager = new UserPreferenceManager(this);
 
         // AppUpdateManager 초기화
         appUpdateManager = AppUpdateManagerFactory.create(this);
@@ -88,7 +93,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
     }
 
-    public void moveActivity(){
+    public void onLoginSuccess() {
+        String token = TokenManager.getInstance().getToken();
+        userPreferenceManager.saveLoginInfo(token);
+        moveToMainActivity();
+    }
+
+
+    public void moveToMainActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
