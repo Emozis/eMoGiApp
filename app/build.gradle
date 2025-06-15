@@ -11,8 +11,8 @@ android {
         applicationId "com.meta.emogi"
         minSdk 24
         targetSdk 34
-        versionCode 2003000
-        versionName "2.03.0000"
+        versionCode 2004000
+        versionName "2.04.0000"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
