@@ -75,11 +75,11 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     }
 
     public void showAds(boolean isGoProfile) {
-//        AdManager.showAdIfAvailable(this, () -> {
-//            if(isGoProfile){
-//                moveToMyProfile();
-//            }
-//        });
+        AdManager.showAdIfAvailable(this, () -> {
+            if(isGoProfile){
+                moveToMyProfile();
+            }
+        });
     }
 
     public int getCharacterId() {
