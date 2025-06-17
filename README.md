@@ -1,8 +1,10 @@
 # 🎭 eMogi - AI 캐릭터 소셜 플랫폼
 
-> **Google Play Store 배포 완료 , 현재 운영중 ** 🚀
-> https://play.google.com/store/apps/details?id=com.meta.emogi
+> **Google Play Store 배포 완료**,
 > AI 캐릭터와 자연스러운 대화를 나눌 수 있는 안드로이드 앱
+
+# 📱 다운로드
+Google Play Store: [다운로드](https://play.google.com/store/apps/details?id=com.meta.emogi)
 
 ## 📱 프로젝트 개요
 
