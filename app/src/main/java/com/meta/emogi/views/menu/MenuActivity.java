@@ -39,15 +39,28 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
 //        binding.toolbar.settingView(toolbarRequest);
 //    }
 
+
+
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Intent intent = getIntent();
+    protected boolean isMainActivity() {
+        return true;
     }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupBottomNavigation(binding.bottomNavigation, R.id.nav_home);
+    }
+
 
 
     public void moveToChatList(){

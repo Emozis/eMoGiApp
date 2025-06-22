@@ -56,13 +56,13 @@ public class ChatResponse {
 
     public static class User {
         @SerializedName("userId")
-        private int userId;
+        private int userId=-1;
 
         @SerializedName("userName")
-        private String userName;
+        private String userName="";
 
         @SerializedName("userProfile")
-        private String userProfile;
+        private String userProfile="";
 
         public int getUserId() {
             return userId;

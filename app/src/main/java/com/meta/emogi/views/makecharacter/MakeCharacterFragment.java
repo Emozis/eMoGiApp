@@ -30,7 +30,7 @@ public class MakeCharacterFragment extends BaseFragment<FragmentMakeCharacterBin
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("캐릭터 생성");
+        return new ToolbarView.ToolbarRequest("새 캐릭터 생성");
     }
 
     public static MakeCharacterFragment newInstance() {

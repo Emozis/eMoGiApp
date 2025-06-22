@@ -39,7 +39,6 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
         viewModel.goToMyPage().observe(this, unused -> {
             Navigation.findNavController(requireView()).navigate(R.id.action_myPageFragment_to_characterManageFragment);
         });
-
         viewModel.userData().observe(this, userData -> {
             viewModel.setUserData(userData.getUserEmail(), userData.getUserName());
 
@@ -60,12 +59,15 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                requireActivity().finish();  // 현재 액티비티 종료
-            }
-        });
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        requireActivity().finish();  // 현재 액티비티 종료
+                    }
+                }
+        );
     }
 
     @Override

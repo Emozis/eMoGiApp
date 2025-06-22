@@ -1,6 +1,9 @@
 package com.meta.emogi.views.chatlist;
 
 import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
@@ -24,6 +27,23 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
     }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupBottomNavigation(binding.bottomNavigation, R.id.nav_chat_list);
+    }
+
+    @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
 
     @Override
     protected void onResume() {

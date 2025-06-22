@@ -30,6 +30,7 @@ import java.util.Objects;
 
 public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
+    private static final String TAG = "ProfileActivity";
     @Override
     protected int layoutId() {
         return R.layout.activity_profile;
@@ -37,14 +38,39 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
+        binding.toolbar.setLogout(toolbarRequest);
     }
 
+
+
+    @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupBottomNavigation(binding.bottomNavigation, R.id.nav_profile);
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         initFragment();
         setToolbarHeight(binding.toolbar);
+    }
+
+    @Override
+    public void logout(){
+        super.logout();
+        Log.d(TAG, "logout: 프로필액티비티에서 호출");
     }
 
 
