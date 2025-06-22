@@ -36,6 +36,17 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         binding.toolbar.settingView(toolbarRequest);
     }
 
+    @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
+
     public void refreshToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
     }

@@ -96,7 +96,7 @@
                 android:layout_width="@dimen/size_profile"
                 android:background="@drawable/drawable_background_rounded_image"
                 android:layout_height="@dimen/size_profile"
-                android:src="@drawable/mypage_icon"
+                android:src="@drawable/ic_my_page"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

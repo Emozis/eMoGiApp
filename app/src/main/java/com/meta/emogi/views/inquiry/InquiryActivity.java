@@ -20,6 +20,17 @@ public class InquiryActivity extends BaseActivity<ActivityInquiryBinding> {
     protected int layoutId() {
         return R.layout.activity_inquiry;
     }
+
+    @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return true;
+    }
+
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);

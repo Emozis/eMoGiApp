@@ -11,8 +11,8 @@ android {
         applicationId "com.meta.emogi"
         minSdk 24
         targetSdk 34
-        versionCode 2003000
-        versionName "2.03.0000"
+        versionCode 2004002
+        versionName "2.04.0002"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -73,7 +73,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment:2.7.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.7.1'
     implementation libs.activity
     implementation libs.legacy.support.v4
     testImplementation 'junit:junit:4.13.2'

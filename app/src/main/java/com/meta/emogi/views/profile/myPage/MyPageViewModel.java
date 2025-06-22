@@ -20,6 +20,8 @@ import retrofit2.Response;
 
 public class MyPageViewModel extends BaseViewModel {
 
+    private static final String TAG = "MyPageViewModel";
+
     private final SingleLiveEvent<Void> _goToMyPage = new SingleLiveEvent<>();
     private final MutableLiveData<String> _email = new MutableLiveData<>();
     private final MutableLiveData<String> _nickName = new MutableLiveData<>();
@@ -31,6 +33,9 @@ public class MyPageViewModel extends BaseViewModel {
     public LiveData<String> email() {
         return _email;
     }
+
+
+
     public LiveData<String> nickName() {
         return _nickName;
     }

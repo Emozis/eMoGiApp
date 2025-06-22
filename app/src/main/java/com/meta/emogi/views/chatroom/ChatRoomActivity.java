@@ -30,6 +30,17 @@ public class ChatRoomActivity extends BaseActivity<ActivityChatRoomBinding> {
     }
 
     @Override
+    protected boolean isMainActivity() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasBottomNavigation() {
+        return false;
+    }
+
+
+    @Override
     protected int layoutId() {
         return R.layout.activity_chat_room;
     }
