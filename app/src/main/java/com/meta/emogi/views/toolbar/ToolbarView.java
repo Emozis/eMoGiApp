@@ -84,6 +84,13 @@ public class ToolbarView extends ConstraintLayout {
         }
     }
 
+    public void setLogout(ToolbarRequest toolbarRequest){
+        if (toolbarRequest != null) {
+            this.clickListener = toolbarRequest.callback;
+            binding.logout.setVisibility(VISIBLE);
+        }
+    }
+
     private ToolbarButtonClickListener clickListener;
 
     public interface ToolbarButtonClickListener {

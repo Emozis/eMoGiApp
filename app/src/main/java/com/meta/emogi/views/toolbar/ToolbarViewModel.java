@@ -14,6 +14,7 @@ public class ToolbarViewModel extends BaseViewModel {
 
     private final MutableLiveData<String> _title = new MutableLiveData<>();
     private final SingleLiveEvent<Void> _back = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> _logout = new SingleLiveEvent<>();
 
     public LiveData<String> title() {
         return _title;
@@ -25,6 +26,9 @@ public class ToolbarViewModel extends BaseViewModel {
     public LiveData<Void> back() {
         return _back;
     }
+    public LiveData<Void> logout() {
+        return _logout;
+    }
 
     public boolean onButtonClicked(View v) {
         if (!super.onButtonClicked(v)) {
@@ -33,6 +37,8 @@ public class ToolbarViewModel extends BaseViewModel {
         int btnResId = v.getId();
         if (btnResId == R.id.back) {
             _back.call();
+        }else if (btnResId == R.id.logout) {
+            _logout.call();
         }
         return true;
     }

@@ -64,8 +64,9 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
                 Log.d("www", "액티비티 뒤로가기눌림");
                 onBackPressedAction();
             }
-
         });
+
+        toolbarViewModel.logout().observe(this, unused -> logout());
 
         //        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
         //            @Override

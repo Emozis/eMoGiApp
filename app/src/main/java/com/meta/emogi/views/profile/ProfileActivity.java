@@ -38,7 +38,10 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
+        binding.toolbar.setLogout(toolbarRequest);
     }
+
+
 
     @Override
     protected boolean isMainActivity() {

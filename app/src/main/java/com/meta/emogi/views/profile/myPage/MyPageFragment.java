@@ -47,9 +47,6 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
                     .circleCrop() // 이미지를 동그랗게 만듭니다.
                     .into(binding.imageProfile);
         });
-        viewModel.logout().observe(this,unused -> {
-            activity.logout();
-        });
     }
 
     @Override
