@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.meta.emogi'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.meta.emogi"
         minSdk 24
-        targetSdk 34
+        targetSdk 35
         versionCode 2004002
         versionName "2.04.0002"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
