@@ -17,7 +17,6 @@ import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageViewModel;
 import com.meta.emogi.views.profile.myPage.MyPageViewModel;
-import com.meta.emogi.views.splash.SplashViewModel;
 import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class ViewModelFactory extends ViewModelProvider {
@@ -35,9 +34,7 @@ public class ViewModelFactory extends ViewModelProvider {
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (modelClass.isAssignableFrom(SplashViewModel.class)) {
-                return (T) new SplashViewModel();
-            } else if (modelClass.isAssignableFrom(ChatRoomViewModel.class)) {
+             if (modelClass.isAssignableFrom(ChatRoomViewModel.class)) {
                 return (T) new ChatRoomViewModel();
             } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
                 return (T) new LoginViewModel();

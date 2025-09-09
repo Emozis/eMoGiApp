@@ -1,16 +1,19 @@
+//플러그인 버전 어디서 가져올지
 pluginManagement {
     repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
+        google() //AGP 플러그인
+        mavenCentral() //코틀린 플러그인
+        gradlePluginPortal() //gradle(Detekt,klint) 플러그인
     }
 }
+
+//라이브러리 저장소 규칙
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT) // 변경
     repositories {
-        google()
-        mavenCentral()
+        google() // 구글 라이브러리 다운
+        mavenCentral() // 코틀린 라이브러리 다운
     }
 }
-rootProject.name = "emogi"
-include ':app'
+rootProject.name = "emogi" //프로젝트 이름설정
+include ':app' //어떤 모듈 포함할지

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.meta.emogi">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -24,6 +23,12 @@
             android:name=".views.inquiry.InquiryActivity"
             android:exported="true" >
         </activity>
+
+        <!--ga_ad_services_config,gma_ad_services_config이 같은 값을 사용하여 충돌방지 -->
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" /> <!--manifesst의 값을 적용하기 -->
 
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"

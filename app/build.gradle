@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -47,6 +47,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 
     buildFeatures {
         dataBinding = true
@@ -98,7 +103,6 @@ dependencies {
     // 소켓통신 라이브러리
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 
-
     //play store 버전확인 라이브러리
     implementation 'com.google.android.play:app-update:2.1.0'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
@@ -112,6 +116,9 @@ dependencies {
     // 구글 admob 추가
     implementation 'com.google.android.gms:play-services-ads:23.0.0'
 
-}
+    //// 코틀린 마이그레이션 라이브러리
 
-apply plugin: 'com.google.gms.google-services'
+    // 코루틴
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1"
+
+}

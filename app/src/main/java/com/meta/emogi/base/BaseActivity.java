@@ -1,14 +1,11 @@
 package com.meta.emogi.base;
 import static com.meta.emogi.MyApplication.getDeviceHeightPx;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.view.Window;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.meta.emogi.R;
-import com.meta.emogi.data.internal.UserPreferenceManager;
 import com.meta.emogi.views.chatlist.ChatListActivity;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
@@ -33,7 +27,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     private static final String TAG = "BaseActivity";
     protected V binding;
     private ToolbarViewModel toolbarViewModel;
-    protected UserPreferenceManager userPreferenceManager;
     private boolean backStatus = false;
 
     protected abstract @LayoutRes int layoutId();
@@ -50,8 +43,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, layoutId());
         binding.setLifecycleOwner(this);
-
-        userPreferenceManager = new UserPreferenceManager(this);
         toolbarViewModel = new ViewModelFactory(this).get(ToolbarViewModel.class);
 
         toolbarViewModel.back().observe(this, unused -> {
@@ -79,10 +70,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         setStatusBarColor();
     }
     protected void logout() {
-        if (userPreferenceManager != null) {
-            userPreferenceManager.logout();
-        }
-
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
