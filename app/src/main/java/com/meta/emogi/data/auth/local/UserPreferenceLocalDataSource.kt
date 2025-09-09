@@ -17,7 +17,7 @@ class UserPreferenceLocalDataSource(private val context: Context) : SessionLocal
 
     override fun getToken(): String? = pref.getString(KEY_USER_TOKEN, null);
 
-    override fun setToken(token: String?) {
+    override fun saveToken(token: String?) {
         val editor = pref.edit()
         if (token.isNullOrBlank()) {
             editor.clear()

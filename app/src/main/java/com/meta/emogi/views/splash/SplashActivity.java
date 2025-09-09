@@ -9,7 +9,8 @@ import com.meta.emogi.R;
 import com.meta.emogi.data.auth.local.UserPreferenceLocalDataSource;
 import com.meta.emogi.data.auth.repo.SessionRepositoryImpl;
 import com.meta.emogi.domain.auth.repo.SessionRepository;
-import com.meta.emogi.domain.auth.usecase.IsLoggedInUseCase;
+import com.meta.emogi.domain.auth.usecase.CheckLoggedInUseCase;
+import com.meta.emogi.domain.auth.usecase.GetTokenUseCase;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 
@@ -28,12 +29,14 @@ public class SplashActivity extends AppCompatActivity {
 
         UserPreferenceLocalDataSource local = new UserPreferenceLocalDataSource(this);
         SessionRepository repo = new SessionRepositoryImpl(local);
-        IsLoggedInUseCase useCase = new IsLoggedInUseCase(repo);
+        CheckLoggedInUseCase checkLoggedInUseCase = new CheckLoggedInUseCase(repo);
+        GetTokenUseCase getTokenUseCase = new GetTokenUseCase(repo);
+
 
         viewModel = new ViewModelProvider(this,new ViewModelProvider.Factory(){
             @Override
             public <T extends androidx.lifecycle.ViewModel> T create(Class<T> modelClass) {
-                return (T) new SplashViewModel(useCase);
+                return (T) new SplashViewModel(checkLoggedInUseCase,getTokenUseCase);
             }
         }).get(SplashViewModel.class);
 
@@ -47,9 +50,8 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         });
 
-        viewModel.decide();
+        viewModel.start();
     }
-
 
     private void goToMainActivity() {
         Intent intent = new Intent(this, MenuActivity.class);

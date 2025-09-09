@@ -8,20 +8,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class SessionRepositoryImpl(private val local: SessionLocalDataSource) : SessionRepository {
-    override suspend fun readLoginState(): AppResult<LoginState> = withContext(Dispatchers.IO) {
+    override suspend fun checkLoginState(): AppResult<Boolean> =
         try {
-            if (local.isLoggedIn()) {
-                val token = local.getToken()
-                if (!token.isNullOrBlank()) {
-                    AppResult.Success(LoginState.LoggedIn)
-                } else {
-                    AppResult.Success(LoginState.LoggedOut)
-                }
-            } else {
-                AppResult.Success(LoginState.LoggedOut)
+                AppResult.Success(local.isLoggedIn())
+            } catch (t: Throwable) {
+                AppResult.Failure("세션 읽기 실패", t)
             }
-        } catch (t: Throwable) {
-            AppResult.Failure("세션 읽기 실패", t)
+
+
+    override suspend fun getToken(): AppResult<String?> =
+        try{
+            AppResult.Success(local.getToken())
+        }catch (t: Throwable){
+           AppResult.Failure("토큰 읽기 실패", t)
         }
-    }
+
+
+    override suspend fun saveToken(token: String?): AppResult<Unit> =
+        try {
+            local.saveToken(token)
+            AppResult.Success(Unit)
+        } catch (t: Throwable) {
+            AppResult.Failure("토큰 저장 실패", t)
+        }
+
+    override suspend fun clearSession(): AppResult<Unit> =
+        try {
+            local.clearSession()
+            AppResult.Success(Unit)
+        } catch (t: Throwable) {
+            AppResult.Failure("세션 종료 실패", t)
+        }
 }
