@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.meta.emogi.MyApplication;
+import com.meta.emogi.EmogiApp;
 import com.meta.emogi.R;
 import com.meta.emogi.data.network.model.ChatResponse;
 
@@ -42,7 +42,7 @@ public class RemoveChatListAdapter extends RecyclerView.Adapter<RemoveChatListAd
     public RemoveChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_rm_chat_list, parent, false);
-        int screenHeight = MyApplication.getDeviceHeightPx();
+        int screenHeight = EmogiApp.getDeviceHeightPx();
         int itemHeight = (int) (screenHeight * 0.1f);
 
         RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(

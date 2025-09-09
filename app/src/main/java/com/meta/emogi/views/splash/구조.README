@@ -1,2 +1,4 @@
-Activity -> ViewModel -> UseCase -> Repository(interface)
-         -> RepositoryImpl -> UserPreferenceLocalDataSource (실제 데이터)
+
+UI: Activity -> ViewModel
+Domain: -> UseCase -> Repository(interface)
+Date: -> RepositoryImpl -> UserPreferenceLocalDataSource (실제 데이터 처리)

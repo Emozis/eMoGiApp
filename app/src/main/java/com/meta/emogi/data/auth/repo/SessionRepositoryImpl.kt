@@ -1,7 +1,6 @@
 package com.meta.emogi.data.auth.repo
 
 import com.meta.emogi.data.auth.local.SessionLocalDataSource
-import com.meta.emogi.domain.auth.entity.LoginState
 import com.meta.emogi.domain.auth.repo.SessionRepository
 import com.meta.emogi.domain.common.AppResult
 import kotlinx.coroutines.Dispatchers

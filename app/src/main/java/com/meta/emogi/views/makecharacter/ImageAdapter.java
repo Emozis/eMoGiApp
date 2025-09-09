@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.meta.emogi.MyApplication;
+import com.meta.emogi.EmogiApp;
 import com.meta.emogi.R;
 import com.meta.emogi.data.network.model.CharacterImageResponse;
 
@@ -48,7 +48,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_make_character, parent, false);
 
-        int screenWidth = MyApplication.getDeviceWidthPx();
+        int screenWidth = EmogiApp.getDeviceWidthPx();
         int itemWidth = (int) (screenWidth * 0.25f);
 
         RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(

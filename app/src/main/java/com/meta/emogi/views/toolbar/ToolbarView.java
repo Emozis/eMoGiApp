@@ -9,10 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.meta.emogi.MyApplication;
 import com.meta.emogi.R;
 import com.meta.emogi.databinding.ViewToolbarBinding;
 import com.meta.emogi.di.ViewModelFactory;

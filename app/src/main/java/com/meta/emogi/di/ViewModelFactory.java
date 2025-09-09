@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.meta.emogi.MyApplication;
+import com.meta.emogi.EmogiApp;
 import com.meta.emogi.views.characterdetail.CharacterDetailViewModel;
 import com.meta.emogi.views.chatlist.chatList.ChatListViewModel;
 import com.meta.emogi.views.chatlist.removeChatList.RemoveChatListViewModel;
@@ -29,7 +29,7 @@ public class ViewModelFactory extends ViewModelProvider {
 
 
         public Factory() {
-            super(MyApplication.getInstance());
+            super(EmogiApp.getInstance());
         }
         @NonNull
         @Override

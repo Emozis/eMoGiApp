@@ -3,12 +3,13 @@ package com.meta.emogi;
 import android.app.Application;
 import android.util.DisplayMetrics;
 import android.util.Log;
-
+import dagger.hilt.android.HiltAndroidApp;
 import com.meta.emogi.util.ads.AdManager;
 
-public class MyApplication extends Application {
+@HiltAndroidApp
+public class EmogiApp extends Application {
 
-    private static MyApplication instance;
+    private static EmogiApp instance;
 
     @Override
     public void onCreate() {
@@ -18,7 +19,7 @@ public class MyApplication extends Application {
         instance = this;
     }
 
-    public synchronized static MyApplication getInstance(){
+    public synchronized static EmogiApp getInstance(){
         return instance;
     }
 

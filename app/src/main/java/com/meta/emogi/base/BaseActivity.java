@@ -1,5 +1,5 @@
 package com.meta.emogi.base;
-import static com.meta.emogi.MyApplication.getDeviceHeightPx;
+import static com.meta.emogi.EmogiApp.getDeviceHeightPx;
 
 import android.content.Intent;
 import android.os.Bundle;

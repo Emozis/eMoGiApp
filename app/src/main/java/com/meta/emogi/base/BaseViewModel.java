@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.meta.emogi.MyApplication;
+import com.meta.emogi.EmogiApp;
 import com.meta.emogi.R;
 import com.meta.emogi.data.repository.ApiRepository;
 
@@ -63,7 +63,7 @@ public class BaseViewModel extends AndroidViewModel {
     }
 
     public BaseViewModel() {
-        super(MyApplication.getInstance());
+        super(EmogiApp.getInstance());
         apiRepository = new ApiRepository();
     }
 

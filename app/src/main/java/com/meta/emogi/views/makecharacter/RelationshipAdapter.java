@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.meta.emogi.MyApplication;
+import com.meta.emogi.EmogiApp;
 import com.meta.emogi.R;
 import com.meta.emogi.data.network.model.CharacterResponse;
 
@@ -45,7 +45,7 @@ public class RelationshipAdapter extends RecyclerView.Adapter<RelationshipAdapte
     public RowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_make_character, parent, false);
 
-        int screenHeight = MyApplication.getDeviceHeightPx();
+        int screenHeight = EmogiApp.getDeviceHeightPx();
         int itemHeight = (int) (screenHeight * 0.1f);
 
         RecyclerView.LayoutParams params =

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.meta.emogi.MyApplication;
+import com.meta.emogi.EmogiApp;
 import com.meta.emogi.R;
 import com.meta.emogi.data.network.model.CharacterResponse;
 
@@ -42,7 +42,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_menu_chracter, parent, false);
 
-        int screenWidth = MyApplication.getDeviceWidthPx();
+        int screenWidth = EmogiApp.getDeviceWidthPx();
         int itemWidth = (int) (screenWidth * 0.4f);
 
         RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(

@@ -1,56 +1,38 @@
 package com.meta.emogi.views.splash;
-
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.meta.emogi.R;
-import com.meta.emogi.data.auth.local.UserPreferenceLocalDataSource;
-import com.meta.emogi.data.auth.repo.SessionRepositoryImpl;
-import com.meta.emogi.domain.auth.repo.SessionRepository;
-import com.meta.emogi.domain.auth.usecase.CheckLoggedInUseCase;
-import com.meta.emogi.domain.auth.usecase.GetTokenUseCase;
+import com.meta.emogi.domain.auth.entity.StartDestination;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 
-public class SplashActivity extends AppCompatActivity {
-    private static final String TAG = "SplashActivity";
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
+public class SplashActivity extends AppCompatActivity {
     private SplashViewModel viewModel;
 
-    public SplashActivity() {
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
 
-        UserPreferenceLocalDataSource local = new UserPreferenceLocalDataSource(this);
-        SessionRepository repo = new SessionRepositoryImpl(local);
-        CheckLoggedInUseCase checkLoggedInUseCase = new CheckLoggedInUseCase(repo);
-        GetTokenUseCase getTokenUseCase = new GetTokenUseCase(repo);
+        viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
 
-
-        viewModel = new ViewModelProvider(this,new ViewModelProvider.Factory(){
-            @Override
-            public <T extends androidx.lifecycle.ViewModel> T create(Class<T> modelClass) {
-                return (T) new SplashViewModel(checkLoggedInUseCase,getTokenUseCase);
-            }
-        }).get(SplashViewModel.class);
-
-
-        viewModel.getGoMain().observe(this, flag -> {
-            if (Boolean.TRUE.equals(flag)) {
-                goToMainActivity();
-            } else if (Boolean.FALSE.equals(flag)) {
+        viewModel.getDestination().observe(this, dest -> {
+            if(dest == StartDestination.Go2Login.INSTANCE){
                 goToLoginActivity();
+            }else if(dest == StartDestination.Go2Main.INSTANCE){
+                goToMainActivity();
+            }else{
+                finish();
             }
-            finish();
         });
 
-        viewModel.start();
+        viewModel.decideNext();
     }
 
     private void goToMainActivity() {
