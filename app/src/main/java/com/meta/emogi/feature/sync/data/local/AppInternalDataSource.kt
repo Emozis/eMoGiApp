@@ -1,9 +1,11 @@
-package com.meta.emogi.data.auth.local
+package com.meta.emogi.feature.sync.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class UserPreferenceLocalDataSource(private val context: Context) : SessionLocalDataSource {
+class AppInternalDataSource @Inject constructor(@ApplicationContext private val context: Context) : IAppInternalDataSource {
 
     companion object {
         const val KEY_IS_LOGGED_IN = "is_logged_in"

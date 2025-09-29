@@ -54,6 +54,7 @@ public class LoadingView extends ConstraintLayout {
         binding.setLifecycleOwner(lifecycleOwner);
         binding.setVariable(BR.viewModel, viewModel);
 
+        Log.d("www", "setViewModel: ");
         if (viewModel instanceof BaseViewModel) {
             BaseViewModel vm = (BaseViewModel) viewModel;
 

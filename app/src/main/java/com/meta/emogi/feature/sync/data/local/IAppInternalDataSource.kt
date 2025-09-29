@@ -1,6 +1,6 @@
-package com.meta.emogi.data.auth.local
+package com.meta.emogi.feature.sync.data.local
 
-interface SessionLocalDataSource {
+interface IAppInternalDataSource {
     fun isLoggedIn(): Boolean
     fun getToken(): String?
     fun saveToken(token: String?)

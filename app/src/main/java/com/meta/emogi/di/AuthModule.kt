@@ -1,35 +1,71 @@
 package com.meta.emogi.di
 
 import android.content.Context
-import com.meta.emogi.data.auth.local.SessionLocalDataSource
-import com.meta.emogi.data.auth.local.UserPreferenceLocalDataSource
-import com.meta.emogi.data.auth.repo.SessionRepositoryImpl
-import com.meta.emogi.domain.auth.repo.SessionRepository
-import com.meta.emogi.domain.auth.usecase.CheckLoggedInUseCase
-import com.meta.emogi.domain.auth.usecase.GetTokenUseCase
+import com.meta.emogi.BuildConfig
+import com.meta.emogi.data.repository.ApiRepository
+import com.meta.emogi.feature.sync.data.impl.SessionRepository
+import com.meta.emogi.feature.sync.data.impl.AppUpdateChecker
+import com.meta.emogi.feature.sync.data.local.AppInternalDataSource
+import com.meta.emogi.feature.sync.data.local.IAppInternalDataSource
+import com.meta.emogi.feature.sync.domain.repo.IAppUpdateChecker
+import com.meta.emogi.feature.sync.domain.repo.ISessionRepository
+import com.meta.emogi.feature.sync.domain.usecase.CheckLoggedInUseCase
+import com.meta.emogi.feature.sync.domain.usecase.CheckMandatoryUpdateUseCase
+import com.meta.emogi.feature.sync.domain.usecase.GetTokenUseCase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
+// 🔹 인터페이스 ↔ 구현체 매핑: @Binds (본문 X, 구현체 1개만 파라미터)
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
-    @Provides @Singleton
-    fun provideLocal(@ApplicationContext context: Context): SessionLocalDataSource =
-        UserPreferenceLocalDataSource(context)
+abstract class AuthBindings {
+
+    @Binds @Singleton
+    abstract fun bindLocal(
+        impl: AppInternalDataSource
+    ): IAppInternalDataSource
+
+    @Binds @Singleton
+    abstract fun bindSessionRepo(
+        impl: SessionRepository
+    ): ISessionRepository
+}
+
+// 🔹 값/외부 의존/Context 필요한 것: @Provides
+@Module
+@InstallIn(SingletonComponent::class)
+object AuthProvides {
 
     @Provides @Singleton
-    fun provideRepo(local: SessionLocalDataSource): SessionRepository =
-        SessionRepositoryImpl(local)
+    fun provideUpdateChecker(
+        @ApplicationContext context: Context
+    ): IAppUpdateChecker = AppUpdateChecker(context)
+
+    // UseCase는 @Inject constructor 있으면 생략 가능. (원한다면 유지)
+    @Provides
+    fun provideCheckMandatoryUpdateUseCase(
+        checker: IAppUpdateChecker
+    ): CheckMandatoryUpdateUseCase = CheckMandatoryUpdateUseCase(checker)
 
     @Provides
-    fun provideCheckLoggedInUseCase(repo: SessionRepository): CheckLoggedInUseCase =
-        CheckLoggedInUseCase(repo)
+    fun provideCheckLoggedInUseCase(
+        repo: ISessionRepository
+    ): CheckLoggedInUseCase = CheckLoggedInUseCase(repo)
 
     @Provides
-    fun provideGetTokenUseCase(repo: SessionRepository): GetTokenUseCase =
-        GetTokenUseCase(repo)
+    fun provideGetTokenUseCase(
+        repo: ISessionRepository
+    ): GetTokenUseCase = GetTokenUseCase(repo)
+
+    @Provides @Named("appVersion")
+    fun provideAppVersion(): String = BuildConfig.VERSION_NAME
+
+    @Provides @Singleton
+    fun provideApiRepository(): ApiRepository = ApiRepository()
 }

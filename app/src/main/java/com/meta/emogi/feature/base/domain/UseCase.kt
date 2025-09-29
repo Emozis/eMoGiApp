@@ -1,4 +1,4 @@
-package com.meta.emogi.domain.common
+package com.meta.emogi.feature.base.domain
 
 abstract class UseCase<in P, R> {
     suspend operator fun invoke(params: P): AppResult<R> {

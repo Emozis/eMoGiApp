@@ -1,12 +1,12 @@
-package com.meta.emogi.data.auth.repo
+package com.meta.emogi.feature.sync.data.impl
 
-import com.meta.emogi.data.auth.local.SessionLocalDataSource
-import com.meta.emogi.domain.auth.repo.SessionRepository
-import com.meta.emogi.domain.common.AppResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.meta.emogi.feature.sync.data.local.IAppInternalDataSource
+import com.meta.emogi.feature.sync.domain.repo.ISessionRepository
+import com.meta.emogi.feature.base.domain.AppResult
+import javax.inject.Inject
 
-class SessionRepositoryImpl(private val local: SessionLocalDataSource) : SessionRepository {
+class SessionRepository @Inject constructor(private val local: IAppInternalDataSource) :
+    ISessionRepository {
     override suspend fun checkLoginState(): AppResult<Boolean> =
         try {
                 AppResult.Success(local.isLoggedIn())

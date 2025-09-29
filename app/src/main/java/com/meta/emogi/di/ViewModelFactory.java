@@ -12,7 +12,6 @@ import com.meta.emogi.views.chatlist.removeChatList.RemoveChatListViewModel;
 import com.meta.emogi.views.chatroom.ChatRoomViewModel;
 import com.meta.emogi.views.inquiry.checkInquiry.CheckInquiryViewModel;
 import com.meta.emogi.views.inquiry.createInquiry.CreateInquiryViewModel;
-import com.meta.emogi.views.login.LoginViewModel;
 import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageViewModel;
@@ -36,9 +35,7 @@ public class ViewModelFactory extends ViewModelProvider {
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
              if (modelClass.isAssignableFrom(ChatRoomViewModel.class)) {
                 return (T) new ChatRoomViewModel();
-            } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-                return (T) new LoginViewModel();
-            } else if (modelClass.isAssignableFrom(MakeCharacterViewModel.class)) {
+            }  else if (modelClass.isAssignableFrom(MakeCharacterViewModel.class)) {
                 return (T) new MakeCharacterViewModel();
             } else if (modelClass.isAssignableFrom(MenuViewModel.class)) {
                 return (T) new MenuViewModel();

@@ -1,8 +1,8 @@
-package com.meta.emogi.domain.auth.repo
+package com.meta.emogi.feature.sync.domain.repo
 
-import com.meta.emogi.domain.common.AppResult
+import com.meta.emogi.feature.base.domain.AppResult
 
-interface SessionRepository {
+interface ISessionRepository {
     suspend fun checkLoginState(): AppResult<Boolean>
     suspend fun getToken(): AppResult<String?>
     suspend fun saveToken(token:String?): AppResult<Unit>
