@@ -18,6 +18,10 @@
     <color name="main_black">#1C1D23</color>
     <color name="text_view_character_create">#1C1D23</color>
 
+    <!--    login-->
+    <color name="login_btn_bg">#525252</color>
+    <color name="login_btn_stroke">#868686</color>
+
     <!--    menu-->
     <color name="menu_my_chat_room">#321E58</color>
     <color name="menu_make_character">#1F5A7D</color>

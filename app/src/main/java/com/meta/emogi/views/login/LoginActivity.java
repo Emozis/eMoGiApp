@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.loginButton.setOnClickListener(v -> signIn());
+        binding.googleLoginButton.setOnClickListener(v -> signIn());
     }
 
     private void signIn() {
