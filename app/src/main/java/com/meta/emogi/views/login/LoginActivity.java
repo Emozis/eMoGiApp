@@ -44,10 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     // use case 로그인 시도 결과 반환
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.w(TAG, "===== 로그인 시도 =====");
                 try {
                     if (result.getResultCode() == Activity.RESULT_OK) {  // -1
-                        Log.d(TAG, "로그인 성공");
                         Intent data = result.getData();
                         if (data != null) {
                             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -73,13 +71,10 @@ public class LoginActivity extends AppCompatActivity {
     //토큰 반환 api 호출 usecase
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
         try {
-            Log.d(TAG, "handleSignInResult 시작");
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account != null) {
                 if (account.getIdToken() != null) {
-                    Log.d(TAG, "ID Token 존재: " + (account.getIdToken() != null));
-                    TokenModel requestToken = new TokenModel(account.getIdToken());
-                    viewModel.createAccessToken(requestToken);
+                    viewModel.handleGoogleIdToken(account.getIdToken());
                 } else {
                     Log.e(TAG, "ID Token이 null");
                 }
@@ -88,14 +83,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         } catch (ApiException e) {
             Log.e(TAG, "=== 구글 로그인 실패 ===");
-            Log.e(TAG, "상태 코드: " + e.getStatusCode());
-            Log.e(TAG, "상태 메시지: " + e.getStatus());
-            Log.e(TAG, "에러 메시지: " + e.getMessage());
-            Log.e(TAG, "로컬라이즈된 메시지: " + e.getLocalizedMessage());
-            // 주요 상태 코드:
-            // 10: DEVELOPER_ERROR (설정 문제)
-            // 12500: SIGN_IN_CANCELLED
-            // 12501: SIGN_IN_FAILED
         } catch (Exception e) {
             Log.e(TAG, "일반 Exception: " + e.getMessage(), e);
         }
@@ -110,19 +97,10 @@ public class LoginActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-
-        ConfigUtil configUtil = new ConfigUtil(this);
-
-        // 서버 OAuth 클라이언트 ID 가져오기
-        String oAuthClientId = configUtil.getProperty("OAUTH_CLIENT_ID");
-        Log.d(TAG, "OAUTH_CLIENT_ID: " + oAuthClientId);
-        Log.d(TAG, "패키지명: " + this.getPackageName());
-
+        String oAuthClientId = viewModel.getOauthClientId();
         try {
-            // GoogleSignInOptions 초기화
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(oAuthClientId).requestEmail().requestProfile().build();
-            // GoogleSignInClient 생성
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         } catch (Exception e) {
             Log.e(TAG, "Google Sign-In 초기화 실패: " + e.getMessage(), e);
@@ -152,23 +130,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         binding.loginButton.setOnClickListener(v -> signIn());
-
-        // FIXME: 2025. 9. 11. 없애야함
-        viewModel.loadingSuccess();
     }
 
     private void signIn() {
-        Log.d(TAG, "=== signIn 시작 ===");
         try {
             // 로그인 전에 항상 로그아웃 (계정 선택 화면 강제)
             mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
-                Log.d(TAG, "signOut 완료 - 성공: " + task.isSuccessful());
-
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                Log.d(TAG, "signInIntent 생성 - null 여부: " + (signInIntent == null));
-
                 if (signInIntent != null) {
-                    Log.d(TAG, "signInLauncher.launch 실행");
                     signInLauncher.launch(signInIntent);
                 } else {
                     Log.e(TAG, "signInIntent가 null - GoogleSignInClient 설정 문제");

@@ -65,7 +65,6 @@ public class BaseViewModel extends AndroidViewModel {
 
     public BaseViewModel() {
         super(EmogiApp.getInstance());
-        apiRepository = new ApiRepository();
     }
 
     public boolean onButtonClicked(View v) {

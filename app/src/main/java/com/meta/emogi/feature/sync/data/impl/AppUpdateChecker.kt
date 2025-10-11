@@ -12,12 +12,14 @@ import kotlin.coroutines.resume
 
 class AppUpdateChecker @Inject constructor(private val context: Context) : IAppUpdateChecker {
     override suspend fun isMandatory(): AppResult<Boolean> = suspendCancellableCoroutine { cont ->
-        val appUpdateManager = AppUpdateManagerFactory.create(context)
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
-                val mandatory = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-                cont.resume(AppResult.Success(mandatory))
-            }.addOnFailureListener {
-                cont.resume(AppResult.Failure("앱 업데이트 체크 에러"))
-            }
+        // FIXME: 임의로 업데이트 없음 처리 250929
+        cont.resume(AppResult.Failure("앱 업데이트 없음"))
+//        val appUpdateManager = AppUpdateManagerFactory.create(context)
+//        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
+//                val mandatory = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+//                cont.resume(AppResult.Success(mandatory))
+//            }.addOnFailureListener {
+//                cont.resume(AppResult.Failure("앱 업데이트 없음"))
+//            }
     }
 }

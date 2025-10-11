@@ -1,6 +1,7 @@
 package com.meta.emogi.views.splash;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class SplashActivity extends AppCompatActivity {
+    private static final String TAG = "SplashActivity";
 
     private static final int UPDATE_REQUEST_CODE = 1234;
     private SplashViewModel viewModel;
@@ -32,29 +34,34 @@ public class SplashActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         appUpdateManager = AppUpdateManagerFactory.create(this);
 
+        // 첫 페이지 설정
         viewModel.getDestination().observe(this, dest -> {
             switch (dest){
                 case LOGIN:
+                    Log.d(TAG, "goToLoginActivity");
                     goToLoginActivity();
                     break;
                 case HOME:
+                    Log.d(TAG, "goToMainActivity");
                     goToMainActivity();
                     break;
                 case UPDATE:
+                    Log.d(TAG, "startImmediateUpdate");
                     startImmediateUpdate();
                     break;
                 default:
+                    Log.d(TAG, "finish");
                     finish();
                     break;
             }
         });
-
         viewModel.decideNext();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //앱 업데이트 필요 확인
         appUpdateManager.getAppUpdateInfo().addOnSuccessListener(info -> {
             if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                 try {
@@ -102,7 +109,6 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }) .addOnFailureListener(e -> {
-            // 정보 조회 실패 → 강제 정책: 진입 차단
             e.printStackTrace();
             finish();
         });

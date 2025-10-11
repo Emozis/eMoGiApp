@@ -47,31 +47,10 @@ class SplashViewModel @Inject constructor(
                     Log.e(TAG, "Error deciding start UI: ${result.message}: ${result.cause}")
                     _destination.value = StartRoute.LOGIN
                 }
+                else -> {
+                    _destination.value = StartRoute.LOGIN
+                }
             }
         }
     }
-
-    //    fun setToken(token: String?) {
-    //        viewModelScope.launch {
-    //            when (val result = saveTokenUseCase(token)) {
-    //                is AppResult.Success -> {
-    //                    Log.d(TAG, "Token saved successfully")
-    //                }
-    //                is AppResult.Failure -> {
-    //                    Log.d(TAG, "Error saving token: ${result.message}")
-    //                }
-    //            })
-    //        }
-    //    }
-    //
-    //    fun logOut(){
-    //        viewModelScope.launch {
-    //            when (val r = logoutUseCase()) {
-    //                is AppResult.Success -> { /* 화면 이동/상태 초기화 */ }
-    //                is AppResult.Failure -> { /* 에러 표시 */ }
-    //            }
-    //        }
-    //    }
-
-
 }

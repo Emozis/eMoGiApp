@@ -12,6 +12,7 @@ import com.meta.emogi.feature.sync.domain.repo.ISessionRepository
 import com.meta.emogi.feature.sync.domain.usecase.CheckLoggedInUseCase
 import com.meta.emogi.feature.sync.domain.usecase.CheckMandatoryUpdateUseCase
 import com.meta.emogi.feature.sync.domain.usecase.GetTokenUseCase
+import com.meta.emogi.util.ConfigUtil
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,7 +22,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 import javax.inject.Singleton
 
-// 🔹 인터페이스 ↔ 구현체 매핑: @Binds (본문 X, 구현체 1개만 파라미터)
+// @Binds (본문 X, 구현체 1개만 파라미터)
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AuthBindings {
@@ -35,9 +36,14 @@ abstract class AuthBindings {
     abstract fun bindSessionRepo(
         impl: SessionRepository
     ): ISessionRepository
+
+    @Binds @Singleton
+    abstract fun bindAuthRepository(
+        impl: com.meta.emogi.feature.login.data.AuthRepository
+    ): com.meta.emogi.feature.login.domain.repo.IAuthRepository
 }
 
-// 🔹 값/외부 의존/Context 필요한 것: @Provides
+// 값/외부 의존/Context 필요한 것: @Provides
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthProvides {
@@ -68,4 +74,10 @@ object AuthProvides {
 
     @Provides @Singleton
     fun provideApiRepository(): ApiRepository = ApiRepository()
+
+    @Provides @Singleton
+    fun provideConfigUtil(@ApplicationContext context: Context): ConfigUtil = ConfigUtil(context)
+
+    @Provides @Named("oauthClientId")
+    fun provideOAuthClientId(configUtil: ConfigUtil): String = configUtil.getProperty("OAUTH_CLIENT_ID")
 }

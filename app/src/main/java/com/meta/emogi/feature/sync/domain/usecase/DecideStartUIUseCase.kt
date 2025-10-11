@@ -18,12 +18,11 @@ class DecideStartUIUseCase @Inject constructor(private val getToken: GetTokenUse
                             AppResult.Success(if (loginResult.value) StartRoute.HOME else StartRoute.LOGIN)
                         }
 
-                        is AppResult.Failure -> AppResult.Success(StartRoute.LOGIN)
+                        else -> AppResult.Success(StartRoute.LOGIN)
                     }
                 }
             }
-
-            is AppResult.Failure -> AppResult.Success(StartRoute.LOGIN)
+            else -> AppResult.Success(StartRoute.LOGIN)
         }
     } catch (e: Exception) {
         AppResult.Failure("DecideStartUIUseCase Error", e)
