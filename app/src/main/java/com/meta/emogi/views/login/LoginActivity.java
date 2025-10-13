@@ -113,9 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
         viewModel.getAccessToken().observe(this, accessToken -> {
             if (accessToken != null && accessToken.getData() != null && accessToken.getData().getAccessToken() != null) {
-                String accessedToken = accessToken.getData().getAccessToken();
-                TokenManager.getInstance().setToken(accessedToken);
-                onLoginSuccess();
+                moveToMainActivity();
             } else {
                 Log.e(TAG, "Login response, data, or access token is null");
                 Toast.makeText(this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
@@ -161,11 +159,8 @@ public class LoginActivity extends AppCompatActivity {
         // 카카오 로그인 콜백
         Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
             if (error != null) {
-                Log.e(TAG, "카카오계정으로 로그인 실패", error);
                 Toast.makeText(this, "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
             } else if (token != null) {
-                Log.i(TAG, "카카오계정으로 로그인 성공 " + token.getAccessToken());
-                Log.i(TAG, "카카오계정으로 로그인 성공 " + token.getIdToken());
                 viewModel.handleKakaoAccessToken(token.getAccessToken());
             }
             return null;
@@ -180,15 +175,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private static final String TAG = "LoginActivity";
-
-    public void onLoginSuccess() {
-        String token = TokenManager.getInstance().getToken();
-
-        // 정보저장 플로우 만들기
-//        userPreferenceManager.saveLoginInfo(token);
-        moveToMainActivity();
-    }
-
 
     public void moveToMainActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
