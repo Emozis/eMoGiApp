@@ -7,24 +7,16 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityMakeCharacterBinding;
 import com.meta.emogi.util.ads.AdManager;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBinding> {
 
     private static final String TAG = "MakeCharacterActivity";
-    private InterstitialAd mInterstitialAd;
     private int characterId;
     @Override
     protected int layoutId() {

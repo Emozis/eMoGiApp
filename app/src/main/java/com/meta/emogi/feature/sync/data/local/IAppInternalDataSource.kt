@@ -2,7 +2,9 @@ package com.meta.emogi.feature.sync.data.local
 
 interface IAppInternalDataSource {
     fun isLoggedIn(): Boolean
-    fun getToken(): String?
-    fun saveToken(token: String?)
+    fun getServerAccessToken(): String?
+    fun saveServerAccessToken(token: String?)
+    fun getServerRefreshToken(): String?
+    fun saveServerRefreshToken(token: String?)
     fun clearSession()
 }

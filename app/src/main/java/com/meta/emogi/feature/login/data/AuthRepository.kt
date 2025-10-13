@@ -1,7 +1,8 @@
 package com.meta.emogi.feature.login.data
 
 import com.meta.emogi.data.network.api.ApiCallBack
-import com.meta.emogi.data.network.model.TokenModel
+import com.meta.emogi.data.network.model.LoginRequest
+import com.meta.emogi.data.network.model.LoginResponse
 import com.meta.emogi.data.repository.ApiRepository
 import com.meta.emogi.feature.base.domain.AppResult
 import com.meta.emogi.feature.base.domain.RetryNeededException
@@ -18,17 +19,17 @@ class AuthRepository @Inject constructor(
 ) :IAuthRepository{
 
 
-    override suspend fun createAccessToken(idToken: String): AppResult<TokenModel> =
+    override suspend fun createAccessTokenGoogle(accessToken: String): AppResult<LoginResponse> =
         suspendCancellableCoroutine { cont ->
-            val request = TokenModel(idToken)
+            val request = LoginRequest(accessToken)
 
-            apiRepository.createAccessToken(request,  object : ApiCallBack.ApiResultHandler<TokenModel>{
-                override fun onSuccess(data: TokenModel) {
+            apiRepository.createAccessTokenGoogle(request,  object : ApiCallBack.ApiResultHandler<LoginResponse>{
+                override fun onSuccess(data: LoginResponse) {
                     if (cont.isActive) cont.resume(AppResult.Success(data))
                 }
 
                 override fun onFailed(t: Throwable) {
-                    if (cont.isActive) cont.resume(AppResult.Failure("토큰 발급 실패", t))
+                    if (cont.isActive) cont.resume(AppResult.Failure("google 로그인으로 토큰 발급 실패", t))
                 }
 
                 override fun onRetry() {
@@ -37,5 +38,25 @@ class AuthRepository @Inject constructor(
             })
         }
 
-    override suspend fun saveSessionToken(token: String): AppResult<Unit> = sessionRepo.saveToken(token)
+    override suspend fun createAccessTokenKakao(accessToken: String): AppResult<LoginResponse> =
+        suspendCancellableCoroutine { cont ->
+            val request = LoginRequest(accessToken)
+
+            apiRepository.createAccessTokenKakao(request,  object : ApiCallBack.ApiResultHandler<LoginResponse>{
+                override fun onSuccess(data: LoginResponse) {
+                    if (cont.isActive) cont.resume(AppResult.Success(data))
+                }
+
+                override fun onFailed(t: Throwable) {
+                    if (cont.isActive) cont.resume(AppResult.Failure("kakao 로그인으로 토큰 발급 실패", t))
+                }
+
+                override fun onRetry() {
+                    if (cont.isActive) cont.resumeWithException(RetryNeededException())
+                }
+            })
+        }
+
+
+    override suspend fun saveSessionToken(token: String): AppResult<Unit> = sessionRepo.saveServerAccessToken(token)
 }

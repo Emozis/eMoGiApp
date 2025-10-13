@@ -15,17 +15,17 @@ class SessionRepository @Inject constructor(private val local: IAppInternalDataS
             }
 
 
-    override suspend fun getToken(): AppResult<String?> =
+    override suspend fun getServerAccessToken(): AppResult<String?> =
         try{
-            AppResult.Success(local.getToken())
+            AppResult.Success(local.getServerAccessToken())
         }catch (t: Throwable){
            AppResult.Failure("토큰 읽기 실패", t)
         }
 
 
-    override suspend fun saveToken(token: String?): AppResult<Unit> =
+    override suspend fun saveServerAccessToken(token: String?): AppResult<Unit> =
         try {
-            local.saveToken(token)
+            local.saveServerAccessToken(token)
             AppResult.Success(Unit)
         } catch (t: Throwable) {
             AppResult.Failure("토큰 저장 실패", t)

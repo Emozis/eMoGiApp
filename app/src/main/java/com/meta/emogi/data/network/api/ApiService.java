@@ -4,8 +4,9 @@ import com.meta.emogi.data.network.model.ChatResponse;
 import com.meta.emogi.data.network.model.ChatLogResponse;
 import com.meta.emogi.data.network.model.CreateChatResponse;
 import com.meta.emogi.data.network.model.DeleteChatResponse;
+import com.meta.emogi.data.network.model.LoginRequest;
+import com.meta.emogi.data.network.model.LoginResponse;
 import com.meta.emogi.data.network.model.ResponseModel;
-import com.meta.emogi.data.network.model.TokenModel;
 import com.meta.emogi.data.network.model.UserData;
 import com.meta.emogi.data.network.model.CharacterImageResponse;
 
@@ -24,7 +25,11 @@ public interface ApiService {
 
     //로그인 권한 관련 api
     @POST("api/v1/auth/login/google")
-    Call<TokenModel> createAccessToken(@Body TokenModel request);
+    Call<LoginResponse> createAccessTokenGoogle(@Body LoginRequest request);
+
+    @POST("api/v1/auth/login/kakao")
+    Call<LoginResponse> createAccessTokenKakao(@Body LoginRequest request);
+
 
     //유저 관련 api
     @GET("api/v1/user/me")

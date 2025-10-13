@@ -22,11 +22,14 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.meta.emogi.BuildConfig;
 import com.meta.emogi.R;
-import com.meta.emogi.data.network.model.TokenModel;
 import com.meta.emogi.databinding.ActivityLoginBinding;
 import com.meta.emogi.domain.TokenManager;
-import com.meta.emogi.util.ConfigUtil;
 import com.meta.emogi.views.menu.MenuActivity;
+
+import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.user.UserApiClient;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -109,9 +112,14 @@ public class LoginActivity extends AppCompatActivity {
         viewModel.setAppVersion(BuildConfig.VERSION_NAME);
 
         viewModel.getAccessToken().observe(this, accessToken -> {
-            String accessedToken = accessToken.getAccessToken();
-            TokenManager.getInstance().setToken(accessedToken);
-            onLoginSuccess();
+            if (accessToken != null && accessToken.getData() != null && accessToken.getData().getAccessToken() != null) {
+                String accessedToken = accessToken.getData().getAccessToken();
+                TokenManager.getInstance().setToken(accessedToken);
+                onLoginSuccess();
+            } else {
+                Log.e(TAG, "Login response, data, or access token is null");
+                Toast.makeText(this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         binding.loading.setViewModel(viewModel);
@@ -129,10 +137,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.googleLoginButton.setOnClickListener(v -> signIn());
+        binding.googleLoginButton.setOnClickListener(v -> googleSignIn());
+        binding.kakaoLoginButton.setOnClickListener(v -> kakaoSignIn());
     }
 
-    private void signIn() {
+    private void googleSignIn() {
         try {
             // 로그인 전에 항상 로그아웃 (계정 선택 화면 강제)
             mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
@@ -145,6 +154,28 @@ public class LoginActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             Log.e(TAG, "signIn 메서드 예외 발생: " + e.getMessage(), e);
+        }
+    }
+
+    private void kakaoSignIn() {
+        // 카카오 로그인 콜백
+        Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
+            if (error != null) {
+                Log.e(TAG, "카카오계정으로 로그인 실패", error);
+                Toast.makeText(this, "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+            } else if (token != null) {
+                Log.i(TAG, "카카오계정으로 로그인 성공 " + token.getAccessToken());
+                Log.i(TAG, "카카오계정으로 로그인 성공 " + token.getIdToken());
+                viewModel.handleKakaoAccessToken(token.getAccessToken());
+            }
+            return null;
+        };
+
+        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+        if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(this)) {
+            UserApiClient.getInstance().loginWithKakaoTalk(this, callback);
+        } else {
+            UserApiClient.getInstance().loginWithKakaoAccount(this, callback);
         }
     }
 

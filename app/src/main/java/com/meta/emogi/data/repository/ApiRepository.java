@@ -3,13 +3,14 @@ import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.api.ApiService;
 import com.meta.emogi.data.network.api.RetrofitClient;
 import com.meta.emogi.data.network.model.CharacterResponse;
+import com.meta.emogi.data.network.model.LoginRequest;
+import com.meta.emogi.data.network.model.LoginResponse;
 import com.meta.emogi.domain.TokenManager;
 import com.meta.emogi.data.network.model.ChatResponse;
 import com.meta.emogi.data.network.model.ChatLogResponse;
 import com.meta.emogi.data.network.model.CharacterImageResponse;
 import com.meta.emogi.data.network.model.CreateChatResponse;
 import com.meta.emogi.data.network.model.ResponseModel;
-import com.meta.emogi.data.network.model.TokenModel;
 import com.meta.emogi.data.network.model.UserData;
 import com.meta.emogi.data.network.model.DeleteChatResponse;
 
@@ -120,10 +121,16 @@ public class ApiRepository {
     }
 
     //login
-    public void createAccessToken(TokenModel requestToken, ApiCallBack.ApiResultHandler<TokenModel> handler) {
-        Call<TokenModel> call = apiService.createAccessToken(requestToken);
+    public void createAccessTokenGoogle(LoginRequest requestToken, ApiCallBack.ApiResultHandler<LoginResponse> handler) {
+        Call<LoginResponse> call = apiService.createAccessTokenGoogle(requestToken);
         retryCall(call,handler);
     }
+
+    public void createAccessTokenKakao(LoginRequest requestToken, ApiCallBack.ApiResultHandler<LoginResponse> handler) {
+        Call<LoginResponse> call = apiService.createAccessTokenKakao(requestToken);
+        retryCall(call,handler);
+    }
+
 
     //characterDetail
     public void createChatRoom(CreateChatResponse createChatResponse, ApiCallBack.ApiResultHandler<CreateChatResponse> handler) {

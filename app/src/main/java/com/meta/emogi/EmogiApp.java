@@ -3,6 +3,9 @@ package com.meta.emogi;
 import android.app.Application;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
+import com.kakao.sdk.common.KakaoSdk;
+
 import dagger.hilt.android.HiltAndroidApp;
 import com.meta.emogi.util.ads.AdManager;
 
@@ -17,6 +20,7 @@ public class EmogiApp extends Application {
         getDeviceSize();
         AdManager.init(this);
         instance = this;
+        KakaoSdk.init(this, "d692ff90ee5d05d30288f303aa3d4313");
     }
 
     public synchronized static EmogiApp getInstance(){

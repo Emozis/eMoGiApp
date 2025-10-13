@@ -11,15 +11,16 @@ class AppInternalDataSource @Inject constructor(@ApplicationContext private val 
         const val KEY_IS_LOGGED_IN = "is_logged_in"
         const val PREF_NAME = "user_prefs"
         const val KEY_USER_TOKEN = "user_token"
+        const val KEY_REFRESH_TOKEN = "refresh_token"
     }
 
     var pref: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
     override fun isLoggedIn(): Boolean = pref.getBoolean(KEY_IS_LOGGED_IN, false);
 
-    override fun getToken(): String? = pref.getString(KEY_USER_TOKEN, null);
+    override fun getServerAccessToken(): String? = pref.getString(KEY_USER_TOKEN, null);
 
-    override fun saveToken(token: String?) {
+    override fun saveServerAccessToken(token: String?) {
         val editor = pref.edit()
         if (token.isNullOrBlank()) {
             editor.clear()
@@ -27,6 +28,18 @@ class AppInternalDataSource @Inject constructor(@ApplicationContext private val 
         } else {
             editor.putBoolean(KEY_IS_LOGGED_IN, true)
             editor.putString(KEY_USER_TOKEN, token)
+        }
+        editor.apply()
+    }
+
+    override fun getServerRefreshToken(): String? = pref.getString(KEY_USER_TOKEN, null);
+
+    override fun saveServerRefreshToken(token: String?) {
+        val editor = pref.edit()
+        if (token.isNullOrBlank()) {
+            editor.remove(KEY_REFRESH_TOKEN)
+        } else {
+            editor.putString(KEY_REFRESH_TOKEN, token)
         }
         editor.apply()
     }
