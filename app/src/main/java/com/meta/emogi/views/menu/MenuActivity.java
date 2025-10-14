@@ -34,12 +34,6 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
     protected int layoutId() {
         return R.layout.activity_menu;
     }
-//    @Override
-//    protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
-//        binding.toolbar.settingView(toolbarRequest);
-//    }
-
-
 
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
@@ -60,8 +54,6 @@ public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
         super.onCreate(savedInstanceState);
         setupBottomNavigation(binding.bottomNavigation, R.id.nav_home);
     }
-
-
 
     public void moveToChatList(){
         Intent intent = new Intent(MenuActivity.this, ChatListActivity.class);

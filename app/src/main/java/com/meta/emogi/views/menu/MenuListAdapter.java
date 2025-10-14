@@ -18,15 +18,14 @@ import com.meta.emogi.data.network.model.CharacterResponse;
 
 import java.util.List;
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.CharacterViewHolder> {
+
+    private static final int TYPE_FIRST = 0;
+    private static final int TYPE_NORMAL = 1;
     private List<CharacterResponse> characterList;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private OnItemClickListener onItemClickListener;
 
     private static final String TAG = "MenuListAdapter";
-
-    public MenuListAdapter(List<CharacterResponse> characterList) {
-        this.characterList = characterList;
-    }
 
     public interface OnItemClickListener {
         void onItemClick(int characterId);
@@ -36,20 +35,36 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         this.onItemClickListener = listener;
     }
 
+    public MenuListAdapter(List<CharacterResponse> characterList) {
+        this.characterList = characterList;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? TYPE_FIRST : TYPE_NORMAL;
+    }
+
+
     @NonNull
     @Override
     public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_menu_chracter, parent, false);
-
-        int screenWidth = EmogiApp.getDeviceWidthPx();
-        int itemWidth = (int) (screenWidth * 0.4f);
-
-        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
-                itemWidth,
-                RecyclerView.LayoutParams.MATCH_PARENT
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                /// TODO: 2025. 10. 14. 첫번째 이미지 레이아웃 변경 필요
+                viewType == TYPE_FIRST ? R.layout.item_menu_chracter  // 새로 추가
+                        : R.layout.item_menu_chracter,       // 기존 레이아웃
+                parent,
+                false
         );
-        view.setLayoutParams(params);
+
+
+//        int screenWidth = EmogiApp.getDeviceWidthPx();
+//        int itemWidth = (int) (screenWidth * 0.4f);
+//
+//        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+//                itemWidth,
+//                RecyclerView.LayoutParams.MATCH_PARENT
+//        );
+//        view.setLayoutParams(params);
 
         return new CharacterViewHolder(view);
     }
@@ -62,13 +77,11 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         holder.characterDescription.setText(character.getCharacterDetails());
         // ImageView에 이미지를 로드하는 코드를 추가
 
-        RequestOptions requestOptions = new RequestOptions()
-                .transform(new RoundedCorners(20)); // 반지름 설정
-
+        RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 반지름 설정
         Glide.with(holder.itemView.getContext()).load(character.getCharacterProfile()) // characterProfile은 이미지 URL
-                .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
+                .placeholder(R.drawable.drawable_default_image) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
                 .apply(requestOptions) // 둥근 모서리 적용
-                .error(R.drawable.drawable_background_toolbar_profile) // 이미지 로드 실패 시 보여줄 이미지
+                .error(R.drawable.drawable_default_image) // 이미지 로드 실패 시 보여줄 이미지
                 .into(holder.characterImage); // ImageView에 로드
 
         holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {

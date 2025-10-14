@@ -14,6 +14,7 @@ import com.meta.emogi.views.inquiry.checkInquiry.CheckInquiryViewModel;
 import com.meta.emogi.views.inquiry.createInquiry.CreateInquiryViewModel;
 import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
+import com.meta.emogi.views.menu.home.HomeViewModel;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageViewModel;
 import com.meta.emogi.views.profile.myPage.MyPageViewModel;
 import com.meta.emogi.views.toolbar.ToolbarViewModel;
@@ -55,7 +56,9 @@ public class ViewModelFactory extends ViewModelProvider {
                 return (T) new CheckInquiryViewModel();
             } else if (modelClass.isAssignableFrom(CreateInquiryViewModel.class)) {
                 return (T) new CreateInquiryViewModel();
-            }
+            }else if (modelClass.isAssignableFrom(HomeViewModel.class)) {
+                 return (T) new HomeViewModel();
+             }
 
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

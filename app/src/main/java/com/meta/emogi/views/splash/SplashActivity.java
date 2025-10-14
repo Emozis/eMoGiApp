@@ -11,6 +11,7 @@ import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
+import com.meta.emogi.BuildConfig;
 import com.meta.emogi.R;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.menu.MenuActivity;
@@ -33,6 +34,13 @@ public class SplashActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         appUpdateManager = AppUpdateManagerFactory.create(this);
+
+
+        /// TODO: 2025. 10. 14. 디버그 모드 설정
+        if (BuildConfig.DEBUG) { // 디버그 모드일 때만 실행
+            startActivity(new Intent(this, MenuActivity.class));
+            finish();
+        }
 
         // 첫 페이지 설정
         viewModel.getDestination().observe(this, dest -> {
@@ -95,6 +103,14 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void goToDebugActivity() {
+        Intent intent = new Intent(this, MenuActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void startImmediateUpdate(){
         appUpdateManager.getAppUpdateInfo().addOnSuccessListener(info -> {
