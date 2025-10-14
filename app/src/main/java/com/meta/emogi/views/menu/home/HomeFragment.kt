@@ -1,16 +1,13 @@
 package com.meta.emogi.views.menu.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.meta.emogi.R
 import com.meta.emogi.base.BaseFragment
 import com.meta.emogi.data.network.model.CharacterResponse
 import com.meta.emogi.databinding.FragmentHomeBinding
-import com.meta.emogi.views.menu.MenuListAdapter
 import com.meta.emogi.views.toolbar.ToolbarView
 import com.meta.emogi.views.toolbar.ToolbarView.ToolbarRequest
 
@@ -38,7 +35,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun registerObservers() {
-        // TODO("Not yet implemented")
+        viewModel.Go2RankFrag().observe(viewLifecycleOwner) {
+            findNavController(requireView()).navigate(R.id.action_homeFragment_to_rankFragment)
+        }
     }
 
 
@@ -78,6 +77,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             mockList.add(c)
         }
         return mockList
-
     }
 }

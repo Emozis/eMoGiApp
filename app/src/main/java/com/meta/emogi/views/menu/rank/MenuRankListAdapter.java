@@ -1,4 +1,5 @@
-package com.meta.emogi.views.menu;
+package com.meta.emogi.views.menu.rank;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.meta.emogi.EmogiApp;
 import com.meta.emogi.R;
 import com.meta.emogi.data.network.model.CharacterResponse;
 
 import java.util.List;
-public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.CharacterViewHolder> {
 
-    private static final int TYPE_FIRST = 0;
-    private static final int TYPE_NORMAL = 1;
+public class MenuRankListAdapter extends RecyclerView.Adapter<com.meta.emogi.views.menu.rank.MenuRankListAdapter.CharacterViewHolder> {
+
     private List<CharacterResponse> characterList;
     private int selectedPosition = RecyclerView.NO_POSITION;
-    private OnItemClickListener onItemClickListener;
+    private com.meta.emogi.views.menu.home.MenuListAdapter.OnItemClickListener onItemClickListener;
 
     private static final String TAG = "MenuListAdapter";
 
@@ -31,44 +30,37 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
         void onItemClick(int characterId);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(com.meta.emogi.views.menu.home.MenuListAdapter.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
 
-    public MenuListAdapter(List<CharacterResponse> characterList) {
+    public MenuRankListAdapter(List<CharacterResponse> characterList) {
         this.characterList = characterList;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position == 0 ? TYPE_FIRST : TYPE_NORMAL;
     }
 
 
     @NonNull
     @Override
-    public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public com.meta.emogi.views.menu.rank.MenuRankListAdapter.CharacterViewHolder onCreateViewHolder(@NonNull
+                                                                                                 ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                /// TODO: 2025. 10. 14. 첫번째 이미지 레이아웃 변경 필요
-                viewType == TYPE_FIRST ? R.layout.item_menu_chracter  // 새로 추가
-                        : R.layout.item_menu_chracter,       // 기존 레이아웃
+                R.layout.item_rank_character ,
                 parent,
                 false
         );
 
 
-//        int screenWidth = EmogiApp.getDeviceWidthPx();
-//        int itemWidth = (int) (screenWidth * 0.4f);
-//
-//        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
-//                itemWidth,
-//                RecyclerView.LayoutParams.MATCH_PARENT
-//        );
-//        view.setLayoutParams(params);
+        //        int screenWidth = EmogiApp.getDeviceWidthPx();
+        //        int itemWidth = (int) (screenWidth * 0.4f);
+        //
+        //        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+        //                itemWidth,
+        //                RecyclerView.LayoutParams.MATCH_PARENT
+        //        );
+        //        view.setLayoutParams(params);
 
-        return new CharacterViewHolder(view);
+        return new com.meta.emogi.views.menu.rank.MenuRankListAdapter.CharacterViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
         CharacterResponse character = characterList.get(position);

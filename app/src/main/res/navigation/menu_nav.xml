@@ -6,12 +6,19 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.meta.emogi.views.menu.MenuFragment"
-        android:label="MenuFragment"
-        tools:layout="@layout/fragment_menu"/>
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.meta.emogi.views.menu.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_rankFragment"
+            app:destination="@id/rankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rankFragment"
+        android:name="com.meta.emogi.views.menu.rank.RankFragment"
+        android:label="RankFragment" >
+        <action
+            android:id="@+id/action_rankFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

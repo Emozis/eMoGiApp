@@ -9,8 +9,8 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
-import com.meta.emogi.base.BaseViewModel;
 import com.meta.emogi.databinding.FragmentMenuBinding;
+import com.meta.emogi.views.menu.home.MenuListAdapter;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
 public class MenuFragment extends BaseFragment<FragmentMenuBinding, MenuViewModel> {
