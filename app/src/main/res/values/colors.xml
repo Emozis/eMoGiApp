@@ -26,6 +26,9 @@
     <color name="menu_my_chat_room">#321E58</color>
     <color name="menu_make_character">#1F5A7D</color>
     <color name="menu_2_profile_btn">#9B9B9B</color>
+    <color name="menu_rank_type_default_bg">#525252</color>
+    <color name="menu_rank_type_selected_bg">#B39EFA</color>
+
 
     <!--    background-->
     <color name="bg_toolbar">#1C1D23</color>

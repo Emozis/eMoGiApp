@@ -7,7 +7,17 @@
     <item
         android:id="@+id/nav_chat_list"
         android:icon="@drawable/ic_chat"
-        android:title="채팅" />
+        android:title="대화" />
+
+    <item
+        android:id="@+id/nav_create"
+        android:icon="@drawable/ic_create"
+        android:title="제작" />
+
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search"
+        android:title="탐색" />
 
     <item
         android:id="@+id/nav_profile"

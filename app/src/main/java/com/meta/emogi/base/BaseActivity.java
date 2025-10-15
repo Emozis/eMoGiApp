@@ -17,7 +17,9 @@ import androidx.databinding.ViewDataBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.meta.emogi.R;
 import com.meta.emogi.views.chatlist.ChatListActivity;
+import com.meta.emogi.views.inquiry.InquiryActivity;
 import com.meta.emogi.views.login.LoginActivity;
+import com.meta.emogi.views.makecharacter.MakeCharacterActivity;
 import com.meta.emogi.views.menu.MenuActivity;
 import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.profile.ProfileActivity;
@@ -102,6 +104,10 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
                 intent = new Intent(this, MenuActivity.class);
             } else if (itemId == R.id.nav_chat_list) {
                 intent = new Intent(this, ChatListActivity.class);
+            }else if (itemId == R.id.nav_create) {
+                intent = new Intent(this, MakeCharacterActivity.class);
+            }else if (itemId == R.id.nav_search) {
+                intent = new Intent(this, InquiryActivity.class);
             } else if (itemId == R.id.nav_profile) {
                 intent = new Intent(this, ProfileActivity.class);
             }

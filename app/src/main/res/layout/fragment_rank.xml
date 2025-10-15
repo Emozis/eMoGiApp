@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.meta.emogi.base.BaseViewModel" />
 
         <variable
@@ -16,7 +17,6 @@
         android:layout_height="match_parent"
         tools:context=".views.menu.MenuFragment">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_menu"
             android:layout_width="match_parent"
@@ -27,30 +27,99 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_toolbar"
+                android:id="@+id/layout_title"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/bg_toolbar"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-
-                <ImageView
-                    android:id="@+id/title"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/logo_t"
+                <TextView
+                    android:id="@+id/title_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_space_semi_medium"
+                    android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+                    android:text="홈"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_large"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.25"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/title_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_space_semi_medium"
+                    android:text="랭킹"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_large"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/title_home"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rank_type_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.08"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_title">
+
+                <TextView
+                    android:id="@+id/rankCategoryView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_space_small"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_rank_type_background"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="일간"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/rankCategoryView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_space_small"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_rank_type_background"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="주간"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rankCategoryView1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/rankCategoryView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_space_small"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_rank_type_background"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="월간"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rankCategoryView2"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,82 +130,33 @@
                 android:background="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+                app:layout_constraintTop_toBottomOf="@+id/rank_type_layout"
                 />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_middle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_rank_character"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/common_space_medium"
+                android:layout_marginBottom="@dimen/common_space_medium"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.325"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view1">
+                app:layout_constraintTop_toBottomOf="@+id/view1"
+                app:layout_constraintVertical_bias="1.0"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_rank_character" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_middle_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.15"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/title_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/common_space_semi_medium"
-                        android:text="홈"
-                        android:textColor="@color/white"
-                        android:onClick="@{v -> viewModel.onButtonClicked(v)}"
-                        android:textSize="@dimen/common_text_size_large"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/title_rank"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/common_space_semi_medium"
-                        android:text="랭킹"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/common_text_size_large"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/title_home"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_rank_character"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/common_space_medium"
-                    android:layout_marginBottom="@dimen/common_space_medium"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_middle_button"
-                    app:layout_constraintVertical_bias="1.0"
-                    tools:itemCount="5"
-                    tools:listitem="@layout/item_rank_character" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.meta.emogi.views.loading.LoadingView
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="1dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.meta.emogi.views.loading.LoadingView
-            android:id="@+id/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
