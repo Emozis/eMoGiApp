@@ -84,6 +84,18 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <ImageView
+                    android:id="@+id/ads"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.10"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_middle_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/drawable_rank_type_background"
+                    />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_rank_character"
                     android:layout_width="match_parent"
@@ -96,8 +108,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_middle_button"
-                    app:layout_constraintVertical_bias="1.0"
+                    app:layout_constraintTop_toBottomOf="@+id/ads"
+                    app:layout_constraintVertical_bias="0.85"
                     app:spanCount="2"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_home_character" />

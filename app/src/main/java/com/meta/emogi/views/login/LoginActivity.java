@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,6 +30,11 @@ import com.meta.emogi.views.menu.MenuActivity;
 
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
@@ -71,16 +78,45 @@ public class LoginActivity extends AppCompatActivity {
             }
     );
 
+    // Access Token을 가져오는 메소드 (백그라운드 스레드에서 실행 필요)
+    private void getAccessToken(GoogleSignInAccount account) {
+        // 백그라운드 스레드에서 네트워크 작업을 수행합니다.
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            try {
+                String scope = "oauth2:profile email";
+
+                // GoogleAuthUtil을 사용하여 Access Token을 가져옵니다.
+                String accessToken = GoogleAuthUtil.getToken(getApplicationContext(), account.getAccount(), scope);
+
+                if (accessToken != null) {
+                    Log.d("ACCESS_TOKEN_CHECK", "Google ACCESS Token: " + accessToken);
+
+                    // UI 스레드에서 ViewModel을 호출합니다.
+                    runOnUiThread(() -> {
+                        viewModel.handleGoogleIdToken(accessToken); // 이름은 그대로 두지만 실제로는 Access Token
+                    });
+                } else {
+                    Log.e(TAG, "Access Token이 null");
+                }
+
+            } catch (IOException | GoogleAuthException e) {
+                Log.e(TAG, "Access Token 가져오기 실패", e);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "구글 인증에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+
+
     //토큰 반환 api 호출 usecase
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account != null) {
-                if (account.getIdToken() != null) {
-                    viewModel.handleGoogleIdToken(account.getIdToken());
-                } else {
-                    Log.e(TAG, "ID Token이 null");
-                }
+                getAccessToken(account);
             } else {
                 Log.e(TAG, "account가 null");
             }
@@ -101,6 +137,8 @@ public class LoginActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         String oAuthClientId = viewModel.getOauthClientId();
+        Log.d("www", "google oauth token: "+oAuthClientId);
+
         try {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(oAuthClientId).requestEmail().requestProfile().build();
@@ -135,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        viewModel.getAppKeyHash(getApplicationContext());
         binding.googleLoginButton.setOnClickListener(v -> googleSignIn());
         binding.kakaoLoginButton.setOnClickListener(v -> kakaoSignIn());
     }
@@ -161,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
             if (error != null) {
                 Toast.makeText(this, "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
             } else if (token != null) {
+                Log.d("www", "kakaoSignIn: "+token);
                 viewModel.handleKakaoAccessToken(token.getAccessToken());
             }
             return null;

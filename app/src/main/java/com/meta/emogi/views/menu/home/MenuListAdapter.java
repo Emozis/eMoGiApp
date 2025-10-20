@@ -83,6 +83,12 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Charac
                 .error(R.drawable.drawable_default_image) // 이미지 로드 실패 시 보여줄 이미지
                 .into(holder.characterImage); // ImageView에 로드
 
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+        if (position == 0) {
+            params.bottomMargin = (int) (holder.itemView.getResources().getDisplayMetrics().density * 16);
+        }
+
+
         holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

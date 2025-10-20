@@ -106,8 +106,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
                 intent = new Intent(this, ChatListActivity.class);
             }else if (itemId == R.id.nav_create) {
                 intent = new Intent(this, MakeCharacterActivity.class);
-            }else if (itemId == R.id.nav_search) {
-                intent = new Intent(this, InquiryActivity.class);
             } else if (itemId == R.id.nav_profile) {
                 intent = new Intent(this, ProfileActivity.class);
             }

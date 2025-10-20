@@ -59,6 +59,11 @@ public class BaseViewModel extends AndroidViewModel {
         _loadingMessage.postValue("데이터 로딩에 문제가 생겼습니다.\n 재시도 중입니다.\n\n잠시만 기다려주세요.");
     }
 
+
+    public void forDebug() {
+        _loadingState.postValue(LoadingState.SUCCESS);
+        _loadingMessage.postValue("");
+    }
     public LiveData<Integer> buttonClicked() {
         return _buttonClicked;
     }

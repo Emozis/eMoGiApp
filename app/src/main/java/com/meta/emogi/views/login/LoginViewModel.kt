@@ -1,8 +1,11 @@
 package com.meta.emogi.views.login
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.common.util.Utility
 import com.meta.emogi.base.BaseViewModel
 import com.meta.emogi.data.network.model.LoginResponse
 import com.meta.emogi.data.repository.ApiRepository
@@ -41,6 +44,7 @@ class LoginViewModel @Inject constructor(
 
 
     fun handleGoogleIdToken(accessToken: String) {
+
         loading()
 
         viewModelScope.launch {
@@ -60,6 +64,12 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+
+    fun getAppKeyHash(context: Context){
+        val keyHash = Utility.getKeyHash(context)
+        Log.d("www","keyhash 값: "+ keyHash)
+    }
+
     fun handleKakaoAccessToken(accessToken: String?) {
         loading()
 
@@ -70,6 +80,7 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
+                Log.d("www", "handleKakaoAccessToken: 토큰: $accessToken")
                 when (val result = createAccessTokenKakao(accessToken)) {
                     is AppResult.Success -> {
                         _accessToken.value = result.value

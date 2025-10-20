@@ -29,15 +29,73 @@
             app:layout_constraintVertical_weight="8"
             >
 
+            <View
+                android:id="@+id/divider_top"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/scrap_tab"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/common_space_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_top"
+                >
+
+                <TextView
+                    android:id="@+id/scrap_tab_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_space_large"
+                    android:text="스크랩한 캐릭터"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/scrap_tab_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_space_large"
+                    android:text="아직 스크랩한 캐릭터가 없어요"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_medium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider_middle"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrap_tab"
+                />
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chat_tab"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.05"
                 android:layout_marginTop="@dimen/common_space_medium"
+                app:layout_constraintTop_toBottomOf="@+id/divider_middle"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.05"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 >
 
                 <TextView
@@ -45,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/common_space_large"
-                    android:text="채팅"
+                    android:text="최신순"
                     android:textColor="@color/white"
                     android:textSize="@dimen/common_text_size_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -62,30 +120,30 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.1" />
 
-                <ImageView
-                    android:id="@+id/add_chat"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="@dimen/common_space_semi_medium"
-                    android:onClick="@{v->viewModel.onButtonClicked(v)}"
-                    android:src="@drawable/ic_add_chat"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/remove_chat"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.07" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/add_chat"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_marginEnd="@dimen/common_space_semi_medium"-->
+<!--                    android:onClick="@{v->viewModel.onButtonClicked(v)}"-->
+<!--                    android:src="@drawable/ic_add_chat"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/remove_chat"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintWidth_percent="0.07" />-->
 
-                <ImageView
-                    android:id="@+id/remove_chat"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.07"
-                    android:layout_marginEnd="@dimen/common_space_large"
-                    android:onClick="@{v->viewModel.onButtonClicked(v)}"
-                    android:src="@drawable/ic_remove_chat"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+<!--                <ImageView-->
+<!--                    android:id="@+id/remove_chat"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_marginEnd="@dimen/common_space_large"-->
+<!--                    android:onClick="@{v->viewModel.onButtonClicked(v)}"-->
+<!--                    android:src="@drawable/ic_remove_chat"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintWidth_percent="0.07"-->
+<!--                    />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -101,15 +159,12 @@
                 tools:listitem="@layout/item_chat_list"
                 />
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.meta.emogi.views.loading.LoadingView
             android:id="@+id/loading"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+            android:layout_height="match_parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

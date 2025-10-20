@@ -15,11 +15,6 @@
         android:title="제작" />
 
     <item
-        android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search"
-        android:title="탐색" />
-
-    <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
         android:title="프로필" />
