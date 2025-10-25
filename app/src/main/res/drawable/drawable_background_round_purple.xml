@@ -5,6 +5,6 @@
     <corners android:radius="20dp" />
 
     <!-- 배경 색상 (필요에 따라 변경) -->
-    <solid android:color="@color/menu_my_chat_room" />
+    <solid android:color="@color/menu_rank_type_selected_bg" />
 
 </shape>

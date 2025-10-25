@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Persona" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/color_default_background</item>
+        <item name="android:windowBackground">@color/emozi2_default_bg</item>
         <item name="android:textColor">@color/color_default_text</item>
         <item name="android:buttonStyle">@style/MyButtonStyle</item>
         <item name="colorAccent">@color/white</item> <!-- Accent 색상을 하얀색으로 설정 -->
