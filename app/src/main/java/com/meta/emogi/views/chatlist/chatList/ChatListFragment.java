@@ -64,6 +64,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
         setAdapter();
         /// FIXME: 2025. 10. 15. 디버그용 코드 제거 필요
         viewModel.forDebug();
+        viewModel.setDebugData();
 //        viewModel.getChatList();
     }
 

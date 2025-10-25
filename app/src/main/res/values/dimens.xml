@@ -21,6 +21,8 @@
     <!--    chat list img-->
     <dimen name="chat_list_img">65dp</dimen>
     <dimen name="chat_list_check_box">1</dimen>
+    <dimen name="chat_list_alarm">12dp</dimen>
+
 
     <!--    menu-->
     <dimen name="menu_top_btn_size">130dp</dimen>

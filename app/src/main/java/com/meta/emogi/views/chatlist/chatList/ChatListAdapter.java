@@ -65,12 +65,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         holder.characterName.setText(chat.getCharacter().getCharacterName());
         holder.itemMenuCharacter.setSelected(position == selectedPosition);
         holder.lastTalk.setText(chat.getLastMessage());
-        holder.lastTalkTime.setText(chat.getLastMessageAt());
+//        holder.lastTalkTime.setText(chat.getLastMessageAt());
 
         if (chat.getEmptyChat()) {
             holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
         } else {
-            holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.yellow));
+            holder.lastTalk.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.gray));
         }
 
         holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +94,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
             }
         });
 
-        RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(20)); // 반지름 설정
+        RequestOptions requestOptions = new RequestOptions().transform(new RoundedCorners(100)); // 반지름 설정
 
         Glide.with(holder.itemView.getContext()).load(chat.getCharacter().getCharacterProfile()) // characterProfile은 이미지 URL
                 .placeholder(R.drawable.drawable_background_toolbar_profile) // 이미지를 로드하는 동안 보여줄 플레이스홀더 이미지
@@ -123,7 +123,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
             characterImage = itemView.findViewById(R.id.character_image);
             characterName = itemView.findViewById(R.id.character_name);
             lastTalk = itemView.findViewById(R.id.last_talk);
-            lastTalkTime = itemView.findViewById(R.id.last_talk_time);
+//            lastTalkTime = itemView.findViewById(R.id.last_talk_time);
 
         }
 

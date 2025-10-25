@@ -15,6 +15,7 @@ import com.meta.emogi.data.network.api.ApiCallBack;
 import com.meta.emogi.data.network.model.ChatResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -69,6 +70,51 @@ public class ChatListViewModel extends BaseViewModel {
                 loadingRetry();
             }
         });
+    }
+
+    public void setDebugData() {
+        List<ChatResponse> dummyData = new ArrayList<>();
+
+        // Dummy data 1
+        ChatResponse chat1 = new ChatResponse();
+        chat1.setChatId(1);
+        ChatResponse.Character character1 = new ChatResponse.Character();
+        character1.setCharacterId(101);
+        character1.setCharacterName("덤프");
+        character1.setCharacterProfile("https://picsum.photos/300/300?random=1");
+        chat1.setCharacter(character1);
+        chat1.setLastMessage("안녕! 무슨 일이야?");
+        chat1.setLastMessageAt("오후\n3:45");
+        chat1.setEmptyChat(false);
+        dummyData.add(chat1);
+
+        // Dummy data 2
+        ChatResponse chat2 = new ChatResponse();
+        chat2.setChatId(2);
+        ChatResponse.Character character2 = new ChatResponse.Character();
+        character2.setCharacterId(102);
+        character2.setCharacterName("에러");
+        character2.setCharacterProfile("https://picsum.photos/300/300?random=2");
+        chat2.setCharacter(character2);
+        chat2.setLastMessage("최근에 대화한 채팅이 없습니다.\n어서 이야기해보세요");
+        chat2.setLastMessageAt("10월 24일");
+        chat2.setEmptyChat(true);
+        dummyData.add(chat2);
+
+        // Dummy data 3
+        ChatResponse chat3 = new ChatResponse();
+        chat3.setChatId(3);
+        ChatResponse.Character character3 = new ChatResponse.Character();
+        character3.setCharacterId(103);
+        character3.setCharacterName("테스트");
+        character3.setCharacterProfile("https://picsum.photos/300/300?random=3");
+        chat3.setCharacter(character3);
+        chat3.setLastMessage("오늘 날씨 좋다!");
+        chat3.setLastMessageAt("오전\n9:10");
+        chat3.setEmptyChat(false);
+        dummyData.add(chat3);
+
+        _chatList.postValue(dummyData);
     }
 
     private List<ChatResponse> formatChatList(List<ChatResponse> chatlist){
