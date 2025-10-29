@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.meta.emogi.views.makecharacter.introduce.CharacterIntroduceViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_next">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <!-- 타이틀 -->
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다른 유저들에게 소개해주세요"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:lineSpacingExtra="4dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!-- 이미지 추가 영역 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_image"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:background="@drawable/drawable_maker_image_background"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageView
+                        android:id="@+id/icon_add"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_add"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintVertical_bias="0.4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="커버 이미지를\n추가해주세요"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_text_size_small"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/icon_add"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- 제목 입력 -->
+                <TextView
+                    android:id="@+id/label_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제목"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toBottomOf="@id/layout_image"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/title_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/40"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintTop_toTopOf="@id/label_title"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="제목의 컨셉 및 분위기를 써주세요"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/white"
+                    android:background="@drawable/drawable_maker_text_background"
+                    android:paddingHorizontal="16dp"
+                    android:maxLength="40"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/label_title" />
+
+                <!-- 크리에이터 코멘트 -->
+                <TextView
+                    android:id="@+id/label_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="크리에이터 코멘트"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/edit_title"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/150"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintTop_toTopOf="@id/label_comment"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:hint="크리에이터 코멘트 레츠고"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/white"
+                    android:background="@drawable/drawable_maker_text_background"
+                    android:padding="16dp"
+                    android:gravity="top"
+                    android:maxLength="150"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/label_comment" />
+
+                <!-- 해시태그 -->
+                <TextView
+                    android:id="@+id/label_hashtag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="해시태그"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/edit_comment"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/hashtag_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="해시태그 그 없으면 10개 더 넣기 능등하지않은듯"
+                    android:textColor="@color/gray"
+                    android:textSize="10sp"
+                    app:layout_constraintTop_toBottomOf="@id/label_hashtag"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/hashtag_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ 추가 0/10"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/hashtag_info"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!-- 토글 스위치들 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toggle_others"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toBottomOf="@id/hashtag_count">
+
+                    <TextView
+                        android:id="@+id/toggle_others_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="다른 유저에게 공개"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_text_size_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/switch_others" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="누구나 대화방 수 있어요"
+                        android:textColor="@color/gray"
+                        android:textSize="10sp"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/toggle_others_title"
+                        app:layout_constraintEnd_toStartOf="@id/switch_others" />
+
+                    <Switch
+                        android:id="@+id/switch_others"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toggle_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/toggle_others">
+
+                    <TextView
+                        android:id="@+id/toggle_detail_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="상세 설명 공개"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_text_size_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/switch_detail" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="내용 대법 상세 설명을 다른 유저가 볼 수 있어요"
+                        android:textColor="@color/gray"
+                        android:textSize="10sp"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/toggle_detail_title"
+                        app:layout_constraintEnd_toStartOf="@id/switch_detail" />
+
+                    <Switch
+                        android:id="@+id/switch_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toggle_situation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="80dp"
+                    app:layout_constraintTop_toBottomOf="@id/toggle_detail">
+
+                    <TextView
+                        android:id="@+id/toggle_situation_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="상황 예시 공개"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_text_size_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/switch_situation" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="상황 예시를 다른 유저가 볼 수 있어요"
+                        android:textColor="@color/gray"
+                        android:textSize="10sp"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/toggle_situation_title"
+                        app:layout_constraintEnd_toStartOf="@id/switch_situation" />
+
+                    <Switch
+                        android:id="@+id/switch_situation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <!-- 캐릭터 생성 버튼 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/menu_rank_type_selected_bg"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="캐릭터 생성"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_text_size_medium"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

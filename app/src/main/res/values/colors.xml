@@ -32,6 +32,11 @@
     <color name="menu_rank_type_selected_bg">#B39EFA</color>
     <color name="menu_rank_up">#4CAF50</color>
 
+
+    <!--    maker-->
+    <color name="maker_character_edit_bg">#43F04438</color>
+    <color name="maker_character_edit_bg_stroke">#E6554C</color>
+
     <!--    background-->
     <color name="bg_toolbar">#1C1D23</color>
 

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.meta.emogi.views.makecharacter.content.CharacterContentFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_next">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <!-- 타이틀 -->
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="000님의 캐릭터를\n현실로 만들어 보세요"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:lineSpacingExtra="4dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!-- 제목 입력 -->
+                <TextView
+                    android:id="@+id/label_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* 제목"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/title_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/20"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintTop_toTopOf="@id/label_title"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="제목을 입력해주세요."
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/white"
+                    android:background="@drawable/drawable_maker_text_background"
+                    android:paddingHorizontal="16dp"
+                    android:maxLength="20"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/label_title" />
+
+                <!-- 상세 설명 -->
+                <TextView
+                    android:id="@+id/label_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* 상세 설명"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/edit_title"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/description_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/1200"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintTop_toTopOf="@id/label_description"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:hint="성향, 관계, 세계관 등을 입력해주세요."
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/white"
+                    android:background="@drawable/drawable_maker_text_background"
+                    android:padding="16dp"
+                    android:gravity="top"
+                    android:maxLength="1200"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/label_description" />
+
+                <!-- 캐릭터 이미지 추가 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_image"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:background="@drawable/drawable_maker_image_background"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/edit_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageView
+                        android:id="@+id/icon_add"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_add"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintVertical_bias="0.4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="캐릭터 이미지를\n설정해주세요"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_text_size_small"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/icon_add"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- 이름 -->
+                <TextView
+                    android:id="@+id/label_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* 이름"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/layout_image"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/name_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/10"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintTop_toTopOf="@id/label_name"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="캐릭터의 이름"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/white"
+                    android:background="@drawable/drawable_maker_text_background"
+                    android:paddingHorizontal="16dp"
+                    android:maxLength="10"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/label_name" />
+
+                <!-- 성명 -->
+                <TextView
+                    android:id="@+id/label_full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* 성명"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_small"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/edit_name"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/full_name_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/200"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/common_text_size_small"
+                    app:layout_constraintTop_toTopOf="@id/label_full_name"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:hint="캐릭터의 특징, 감정표현 대해 버츄버 개성있는 캐릭터를\n만들 수 있어요"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/white"
+                    android:background="@drawable/drawable_maker_text_background"
+                    android:padding="16dp"
+                    android:gravity="top"
+                    android:maxLength="200"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/label_full_name" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <!-- 캐릭터 생성 버튼 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/menu_rank_type_selected_bg"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="캐릭터 생성"
+                android:textColor="@color/black"
+                android:textSize="@dimen/common_text_size_medium"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

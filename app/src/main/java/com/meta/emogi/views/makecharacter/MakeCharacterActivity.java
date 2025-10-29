@@ -3,9 +3,13 @@ package com.meta.emogi.views.makecharacter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
@@ -18,6 +22,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
 
     private static final String TAG = "MakeCharacterActivity";
     private int characterId;
+    private NavController navController;
     @Override
     protected int layoutId() {
         return R.layout.activity_make_character;
@@ -47,11 +52,60 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // NavController 설정
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragmentContainerView5);
+        if (navHostFragment != null) {
+            navController = navHostFragment.getNavController();
+        }
+
+        // 탭 클릭 리스너
+        binding.tabContent.setOnClickListener(v -> {
+            try {
+                navController.navigate(R.id.action_to_content);
+            } catch (Exception e) {
+                // 이미 content 프래그먼트인 경우
+            }
+            updateTabUI(binding.tabContent);
+        });
+
+        binding.tabIntro.setOnClickListener(v -> {
+            navController.navigate(R.id.action_to_intro);
+            updateTabUI(binding.tabIntro);
+        });
+
+        binding.tabSituation.setOnClickListener(v -> {
+            navController.navigate(R.id.action_to_situation);
+            updateTabUI(binding.tabSituation);
+        });
+
+        binding.tabIntroduce.setOnClickListener(v -> {
+            navController.navigate(R.id.action_to_introduce);
+            updateTabUI(binding.tabIntroduce);
+        });
     }
+
+    private void updateTabUI(View selectedTab) {
+        // 모든 탭 회색으로
+        binding.tabContent.setTextColor(getColor(R.color.gray));
+        binding.tabIntro.setTextColor(getColor(R.color.gray));
+        binding.tabSituation.setTextColor(getColor(R.color.gray));
+        binding.tabIntroduce.setTextColor(getColor(R.color.gray));
+
+        // 선택된 탭 흰색으로
+        ((android.widget.TextView) selectedTab).setTextColor(getColor(R.color.white));
+
+        // 인디케이터 이동
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) binding.tabIndicator.getLayoutParams();
+        params.startToStart = selectedTab.getId();
+        params.endToEnd = selectedTab.getId();
+        binding.tabIndicator.setLayoutParams(params);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        showAds(false);
+//        showAds(false);
         Intent intent = getIntent();
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
         if(characterId!=-1){

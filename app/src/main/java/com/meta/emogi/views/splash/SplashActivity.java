@@ -37,10 +37,10 @@ public class SplashActivity extends AppCompatActivity {
 
 
         /// TODO: 2025. 10. 14. 디버그 모드 설정
-//        if (BuildConfig.DEBUG) { // 디버그 모드일 때만 실행
-//            startActivity(new Intent(this, MenuActivity.class));
-//            finish();
-//        }
+        if (BuildConfig.DEBUG) { // 디버그 모드일 때만 실행
+            startActivity(new Intent(this, MenuActivity.class));
+            finish();
+        }
 
         // 첫 페이지 설정
         viewModel.getDestination().observe(this, dest -> {

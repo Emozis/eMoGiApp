@@ -3,12 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/make_character_nav"
-    app:startDestination="@id/makeCharacterFragment">
+    app:startDestination="@id/characterContentFragment">
 
     <fragment
-        android:id="@+id/makeCharacterFragment"
-        android:name="com.meta.emogi.views.makecharacter.MakeCharacterFragment"
-        android:label="MakeCharacterFragment"
-        tools:layout="@layout/fragment_make_character" />
+        android:id="@+id/characterContentFragment"
+        android:name="com.meta.emogi.views.makecharacter.content.CharacterContentFragment"
+        android:label="내용">
+        <action
+            android:id="@+id/action_to_intro"
+            app:destination="@id/chatIntroFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_situation"
+            app:destination="@id/chatExampleFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_introduce"
+            app:destination="@id/characterIntroduceFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatIntroFragment"
+        android:name="com.meta.emogi.views.makecharacter.intro.ChatIntroFragment"
+        android:label="인트로">
+        <action
+            android:id="@+id/action_to_content"
+            app:destination="@id/characterContentFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_situation"
+            app:destination="@id/chatExampleFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_introduce"
+            app:destination="@id/characterIntroduceFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatExampleFragment"
+        android:name="com.meta.emogi.views.makecharacter.example.ChatExampleFragment"
+        android:label="상황예시">
+        <action
+            android:id="@+id/action_to_content"
+            app:destination="@id/characterContentFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_intro"
+            app:destination="@id/chatIntroFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_introduce"
+            app:destination="@id/characterIntroduceFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterIntroduceFragment"
+        android:name="com.meta.emogi.views.makecharacter.introduce.CharacterIntroduceFragment"
+        android:label="캐릭터소개">
+        <action
+            android:id="@+id/action_to_content"
+            app:destination="@id/characterContentFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_intro"
+            app:destination="@id/chatIntroFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_to_situation"
+            app:destination="@id/chatExampleFragment"
+            app:popUpTo="@id/characterContentFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 
 </navigation>

@@ -13,6 +13,10 @@ import com.meta.emogi.views.chatroom.ChatRoomViewModel;
 import com.meta.emogi.views.inquiry.checkInquiry.CheckInquiryViewModel;
 import com.meta.emogi.views.inquiry.createInquiry.CreateInquiryViewModel;
 import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
+import com.meta.emogi.views.makecharacter.content.CharacterContentViewModel;
+import com.meta.emogi.views.makecharacter.example.ChatExampleViewModel;
+import com.meta.emogi.views.makecharacter.intro.ChatIntroViewModel;
+import com.meta.emogi.views.makecharacter.introduce.CharacterIntroduceViewModel;
 import com.meta.emogi.views.menu.MenuViewModel;
 import com.meta.emogi.views.menu.home.HomeViewModel;
 import com.meta.emogi.views.menu.rank.RankViewModel;
@@ -61,6 +65,14 @@ public class ViewModelFactory extends ViewModelProvider {
                  return (T) new HomeViewModel();
              }else if (modelClass.isAssignableFrom(RankViewModel.class)) {
                  return (T) new RankViewModel();
+             }else if (modelClass.isAssignableFrom(CharacterContentViewModel.class)) {
+                 return (T) new CharacterContentViewModel();
+             }else if (modelClass.isAssignableFrom(ChatExampleViewModel.class)) {
+                 return (T) new ChatExampleViewModel();
+             }else if (modelClass.isAssignableFrom(ChatIntroViewModel.class)) {
+                 return (T) new ChatIntroViewModel();
+             }else if (modelClass.isAssignableFrom(CharacterIntroduceViewModel.class)) {
+                 return (T) new CharacterIntroduceViewModel();
              }
 
             throw new IllegalArgumentException("Unknown ViewModel class");
