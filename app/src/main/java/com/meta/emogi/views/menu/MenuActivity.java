@@ -2,29 +2,17 @@ package com.meta.emogi.views.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseActivity;
 import com.meta.emogi.databinding.ActivityMenuBinding;
-import com.meta.emogi.di.ViewModelFactory;
 import com.meta.emogi.views.characterdetail.CharacterDetailActivity;
-import com.meta.emogi.views.characterdetail.CharacterDetailViewModel;
 import com.meta.emogi.views.chatlist.ChatListActivity;
-import com.meta.emogi.views.chatroom.ChatRoomActivity;
-import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.makecharacter.MakeCharacterActivity;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
-import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
 public class MenuActivity extends BaseActivity<ActivityMenuBinding> {
 

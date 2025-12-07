@@ -37,7 +37,10 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TAG = getClass().getSimpleName();
-        viewModel = new ViewModelFactory(this).get(viewModelClass());
+        // Hilt가 주입한 viewModel이 없으면 ViewModelFactory 사용
+        if (viewModel == null) {
+            viewModel = new ViewModelFactory(this).get(viewModelClass());
+        }
 
     }
 

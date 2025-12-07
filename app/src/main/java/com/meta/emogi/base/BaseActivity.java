@@ -17,7 +17,6 @@ import androidx.databinding.ViewDataBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.meta.emogi.R;
 import com.meta.emogi.views.chatlist.ChatListActivity;
-import com.meta.emogi.views.inquiry.InquiryActivity;
 import com.meta.emogi.views.login.LoginActivity;
 import com.meta.emogi.views.makecharacter.MakeCharacterActivity;
 import com.meta.emogi.views.menu.MenuActivity;

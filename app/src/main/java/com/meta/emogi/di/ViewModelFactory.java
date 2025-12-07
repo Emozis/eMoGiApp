@@ -12,6 +12,9 @@ import com.meta.emogi.views.chatlist.removeChatList.RemoveChatListViewModel;
 import com.meta.emogi.views.chatroom.ChatRoomViewModel;
 import com.meta.emogi.views.inquiry.checkInquiry.CheckInquiryViewModel;
 import com.meta.emogi.views.inquiry.createInquiry.CreateInquiryViewModel;
+import com.meta.emogi.views.login.inituser.InitUserViewModel;
+import com.meta.emogi.views.login.loginapi.LoginApiViewModel;
+import com.meta.emogi.views.login.serviceterms.ServiceTermsViewModel;
 import com.meta.emogi.views.makecharacter.MakeCharacterViewModel;
 import com.meta.emogi.views.makecharacter.content.CharacterContentViewModel;
 import com.meta.emogi.views.makecharacter.example.ChatExampleViewModel;
@@ -73,6 +76,10 @@ public class ViewModelFactory extends ViewModelProvider {
                  return (T) new ChatIntroViewModel();
              }else if (modelClass.isAssignableFrom(CharacterIntroduceViewModel.class)) {
                  return (T) new CharacterIntroduceViewModel();
+             }else if(modelClass.isAssignableFrom(InitUserViewModel.class)) {
+                 return (T) new InitUserViewModel();
+             }else if(modelClass.isAssignableFrom(ServiceTermsViewModel.class)) {
+                 return (T) new ServiceTermsViewModel();
              }
 
             throw new IllegalArgumentException("Unknown ViewModel class");

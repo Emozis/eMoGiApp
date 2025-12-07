@@ -3,11 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_nav"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/loginApiFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.meta.emogi.views.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        android:id="@+id/loginApiFragment"
+        android:name="com.meta.emogi.views.login.loginapi.LoginApiFragment"
+        android:label="fragment_login_api"
+        tools:layout="@layout/fragment_login_api" >
+        <action
+            android:id="@+id/action_loginApiFragment_to_serviceTermsFragment"
+            app:destination="@id/serviceTermsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/initUserFragment"
+        android:name="com.meta.emogi.views.login.inituser.InitUserFragment"
+        android:label="fragment_init_user"
+        tools:layout="@layout/fragment_init_user" />
+    <fragment
+        android:id="@+id/serviceTermsFragment"
+        android:name="com.meta.emogi.views.login.serviceterms.ServiceTermsFragment"
+        android:label="fragment_service_terms"
+        tools:layout="@layout/fragment_service_terms" >
+        <action
+            android:id="@+id/action_serviceTermsFragment_to_initUserFragment"
+            app:destination="@id/initUserFragment" />
+    </fragment>
 </navigation>

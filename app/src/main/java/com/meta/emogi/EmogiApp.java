@@ -1,6 +1,7 @@
 package com.meta.emogi;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -27,6 +28,10 @@ public class EmogiApp extends Application {
         return instance;
     }
 
+
+    public Context getAppContext(){
+        return instance.getApplicationContext();
+    }
 
     private void getDeviceSize(){
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();

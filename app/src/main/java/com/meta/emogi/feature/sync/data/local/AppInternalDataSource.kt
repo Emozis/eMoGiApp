@@ -14,7 +14,7 @@ class AppInternalDataSource @Inject constructor(@ApplicationContext private val 
         const val KEY_REFRESH_TOKEN = "refresh_token"
     }
 
-    var pref: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    val pref: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
     override fun isLoggedIn(): Boolean = pref.getBoolean(KEY_IS_LOGGED_IN, false);
 

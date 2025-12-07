@@ -62,7 +62,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
     public void onResume() {
         super.onResume();
         setAdapter();
-        /// FIXME: 2025. 10. 15. 디버그용 코드 제거 필요
+        // DEBUG: 2025. 12. 7. 디버그용 코드 제거 필요
         viewModel.forDebug();
         viewModel.setDebugData();
 //        viewModel.getChatList();
