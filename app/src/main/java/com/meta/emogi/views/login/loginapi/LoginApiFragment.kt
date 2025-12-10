@@ -3,6 +3,7 @@ package com.meta.emogi.views.login.loginapi
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
@@ -77,6 +78,10 @@ class LoginApiFragment : BaseFragment<FragmentLoginApiBinding, LoginApiViewModel
         }
         binding.googleLoginButton.setOnClickListener { v -> activity.googleSignIn() }
         binding.kakaoLoginButton.setOnClickListener { v -> kakaoSignIn() }
+
+        binding.testButton.setOnClickListener {
+            findNavController(requireView()).navigate(R.id.action_loginApiFragment_to_serviceTermsFragment)
+        }
     }
 
     private fun kakaoSignIn() { // 카카오 로그인 콜백

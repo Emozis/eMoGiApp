@@ -44,5 +44,9 @@
     <color name="text_color_common">@color/white</color>
     <!--    icon-->
     <color name="icon_color_white">@color/white</color>
+    
+    <color name="purple_500">#6200EE</color>
+    <color name="dark_gray">#333333</color>
+    <color name="main_purple">#5936D9</color>
 
 </resources>

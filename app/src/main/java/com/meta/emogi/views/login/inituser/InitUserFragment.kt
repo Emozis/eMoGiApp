@@ -1,31 +1,44 @@
 package com.meta.emogi.views.login.inituser
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.meta.emogi.R
+import com.meta.emogi.base.BaseFragment
+import com.meta.emogi.databinding.FragmentInitUserBinding
+import com.meta.emogi.views.toolbar.ToolbarView
+import dagger.hilt.android.AndroidEntryPoint
 
-class InitUserFragment : Fragment() {
+@AndroidEntryPoint
+class InitUserFragment : BaseFragment<FragmentInitUserBinding, InitUserViewModel>() {
 
-    companion object {
-        fun newInstance() = InitUserFragment()
-    }
+    override fun layoutId(): Int = R.layout.fragment_init_user
 
-    private val viewModel: InitUserViewModel by viewModels()
+    override fun viewModelClass(): Class<InitUserViewModel> = InitUserViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+        viewModel = viewModels<InitUserViewModel>().value
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_init_user, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    override fun registerObservers() {
+        viewModel.navigateToMain.observe(this) {
+            (requireActivity() as? com.meta.emogi.views.login.LoginActivity)?.moveToMainActivity()
+        }
+    }
+
+    override fun toolbarCallback(): ToolbarView.ToolbarRequest {
+        return ToolbarView.ToolbarRequest("회원정보 입력")
     }
 }
