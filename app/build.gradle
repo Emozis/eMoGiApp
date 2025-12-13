@@ -15,7 +15,7 @@ android {
         minSdk 24
         targetSdk 35
         versionCode 2005001
-        versionName "2.05.0001"
+        versionName "2.05.0001-design-test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
