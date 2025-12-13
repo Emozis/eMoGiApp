@@ -76,21 +76,21 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         holder.itemMenuCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-
-                // 현재 포지션이 RecyclerView.NO_POSITION이 아닌지 확인
-                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
-                    // 선택된 포지션 업데이트
-                    selectedPosition = position;
-
-                    int clickedChatId = chatList.get(selectedPosition).getChatId();
-                    String clickedChatUrl = chatList.get(selectedPosition).getCharacter().getCharacterProfile();
-                    String clickedCharacterName = chatList.get(selectedPosition).getCharacter().getCharacterName();
-                    onItemClickListener.onItemClick(clickedChatId, clickedChatUrl,clickedCharacterName);
-
-                    // 변경된 선택 사항을 RecyclerView에 반영
-                    notifyDataSetChanged();
-                }
+//                int position = holder.getAdapterPosition();
+//
+//                // 현재 포지션이 RecyclerView.NO_POSITION이 아닌지 확인
+//                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
+//                    // 선택된 포지션 업데이트
+//                    selectedPosition = position;
+//
+//                    int clickedChatId = chatList.get(selectedPosition).getChatId();
+//                    String clickedChatUrl = chatList.get(selectedPosition).getCharacter().getCharacterProfile();
+//                    String clickedCharacterName = chatList.get(selectedPosition).getCharacter().getCharacterName();
+//                    onItemClickListener.onItemClick(clickedChatId, clickedChatUrl,clickedCharacterName);
+//
+//                    // 변경된 선택 사항을 RecyclerView에 반영
+//                    notifyDataSetChanged();
+//                }
             }
         });
 

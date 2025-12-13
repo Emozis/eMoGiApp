@@ -27,7 +27,8 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("마이페이지");
+        // onViewCreated에서 직접 refreshToolbar를 호출하므로 null 반환
+        return null;
     }
 
     @Override
@@ -65,13 +66,13 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(TAG, "onCreate: ");
         activity = (ProfileActivity) requireActivity();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        activity.refreshToolbar(new ToolbarView.ToolbarRequest("프로필 편집"), "저장", false, true);
         requireActivity().getOnBackPressedDispatcher().addCallback(
                 getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {

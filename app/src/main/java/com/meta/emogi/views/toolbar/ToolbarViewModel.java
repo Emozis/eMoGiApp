@@ -13,11 +13,24 @@ import com.meta.emogi.base.SingleLiveEvent;
 public class ToolbarViewModel extends BaseViewModel {
 
     private final MutableLiveData<String> _title = new MutableLiveData<>();
+    private final MutableLiveData<String> _buttonText = new MutableLiveData<>("임시저장");
+    private final MutableLiveData<Boolean> _visibleSaveButton = new MutableLiveData<>(false);
     private final SingleLiveEvent<Void> _back = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> _logout = new SingleLiveEvent<>();
 
+    public LiveData<Boolean> visibleSaveButton() {
+        return _visibleSaveButton;
+    }
+
+    public void setVisibleSaveButton(boolean isVisible){
+        _visibleSaveButton.setValue(isVisible);
+    }
+
     public LiveData<String> title() {
         return _title;
+    }
+    public LiveData<String> buttonText() {
+        return _buttonText;
     }
 
     public void setTitle(String title) {
@@ -43,5 +56,5 @@ public class ToolbarViewModel extends BaseViewModel {
         return true;
     }
 
-
+    public void setButtonText(String buttonText) {_buttonText.setValue(buttonText);}
 }

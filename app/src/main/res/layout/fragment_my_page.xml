@@ -13,43 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- 헤더: 타이틀 + 햄버거 -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="마이페이지"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_text_size_large"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="16dp"/>
-
-            <ImageView
-                android:id="@+id/menu"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="16dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <View
             android:id="@+id/divider1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/header"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <!-- 프로필 영역 -->
         <androidx.constraintlayout.widget.ConstraintLayout

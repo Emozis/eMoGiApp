@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,6 +73,7 @@ public class ToolbarView extends ConstraintLayout {
     public static class ToolbarRequest {
 
         private String title = null;
+        private String button = null;
         private ToolbarButtonClickListener callback = null;
 
         public ToolbarRequest(String title) {
@@ -82,19 +84,29 @@ public class ToolbarView extends ConstraintLayout {
             this.title = title;
             this.callback = callback;
         }
-    }
 
-    public void setLogout(ToolbarRequest toolbarRequest) {
-        if (toolbarRequest != null) {
-            this.clickListener = toolbarRequest.callback;
-            binding.logout.setVisibility(VISIBLE);
+        public ToolbarRequest(String title,String button, ToolbarButtonClickListener callback) {
+            this.title = title;
+            this.button = button;
+            this.callback = callback;
         }
     }
 
-    public void setTemporarySave(ToolbarRequest toolbarRequest) {
+    public void setLogout(ToolbarRequest toolbarRequest,Boolean isVisible) {
         if (toolbarRequest != null) {
             this.clickListener = toolbarRequest.callback;
-            binding.btnTempSave.setVisibility(VISIBLE);
+            int visible = isVisible?View.VISIBLE : View.GONE;
+            binding.logout.setVisibility(visible);
+        }
+    }
+
+    public void setTemporarySave(ToolbarRequest toolbarRequest,Boolean isVisible) {
+        if (toolbarRequest != null) {
+            this.clickListener = toolbarRequest.callback;
+            // ViewModel도 업데이트하여 Data Binding과 동기화
+            viewModel.setVisibleSaveButton(isVisible);
+            int visible = isVisible?View.VISIBLE : View.GONE;
+            binding.btnTempSave.setVisibility(visible);
         }
     }
 

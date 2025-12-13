@@ -7,18 +7,22 @@ import androidx.navigation.fragment.findNavController
 import com.meta.emogi.R
 import com.meta.emogi.base.BaseFragment
 import com.meta.emogi.databinding.FragmentEditProfileBinding
+import com.meta.emogi.views.profile.ProfileActivity
 import com.meta.emogi.views.toolbar.ToolbarView
+import com.meta.emogi.views.toolbar.ToolbarView.ToolbarRequest
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfileViewModel>() {
+
+    private val activity by lazy { requireActivity() as ProfileActivity }
 
     override fun layoutId(): Int = R.layout.fragment_edit_profile
 
     override fun viewModelClass(): Class<EditProfileViewModel> = EditProfileViewModel::class.java
 
     override fun toolbarCallback(): ToolbarView.ToolbarRequest? {
-        return null // Hide default toolbar as we have custom header
+        return ToolbarRequest("프로필 편집")
     }
 
     override fun registerObservers() {
@@ -30,9 +34,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        activity.refreshToolbar(ToolbarRequest("프로필 편집"), "저장", true, false)
 
         binding.tabSocial.setOnClickListener {
             viewModel.setTab(0)

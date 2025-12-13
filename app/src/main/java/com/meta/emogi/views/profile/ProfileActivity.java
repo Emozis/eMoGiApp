@@ -43,7 +43,15 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
-        binding.toolbar.setLogout(toolbarRequest);
+        binding.toolbar.setLogout(toolbarRequest,true);
+        binding.toolbar.setTemporarySave(toolbarRequest,false);
+    }
+
+    public void refreshToolbar(ToolbarView.ToolbarRequest toolbarRequest, String buttonText, boolean isVisibleSaveButton, boolean isVisibleLogOutButton) {
+        binding.toolbar.settingView(toolbarRequest);
+        toolbarViewModel.setButtonText(buttonText);
+        binding.toolbar.setLogout(toolbarRequest,isVisibleLogOutButton);
+        binding.toolbar.setTemporarySave(toolbarRequest,isVisibleSaveButton);
     }
 
     @Override
@@ -60,12 +68,13 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupBottomNavigation(binding.bottomNavigation, R.id.nav_profile);
+        // View가 완전히 생성된 후 initFragment 호출
+        binding.profileChildFrag.post(() -> initFragment());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initFragment();
         setToolbarHeight(binding.toolbar);
     }
 

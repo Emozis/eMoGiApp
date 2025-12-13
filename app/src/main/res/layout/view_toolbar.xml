@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.meta.emogi.views.toolbar.ToolbarViewModel" />
@@ -74,8 +74,8 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="로그아웃" />
 
             <TextView
@@ -85,14 +85,14 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/bg_button_temp_save"
                 android:paddingStart="12dp"
+                android:visibility="@{viewModel.visibleSaveButton() ? View.VISIBLE : View.GONE}"
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="임시저장"
+                android:text="@{viewModel.buttonText()}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_text_size_small"
                 android:textStyle="bold"
-                android:visibility="gone"
                 android:onClick="@{v -> viewModel.onButtonClicked(v)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

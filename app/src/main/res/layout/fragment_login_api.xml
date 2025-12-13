@@ -44,10 +44,10 @@
             android:id="@+id/test_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:text="약관 테스트 버튼"
             android:textColor="@android:color/white"
-            android:text="테스트 버튼"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/test_button2"
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <Button
@@ -61,6 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <include
+            android:visibility="gone"
             android:id="@+id/google_login_button"
             layout="@layout/item_google_login_btn"
             android:layout_width="0dp"
@@ -76,6 +77,7 @@
             />
 
         <include
+            android:visibility="gone"
             android:id="@+id/kakao_login_button"
             layout="@layout/item_kakao_login_btn"
             android:layout_width="0dp"

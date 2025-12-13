@@ -92,12 +92,11 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
         // 툴바 설정
         ToolbarView.ToolbarRequest request = new ToolbarView.ToolbarRequest("제작", btnId -> {
             if (btnId == R.id.btn_temp_save) {
-                // TODO: 임시저장 로직
-                Log.d(TAG, "임시저장 클릭");
+
             }
         });
         binding.toolbar.settingView(request);
-        binding.toolbar.setTemporarySave(request);
+        binding.toolbar.setTemporarySave(request,true);
 
     }
 

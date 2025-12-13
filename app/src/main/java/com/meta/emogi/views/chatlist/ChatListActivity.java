@@ -26,6 +26,8 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
+        binding.toolbar.setLogout(toolbarRequest,false);
+        binding.toolbar.setTemporarySave(toolbarRequest,false);
     }
 
     @Override
@@ -42,6 +44,13 @@ public class ChatListActivity extends BaseActivity<ActivityChatListBinding> {
     @Override
     protected boolean hasBottomNavigation() {
         return true;
+    }
+
+    public void refreshToolbar(ToolbarView.ToolbarRequest toolbarRequest, String buttonText, boolean isVisibleSaveButton, boolean isVisibleLogOutButton) {
+        binding.toolbar.settingView(toolbarRequest);
+        toolbarViewModel.setButtonText(buttonText);
+        binding.toolbar.setLogout(toolbarRequest,isVisibleLogOutButton);
+        binding.toolbar.setTemporarySave(toolbarRequest,isVisibleSaveButton);
     }
 
 

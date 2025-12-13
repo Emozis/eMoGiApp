@@ -136,54 +136,6 @@
             android:focusable="true"
             android:elevation="20dp">
 
-            <TextView
-                android:id="@+id/guide_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="000님의 캐릭터를\n현실로 만들어 보세요"
-                android:textColor="#888888"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginTop="80dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="* 제목"
-                android:textColor="#AAAAAA"
-                android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@id/guide_title"
-                app:layout_constraintStart_toStartOf="@id/guide_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="24dp"
-                android:background="@drawable/bg_edittext"
-                app:layout_constraintTop_toBottomOf="@id/guide_title"
-                android:layout_marginTop="70dp"/>
-
-             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="* 상세 설명"
-                android:textColor="#AAAAAA"
-                android:layout_marginTop="140dp"
-                app:layout_constraintTop_toBottomOf="@id/guide_title"
-                app:layout_constraintStart_toStartOf="@id/guide_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginHorizontal="24dp"
-                android:background="@drawable/bg_edittext"
-                app:layout_constraintTop_toBottomOf="@id/guide_title"
-                android:layout_marginTop="170dp"/>
-
-
             <!-- 하단 안내문구 -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

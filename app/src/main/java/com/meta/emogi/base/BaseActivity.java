@@ -27,7 +27,7 @@ import com.meta.emogi.views.toolbar.ToolbarViewModel;
 public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
     protected V binding;
-    private ToolbarViewModel toolbarViewModel;
+    protected ToolbarViewModel toolbarViewModel;
     private boolean backStatus = false;
 
     protected abstract @LayoutRes int layoutId();

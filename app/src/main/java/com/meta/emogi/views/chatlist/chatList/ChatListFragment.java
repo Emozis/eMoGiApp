@@ -2,11 +2,13 @@ package com.meta.emogi.views.chatlist.chatList;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
+import android.view.View;
 
 import com.meta.emogi.R;
 import com.meta.emogi.base.BaseFragment;
@@ -23,7 +25,8 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
 
     @Override
     protected ToolbarView.ToolbarRequest toolbarCallback() {
-        return new ToolbarView.ToolbarRequest("내 채팅방");
+        // onViewCreated에서 직접 refreshToolbar를 호출하므로 null 반환
+        return null;
     }
 
     public static ChatListFragment newInstance() {
@@ -57,6 +60,7 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (ChatListActivity) requireActivity();
+
     }
     @Override
     public void onResume() {
@@ -68,6 +72,11 @@ public class ChatListFragment extends BaseFragment<FragmentChatListBinding, Chat
 //        viewModel.getChatList();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        activity.refreshToolbar(new ToolbarView.ToolbarRequest("내 채팅방"), "", false, false);
+    }
     private void setAdapter() {
         adapter = new ChatListAdapter(new ArrayList<>());
         binding.listChat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
