@@ -20,10 +20,10 @@ import com.meta.emogi.views.makecharacter.content.CharacterContentViewModel;
 import com.meta.emogi.views.makecharacter.example.ChatExampleViewModel;
 import com.meta.emogi.views.makecharacter.intro.ChatIntroViewModel;
 import com.meta.emogi.views.makecharacter.introduce.CharacterIntroduceViewModel;
-import com.meta.emogi.views.menu.MenuViewModel;
 import com.meta.emogi.views.menu.home.HomeViewModel;
 import com.meta.emogi.views.menu.rank.RankViewModel;
 import com.meta.emogi.views.profile.characterMangage.CharacterManageViewModel;
+import com.meta.emogi.views.profile.editprofile.EditProfileViewModel;
 import com.meta.emogi.views.profile.myPage.MyPageViewModel;
 import com.meta.emogi.views.toolbar.ToolbarViewModel;
 
@@ -46,8 +46,6 @@ public class ViewModelFactory extends ViewModelProvider {
                 return (T) new ChatRoomViewModel();
             }  else if (modelClass.isAssignableFrom(MakeCharacterViewModel.class)) {
                 return (T) new MakeCharacterViewModel();
-            } else if (modelClass.isAssignableFrom(MenuViewModel.class)) {
-                return (T) new MenuViewModel();
             } else if (modelClass.isAssignableFrom(ChatListViewModel.class)) {
                 return (T) new ChatListViewModel();
             } else if (modelClass.isAssignableFrom(ToolbarViewModel.class)) {
@@ -80,6 +78,8 @@ public class ViewModelFactory extends ViewModelProvider {
                  return (T) new InitUserViewModel();
              }else if(modelClass.isAssignableFrom(ServiceTermsViewModel.class)) {
                  return (T) new ServiceTermsViewModel();
+             }else if(modelClass.isAssignableFrom(EditProfileViewModel.class)) {
+                 return (T) new EditProfileViewModel();
              }
 
             throw new IllegalArgumentException("Unknown ViewModel class");

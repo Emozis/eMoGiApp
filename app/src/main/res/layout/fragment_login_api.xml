@@ -50,6 +50,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
+        <Button
+            android:id="@+id/test_button2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="바로 홈가기"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/test_button"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
         <include
             android:id="@+id/google_login_button"
             layout="@layout/item_google_login_btn"

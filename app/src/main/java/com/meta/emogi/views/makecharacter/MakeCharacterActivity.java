@@ -23,6 +23,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     private static final String TAG = "MakeCharacterActivity";
     private int characterId;
     private NavController navController;
+
     @Override
     protected int layoutId() {
         return R.layout.activity_make_character;
@@ -42,7 +43,6 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     protected boolean hasBottomNavigation() {
         return true;
     }
-
 
     public void refreshToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
@@ -83,6 +83,22 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
             navController.navigate(R.id.action_to_introduce);
             updateTabUI(binding.tabIntroduce);
         });
+
+        // 가이드 확인 버튼
+        binding.btnConfirmGuide.setOnClickListener(v -> {
+            binding.guideLayout.setVisibility(View.GONE);
+        });
+
+        // 툴바 설정
+        ToolbarView.ToolbarRequest request = new ToolbarView.ToolbarRequest("제작", btnId -> {
+            if (btnId == R.id.btn_temp_save) {
+                // TODO: 임시저장 로직
+                Log.d(TAG, "임시저장 클릭");
+            }
+        });
+        binding.toolbar.settingView(request);
+        binding.toolbar.setTemporarySave(request);
+
     }
 
     private void updateTabUI(View selectedTab) {
@@ -105,10 +121,10 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     @Override
     protected void onResume() {
         super.onResume();
-//        showAds(false);
+        // showAds(false);
         Intent intent = getIntent();
         characterId = intent.getIntExtra("CHARACTER_ID", -1);
-        if(characterId!=-1){
+        if (characterId != -1) {
             changeBackStatus();
         }
         setToolbarHeight(binding.toolbar);
@@ -122,7 +138,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
 
     public void showAds(boolean isGoProfile) {
         AdManager.showAdIfAvailable(this, () -> {
-            if(isGoProfile){
+            if (isGoProfile) {
                 moveToMyProfile();
             }
         });
@@ -131,6 +147,7 @@ public class MakeCharacterActivity extends BaseActivity<ActivityMakeCharacterBin
     public int getCharacterId() {
         return characterId;
     }
+
     public void setCharacterId(int characterId) {
         this.characterId = characterId;
     }

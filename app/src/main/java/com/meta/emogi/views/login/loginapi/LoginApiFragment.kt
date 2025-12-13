@@ -82,6 +82,10 @@ class LoginApiFragment : BaseFragment<FragmentLoginApiBinding, LoginApiViewModel
         binding.testButton.setOnClickListener {
             findNavController(requireView()).navigate(R.id.action_loginApiFragment_to_serviceTermsFragment)
         }
+
+        binding.testButton2.setOnClickListener {
+            activity.moveToMainActivity()
+        }
     }
 
     private fun kakaoSignIn() { // 카카오 로그인 콜백

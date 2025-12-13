@@ -1,4 +1,5 @@
 package com.meta.emogi.views.toolbar;
+
 import android.app.Application;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.meta.emogi.R;
 import com.meta.emogi.databinding.ViewToolbarBinding;
 import com.meta.emogi.di.ViewModelFactory;
+
 public class ToolbarView extends ConstraintLayout {
 
     private ToolbarViewModel viewModel;
@@ -39,7 +41,6 @@ public class ToolbarView extends ConstraintLayout {
         init(context);
     }
 
-
     private void init(Context context) {
         LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Application application = (Application) context.getApplicationContext();
@@ -56,7 +57,8 @@ public class ToolbarView extends ConstraintLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         viewModel.buttonClicked().observe((LifecycleOwner) getContext(), btnResId -> {
-            if (clickListener != null) clickListener.onClick(btnResId);
+            if (clickListener != null)
+                clickListener.onClick(btnResId);
         });
     }
 
@@ -82,10 +84,17 @@ public class ToolbarView extends ConstraintLayout {
         }
     }
 
-    public void setLogout(ToolbarRequest toolbarRequest){
+    public void setLogout(ToolbarRequest toolbarRequest) {
         if (toolbarRequest != null) {
             this.clickListener = toolbarRequest.callback;
             binding.logout.setVisibility(VISIBLE);
+        }
+    }
+
+    public void setTemporarySave(ToolbarRequest toolbarRequest) {
+        if (toolbarRequest != null) {
+            this.clickListener = toolbarRequest.callback;
+            binding.btnTempSave.setVisibility(VISIBLE);
         }
     }
 

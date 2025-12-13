@@ -33,7 +33,8 @@ class InitUserFragment : BaseFragment<FragmentInitUserBinding, InitUserViewModel
     }
 
     override fun registerObservers() {
-        viewModel.navigateToMain.observe(this) {
+        viewModel.navigateToMain.observe(viewLifecycleOwner) {
+            android.util.Log.d("InitUserFragment", "navigateToMain observed")
             (requireActivity() as? com.meta.emogi.views.login.LoginActivity)?.moveToMainActivity()
         }
     }
@@ -41,4 +42,5 @@ class InitUserFragment : BaseFragment<FragmentInitUserBinding, InitUserViewModel
     override fun toolbarCallback(): ToolbarView.ToolbarRequest {
         return ToolbarView.ToolbarRequest("회원정보 입력")
     }
+
 }

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_characterManageFragment"
             app:destination="@id/characterManageFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/characterManageFragment"
@@ -21,4 +24,8 @@
             android:id="@+id/action_characterManageFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.meta.emogi.views.profile.editprofile.EditProfileFragment"
+        android:label="EditProfileFragment" />
 </navigation>

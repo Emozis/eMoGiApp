@@ -18,6 +18,9 @@ import com.meta.emogi.databinding.FragmentMyPageBinding;
 import com.meta.emogi.views.profile.ProfileActivity;
 import com.meta.emogi.views.toolbar.ToolbarView;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageViewModel> {
 
     private ProfileActivity activity;
@@ -26,23 +29,33 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
     protected ToolbarView.ToolbarRequest toolbarCallback() {
         return new ToolbarView.ToolbarRequest("마이페이지");
     }
+
     @Override
     protected int layoutId() {
         return R.layout.fragment_my_page;
     }
+
     @Override
     protected Class<MyPageViewModel> viewModelClass() {
         return MyPageViewModel.class;
     }
+
     @Override
     protected void registerObservers() {
         viewModel.goToMyPage().observe(this, unused -> {
             Navigation.findNavController(requireView()).navigate(R.id.action_myPageFragment_to_characterManageFragment);
         });
+
+        viewModel.goToEditProfile().observe(this, unused -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_myPageFragment_to_editProfileFragment);
+        });
+
+
         viewModel.userData().observe(this, userData -> {
             viewModel.setUserData(userData.getUserEmail(), userData.getUserName());
 
-            Glide.with(requireContext()).load(userData.getUserProfile()).placeholder(R.drawable.ic_profile) // 로딩 중일 때 보여줄 이미지
+            Glide.with(requireContext()).load(userData.getUserProfile()).placeholder(R.drawable.ic_profile) // 로딩 중일 때
+                                                                                                            // 보여줄 이미지
                     .error(R.drawable.ic_profile) // 로딩 실패 시 보여줄 이미지
                     .circleCrop() // 이미지를 동그랗게 만듭니다.
                     .into(binding.imageProfile);
@@ -64,15 +77,14 @@ public class MyPageFragment extends BaseFragment<FragmentMyPageBinding, MyPageVi
                 new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        requireActivity().finish();  // 현재 액티비티 종료
+                        requireActivity().finish(); // 현재 액티비티 종료
                     }
-                }
-        );
+                });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.getUserData();
+//        viewModel.getUserData();
     }
 }

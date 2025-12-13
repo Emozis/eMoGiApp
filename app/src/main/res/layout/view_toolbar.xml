@@ -78,6 +78,27 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="로그아웃" />
 
+            <TextView
+                android:id="@+id/btn_temp_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_button_temp_save"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="임시저장"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_text_size_small"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:onClick="@{v -> viewModel.onButtonClicked(v)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

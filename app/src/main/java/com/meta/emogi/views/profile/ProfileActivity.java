@@ -28,20 +28,23 @@ import com.meta.emogi.views.toolbar.ToolbarView;
 
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     private static final String TAG = "ProfileActivity";
+
     @Override
     protected int layoutId() {
         return R.layout.activity_profile;
     }
+
     @Override
     protected void setToolbar(ToolbarView.ToolbarRequest toolbarRequest) {
         binding.toolbar.settingView(toolbarRequest);
         binding.toolbar.setLogout(toolbarRequest);
     }
-
-
 
     @Override
     protected boolean isMainActivity() {
@@ -52,7 +55,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     protected boolean hasBottomNavigation() {
         return true;
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,22 +70,21 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     }
 
     @Override
-    public void logout(){
+    public void logout() {
         super.logout();
         Log.d(TAG, "logout: 프로필액티비티에서 호출");
     }
 
-
-    private void initFragment(){
+    private void initFragment() {
         Intent intent = getIntent();
         String initFragment = intent.getStringExtra("INIT_FRAGMENT");
         NavController navController = Navigation.findNavController(this, R.id.profileChildFrag);
         NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.profile_nav);
 
-        Log.d("www", "현재 페이지 확인 : "+initFragment);
-        if (Objects.equals(initFragment, "Character")|| isBackToCharacterMangage) {
+        Log.d("www", "현재 페이지 확인 : " + initFragment);
+        if (Objects.equals(initFragment, "Character") || isBackToCharacterMangage) {
             navGraph.setStartDestination(R.id.characterManageFragment);
-            isBackToCharacterMangage=false;
+            isBackToCharacterMangage = false;
         } else {
             navGraph.setStartDestination(R.id.myPageFragment);
         }
@@ -92,19 +93,18 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     private boolean isBackToCharacterMangage = false;
 
-    public void moveToDetail(int characterId){
-        isBackToCharacterMangage=true;
+    public void moveToDetail(int characterId) {
+        isBackToCharacterMangage = true;
         Intent intent = new Intent(ProfileActivity.this, CharacterDetailActivity.class);
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
 
-    public void moveToEditCharacter(int characterId){
-        isBackToCharacterMangage=true;
+    public void moveToEditCharacter(int characterId) {
+        isBackToCharacterMangage = true;
         Intent intent = new Intent(ProfileActivity.this, MakeCharacterActivity.class);
         intent.putExtra("CHARACTER_ID", characterId);
         startActivity(intent);
     }
-
 
 }

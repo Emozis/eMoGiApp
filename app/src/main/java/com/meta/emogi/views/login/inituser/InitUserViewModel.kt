@@ -47,11 +47,12 @@ class InitUserViewModel @Inject constructor() : BaseViewModel() {
         isFormValid.value = isValid
     }
 
-    private val _navigateToMain = com.meta.emogi.base.SingleLiveEvent<Unit>()
-    val navigateToMain: LiveData<Unit> get() = _navigateToMain
+    private val _navigateToMain = com.meta.emogi.base.SingleLiveEvent<Boolean>()
+    val navigateToMain: LiveData<Boolean> get() = _navigateToMain
 
     fun onCompleteClick() {
+        android.util.Log.d("InitUserViewModel", "onCompleteClick: Complete button clicked")
         // TODO: 서버로 데이터 전송 로직이 있다면 여기에 추가
-        _navigateToMain.call()
+        _navigateToMain.setValue(true)
     }
 }
