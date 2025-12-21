@@ -13,7 +13,6 @@
         <item name="colorOnBackground">@color/color_default_text</item> <!-- 배경 위 텍스트 색상 설정 -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowFullscreen">true</item>
         <item name="colorControlActivated">@color/yellow</item>
         <item name="android:statusBarColor">@color/main_black</item>
         <item name="android:windowAnimationStyle">@null</item>
@@ -49,6 +48,12 @@
     <style name="checkBox" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- 기존 테마 속성들 -->
         <item name="colorControlActivated">@color/yellow</item>
+    </style>
+
+
+    <style name="checkBox_purple" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- 기존 테마 속성들 -->
+        <item name="colorControlActivated">@color/check_box_purple</item>
     </style>
 
 </resources>

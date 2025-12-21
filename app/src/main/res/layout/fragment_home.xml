@@ -50,7 +50,6 @@
                     android:id="@+id/layout_middle_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_toolbar"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:paddingStart="24dp"

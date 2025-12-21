@@ -12,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#121212"
         android:padding="24dp">
 
         <TextView
@@ -136,7 +135,8 @@
             android:layout_height="56dp"
             android:layout_marginBottom="24dp"
             android:text="동의하기"
-            android:backgroundTint="#5936D9"
+            android:textSize="16sp"
+            android:backgroundTint="@color/main_purple"
             android:onClick="@{() -> viewModel.onAgreeClick()}"
             android:enabled="@{viewModel.isMandatoryAgreed}"
             app:layout_constraintBottom_toBottomOf="parent"

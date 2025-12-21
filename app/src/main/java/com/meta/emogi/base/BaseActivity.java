@@ -4,6 +4,7 @@ import static com.meta.emogi.EmogiApp.getDeviceHeightPx;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 
 import androidx.annotation.LayoutRes;
@@ -11,6 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
@@ -69,6 +74,22 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         //        });
 
         setStatusBarColor();
+        setupWindowInsets();
+    }
+
+    private void setupWindowInsets() {
+        // Edge-to-edge 모드 활성화
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
+        View rootView = binding.getRoot();
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            // 루트 뷰에 시스템 바 영역만큼 패딩 적용
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
     protected void logout() {
         Intent intent = new Intent(this, LoginActivity.class);

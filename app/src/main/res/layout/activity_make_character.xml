@@ -25,7 +25,6 @@
             android:id="@+id/layout_tabs"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/bg_toolbar"
             app:layout_constraintHeight_percent="0.08"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -181,8 +180,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="24dp"
+                    android:textColor="@android:color/white"
                     android:text="확인했어요"
-                    android:textColor="@color/black"
                     android:backgroundTint="#B39EFA"
                     app:layout_constraintTop_toBottomOf="@id/notice_content"
                     app:layout_constraintBottom_toBottomOf="parent"/>
